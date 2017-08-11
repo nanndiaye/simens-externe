@@ -39,7 +39,7 @@ class PatientForm extends Form {
 						'value_options' => array (
 								'' => '',
 								'Masculin' => 'Masculin',
-								iconv ( 'ISO-8859-1', 'UTF-8','Féminin') => iconv ( 'ISO-8859-1', 'UTF-8','Féminin')
+								iconv ( 'ISO-8859-1', 'UTF-8','Feminin') => iconv ( 'ISO-8859-1', 'UTF-8','Feminin')
 						)
 				),
 				'attributes' => array (
@@ -67,7 +67,7 @@ class PatientForm extends Form {
 				'name' => 'PRENOM',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Prénom' )
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Prenom' )
 				),
 				'attributes' => array (
 						'id' => 'PRENOM',
@@ -82,7 +82,7 @@ class PatientForm extends Form {
 				'name' => 'AGE',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Âge' )
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'age' )
 				),
 				'attributes' => array (
 						'id' => 'AGE',
@@ -121,10 +121,11 @@ class PatientForm extends Form {
 				'name' => 'TELEPHONE',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Téléphone' )
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Telephone' )
 				),
 				'attributes' => array (
 						'id' => 'TELEPHONE',
+				    'required' => true,
 						'tabindex' => 7,
 				)
 		) );
@@ -169,7 +170,7 @@ class PatientForm extends Form {
 				'name' => 'NATIONALITE_ORIGINE',
 				'type' => 'Zend\Form\Element\Select',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','Nationalité origine'),
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8','Nationalite origine'),
 				),
 				'attributes' => array (
 						'id' => 'NATIONALITE_ORIGINE',
@@ -181,7 +182,7 @@ class PatientForm extends Form {
 				'name' => 'NATIONALITE_ACTUELLE',
 				'type' => 'Zend\Form\Element\Select',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','Nationalité actuelle'),
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8','Nationalite actuelle'),
 						'value_options' => array (
 								'' => ''
 						)

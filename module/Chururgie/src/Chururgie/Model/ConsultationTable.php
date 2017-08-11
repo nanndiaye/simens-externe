@@ -9,6 +9,24 @@ use Zend\Db\Sql\Where;
 class ConsultationTable {
 
     
+    /**
+     * verifier si la pathologie existe dans la base de donnees
+     */
+    
+    public function getOrganeByName($lesorganes){
+        
+        $adapter = $this->tableGateway->getAdapter ();
+        $sql = new Sql ( $adapter );
+        $select = $sql->select ();
+        $select->columns( array('*'));
+        $select->from( array( 'c' => 'organe' ));
+        $select->where ( array( 'c.LESORGANES' => $lesorganes));
+        
+        $stat = $sql->prepareStatementForSqlObject ( $select );
+        $result = $stat->execute ()->current();
+        
+        return $result;
+    }
     
     /**
      * RECUPERER Les types de pathologlogies

@@ -37,6 +37,7 @@ class OrganeTable{
 // 	}
 
 	public function getOrganeByName($lesorganes){
+	    var_dump("test");exit();
 	    $adapter = $this->tableGateway->getAdapter ();
 	    $sql = new Sql ( $adapter );
 	    $select = $sql->select ();

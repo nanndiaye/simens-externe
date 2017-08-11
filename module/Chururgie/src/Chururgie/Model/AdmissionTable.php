@@ -18,16 +18,18 @@ class AdmissionTable {
 		$select = $sql->select ();
 		$select->from ( array (
 				'p' => 'patient'
-		) );
-		$select->columns ( array () );
+		));
+		$select->columns ( array ('*') );
 		$select->join(array('pers' => 'personne'), 'pers.ID_PERSONNE = p.ID_PERSONNE', array(
 				'Nom' => 'NOM',
 				'Prenom' => 'PRENOM',
+		          'AGE' => 'AGE',
 				'Datenaissance' => 'DATE_NAISSANCE',
 				'Sexe' => 'SEXE',
 				'Adresse' => 'ADRESSE',
 				'Nationalite' => 'NATIONALITE_ACTUELLE',
-				'Id' => 'ID_PERSONNE'
+				'Id' => 'ID_PERSONNE',
+             
 		));
 		$select->join ( array (
 				'a' => 'admission'
@@ -73,7 +75,7 @@ class AdmissionTable {
 	}
 	
 	/*
-	 * Recupérer la liste des patients admis et déjà consultés pour aujourd'hui
+	 * Recupï¿½rer la liste des patients admis et dï¿½jï¿½ consultï¿½s pour aujourd'hui
 	 */
 	public function getPatientAdmisCons(){
 		$today = new \DateTime ( 'now' );
@@ -99,7 +101,7 @@ class AdmissionTable {
 	}
 	
 	/*
-	 * Fonction qui vérifie est ce que le patient n'est pas déja consulté
+	 * Fonction qui vï¿½rifie est ce que le patient n'est pas dï¿½ja consultï¿½
 	 */
 	public function verifierPatientConsulter($idPatient, $idService){
 		$today = new \DateTime ( 'now' );
@@ -152,8 +154,8 @@ class AdmissionTable {
 		return $requete->execute()->current();
 	}
 	
-	//Ajouter la consultation dans la table << consultation >> pour permettre au medecin de pouvoir lui même ajouter les constantes
-	//Ajouter la consultation dans la table << consultation >> pour permettre au medecin de pouvoir lui même ajouter les constantes
+	//Ajouter la consultation dans la table << consultation >> pour permettre au medecin de pouvoir lui mï¿½me ajouter les constantes
+	//Ajouter la consultation dans la table << consultation >> pour permettre au medecin de pouvoir lui mï¿½me ajouter les constantes
 	public function addConsultation($values , $IdDuService){
 		$today = new \DateTime ( 'now' );
 		$date = $today->format ( 'Y-m-d H:i:s' );

@@ -64,8 +64,8 @@ use Chururgie\Model\ResultatVisitePreanesthesiqueTable;
 use Chururgie\Model\ResultatVisitePreanesthesique;
 use Chururgie\Model\DemandeActeTable;
 use Chururgie\Model\DemandeActe;
+
 use Chururgie\Model\OrganeTable;
-use Chururgie\Model\Organe;
 use Chururgie\Model\ClassePathologieTable;
 use Chururgie\Model\ClassePathologie;
 use Chururgie\Model\ClasseOrganePathologieTable;
