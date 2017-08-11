@@ -49,9 +49,10 @@ $(window).load(function () {
 		<table class="table table-bordered tab_list_mini" id="patientdeces">
 			<thead>
 				<tr style="height:50px; width:100%;">
+					<th id="nom" align="center">N&deg; dossier</th>
 					<th id="nom" align="center">Nom</th>
 					<th id="prenom" align="center">Prenom</th>
-					<th id="date" align="center" name="date">D. naissance</th>
+					<th id="date" align="center" name="date">AGE</th>
 					<th id="sexe" align="center" name="sexe">Sexe</th>
 					<th id="adresse" align="center" name="adresse">Adresse</th>
 					<th id="nationalite" align="center" name="nationalite">Nationalite</th>
@@ -73,10 +74,10 @@ $(window).load(function () {
 				
 				
 				<tr id="<?php echo $this->escapeHtml($donnees['Id_admission']);?>">
-
+					<td><?php echo $this->escapeHtml($donnees['NUMERO_DOSSIER']);?></td>
 				    <td style='text-transform : uppercase;'><?php echo $this->escapeHtml($donnees['Nom']);?></td>
 				    <td><?php echo $this->escapeHtml($donnees['Prenom']);?></td>
-					<td><?php echo $this->escapeHtml($date_naissance);?></td>
+					<td><?php echo $this->escapeHtml($donnees['AGE']);?></td>
 					<td><?php echo $this->escapeHtml($donnees['Sexe']);?></td>
 					<td><?php echo $this->escapeHtml($donnees['Adresse']);?></td>
 					<td><?php echo $this->escapeHtml($donnees['Nationalite']);?></td>

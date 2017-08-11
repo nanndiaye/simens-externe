@@ -146,6 +146,7 @@ class PatientTable {
 	    
 	    $dernierPatient = $this->getDernierPatient($mois, $annee);
 	    //var_dump($dernierPatient);exit();
+	    
 	    if($dernierPatient){
 	        $suivant = $this->numeroOrdreTroisChiffre(( (int)$dernierPatient['ORDRE'] )+1);
 	        $numeroDossier = $sexe.' '.$suivant.' '.$mois.''.$annee;

@@ -802,34 +802,36 @@ class ChururgieController extends AbstractActionController {
 		/**** Pathologie ****/
 		/**** Pathologie ****/
 		
-		 $organe=$this->getOrganeTable();
+		
 		$nomOrgane = "";
 		$classePatho = "";
 		$typePathologie = "";
+		
 		for($i = 1 ; $i < 10 ; $i++ ){
-		    if($this->params()->fromPost("Pathologie_0".$i)){
+		    if($this->params()->fromPost("pathologie_0".$i)){
 		        
 		        $nomOrgane = $this->params()->fromPost("pathologie_0".$i);
 		        $classePatho = $this->params()->fromPost("classepathologie".$i);
 		        $typePathologie = $this->params()->fromPost("typepathologie".$i);
+		      
 		        
-		        var_dump($nomOrgane, $classePatho,  $typePathologie);exit();
- 		      //  if($this->params()->fromPost("Pathologie_0".$i)){
- 		           // var_dump($this->params()->fromPost("Pathologie_0".$i));exit();
- 		         //    $result1 = $organe->getOrganeByName($this->params()->fromPost("pathologie_0".$i));
+ 		        if($this->params()->fromPost("pathologie_0".$i)){
+ 		           //var_dump($this->params()->fromPost("pathologie_0".$i));exit();
+ 		            $result1 = $this->getConsultationTable()->getOrganeByName($nomOrgane);
  		             
+ 		            var_dump($result1);exit();
  		            if($result1){
-// 		                $tab[$j++] = $result;
-// 		                $tab[$j++] = $formeMedicament; $Consommable->addFormes($formeMedicament);
-// 		                $tab[$j++] = $this->params()->fromPost("nb_medicament_".$i);
-// 		                $tab[$j++] = $quantiteMedicament; $Consommable->addQuantites($quantiteMedicament);
- 		            } else {
-// 		                $idMedicaments = $Consommable->addMedicaments($nomMedicament);
-// 		                $tab[$j++] = $idMedicaments;
-// 		                $tab[$j++] = $formeMedicament; $Consommable->addFormes($formeMedicament);
-// 		                $tab[$j++] = $this->params()->fromPost("nb_medicament_".$i);
-// 		                $tab[$j++] = $quantiteMedicament; $Consommable->addQuantites($quantiteMedicament);
-		            }
+		                $tab[$j++] = $result1;
+		                $tab[$j++] = $formeMedicament; $Consommable->addFormes($formeMedicament);
+		                $tab[$j++] = $this->params()->fromPost("nb_medicament_".$i);
+		                $tab[$j++] = $quantiteMedicament; $Consommable->addQuantites($quantiteMedicament);
+ 		           } else {
+		                $idMedicaments = $Consommable->addMedicaments($nomMedicament);
+		                $tab[$j++] = $idMedicaments;
+		                $tab[$j++] = $formeMedicament; $Consommable->addFormes($formeMedicament);
+		                $tab[$j++] = $this->params()->fromPost("nb_medicament_".$i);
+		                $tab[$j++] = $quantiteMedicament; $Consommable->addQuantites($quantiteMedicament);
+		           }
 	        }
 		        
 		    }
@@ -1556,6 +1558,8 @@ class ChururgieController extends AbstractActionController {
 	//Admission d' un patient en Chururgie
 	
 	public function listePatientsAdmisAction() {
+	 
+	    
 		$this->layout ()->setTemplate ( 'layout/chururgie' );
 		$patientsAdmis = $this->getAdmissionTable ();
 		//INSTANCIATION DU FORMULAIRE
@@ -1569,7 +1573,8 @@ class ChururgieController extends AbstractActionController {
 		$tab_service = array_merge ( $afficheTous, $listeService );
 		$formAdmission->get ( 'service' )->setValueOptions ( $service );
 		$formAdmission->get ( 'liste_service' )->setValueOptions ( $tab_service );
-		//var_dump($patientsAdmis->getPatientsAdmis ());exit();
+		
+		var_dump($patientsAdmis->getPatientsAdmis ());exit();
 		return new ViewModel ( array (
 				'listePatientsAdmis' => $patientsAdmis->getPatientsAdmis (),
 				'form' => $formAdmission,
