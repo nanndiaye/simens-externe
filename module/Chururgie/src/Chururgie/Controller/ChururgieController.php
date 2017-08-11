@@ -4,6 +4,7 @@ namespace Chururgie\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+//use Zend\Json\Json
 use Zend\Json\Json;
 use Chururgie\Form\PatientForm;
 use Chururgie\View\Helper\DateHelper;
@@ -1574,7 +1575,7 @@ class ChururgieController extends AbstractActionController {
 		$formAdmission->get ( 'service' )->setValueOptions ( $service );
 		$formAdmission->get ( 'liste_service' )->setValueOptions ( $tab_service );
 		
-		var_dump($patientsAdmis->getPatientsAdmis ());exit();
+		//var_dump($patientsAdmis->getPatientsAdmis ());exit();
 		return new ViewModel ( array (
 				'listePatientsAdmis' => $patientsAdmis->getPatientsAdmis (),
 				'form' => $formAdmission,
