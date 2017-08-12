@@ -153,7 +153,7 @@ $(document).ready(function() {
 	$('#modifierPassword').click(function(){
         var role = "<?php echo $user['role'];?>";
         var id = 0;
-        if(role == 'facturation'){id = 3;}
+        if(role == 'secretaire'){id = 3;}
         if(role == 'etat_civil' ){id = 9;}
         
     	vart=tabUrl[0]+'public/admin/modifier-password/'+id;

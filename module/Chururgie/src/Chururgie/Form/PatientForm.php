@@ -130,6 +130,17 @@ class PatientForm extends Form {
 				)
 		) );
 		$this->add ( array (
+		    'name' => 'TELEPHONE1',
+		    'type' => 'Text',
+		    'options' => array (
+		        'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Telephone Proche' )
+		    ),
+		    'attributes' => array (
+		        'id' => 'TELEPHONE1',
+		        'tabindex' => 7,
+		    )
+		) );
+		$this->add ( array (
 				'name' => 'PROFESSION',
 				'type' => 'Text',
 				'options' => array (
