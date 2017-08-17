@@ -2,23 +2,21 @@
 
 namespace Chururgie\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
-//use Zend\Json\Json
-use Zend\Json\Json;
-use Chururgie\Form\PatientForm;
-use Chururgie\View\Helper\DateHelper;
 use Chururgie\Form\AdmissionForm;
 use Chururgie\Form\ConsultationForm;
-use Chururgie\View\Helper\DocumentPdf;
-use Chururgie\View\Helper\OrdonnancePdf;
-use Chururgie\View\Helper\TransfertPdf;
-use Chururgie\View\Helper\RendezVousPdf;
-use Chururgie\View\Helper\TraitementInstrumentalPdf;
-use Chururgie\View\Helper\HospitalisationPdf;
+use Chururgie\Form\PatientForm;
+use Chururgie\View\Helper\DateHelper;
 use Chururgie\View\Helper\DemandeExamenPdf;
+use Chururgie\View\Helper\DocumentPdf;
+use Chururgie\View\Helper\HospitalisationPdf;
+use Chururgie\View\Helper\OrdonnancePdf;
+use Chururgie\View\Helper\RendezVousPdf;
 use Chururgie\View\Helper\TraitementChirurgicalPdf;
-
+use Chururgie\View\Helper\TraitementInstrumentalPdf;
+use Chururgie\View\Helper\TransfertPdf;
+use Zend\Json\Json;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class ChururgieController extends AbstractActionController {
 	protected $patientTable;
@@ -282,7 +280,7 @@ class ChururgieController extends AbstractActionController {
 	    
 	    //var_dump($rv); exit();
 	    $donneesRv = array(
-	        'motif_rv' => $rv['NOTE'],
+	       // 'motif_rv' => $rv['NOTE'],
 	        'date_rv' => (new DateHelper())->convertDate($rv['DATE']),
 	        'heure_rv' => $rv['HEURE'],
 	        'delai_rv' => $rv['DELAI'],
@@ -300,7 +298,7 @@ class ChururgieController extends AbstractActionController {
 	}
 	public function listeRendezVousAjaxAction() {
 	    $output = $this->getRvPatientConsTable()->getTousRV();
-	    // var_dump("$leRendezVous"); exit();
+	    //var_dump("$output"); exit();
 	    //$patient = $this->getPatientTable ();
 	    return $this->getResponse ()->setContent ( Json::encode ( $output, array (
 	        'enableJsonExprFinder' => true
@@ -353,7 +351,6 @@ class ChururgieController extends AbstractActionController {
 	        
 	        $infos_rv = array(
 	            'ID_CONS' => $id_cons,
-	            'NOTE'    => $this->params()->fromPost('motif_rv'),
 	            'HEURE'   => $this->params()->fromPost('heure_rv'),
 	            'DATE'    => $date_RV,
 	            'DELAI'   => $this->params()->fromPost('delai_rv'),
@@ -377,7 +374,7 @@ class ChururgieController extends AbstractActionController {
 	        ) );
 	    }
 	    
-	    
+	
 	    return new ViewModel ( array (
 	        //'donnees' => $leRendezVous,
 	        'tabPatientRV' => $tabPatientRV,
@@ -2289,6 +2286,8 @@ class ChururgieController extends AbstractActionController {
 		
 		
 		if(isset($_POST['ordonnance'])){
+		    
+		
 			//r�cup�ration de la liste des m�dicaments
 			$medicaments = $this->getConsultationTable()->fetchConsommable();
 				

@@ -33,9 +33,9 @@ $(function(){
 
 
 //POUR LE MENU GAUCHE dans -elementgauche.phtml
-$('#plus_deces').toggle(true);
-$("#deces").replaceWith("<li id='deces' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='<?php echo $this->basePath().'/images_icons/moin-green2.PNG';?>' alt='Liste' /> Consultation Externe </span></a></li>");
-dep_deces1();
+$('#plus_consult_chururgie').toggle(true);
+$("#consult_chururgie").replaceWith("<li id='deces' style='background:#4a5765;'><a href=''><span style='margin-left:0px; color: #ffffff; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='<?php echo $this->basePath().'/images_icons/moin-green2.PNG';?>'  /> Consultation </span></a></li>");
+dep_consult_chururgie();
 $('#declarer_style').css({'font-weight':'bold','color':'white','font-size':'22px'});
 </script>
 
@@ -1085,7 +1085,10 @@ echo $this->form()->openTag($form);
 								</div>
 							</td>
 						</tr>
-
+						<tr>
+						<td class="form-hospitalisation" style="width: 100%;"> <?php echo $this->formRow($form->get('antecedents_chirugicaux'));?> </td>
+						
+						</tr>
 						<tr style="width: 100%;">
 							<td class='block' id='thoughtbot'
 								style='display: inline-block; vertical-align: bottom; width: 100%; padding-bottom: 5px;'><div
@@ -1211,47 +1214,44 @@ echo $this->form()->openTag($form);
 								</div>
 							</td>
 						</tr>
+						<div style="float: left;">
 						<tr style="width: 100%;">
+						
 							<td id="BUcheckbox" style="">
-								<div style="float: left;">
-									<label style="width: 230px; height: 30px; text-align: right;">Diab&egrave;te <?php echo $this->formRow($form->get('DiabeteAF'));?></label>
-								</div>
-								<div style="float: left" id="DivNoteDiabeteAF">
-									<label style="width: 260px; height: 30px; text-align: right;">Note <?php echo $this->formRow($form->get('NoteDiabeteAF'));?></label>
-								</div>
+								
+									<label style="width: 200px; height: 30px; text-align: right;">Diab&egrave;te <?php echo $this->formRow($form->get('DiabeteAF'));?></label>
+								
+									<label id="DivNoteDiabeteAF" style="width: 260px; height: 30px; text-align: right;">Note <?php echo $this->formRow($form->get('NoteDiabeteAF'));?></label>
+								
 							</td>
-						</tr>
-						<tr style="width: 100%;">
+						 
 							<td id="BUcheckbox" style="">
-								<div style="float: left;">
-									<label style="width: 230px; height: 30px; text-align: right;">Dr&eacute;panocytose <?php echo $this->formRow($form->get('DrepanocytoseAF'));?></label>
-								</div>
-								<div style="float: left" id="DivNoteDrepanocytoseAF">
-									<label style="width: 260px; height: 30px; text-align: right;">Note <?php echo $this->formRow($form->get('NoteDrepanocytoseAF'));?></label>
-								</div>
+								
+									<label style="width: 200px; height: 30px; text-align: right;">Dr&eacute;panocytose <?php echo $this->formRow($form->get('DrepanocytoseAF'));?></label>
+								
+									<label id="DivNoteDrepanocytoseAF" style="width: 260px; height: 30px; text-align: right;">Note <?php echo $this->formRow($form->get('NoteDrepanocytoseAF'));?></label>
+								
 							</td>
-						</tr>
-						<tr style="width: 100%;">
+						
 							<td id="BUcheckbox" style="">
-								<div style="float: left;">
-									<label style="width: 230px; height: 30px; text-align: right;">HTA <?php echo $this->formRow($form->get('htaAF'));?></label>
-								</div>
-								<div style="float: left" id="DivNoteHtaAF">
-									<label style="width: 260px; height: 30px; text-align: right;">Note <?php echo $this->formRow($form->get('NoteHtaAF'));?></label>
-								</div>
+								
+									<label style="width: 200px; height: 30px; text-align: right;">HTA <?php echo $this->formRow($form->get('htaAF'));?></label>
+								
+									<label id="DivNoteHtaAF" style="width: 260px; height: 30px; text-align: right;">Note <?php echo $this->formRow($form->get('NoteHtaAF'));?></label>
+								
 							</td>
-						</tr>
-						<tr style="width: 100%;">
-							<td id="BUcheckbox" style="">
-								<div style="float: left;">
-									<label style="width: 230px; height: 30px; text-align: right;">Autres <?php echo $this->formRow($form->get('autresAF'));?></label>
-								</div>
-								<div style="float: left" id="DivNoteAutresAF">
-									<label style="width: 260px; height: 30px; text-align: right;">Note <?php echo $this->formRow($form->get('NoteAutresAF'));?></label>
-								</div>
+						
+							<td  id="BUcheckbox" style="">
+								
+									<label style="width: 200px; height: 30px; text-align: right;">Autres <?php echo $this->formRow($form->get('autresAF'));?></label>
+								<label id="DivNoteAutresAF" style="width: 260px; height: 30px; text-align: right;">Note <?php echo $this->formRow($form->get('NoteAutresAF'));?></label>
+								
 							</td>
+							
 						</tr>
-
+						</div>
+						
+							
 
 						<tr style="width: 100%;">
 							<td class='block' id='thoughtbot'
@@ -1488,13 +1488,13 @@ echo $this->form()->openTag($form);
 			<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
 			<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
 			<div id="controls_donnees" style="margin-top: 10px; width: 100%;">
-				<div style="width: 100%;">
-					<div style="width: 3%; height: 1px; float: left;"
+			<div style="width: 100%;">
+				<!--		<div style="width: 3%; height: 1px; float: left;"
 						id="supprimer_donnee">
 						<img id="supprimer_donnee_img"
 							style='margin-left: 5px; cursor: pointer;'
 							src='../images_icons/moin-green.png' title='supprimer' />
-					</div>
+					</div>-->
 					<div style="width: 3%; height: 1px; float: left;"
 						id="ajouter_donnee">
 						<img id="ajouter_donnee_img"
@@ -1588,9 +1588,9 @@ echo $this->form()->openTag($form);
 											<th style="width: 4%; font-weight: bold; font-size: 15px;">N&ordm;</th>
 											<th
 												style="width: 35%; font-weight: bold; font-size: 15px; text-align: left;">Acte</th>
-											<th
+										<!--  	<th
 												style="width: 15%; font-weight: bold; font-size: 15px; text-align: left;">Tarif
-												(frs)</th>
+												(frs)</th>-->
 											<th
 												style="width: 37%; font-weight: bold; font-size: 15px; text-align: left;">Note</th>
 											<th style="width: 9%; font-weight: bold; font-size: 15px;">Options</th>

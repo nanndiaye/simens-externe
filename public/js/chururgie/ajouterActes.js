@@ -19,11 +19,7 @@ function creerLalisteActe ($listeDesElements) {
                              }   
                     $liste +="</select>"+                           
                              "</th>"+
-                             
-                             "<th id='tarifActe_"+(index+1)+"'  style='width: 15%;'  >"+
-                             "<input id='tarifActe"+(index+1)+"' readonly='true' name='tarifActe_"+(index+1)+"' type='text' style='background: #f8f8f8; text-align: right; padding-right: 10px;  width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px; font-family: Iskoola Pota; font-size: 20px; font-weight: bold;' >" +
-                             "</th >"+
-                             
+                            
                              "<th id='noteActe_"+(index+1)+"'  style='width: 37%;'  >"+
                              "<input name='noteActe_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' >" +
                              "</th >"+
@@ -75,7 +71,7 @@ function nbListeActe () {
 
 //SUPPRIMER LE DERNIER ELEMENT
 $(function () {
-	//Au début on cache la suppression
+	//Au dï¿½but on cache la suppression
 	$("#supprimer_acte").click(function(){
 		//ON PEUT SUPPRIMER QUAND C'EST PLUS DE DEUX LISTE
 		if(nbListeActe () >  1){$("#Acte_"+nbListeActe ()).remove();}
@@ -95,7 +91,7 @@ $(function () {
 });
 
 
-//FONCTION INITIALISATION (Par défaut)
+//FONCTION INITIALISATION (Par dï¿½faut)
 function partDefautActe (Liste, n) { 
 	var i = 0;
 	for( i ; i < n ; i++){
