@@ -2413,89 +2413,310 @@ echo $this->form()->openTag($form);
 		<!-- *******************************Diagnostic***********************************-->
 
 		<!--*5*-->
-		<div style='font-family: police2; font-size: 17px; font-weight: bold;'>Diagnostic
-			(pr&eacute;liminaire et/ou final)</div>
+		<div style='font-family: police2; font-size: 17px; font-weight: bold;'>Diagnostic et Pathologies
+			</div>
 		<div style='max-height: 280px;'>
+		<div id="accordions_diagnostic_pathologies">
+		<div style='font-family: police2; font-size: 17px; font-weight: bold;'>
+					Diagnostic (pr&eacute;liminaire et/ou final) </div>
+			<div style='min-height: 180px;'>
 			<p style='color: white; opacity: 0.5;'>
-				<img id=""
-					src='<?php echo $this->basePath().'/images_icons/diag.png'?>'
-					alt="consult-motif"
-					style='float: right; margin-right: 10px; width: 28%; height: 220px;' />
-			</p>
+
+<img id="" src='<?php echo $this->basePath().'/images_icons/diag.png'?>' alt="consult-motif"
+
+style='float: right; margin-right: 10px; width: 28%; height: 220px;' />
+
+</p>
+
         <?php echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterDiagnostic.js');?>
 
+
+
         <table id="responded" style="width: 65%;">
-				<tr id="diag1" class="form-diag" style="width: 65%; height: 40px;">
-					<th> <?php echo $this->formRow($form->get('diagnostic1')); ?> <span
-						id="label"> <img class='supprimerDiag1' style='cursor: pointer;'
-							src='../images/images/sup.png' title='supprimer' />
-					</span>
-					</th>
-				</tr>
 
-				<tr id="diag2" class="form-diag" style="width: 65%;">
-					<th> <?php echo $this->formRow($form->get('diagnostic2')); ?> <span
-						id="label"> <img class='supprimerDiag2' style='cursor: pointer;'
-							src='../images/images/sup.png' title='supprimer' />
-					</span></th>
-				</tr>
+<tr id="diag1" class="form-diag" style="width: 65%; height: 40px;">
 
-				<tr id="diag3" class="form-diag" style="width: 65%;">
-					<th> <?php echo $this->formRow($form->get('diagnostic3')); ?> <span
-						id="label"> <img class='supprimerDiag3' style='cursor: pointer;'
-							src='../images/images/sup.png' title='supprimer' />
-					</span></th>
-				</tr>
+<th> <?php echo $this->formRow($form->get('diagnostic1')); ?> <span
 
-				<tr id="diag4" class="form-diag" style="width: 65%;">
-					<th> <?php echo $this->formRow($form->get('diagnostic4')); ?> <span
-						id="label"> <img class='supprimerDiag4' style='cursor: pointer;'
-							src='../images/images/sup.png' title='supprimer' />
-					</span></th>
-				</tr>
-			</table>
+id="label"> <img class='supprimerDiag1' style='cursor: pointer;'
 
-			<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
-			<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
-			<div id="controls_diagnostics" style="margin-top: 10px; width: 100%;">
-				<div style="width: 100%; background: green;">
-					<div style="width: 3%; height: 1px; float: left;"
-						id="supprimer_diagnostic">
-						<img id="supprimer_diagnostic_img"
-							style='margin-left: 5px; cursor: pointer;'
-							src='../images_icons/moin-green.png' title='supprimer' />
-					</div>
-					<div style="width: 3%; height: 1px; float: left;"
-						id="ajouter_diagnostic">
-						<img id="ajouter_diagnostic_img"
-							style='margin-left: 5px; cursor: pointer;'
-							src='../images_icons/plus-green.png' title='ajouter' />
-					</div>
-				</div>
-			</div>
+src='../images/images/sup.png' title='supprimer' />
 
-			<!--********************* BOUTON VALIDER-MODIFIER ************************-->
-			<!--********************* BOUTON VALIDER-MODIFIER ************************-->
-			<table style="width: 59%; position: relative; top: 0px;">
-				<tr style="width: 90%;">
-					<th style="width: 65%;">
-						<div style="float: right;">
-							<button id='bouton_diagnostic_valider'>Valider</button>
-						</div>
-						<div style="float: right;">
-							<button id='bouton_diagnostic_modifier'>Modifier</button>
-						</div>
-					</th>
-				</tr>
-			</table>
+</span>
 
-			<script>
+</th>
+
+</tr>
+
+
+
+<tr id="diag2" class="form-diag" style="width: 65%;">
+
+<th> <?php echo $this->formRow($form->get('diagnostic2')); ?> <span
+
+id="label"> <img class='supprimerDiag2' style='cursor: pointer;'
+
+src='../images/images/sup.png' title='supprimer' />
+
+</span></th>
+
+</tr>
+
+
+
+<tr id="diag3" class="form-diag" style="width: 65%;">
+
+<th> <?php echo $this->formRow($form->get('diagnostic3')); ?> <span
+
+id="label"> <img class='supprimerDiag3' style='cursor: pointer;'
+
+src='../images/images/sup.png' title='supprimer' />
+
+</span></th>
+
+</tr>
+
+
+
+<tr id="diag4" class="form-diag" style="width: 65%;">
+
+<th> <?php echo $this->formRow($form->get('diagnostic4')); ?> <span
+
+id="label"> <img class='supprimerDiag4' style='cursor: pointer;'
+
+src='../images/images/sup.png' title='supprimer' />
+
+</span></th>
+
+</tr>
+
+</table>
+
+
+
+<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+
+<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+
+<div id="controls_diagnostics" style="margin-top: 10px; width: 100%;">
+
+<div style="width: 100%; background: green;">
+
+<div style="width: 3%; height: 1px; float: left;"
+
+id="supprimer_diagnostic">
+
+<img id="supprimer_diagnostic_img"
+
+style='margin-left: 5px; cursor: pointer;'
+
+src='../images_icons/moin-green.png' title='supprimer' />
+
+</div>
+
+<div style="width: 3%; height: 1px; float: left;"
+
+id="ajouter_diagnostic">
+
+<img id="ajouter_diagnostic_img"
+
+style='margin-left: 5px; cursor: pointer;'
+
+src='../images_icons/plus-green.png' title='ajouter' />
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!--********************* BOUTON VALIDER-MODIFIER ************************-->
+
+<!--********************* BOUTON VALIDER-MODIFIER ************************-->
+
+<table style="width: 59%; position: relative; top: 0px;">
+
+<tr style="width: 90%;">
+
+<th style="width: 65%;">
+
+<div style="float: right;">
+
+<button id='bouton_diagnostic_valider'>Valider</button>
+
+</div>
+
+<div style="float: right;">
+
+<button id='bouton_diagnostic_modifier'>Modifier</button>
+
+</div>
+
+</th>
+
+</tr>
+
+</table>
+
+
+
+<script>
+
               var nbdiagnostic = 1;
+
               cacherTout();
+
               afficher(nbdiagnostic);
+
               supprimerUnDiagnostic();
+
          </script>
 
+			
+				
+			</div>
+			
+			
+			
+			
+				<!-- ************* Traitement les pathologies **********-->
+				<!-- Les pathologies -->
+				<!-- Les pathologies -->
+				<!-- Les pathologies -->
+				<!-- Les pathologies -->
+				<!-- Les pathologies -->
+				<!-- Les pathologies -->
+
+				<div
+					style='font-family: police2; font-size: 17px; font-weight: bold;'>
+					Les Pathologies</div>
+				<div style='min-height: 180px;'>
+
+					
+                  
+                  <?php
+                /**
+                 * =============================================================================================
+                 * =============================================================================================
+                 * =============================================================================================
+                 */
+                echo $this->headScript()->appendFile($this->basePath() . '/js/chururgie/lespathologies.js');
+                ?>    
+                                   
+                 <div id="listePathologies"
+						style="float: left; width: 100%;">
+
+						<table class="table table-bordered"
+							style="width: 100%; margin-bottom: 0px; margin-left: 0px;">
+							<thead style="width: 100%;">
+								<tr style="width: 100%; height: 40px; font-family: police2;">
+
+									<th
+										style="width: 30%; font-weight: bold; font-size: 15px; text-align: left;">
+										Organes</th>
+									<th
+										style="width: 30%; font-weight: bold; font-size: 15px; text-align: left;">Classes
+										de Pathologies</th>
+									<th
+										style="width: 30%; font-weight: bold; font-size: 15px; text-align: left;">Types
+										de Pathologies</th>
+
+									<th style="width: 9%; font-weight: bold; font-size: 15px;">Options</th>
+								</tr>
+							</thead>
+						</table>
+
+						<div id="Pathologie_0" style="width: 100%;">
+							<!-- A ne pas enlever -->
+						</div>
+
+
+
+						<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+						<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+						<div id="controls_pathologie"
+							style="margin-top: 20px; width: 100%;">
+							<div style="width: 100%;">
+								<div style="width: 3%; float: left; cursor: pointer;"
+									id="supprimer_pathologie">
+									<img style='margin-left: 5px;'
+										src='../images_icons/moin-green.png' title='supprimer' />
+								</div>
+								<div style="width: 3%; float: left; cursor: pointer;"
+									id="ajouter_pathologie">
+									<img style='margin-left: 5px;'
+										src='../images_icons/plus-green.png' title='ajouter' />
+								</div>
+							</div>
+						</div>
+
+						<!--********************* BOUTON VALIDER OU MODIFIER ************************-->
+						<!--********************* BOUTON VALIDER OU MODIFIER ************************-->
+						<table
+							style="width: 90%; float: right; position: relative; right: 0;">
+							<tr style="width: 100%;">
+								<th style="height: 15px;">
+									<div id='bouton_Pathologie_modifier_demande'
+										style="float: right;">
+										<button>Modifier</button>
+									</div>
+									<div id='bouton_Pathologie_valider_demande'
+										style="float: right;">
+										<button>Valider</button>
+									</div>
+								</th>
+							</tr>
+						</table>
+
+					</div>
+
+                    <!--********************* CHARGEMENT DES DONNEES  ************************-->
+					<!--********************* CHARGEMENT DES DONNEES  ************************-->
+					<!--********************* CHARGEMENT DES DONNEES  ************************-->
+						<script> 
+                   ValiderPathologie();
+
+                   var myArrayOrgane1 = new Array();
+                   var myArrayClassePathologie1 =  new Array();
+                   var myArrayTypePathologie1 =  new Array();
+						
+                   /*Nouveau Code Ajouter*/
+                   /*Nouveau Code Ajouter*/
+                   /*Nouveau Code Ajouter*/ 
+                   var j = 0;
+                   </script>
+                       
+                   <?php foreach($this->listeclassePathologie as $Liste1) {?>
+                     <script>
+                        myArrayClassePathologie1[j++] = "<?php echo $Liste1['nom_classe_pathologie']; ?>";    
+                     </script>
+                   <?php } ?> <script> var j = 0;  </script>
+              
+                   <?php foreach($this->lesOrganes as $Liste2) {?>
+               
+                     <script>
+                       myArrayOrgane1[j++] = "<?php echo $Liste2['LESORGANES']; ?>";  
+                     </script>
+                   
+                   <?php } ?> 
+       
+                   <script> var j = 0;  </script>
+       
+                   <?php 
+                     for($i = 0 ; $i < count($this->listeTypePathologie); $i++) {  ?>
+                      <script>
+                         myArrayTypePathologie1[j++]= "<?php echo $this->listeTypePathologie[$i]; ?>";
+                      </script>
+                   <?php } ?> 
+              
+                   <script>
+                      DefautPathologie(myArrayOrgane1, myArrayClassePathologie1, myArrayTypePathologie1, 1);
+                   </script>
+			  
+			  </div>
+			</div>
 		</div>
 
 
@@ -2864,157 +3085,6 @@ echo $this->form()->openTag($form);
 				</div>
 
 
-				<!-- ************* Traitement les pathologies **********-->
-				<!-- Les pathologies -->
-				<!-- Les pathologies -->
-				<!-- Les pathologies -->
-				<!-- Les pathologies -->
-				<!-- Les pathologies -->
-				<!-- Les pathologies -->
-
-				<div
-					style='font-family: police2; font-size: 17px; font-weight: bold;'>
-					Les Pathologies</div>
-				<div>
-
-					<!--******* ======= MENU MENU MENU =======  ******-->
-					<!--******* ======= MENU MENU MENU =======  ******-->
-					<div
-						style="padding-bottom: 0px; margin-bottom: 5px; border-bottom: 2px solid green; margin-left: 0px;"></div>
-					<!-- LE PDF POUR IMPRESSION
-					<div class="ordonnance">
-						<hass> <input type="submit" alt="Constantes" title="Imprimer"
-							name="ordonnance" id="ordonnance"></hass>
-					</div>-->
-
-					<!-- LE CHAMP POUR LA DUREE DU TRAITEMENT DE L'ORDONNANCE-->
-
-
-					<div
-						style="padding-bottom: 40px; margin-bottom: 10px; border-bottom: 1px dashed green; margin-left: 0px; margin-right: 0px;"></div>
-
-					
-                  
-                  <?php
-                /**
-                 * =============================================================================================
-                 * =============================================================================================
-                 * =============================================================================================
-                 */
-                echo $this->headScript()->appendFile($this->basePath() . '/js/chururgie/lespathologies.js');
-                ?>    
-                                   
-                 <div id="listePathologies"
-						style="float: left; width: 100%;">
-
-						<table class="table table-bordered"
-							style="width: 100%; margin-bottom: 0px; margin-left: 0px;">
-							<thead style="width: 100%;">
-								<tr style="width: 100%; height: 40px; font-family: police2;">
-
-									<th
-										style="width: 30%; font-weight: bold; font-size: 15px; text-align: left;">
-										Organes</th>
-									<th
-										style="width: 30%; font-weight: bold; font-size: 15px; text-align: left;">Classes
-										de Pathologies</th>
-									<th
-										style="width: 30%; font-weight: bold; font-size: 15px; text-align: left;">Types
-										de Pathologies</th>
-
-									<th style="width: 9%; font-weight: bold; font-size: 15px;">Options</th>
-								</tr>
-							</thead>
-						</table>
-
-						<div id="Pathologie_0" style="width: 100%;">
-							<!-- A ne pas enlever -->
-						</div>
-
-
-
-						<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
-						<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
-						<div id="controls_pathologie"
-							style="margin-top: 20px; width: 100%;">
-							<div style="width: 100%;">
-								<div style="width: 3%; float: left; cursor: pointer;"
-									id="supprimer_pathologie">
-									<img style='margin-left: 5px;'
-										src='../images_icons/moin-green.png' title='supprimer' />
-								</div>
-								<div style="width: 3%; float: left; cursor: pointer;"
-									id="ajouter_pathologie">
-									<img style='margin-left: 5px;'
-										src='../images_icons/plus-green.png' title='ajouter' />
-								</div>
-							</div>
-						</div>
-
-						<!--********************* BOUTON VALIDER OU MODIFIER ************************-->
-						<!--********************* BOUTON VALIDER OU MODIFIER ************************-->
-						<table
-							style="width: 90%; float: right; position: relative; right: 0;">
-							<tr style="width: 100%;">
-								<th style="height: 15px;">
-									<div id='bouton_Pathologie_modifier_demande'
-										style="float: right;">
-										<button>Modifier</button>
-									</div>
-									<div id='bouton_Pathologie_valider_demande'
-										style="float: right;">
-										<button>Valider</button>
-									</div>
-								</th>
-							</tr>
-						</table>
-
-					</div>
-
-                    <!--********************* CHARGEMENT DES DONNEES  ************************-->
-					<!--********************* CHARGEMENT DES DONNEES  ************************-->
-					<!--********************* CHARGEMENT DES DONNEES  ************************-->
-						<script> 
-                   ValiderPathologie();
-
-                   var myArrayOrgane1 = new Array();
-                   var myArrayClassePathologie1 =  new Array();
-                   var myArrayTypePathologie1 =  new Array();
-						
-                   /*Nouveau Code Ajouter*/
-                   /*Nouveau Code Ajouter*/
-                   /*Nouveau Code Ajouter*/ 
-                   var j = 0;
-                   </script>
-                       
-                   <?php foreach($this->listeclassePathologie as $Liste1) {?>
-                     <script>
-                        myArrayClassePathologie1[j++] = "<?php echo $Liste1['nom_classe_pathologie']; ?>";    
-                     </script>
-                   <?php } ?> <script> var j = 0;  </script>
-              
-                   <?php foreach($this->lesOrganes as $Liste2) {?>
-               
-                     <script>
-                       myArrayOrgane1[j++] = "<?php echo $Liste2['LESORGANES']; ?>";  
-                     </script>
-                   
-                   <?php } ?> 
-       
-                   <script> var j = 0;  </script>
-       
-                   <?php 
-                     for($i = 0 ; $i < count($this->listeTypePathologie); $i++) {  ?>
-                      <script>
-                         myArrayTypePathologie1[j++]= "<?php echo $this->listeTypePathologie[$i]; ?>";
-                      </script>
-                   <?php } ?> 
-              
-                   <script>
-                      DefautPathologie(myArrayOrgane1, myArrayClassePathologie1, myArrayTypePathologie1, 1);
-                   </script>
-			  
-			  </div>
 
 			</div>
 

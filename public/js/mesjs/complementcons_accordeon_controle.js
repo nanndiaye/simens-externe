@@ -22,7 +22,9 @@
   $(function() {
     $( "#accordions" ).accordion();
   });
-  
+  $(function() {
+	    $( "#accordions_diagnostic_pathologies" ).accordion();
+	  });
   
   function supprimer_dernier_caractere(elm) {
 	  var val = $(elm).val();
