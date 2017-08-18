@@ -184,7 +184,8 @@ return array(
     								'liste-patient-ajax' => array('secretaire','medecin'),
     								'enregistrement-modification' => array('secretaire','medecin'),
     								'get-infos-vue-patient'=> array('secretaire','medecin'),
-    						
+    						          'vue-patient-admis'=> array('secretaire','medecin'),
+    						           'liste-rendez-vous'=> array('secretaire','medecin'),
     					
     						
     								/*MENU MEDECIN GENERALE*/

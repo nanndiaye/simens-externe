@@ -29,7 +29,9 @@ function controle_saisie(){
 	jQuery(function($){
 		   $("#TELEPHONE, #telephone").mask("99 999 99 99");
 	});
-	
+	jQuery(function($){
+		   $("#TELEPHONE1, #telephone1").mask("99 999 99 99");
+	});
 	jQuery(function($){
 		   $("#heure_recommandee").mask("23:59:59");
 	});

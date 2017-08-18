@@ -1658,5 +1658,18 @@ class ConsultationForm extends Form {
 		        'id' => 'designation',
 		    )
 		) );
+		
+		
+		/*B))************** Antecedents chirurgicaux *************/
+		$this->add ( array (
+		    'name' => 'antecedents_chirugicaux',
+		    'type' => 'Textarea',
+		    'options' => array (
+		        'label' => 'Antecedent :'
+		    ),
+		    'attributes' => array (
+		        'id' => 'motif_hospitalisation'
+		    )
+		) );
 	}
 }

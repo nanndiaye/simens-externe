@@ -2,23 +2,21 @@
 
 namespace Chururgie\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
-//use Zend\Json\Json
-use Zend\Json\Json;
-use Chururgie\Form\PatientForm;
-use Chururgie\View\Helper\DateHelper;
 use Chururgie\Form\AdmissionForm;
 use Chururgie\Form\ConsultationForm;
-use Chururgie\View\Helper\DocumentPdf;
-use Chururgie\View\Helper\OrdonnancePdf;
-use Chururgie\View\Helper\TransfertPdf;
-use Chururgie\View\Helper\RendezVousPdf;
-use Chururgie\View\Helper\TraitementInstrumentalPdf;
-use Chururgie\View\Helper\HospitalisationPdf;
+use Chururgie\Form\PatientForm;
+use Chururgie\View\Helper\DateHelper;
 use Chururgie\View\Helper\DemandeExamenPdf;
+use Chururgie\View\Helper\DocumentPdf;
+use Chururgie\View\Helper\HospitalisationPdf;
+use Chururgie\View\Helper\OrdonnancePdf;
+use Chururgie\View\Helper\RendezVousPdf;
 use Chururgie\View\Helper\TraitementChirurgicalPdf;
-
+use Chururgie\View\Helper\TraitementInstrumentalPdf;
+use Chururgie\View\Helper\TransfertPdf;
+use Zend\Json\Json;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class ChururgieController extends AbstractActionController {
 	protected $patientTable;
@@ -220,7 +218,173 @@ class ChururgieController extends AbstractActionController {
 		
 	}
 	
+// 	
+// 	    GESTION DES RENDEZ-VOUS DES PATIENTS
+// 	   GESTION DES RENDEZ-VOUS DES PATIENTS
+// 	   GESTION DES RENDEZ-VOUS DES PATIENTS
+// 	   GESTION DES RENDEZ-VOUS DES PATIENTS
+// 	   GESTION DES RENDEZ-VOUS DES PATIENTS
+// 	
 	
+	public function infoPatientRvAction() {
+	    $id_pat = $this->params()->fromQuery ( 'id_patient', 0 );
+	    $id_cons = $this->params()->fromQuery ( 'id_cons' );
+	    
+	    $this->layout ()->setTemplate ( 'layout/chururgie' );
+	    
+	    $form = new ConsultationForm();
+	    $form->populateValues(array('id_cons' => $id_cons));
+	    
+	    //var_dump($form); exit();
+	    
+	    $user = $this->layout()->user;
+	    $IdDuService = $user['IdService'];
+	    
+	    $patient = $this->getPatientTable ();
+	    //var_dump( new \DateTime ( 'now' ));exit(); date d'aujourd'hui
+	    
+	    $unPatient = $patient->getInfoPatient( $id_pat );
+	    //var_dump($unPatient);exit();
+	    
+	    $rv = $patient->getRvPatientParIdcons($id_cons);
+	    $form->populateValues(array('delai_rv' => $rv['DELAI']));
+	    //var_dump($rv);exit();
+	    return array (
+	        'form'=>$form,
+	        'lesdetails' => $unPatient,
+	        'image' => $patient->getPhoto ( $id_pat ),
+	        'id_patient' => $unPatient['ID_PERSONNE'],
+	        'date_enregistrement' => $unPatient['DATE_ENREGISTREMENT']
+	    );
+	}
+	
+	public function modifierInfosPatientRVAction() {
+	    $id_pat = $this->params()->fromQuery ( 'id_patient', 0 );
+	    $id_cons = $this->params()->fromQuery ( 'id_cons' );
+	    
+	    $this->layout ()->setTemplate ( 'layout/chururgie' );
+	    
+	    //var_dump($id_pat); exit();
+	    
+	    $form = new ConsultationForm();
+	    $form->populateValues(array('id_cons' => $id_cons));
+	    
+	    //var_dump($form); exit();
+	    
+	    $user = $this->layout()->user;
+	    $IdDuService = $user['IdService'];
+	    
+	    $patient = $this->getPatientTable ();
+	    $unPatient = $patient->getInfoPatient( $id_pat );
+	    $rv = $patient->getRvPatientParIdcons($id_cons);
+	    
+	    //var_dump($rv); exit();
+	    $donneesRv = array(
+	       // 'motif_rv' => $rv['NOTE'],
+	        'date_rv' => (new DateHelper())->convertDate($rv['DATE']),
+	        'heure_rv' => $rv['HEURE'],
+	        'delai_rv' => $rv['DELAI'],
+	    );
+	    
+	    $form->populateValues($donneesRv);
+	    
+	    return array (
+	        'form'=>$form,
+	        'lesdetails' => $unPatient,
+	        'image' => $patient->getPhoto ( $id_pat ),
+	        'id_patient' => $unPatient['ID_PERSONNE'],
+	        'date_enregistrement' => $unPatient['DATE_ENREGISTREMENT']
+	    );
+	}
+	public function listeRendezVousAjaxAction() {
+	    $output = $this->getRvPatientConsTable()->getTousRV();
+	    //var_dump("$output"); exit();
+	    //$patient = $this->getPatientTable ();
+	    return $this->getResponse ()->setContent ( Json::encode ( $output, array (
+	        'enableJsonExprFinder' => true
+	    ) ) );
+	}
+	
+	public function listeRendezVousAction() {
+	
+	    //$formConsultation = new ConsultationForm();
+	    $layout = $this->layout ();
+	    $layout->setTemplate ( 'layout/chururgie' );
+	    
+	    $user = $this->layout()->user;
+	    $idService = $user['IdService'];
+	    $id_cons = $this->params()->fromPost('id_cons');
+	    $id_patient = $this->params()->fromPost('id_patient');
+	  
+	    $leRendezVous = $this->getRvPatientConsTable()->getTousRV();
+	   
+	    
+	    
+	    //$lespatients = $this->getConsultationTable()->listePatientsConsParMedecin ( $idService );
+	    //
+	    //RECUPERER TOUS LES PATIENTS AYANT UN RV aujourd'hui
+	    
+	    $tabPatientRV = $this->getConsultationTable ()->getPatientsRV($idService);
+	    //var_dump($tabPatientRV);exit();
+	    //   		if($leRendezVous) {
+	    
+	    //   		var_dump($leRendezVous); exit();
+	    //  		$data['heure_rv'] = $leRendezVous->heure;
+	    //   		//$data['date_rv']  = $this->controlDate->convertDate($leRendezVous->date);
+	    //   		$data['motif_rv'] = $leRendezVous->note;
+	    //   		$data['delai_rv'] = $leRendezVous->note;
+	    //   		}
+	    
+	    
+	    if (isset ( $_POST ['terminer'] ))  // si formulaire soumis
+	    {
+	        $id_patient = $this->params()->fromPost('id_patient');
+	        $date_RV_Recu = $this->params()->fromPost('date_rv');
+	        
+	        if($date_RV_Recu){
+	            $date_RV = (new DateHelper())->convertDateInAnglais($date_RV_Recu);
+	        }
+	        
+	        else{
+	            $date_RV = $date_RV_Recu;
+	        }
+	        
+	        $infos_rv = array(
+	            'ID_CONS' => $id_cons,
+	            'HEURE'   => $this->params()->fromPost('heure_rv'),
+	            'DATE'    => $date_RV,
+	            'DELAI'   => $this->params()->fromPost('delai_rv'),
+	        );
+	        //var_dump($infos_rv);exit();
+	        
+	        $this->getRvPatientConsTable()->updateRendezVous($infos_rv);
+	        //var_dump('ssssss');exit();
+	        if ($this->params()->fromPost ( 'terminer' ) == 'save') {
+	            //VALIDER EN METTANT '1' DANS CONSPRISE Signifiant que le medecin a consulter le patient
+	            //Ajouter l'id du medecin ayant consulter le patient
+	            $valide = array (
+	                'VALIDER' => 1,
+	                'ID_CONS' => $id_cons,
+	                'ID_MEDECIN' => $this->params()->fromPost('med_id_personne')
+	            );
+	            $this->getConsultationTable ()->validerConsultation ( $valide );
+	        }
+	        return $this->redirect ()->toRoute ( 'chururgie', array (
+	            'action' => 'liste-rendez-vous'
+	        ) );
+	    }
+	    
+	
+	    return new ViewModel ( array (
+	        //'donnees' => $leRendezVous,
+	        'tabPatientRV' => $tabPatientRV,
+	        //  				'listeRendezVous' => $patientsRV->getPatientsRV (),
+	    //  				'form' => $formConsultation,
+	    ) );
+	    
+	    
+	    
+	}
 	
 	
 	
@@ -981,6 +1145,7 @@ class ChururgieController extends AbstractActionController {
 	}
 	
 	//CONSULTATION DU MEDECIN DE LA CHURURGIE GENERALE
+	
 	
 	
 	public function servicesAction()
@@ -1765,6 +1930,7 @@ class ChururgieController extends AbstractActionController {
 					'EMAIL' => $this->params ()->fromPost ( 'EMAIL' ),
 					'NOM' => $this->params ()->fromPost ( 'NOM' ),
 					'TELEPHONE' => $this->params ()->fromPost ( 'TELEPHONE' ),
+			        'TELEPHONE1' => $this->params ()->fromPost ( 'TELEPHONE1' ),
 					'NATIONALITE_ORIGINE' => $this->params ()->fromPost ( 'NATIONALITE_ORIGINE' ),
 					'PRENOM' => $this->params ()->fromPost ( 'PRENOM' ),
 					'PROFESSION' => $this->params ()->fromPost ( 'PROFESSION' ),
@@ -1786,7 +1952,7 @@ class ChururgieController extends AbstractActionController {
 				$Patient->addPatient ( $donnees, $date_enregistrement, $id_employe, $sexe );
 				
 				return $this->redirect ()->toRoute ( 'chururgie', array (
-						'action' => 'liste-patient' 
+						'action' => 'admission' 
 				) );
 			} else {
 			   
@@ -1794,12 +1960,12 @@ class ChururgieController extends AbstractActionController {
 				$Patient->addPatient ( $donnees, $date_enregistrement, $id_employe, $sexe );
 			
 				return $this->redirect ()->toRoute ( 'chururgie', array (
-						'action' => 'liste-patient' 
+						'action' => 'admission' 
 				) );
 			}
 		}
 		return $this->redirect ()->toRoute ( 'chururgie', array (
-				'action' => 'liste-patient' 
+				'action' => 'admission' 
 		) );
 	}
 	public function ajouterAction() {
@@ -1850,6 +2016,7 @@ class ChururgieController extends AbstractActionController {
 					'EMAIL' => $this->params ()->fromPost ( 'EMAIL' ),
 					'NOM' => $this->params ()->fromPost ( 'NOM' ),
 					'TELEPHONE' => $this->params ()->fromPost ( 'TELEPHONE' ),
+			        'TELEPHONE1' => $this->params ()->fromPost ( 'TELEPHONE1' ),
 					'NATIONALITE_ORIGINE' => $this->params ()->fromPost ( 'NATIONALITE_ORIGINE' ),
 					'PRENOM' => $this->params ()->fromPost ( 'PRENOM' ),
 					'PROFESSION' => $this->params ()->fromPost ( 'PROFESSION' ),
@@ -1939,7 +2106,7 @@ class ChururgieController extends AbstractActionController {
  			$date = $unPatient['DATE_NAISSANCE'];
  			if($date){ $date = $this->convertDate ($date); }else{ $date = null;}
 		
-			$html = "<div style='float:left;' ><div id='photo' style='float:left; margin-right:20px; margin-bottom: 10px;'> <img  src='../img/photos_patients/" . $photo . "'  style='width:105px; height:105px;'></div>";
+ 			$html = " <div style='float:left;' ><div id='photo' style='float:left; margin-right:20px; margin-bottom: 10px;'> <img  src='../img/photos_patients/" . $photo . "'  style='width:105px; height:105px;'></div>";
 			$html .= "<div style='margin-left:6px;'> <div style='text-decoration:none; font-size:14px; float:left; padding-right: 7px; '>Age:</div>  <div style='font-weight:bold; font-size:19px; font-family: time new romans; color: green; font-weight: bold;'>" . $unPatient['AGE'] . " ans</div></div></div>";
 				
 				
@@ -1955,6 +2122,8 @@ class ChururgieController extends AbstractActionController {
 			$html .= "<td><a style='text-decoration:underline; font-size:12px;'>Adresse:</a><br><p style='width:280px; font-weight:bold; font-size:17px;'>" . $unPatient['ADRESSE'] . "</p></td>";
 			$html .= "</tr><tr>";
 			$html .= "<td><a style='text-decoration:underline; font-size:12px;'>T&eacute;l&eacute;phone:</a><br><p style='width:280px; font-weight:bold; font-size:17px;'>" . $unPatient['TELEPHONE'] . "</p></td>";
+			$html .= "</tr><tr>";
+			$html .= "<td><a style='text-decoration:underline; font-size:12px;'>T&eacute;l&eacute;phone Proche:</a><br><p style='width:280px; font-weight:bold; font-size:17px;'>" . $unPatient['TELEPHONE1'] . "</p></td>";
 			$html .= "</tr>";
 		
 			$html .= "</table>";
@@ -2007,7 +2176,7 @@ class ChururgieController extends AbstractActionController {
 		 $html  = "<div style='width:100%;'>";
 			
 		$html .= "<div style='width: 18%; height: 180px; float:left;'>";
-		$html .= "<div id='photo' style='float:left; margin-left:40px; margin-top:10px; margin-right:30px;'> <img style='width:105px; height:105px;' src='../public/img/photos_patients/" . $photo . "' ></div>";
+		$html .= "<div id='photo' style='float:left; margin-left:40px; margin-top:10px; margin-right:30px;'> <img style='width:105px; height:105px;' src='../img/photos_patients/" . $photo .  "' ></div>";
 		$html .= "<div style='margin-left:60px; margin-top: 150px;'> <div style='text-decoration:none; font-size:14px; float:left; padding-right: 7px; '>Age:</div>  <div style='font-weight:bold; font-size:19px; font-family: time new romans; color: green; font-weight: bold;'>" . $unPatient['AGE'] . " ans</div></div>";
 		$html .= "</div>";
 			
@@ -2018,13 +2187,15 @@ class ChururgieController extends AbstractActionController {
 		$html .= "<td style='width: 19%; vertical-align: top;'><a style='text-decoration:underline; font-size:12px;'>Nom:</a><br><div style='width: 150px; max-width: 160px; height:40px; overflow:auto; margin-bottom: 3px;'><p style='font-weight:bold; font-size:17px;'>" . $unPatient['NOM'] . "</p></div></td>";
 		$html .= "<td style='width: 29%; vertical-align: top;'><a style='text-decoration:underline; font-size:12px;'>Lieu de naissance:</a><br><div style='width: 95%; max-width: 250px; height:40px; overflow:auto; margin-bottom: 3px;'><p style=' font-weight:bold; font-size:17px;'>" . $unPatient['LIEU_NAISSANCE'] . "</p></div></td>";
 		$html .= "<td style='width: 23%; vertical-align: top;'><a style='text-decoration:underline; font-size:12px;'>Nationalit&eacute;  d'origine:</a><br><div style='width: 95%; '><p style=' font-weight:bold; font-size:17px;'>" . $unPatient['NATIONALITE_ORIGINE'] . "</p></div></td>";
+		$html .= "<td style='width: 23%; vertical-align: top;'><a style='text-decoration:underline; font-size:12px;'>Email:</a><br><div style='width: 100%; max-width: 235px; height:40px; overflow:auto;'><p style='font-weight:bold; font-size:17px;'>" . $unPatient['EMAIL'] . "</p></div></td>";
 		$html .= "<td style='width: 29%; '></td>";
 			
 		$html .= "</tr><tr style='width: 100%;'>";
 		$html .= "<td style='vertical-align: top;'><a style='text-decoration:underline; font-size:12px;'>Pr&eacute;nom:</a><br><div style='width: 95%; max-width: 130px; height:40px; overflow:auto; margin-bottom: 3px;'><p style=' font-weight:bold; font-size:17px;'>" . $unPatient['PRENOM'] . "</p></div></td>";
 		$html .= "<td style='vertical-align: top;'><a style='text-decoration:underline; font-size:12px;'>T&eacute;l&eacute;phone:</a><br><div style='width: 95%; max-width: 250px; height:40px; overflow:auto; margin-bottom: 3px;'><p style=' font-weight:bold; font-size:17px;'>" . $unPatient['TELEPHONE'] . "</p></div></td>";
+		$html .= "<td style='vertical-align: top;'><a style='text-decoration:underline; font-size:12px;'>T&eacute;l&eacute;phone Proche:</a><br><div style='width: 95%; max-width: 250px; height:40px; overflow:auto; margin-bottom: 3px;'><p style=' font-weight:bold; font-size:17px;'>" . $unPatient['TELEPHONE1'] . "</p></div></td>";
 		$html .= "<td style='vertical-align: top;'><a style='text-decoration:underline; font-size:12px;'>Nationalit&eacute; actuelle:</a><br><div style='width: 95%; max-width: 135px; overflow:auto; '><p style=' font-weight:bold; font-size:17px;'>" . $unPatient['NATIONALITE_ACTUELLE']. "</p></td>";
-		$html .= "<td style='vertical-align: top;'><a style='text-decoration:underline; font-size:12px;'>Email:</a><br><div style='width: 100%; max-width: 235px; height:40px; overflow:auto;'><p style='font-weight:bold; font-size:17px;'>" . $unPatient['EMAIL'] . "</p></div></td>";
+
 			
 		$html .= "</tr><tr style='width: 100%;'>";
 		$html .= "<td style='vertical-align: top;'><a style='text-decoration:underline; font-size:12px;'>Date de naissance:</a><br><div style='width: 95%; max-width: 130px; height:40px; overflow:auto; margin-bottom: 3px;'><p style=' font-weight:bold; font-size:17px;'>" . $date . "</p></div></td>";
@@ -2050,17 +2221,17 @@ class ChururgieController extends AbstractActionController {
 			
 		$html .= "</div>";
 	
-		$html .="<div id='titre_info_admis'>Informations sur la facturation <img id='button_pdf' style='width:15px; height:15px; float: right; margin-right: 35px; cursor: pointer;' src='../public/images_icons/button_pdf.png' title='Imprimer la facture' ></div>";
-		$html .="<div id='barre_separateur'></div>";
+		//$html .="<div id='titre_info_admis'>Informations sur la facturation <img id='button_pdf' style='width:15px; height:15px; float: right; margin-right: 35px; cursor: pointer;' src='../public/images_icons/button_pdf.png' title='Imprimer la facture' ></div>";
+		//$html .="<div id='barre_separateur'></div>";
 	
 		$html .="<table style='margin-top:10px; margin-left:18%; width: 80%; margin-bottom: 60px;'>";
 	
-		$html .="<tr style='width: 80%; '>";
-		$html .="<td style='width: 25%; vertical-align:top; margin-right:10px;'><span id='labelHeureLABEL' style='padding-left: 5px;'>Date d'admission </span><br><p id='zoneChampInfo1' style='background:#f8faf8; padding-left: 5px; padding-top: 5px;'> ". $this->dateHelper->convertDateTime($InfoAdmis->date_enregistrement) ." </p></td>";
-		$html .="<td style='width: 25%; vertical-align:top; margin-right:10px;'><span id='labelHeureLABEL' style='padding-left: 5px;'>Num&eacute;ro facture </span><br><p id='zoneChampInfo1' style='background:#f8faf8; padding-left: 5px; padding-top: 5px;'> ". $InfoAdmis->numero ." </p></td>";
-		$html .="<td style='width: 25%; vertical-align:top; margin-right:10px;'><span id='labelHeureLABEL' style='padding-left: 5px;'>Service </span><br><p id='zoneChampInfo1' style='background:#f8faf8; padding-left: 5px; padding-top: 5px; font-size:15px;'> ". $InfoService->nom ." </p></td>";
+		//$html .="<tr style='width: 80%; '>";
+		//$html .="<td style='width: 25%; vertical-align:top; margin-right:10px;'><span id='labelHeureLABEL' style='padding-left: 5px;'>Date d'admission </span><br><p id='zoneChampInfo1' style='background:#f8faf8; padding-left: 5px; padding-top: 5px;'> ". $this->dateHelper->convertDateTime($InfoAdmis->date_enregistrement) ." </p></td>";
+		//$html .="<td style='width: 25%; vertical-align:top; margin-right:10px;'><span id='labelHeureLABEL' style='padding-left: 5px;'>Num&eacute;ro facture </span><br><p id='zoneChampInfo1' style='background:#f8faf8; padding-left: 5px; padding-top: 5px;'> ". $InfoAdmis->numero ." </p></td>";
+		//$html .="<td style='width: 25%; vertical-align:top; margin-right:10px;'><span id='labelHeureLABEL' style='padding-left: 5px;'>Service </span><br><p id='zoneChampInfo1' style='background:#f8faf8; padding-left: 5px; padding-top: 5px; font-size:15px;'> ". $InfoService->nom ." </p></td>";
 	//	$html .="<td style='width: 25%; vertical-align:top; margin-right:10px;'><span id='labelHeureLABEL' style='padding-left: 5px;'>Tarif (frs) </span><br><p id='zoneChampInfo1' style='background:#f8faf8; padding-left: 5px; padding-top: 5px; font-weight:bold; font-size:22px;'> ". $this->prixMill($InfoAdmis->montant)." </p></td>";
-		$html .="</tr>";
+		//$html .="</tr>";
 	
 	
 	
@@ -2069,7 +2240,7 @@ class ChururgieController extends AbstractActionController {
 		$html .="<table style='margin-top:10px; margin-left:18%; width: 80%;'>";
 		$html .="<tr style='width: 80%;'>";
 	
-		$html .="<td class='block' id='thoughtbot' style='width: 35%; display: inline-block;  vertical-align: bottom; padding-left:350px; padding-bottom: 15px; padding-right: 150px;'><button type='submit' id='terminer'>Terminer</button></td>";
+		$html .="<td class='block' id='thoughtbot' style='width: 35%; display: inline-block;  vertical-align: bottom; padding-left:350px; padding-bottom: 15px; padding-right: 150px;'><button type='submit' id='terminer'>Terminer</button></td> <script >listepatient()</script>";
 	
 		$html .="</tr>";
 		$html .="</table>";
@@ -2115,6 +2286,8 @@ class ChururgieController extends AbstractActionController {
 		
 		
 		if(isset($_POST['ordonnance'])){
+		    
+		
 			//r�cup�ration de la liste des m�dicaments
 			$medicaments = $this->getConsultationTable()->fetchConsommable();
 				

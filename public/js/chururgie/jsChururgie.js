@@ -96,6 +96,7 @@ $(function() {
             var nationalite_actuelle = $("#NATIONALITE_ACTUELLE");
             var     adresse = $("#ADRESSE");
             var   telephone = $("#TELEPHONE");
+            var   telephone1 = $("#TELEPHONE1");
             var       email = $("#EMAIL");
             var  profession = $("#PROFESSION");
     	
@@ -115,6 +116,7 @@ $(function() {
    nationalite_actuelle.attr( 'readonly', true );
                 adresse.attr( 'readonly', true );
               telephone.attr( 'readonly', true );
+              telephone1.attr( 'readonly', true );
                   email.attr( 'readonly', true );
              profession.attr( 'readonly', true );
              
@@ -133,6 +135,7 @@ $(function() {
   nationalite_actuelle.attr( 'readonly', false );
                adresse.attr( 'readonly', false );
              telephone.attr( 'readonly', false );
+             telephone1.attr( 'readonly', false );
                  email.attr( 'readonly', false );
             profession.attr( 'readonly', false );
   		
@@ -149,6 +152,7 @@ $(function() {
   		$('#EMAIL').val('');
   		$('#NOM').val('');
   		$('#TELEPHONE').val('');
+  		$('#TELEPHONE1').val('');
   		$('#NATIONALITE_ORIGINE').val('');
   		$('#PRENOM').val('');
   		$('#NATIONALITE_ACTUELLE').val('');

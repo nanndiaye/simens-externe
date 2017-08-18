@@ -59,7 +59,7 @@
             data: $(this).serialize(),  
             data:{'idPatient':idPatient, 'idAdmission':idAdmission},
             success: function(data) {
-            	alert(idPatient,idAdmission);
+            		
             	     $("#titre").replaceWith("<div id='titre2' style='font-family: police2; color: green; font-size: 18px; font-weight: bold; padding-left: 20px;'><iS style='font-size: 25px;'>&curren;</iS> INFORMATIONS SUR LE PATIENT </div>");
                 	  var result = jQuery.parseJSON(data);    
             	     $("#contenu").fadeOut(function(){$("#vue_patient").html(result).fadeIn("fast"); }); 
