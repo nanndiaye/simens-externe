@@ -43,7 +43,7 @@ class AdmissionTable {
 				'Nomservice' => 'NOM'
 		) );
 				$select->where ( array (
-				'a.date_cons' => $date
+				'a.date_admise' => $date
 		) );
 		
 		$select->order ( 'id_admission DESC' );
@@ -62,17 +62,32 @@ class AdmissionTable {
 				'id_admission'
 		) );
 		$select->where ( array (
-				'date_cons' => $date
+				'date_admise' => $date
 		) );
 		$stat = $sql->prepareStatementForSqlObject ( $select );
 		$nb = $stat->execute ()->count ();
 		return $nb;
 	}
 	
+	public function getLastAdmission() {
+	    $db = $this->tableGateway->getAdapter();
+	    $sql = new Sql($db);
+	    $sQuery = $sql->select('admission')
+	    ->order('id_admission DESC');
+	    $requete = $sql->prepareStatementForSqlObject($sQuery);
+	    //var_dump($requete);exit();
+	    
+	    return $requete->execute()->current();
+	}
+	
 	public function addAdmission($donnees){
 		
-		$this->tableGateway->insert($donnees);
+		return 
+		$this->tableGateway->getLastInsertValue($this->tableGateway->insert($donnees));
+		//var_dump($id);exit();
 	}
+	
+	
 	
 	/*
 	 * Recup�rer la liste des patients admis et d�j� consult�s pour aujourd'hui
@@ -145,14 +160,7 @@ class AdmissionTable {
 	}
 	
 	
-	public function getLastAdmission() {
-		$db = $this->tableGateway->getAdapter();
-		$sql = new Sql($db);
-		$sQuery = $sql->select('admission')
-		->order('id_admission DESC');
-		$requete = $sql->prepareStatementForSqlObject($sQuery);
-		return $requete->execute()->current();
-	}
+	
 	
 	//Ajouter la consultation dans la table << consultation >> pour permettre au medecin de pouvoir lui m�me ajouter les constantes
 	//Ajouter la consultation dans la table << consultation >> pour permettre au medecin de pouvoir lui m�me ajouter les constantes

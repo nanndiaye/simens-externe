@@ -80,7 +80,22 @@ class DemandeTable{
 	
 		return $result;
 	}
-	
+	/**
+	 * Recuperer la liste des examens Fonctionnels
+	 */
+	public function getDemandeDesExamensFonctionnels(){
+	    $adapter = $this->tableGateway->getAdapter();
+	    $sql = new Sql($adapter);
+	    $select = $sql->select();
+	    $select->columns(array('*'));
+	    $select->from(array('e'=>'examens'));
+	    $select->where(array('idType' => 3));
+	    $select->order('idExamen ASC');
+	    $stat = $sql->prepareStatementForSqlObject($select);
+	    $result = $stat->execute();
+	    
+	    return $result;
+	}
 	/**
 	 * Recuperer la liste des examens Biologiques
 	 */
@@ -99,7 +114,7 @@ class DemandeTable{
 	}
 	
 	/**
-	 * Recuperer la liste des examens Biologiques Effectués et Envoyés par le laborantion (biologiste)
+	 * Recuperer la liste des examens Biologiques Effectuï¿½s et Envoyï¿½s par le laborantion (biologiste)
 	 */
 	public function getDemandeExamensBiologiquesEffectuesEnvoyer($id){
 		$adapter = $this->tableGateway->getAdapter();
@@ -122,7 +137,7 @@ class DemandeTable{
 	}
 	
 	/**
-	 * Recuperer la liste des examens Biologiques Effectués par le laborantion (biologiste)
+	 * Recuperer la liste des examens Biologiques Effectuï¿½s par le laborantion (biologiste)
 	 */
 	public function getDemandeExamensBiologiquesEffectues($id){
 		$adapter = $this->tableGateway->getAdapter();
@@ -145,7 +160,7 @@ class DemandeTable{
 	}
 	
 	/**
-	 * Recuperer la liste des examens Morphologiques Effectués et Envoyés par le laborantion (radiologue)
+	 * Recuperer la liste des examens Morphologiques Effectuï¿½s et Envoyï¿½s par le laborantion (radiologue)
 	 */
 	public function getDemandeExamensMorphologiquesEffectues($id){
 		$adapter = $this->tableGateway->getAdapter();
@@ -259,7 +274,7 @@ class DemandeTable{
 				$result = $stat->execute();
 				return $result;
 			}else {
-				//C'est ici qu'on met appliquer à 1
+				//C'est ici qu'on met appliquer ï¿½ 1
 				$this->tableGateway->update(array('appliquer' => 1, 'responsable' => 0) , array('idCons' => $id_cons, 'idExamen' => $idExamen));
 	
 				//INSERTION DU RESULTAT DE LA DEMANDE
@@ -342,7 +357,7 @@ class DemandeTable{
 				$result = $stat->execute();
 				return $result;
 			}else {
-				//C'est ici qu'on met appliquer à 1
+				//C'est ici qu'on met appliquer ï¿½ 1
 				$this->tableGateway->update(array('appliquer' => 1, 'responsable' => 1) , array('idCons' => $id_cons, 'idExamen' => $idExamen));
 				
 				//INSERTION DU RESULTAT DE LA DEMANDE

@@ -24,15 +24,18 @@ class Consultation implements InputFilterAwareInterface{
 	public $heurecons;
 	public $id_service;
 	public $archivage;
+	public $id_admission;
 	
 	
 	protected $inputFilter;
 
 	public function exchangeArray($data) {
+	  
 		$this->id_cons = (! empty ( $data ['ID_CONS'] )) ? $data ['ID_CONS'] : null;
 		$this->id_medecin = (! empty ( $data ['ID_MEDECIN'] )) ? $data ['ID_MEDECIN'] : null;
 		$this->id_surveillant = (! empty ( $data ['ID_SURVEILLANT'] )) ? $data ['ID_SURVEILLANT'] : null;
 		$this->id_patient = (! empty ( $data ['ID_PATIENT'] )) ? $data ['ID_PATIENT'] : null;
+		$this->id_admission = (! empty ( $data ['id_admission'] )) ? $data ['id_admission'] : null;
 		$this->date = (! empty ( $data ['DATE'] )) ? $data ['DATE'] : null;
 		$this->poids = (! empty ( $data ['POIDS'] )) ? $data ['POIDS'] : null;
 		$this->taille = (! empty ( $data ['TAILLE'] )) ? $data ['TAILLE'] : null;

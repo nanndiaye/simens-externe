@@ -16,6 +16,7 @@ use Chururgie\View\Helper\TraitementInstrumentalPdf;
 use Chururgie\View\Helper\TransfertPdf;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
+use Zend\Stdlib\DateTime;
 use Zend\View\Model\ViewModel;
 
 class ChururgieController extends AbstractActionController {
@@ -693,7 +694,7 @@ class ChururgieController extends AbstractActionController {
 	    
 	    //Recuperer la liste des actes
 	    //Recuperer la liste des actes
-	    $listeActes = $this->getConsultationTable()->getListeDesActes();
+	   // $listeActes = $this->getConsultationTable()->getListeDesActes();
 	    $listeDemandesActes = $this->getDemandeActe()->getDemandeActe($id);
 	    
 	    //FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
@@ -701,9 +702,11 @@ class ChururgieController extends AbstractActionController {
 	    
 	    //Liste des examens biologiques
 	    $listeDesExamensBiologiques = $this->demandeExamensTable()->getDemandeDesExamensBiologiques();
-	    //Liste des examens Morphologiques
+	    //Liste des examens Morphologiques 
 	    $listeDesExamensMorphologiques = $this->demandeExamensTable()->getDemandeDesExamensMorphologiques();
 	    
+	    //Liste des examens Fonctionnels
+	    $listeActes = $this->demandeExamensTable()->getDemandeDesExamensFonctionnels();
 	    //POUR LES DEMANDES D'HOSPITALISATION
 	    //POUR LES DEMANDES D'HOSPITALISATION
 	    //POUR LES DEMANDES D'HOSPITALISATION
@@ -1134,6 +1137,7 @@ class ChururgieController extends AbstractActionController {
 			$id = (int)$this->params()->fromPost ('id');
 			$idPatient = (int)$this->params()->fromPost ('idPatient');
 			$idService = (int)$this->params()->fromPost ('idService');
+		
 			$resultat = $this->getAdmissionTable()->deleteAdmissionPatient($id, $idPatient, $idService);
 	
 			//$nb = $this->getAdmissionTable()->nbAdmission();
@@ -1197,7 +1201,7 @@ class ChururgieController extends AbstractActionController {
 		//POUR LES CONSTANTES
 		//POUR LES CONSTANTES
 		//POUR LES CONSTANTES
-		$consult = $this->getConsultationTable ()->getConsult ( $id );
+		$consult = $this->getConsultationTable ()->getConsult ( $id_pat );
 		$pos = strpos($consult->pression_arterielle, '/') ;
 		$tensionmaximale = substr($consult->pression_arterielle, 0, $pos);
 		$tensionminimale = substr($consult->pression_arterielle, $pos+1);
@@ -1473,7 +1477,7 @@ class ChururgieController extends AbstractActionController {
 		
 		//Recuperer la liste des actes
 		//Recuperer la liste des actes
-		$listeActes = $this->getConsultationTable()->getListeDesActes();
+		//$listeActes = $this->getConsultationTable()->getListeDesActes();
 		$listeDemandesActes = $this->getDemandeActe()->getDemandeActe($id);
 	
 		//FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
@@ -1538,20 +1542,25 @@ class ChururgieController extends AbstractActionController {
 	}
 	
 	public function consultationMedecinAction() {
-		//var_dump('eeee');exit();
+		
 		$this->layout ()->setTemplate ( 'layout/chururgie' );
 		$user = $this->layout()->user;
 		$idService = $user['IdService'];
 		//
 		$form= new ConsultationForm();
+		
+		
 		$lespatients = $this->getConsultationTable()->listePatientsConsParMedecin ( $idService );
 		//RECUPERER TOUS LES PATIENTS AYANT UN RV aujourd'hui		
+		//var_dump($lespatients);exit();
 		$tabPatientRV = $this->getConsultationTable ()->getPatientsRV($idService);
-		//var_dump($tabPatientRV);exit();
+		$cons=$form->get('id_cons')->getValue();
+		//var_dump($cons);exit();
 		return new ViewModel ( array (
 				'donnees' => $lespatients,
 				'tabPatientRV' => $tabPatientRV,
-		    'form'=> $form,
+		         'form'=> $form,
+		    'id_cons'=>$cons,
 		) );
 	}
 
@@ -1564,16 +1573,14 @@ class ChururgieController extends AbstractActionController {
 		$id_medecin = $user['id_personne'];
 	
 		$id_pat = $this->params ()->fromQuery ( 'id_patient', 0 );
-		$id = $this->params ()->fromQuery ( 'id_cons' );
+		$id_cons = $this->params ()->fromQuery ( 'id_cons' );
+		$id= $this->params ()->fromQuery ('id_admission');
 		
             $listeOrgane=$this->getConsultationTable()->listeDeTousLesOrganes();
           //
             $listeclassePathologie=$this->getConsultationTable()->getClassePathologie();
             
-           
-            //var_dump($listeTypePathologie[0]);exit();
-		
-		
+          
 		$listeMedicament = $this->getConsultationTable()->listeDeTousLesMedicaments();
 		
 		$listeForme = $this->getConsultationTable()->formesMedicaments();
@@ -1590,18 +1597,18 @@ class ChururgieController extends AbstractActionController {
 		if(array_key_exists($id_pat, $tabPatientRV)){
 			$resultRV = $tabPatientRV[ $id_pat ];
 		}
-	
+		//var_dump($id);exit();
 		$form = new ConsultationForm ();
-	
+		
 		// instancier la consultation et r�cup�rer l'enregistrement
-		$consult = $this->getConsultationTable ()->getConsult ( $id );
-	
+		//$consult = $this->getConsultationTable ()->getConsult ( $id_cons );
+		
 		// POUR LES HISTORIQUES OU TERRAIN PARTICULIER
 		// POUR LES HISTORIQUES OU TERRAIN PARTICULIER
 		// POUR LES HISTORIQUES OU TERRAIN PARTICULIER
 		//*** Liste des consultations
 		//
-		$listeConsultation = $this->getConsultationTable ()->getConsultationPatient($id_pat, $id);
+		$listeConsultation = $this->getConsultationTable ()->getConsultationPatient($id_pat, $id_cons);
 		
 		//Liste des examens biologiques
 		$listeDesExamensBiologiques = $this->demandeExamensTable()->getDemandeDesExamensBiologiques();
@@ -1614,16 +1621,16 @@ class ChururgieController extends AbstractActionController {
 		$listeHospitalisation = $this->getDemandeHospitalisationTable()->getDemandeHospitalisationWithIdPatient($id_pat);
 		
 		// instancier le motif d'admission et recup�rer l'enregistrement
-		$motif_admission = $this->getMotifAdmissionTable ()->getMotifAdmission ( $id );
-		$nbMotif = $this->getMotifAdmissionTable ()->nbMotifs ( $id );
-	
+		$motif_admission = $this->getMotifAdmissionTable ()->getMotifAdmission ( $id_cons );
+		$nbMotif = $this->getMotifAdmissionTable ()->nbMotifs ( $id_cons );
+		
 		// r�cup�ration de la liste des hopitaux
 		$hopital = $this->getTransfererPatientServiceTable ()->fetchHopital ();
 		$form->get ( 'hopital_accueil' )->setValueOptions ( $hopital );
 		// RECUPERATION DE L'HOPITAL DU SERVICE
 		$transfertPatientHopital = $this->getTransfererPatientServiceTable ()->getHopitalPatientTransfert($IdDuService);
 		$idHopital = $transfertPatientHopital['ID_HOPITAL'];
-	
+		
 		// RECUPERATION DE LA LISTE DES SERVICES DE L'HOPITAL OU SE TROUVE LE SERVICE OU LE MEDECIN TRAVAILLE
 	//	$serviceHopital = $this->getTransfererPatientServiceTable ()->fetchServiceWithHopitalNotServiceActual($idHopital, $IdDuService);
 		$serviceHopital = $this->getServiceTable()->listeService();
@@ -1640,30 +1647,30 @@ class ChururgieController extends AbstractActionController {
 		);
 		$form->get ( 'heure_rv' )->setValueOptions ( $heure_rv );
 	
-		$data = array (
-				'id_cons' => $consult->id_cons,
-				'id_medecin' => $id_medecin,
-				'id_patient' => $consult->id_patient,
-				'date_cons' => $consult->date,
-				'poids' => $consult->poids,
-				'taille' => $consult->taille,
-				'temperature' => $consult->temperature,
-				'pouls' => $consult->pouls,
-				'frequence_respiratoire' => $consult->frequence_respiratoire,
-				'glycemie_capillaire' => $consult->glycemie_capillaire,
-				'pressionarterielle' => $consult->pression_arterielle,
-				'hopital_accueil' => $idHopital,
+// 		$data = array (
+// 				'id_cons' => $consult->id_cons,
+// 				'id_medecin' => $id_medecin,
+// 				'id_patient' => $consult->id_patient,
+// 				'date_cons' => $consult->date,
+// 				'poids' => $consult->poids,
+// 				'taille' => $consult->taille,
+// 				'temperature' => $consult->temperature,
+// 				'pouls' => $consult->pouls,
+// 				'frequence_respiratoire' => $consult->frequence_respiratoire,
+// 				'glycemie_capillaire' => $consult->glycemie_capillaire,
+// 				'pressionarterielle' => $consult->pression_arterielle,
+// 				'hopital_accueil' => $idHopital,
                
-		);
-		
-		$k = 1;
-		foreach ( $motif_admission as $Motifs ) {
-			$data ['motif_admission' . $k] = $Motifs ['Libelle_motif'];
-			$k ++;
-		}
+// 		);
+// 		var_dump($nbMotif);exit();
+// 		$k = 1;
+// 		foreach ( $motif_admission as $Motifs ) {
+// 			$data ['motif_admission' . $k] = $Motifs ['Libelle_motif'];
+// 			$k ++;
+// 		}
 		
 		// Pour recuper les bandelettes
-		$bandelettes = $this->getConsultationTable ()->getBandelette($id);
+		//$bandelettes = $this->getConsultationTable ()->getBandelette($id_cons);
 		
 		//RECUPERATION DES ANTECEDENTS
 		//RECUPERATION DES ANTECEDENTS
@@ -1674,35 +1681,41 @@ class ChururgieController extends AbstractActionController {
 		//Recuperer les antecedents medicaux ajouter pour le patient
 		//Recuperer les antecedents medicaux ajouter pour le patient
 		$antMedPat = $this->getConsultationTable()->getAntecedentMedicauxPersonneParIdPatient($id_pat);
-	
+		
 		//Recuperer les antecedents medicaux
 		//Recuperer les antecedents medicaux
 		$listeAntMed = $this->getConsultationTable()->getAntecedentsMedicaux();
 	
 		//FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
 		//FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
-	
+		
+		
+		
+		//Liste des examens Fonctionnels
+		//$listeActes = $this->demandeExamensTable()->getDemandeDesExamensFonctionnels();
+		//var_dump($listeActes);exit();
 		//Recuperer la liste des actes
 		//Recuperer la liste des actes
 		$listeActes = $this->getConsultationTable()->getListeDesActes();
-	
-		$form->populateValues ( array_merge($data,$bandelettes,$donneesAntecedentsPersonnels,$donneesAntecedentsFamiliaux) );
+		//var_dump($listeActes);exit();
+		$form->populateValues ( array_merge($donneesAntecedentsPersonnels,$donneesAntecedentsFamiliaux) );
 		
 		$listeTypePathologie=$this->getConsultationTable()->getTypePathologie();
 		//var_dump($listeTypePathologie);exit();
+		//var_dump("je tes");exit();
 		return array (
 		          'lesOrganes' => $listeOrgane,
 		          'listeclassePathologie'=>$listeclassePathologie,
 		          'listeTypePathologie'=> $listeTypePathologie,
 				'lesdetails' => $liste,
-				'id_cons' => $id,
-				'nbMotifs' => $nbMotif,
+		         'id_cons' => $id_cons,
+				//'nbMotifs' => $nbMotif,
 				'image' => $image,
 				'form' => $form,
-				'heure_cons' => $consult->heurecons,
-				'dateonly' => $consult->dateonly,
+				//'heure_cons' => $consult->heurecons,
+				//'dateonly' => $consult->dateonly,
 				'liste_med' => $listeMedicament,
-				'temoin' => $bandelettes['temoin'],
+				//'temoin' => $bandelettes['temoin'],
 				'listeForme' => $listeForme,
 				'listetypeQuantiteMedicament'  => $listetypeQuantiteMedicament,
 				'donneesAntecedentsPersonnels' => $donneesAntecedentsPersonnels,
@@ -1740,7 +1753,7 @@ class ChururgieController extends AbstractActionController {
 		$formAdmission->get ( 'service' )->setValueOptions ( $service );
 		$formAdmission->get ( 'liste_service' )->setValueOptions ( $tab_service );
 		
-		//var_dump($patientsAdmis->getPatientsAdmis ());exit();
+		///var_dump($patientsAdmis->getPatientsAdmis ());exit();
 		return new ViewModel ( array (
 				'listePatientsAdmis' => $patientsAdmis->getPatientsAdmis (),
 				'form' => $formAdmission,
@@ -1754,7 +1767,7 @@ class ChururgieController extends AbstractActionController {
 		
 		
 		$today = new \DateTime ( "now" );
-		$date_cons = $today->format ( 'Y-m-d' );
+		$date_admise = $today->format ( 'Y-m-d' );
 		$date_enregistrement = $today->format ( 'Y-m-d H:i:s' );
 	
 		$id_patient = ( int ) $this->params ()->fromPost ( 'id_patient', 0 );
@@ -1766,7 +1779,7 @@ class ChururgieController extends AbstractActionController {
 		$donnees = array (
 				'id_patient' => $id_patient,
 				'id_service' => $id_service,
-				'date_cons' => $date_cons,
+				'date_admise' => $date_admise,
 				'type_consultation' => $type_consultation,
 				'date_enregistrement' => $date_enregistrement,
 				'id_employe' => $id_employe,
@@ -1776,10 +1789,10 @@ class ChururgieController extends AbstractActionController {
 		$formData = $this->getRequest ()->getPost ();
 		$form->setData ( $formData );
 		
-		$id_cons = $form->get (  "id_cons" )->getValue ();	
+		//$id_cons = $form->get (  "id_cons" )->getValue ();	
 		
-		$this->getAdmissionTable ()->addAdmission ( $donnees );		
-		
+		//$this->getAdmissionTable ()->addAdmission ( $donnees );		
+		$id_admission=$this->getAdmissionTable ()->addAdmission ( $donnees );	
 		//NOUVEAU CODE AJOUTER POUR QUE LE MEDECIN PUISSE AJOUTER DIRECTEMENT LES CONSTANTES DU PATIENT SANS LE PASSAGE DE CELUI CI AU NIVEAU DU SURVEILLANT DE SERVICE
 		//NOUVEAU CODE AJOUTER POUR QUE LE MEDECIN PUISSE AJOUTER DIRECTEMENT LES CONSTANTES DU PATIENT SANS LE PASSAGE DE CELUI CI AU NIVEAU DU SURVEILLANT DE SERVICE
 		//NOUVEAU CODE AJOUTER POUR QUE LE MEDECIN PUISSE AJOUTER DIRECTEMENT LES CONSTANTES DU PATIENT SANS LE PASSAGE DE CELUI CI AU NIVEAU DU SURVEILLANT DE SERVICE
@@ -1787,14 +1800,16 @@ class ChururgieController extends AbstractActionController {
 		/* CODE A SUPPRIMER POUR FAIRE INTERVENIR LE SURVEILLANT DE SERVICE*/
 		/* CODE A SUPPRIMER POUR FAIRE INTERVENIR LE SURVEILLANT DE SERVICE*/		
 		
-		$this->getAdmissionTable ()-> addConsultation ( $form, $id_service );	
+		$this->getConsultationTable()-> addIdAdmission ( $id_admission );	
+		//var_dump($id_admission);exit();
+		//var_dump($id_admission);exit();
+		//$this->getAdmissionTable ()->addConsultationChururgieGenerale($id_cons);
 		
-		$this->getAdmissionTable ()->addConsultationChururgieGenerale($id_cons);
-		
 		//FIN FIN NOUVEAU CODE AJOUTER POUR QUE LE MEDECIN PUISSE AJOUTER DIRECTEMENT LES CONSTANTES DU PATIENT
 		//FIN FIN NOUVEAU CODE AJOUTER POUR QUE LE MEDECIN PUISSE AJOUTER DIRECTEMENT LES CONSTANTES DU PATIENT
 		//FIN FIN NOUVEAU CODE AJOUTER POUR QUE LE MEDECIN PUISSE AJOUTER DIRECTEMENT LES CONSTANTES DU PATIENT
-			
+		//$id_dernier=$this->getAdmissionTable ()->getLastAdmission();
+		//var_dump($id_dernier);exit();
 	
 		return $this->redirect()->toRoute('chururgie', array('action' =>'liste-patients-admis'));
 	
@@ -2521,7 +2536,20 @@ class ChururgieController extends AbstractActionController {
 		//**********DEMANDES D'EXAMENS****************
 		//**********DEMANDES D'EXAMENS****************
 		if(isset ($_POST['demandeExamenBioMorpho'])){
-			$i = 1; $j = 1;
+		    $i = 1; $j = 1;
+		    $donneesExamensFonc = array();
+		    $notesExamensFonc = array();
+		    //R�cup�ration des donn�es examens fonctionnels
+		    for( ; $i <= 6; $i++){
+		        if($this->params ()->fromPost ( 'acte_name_'.$i )){
+		            $donneesExamensFonc[$j] = $this->params ()->fromPost ( 'acte_name_'.$i );
+		            $notesExamensFonc[$j++ ] = $this->params ()->fromPost ( 'noteActe_'.$i  );
+		        }
+		    }
+		    
+		    
+		    
+		    $i = 1; $j = 1;
 			$donneesExamensBio = array();
 			$notesExamensBio = array();
 			//R�cup�ration des donn�es examens biologiques
@@ -2557,6 +2585,9 @@ class ChururgieController extends AbstractActionController {
 			//Envoi des donn�es du medecin
 			$page->setDonneesMedecinBio($donneesMedecin);
 			//Envoi les donn�es de la demande
+			$page->setDonneesDemandeFonctionnel($donneesExamensFonc);
+			$page->setNotesDemandeFonctionnel($notesExamensFonc);
+			
 			$page->setDonneesDemandeBio($donneesExamensBio);
 			$page->setNotesDemandeBio($notesExamensBio);
 			$page->setDonneesDemandeMorph($donneesExamensMorph);

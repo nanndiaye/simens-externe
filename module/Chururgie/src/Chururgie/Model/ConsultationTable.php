@@ -98,15 +98,17 @@ class ConsultationTable {
 		$this->tableGateway = $tableGateway;
 	}
 	public function getConsult($id){
-		$id = (String) $id;
-		$rowset = $this->tableGateway->select ( array (
-				'ID_CONS' => $id
-		) );
-		$row =  $rowset->current ();
- 		if (! $row) {
- 			throw new \Exception ( "Could not find row $id" );
- 		}
-		return $row;
+	   
+	    $id = (String) $id;
+	    
+	    $rowset = $this->tableGateway->select ( array (
+	        'ID_PATIENT' => $id
+	    ) );
+	    $row =  $rowset->current ();
+	    if (! $row) {
+	        throw new \Exception ( "Could not find row $id" );
+	    }
+	    return $row;
 	}
 	
 	public function getConsultationPatient($id_pat, $id_cons){
@@ -241,6 +243,21 @@ class ConsultationTable {
 		} catch (\Exception $e) {
 			$this->tableGateway->getAdapter()->getDriver()->getConnection()->rollback();
 		}
+	}
+	
+	//Ajouter Idadmission a la table consultation
+	public function addIdAdmission($id_admission,$date_admise){
+	    
+	    $db = $this->tableGateway->getAdapter();
+	    $sql = new Sql($db);
+	    $sQuery = $sql->insert()
+	    ->into('admissionChirurgie')
+	    ->values(array('id_admission' => $id_admission,
+	                       'date' => $date_admise));
+	    $requete = $sql->prepareStatementForSqlObject($sQuery);
+	  //var_dump($id_admission);exit();
+	  $requete->execute();
+	  //var_dump($id_admission);exit();
 	}
 	
 	public function addConsultationEffective($id_cons){
@@ -402,16 +419,21 @@ class ConsultationTable {
 				'Nationalite' => 'NATIONALITE_ACTUELLE',
 				'Id' => 'ID_PERSONNE'
 		));
-		$select->join(array('c' => 'consultation'), 'p.ID_PERSONNE = c.ID_PATIENT', array('Id_cons' => 'ID_CONS', 'dateonly' => 'DATEONLY', 'date' => 'DATE'));
-		$select->join(array('cons_eff' => 'consultationchururgiegenerale'), 'cons_eff.ID_CONS = c.ID_CONS' , array('*'));
-		$select->join(array('a' => 'admission'), 'c.ID_PATIENT = a.id_patient', array('Id_admission' => 'id_admission','date_cons'=>'date_cons',
-		 'type_consultation'=>'type_consultation'));
+		//
+		//$select->join(array('c' => 'consultation'), 'p.ID_PERSONNE = c.ID_PATIENT', array('Id_cons' => 'ID_CONS', 'dateonly' => 'DATEONLY', 'date' => 'DATE'));
+		//$select->join(array('cons_eff' => 'consultationchururgiegenerale'), 'cons_eff.ID_CONS = c.ID_CONS' , array('*'));
+		
+		$select->join(array('a' => 'admission'), 'a.ID_PATIENT = p.ID_PERSONNE', array('Id_admission' => 'id_admission','date_admise'=>'date_admise',
+		 'type_consultation'=>'type_consultation','id_service'=>'id_service'));
+		
 		$select->join(array('type_cons' => 'type_consultation'), 'type_cons.ID = a.type_consultation', array('designation' => 'designation'));
-		$select->where(array('c.ID_SERVICE' => $idService, 'DATEONLY' => $date, 'a.date_cons' => $date));
+		//var_dump("tes");exit();
+		$select->where(array('a.id_service' => $idService, 'a.date_admise' => $date));
 		$select->order('id_admission ASC');
 	
 		$stmt = $sql->prepareStatementForSqlObject($select);
 		$result = $stmt->execute();
+		
 		return $result;
 	}
 	
@@ -1029,6 +1051,21 @@ class ConsultationTable {
  		return $sql->prepareStatementForSqlObject($select)->execute();
  	}
  	
- 	
+ 	/**
+ 	 * Recuperer la liste des examens Fonctionnels
+ 	 */
+ 	public function getDemandeDesExamensFonctionnels(){
+ 	    $adapter = $this->tableGateway->getAdapter();
+ 	    $sql = new Sql($adapter);
+ 	    $select = $sql->select();
+ 	    $select->columns(array('*'));
+ 	    $select->from(array('e'=>'examens'));
+ 	    $select->where(array('idType' => 3));
+ 	    $select->order('idExamen ASC');
+ 	    $stat = $sql->prepareStatementForSqlObject($select);
+ 	    $result = $stat->execute();
+ 	    
+ 	    return $result;
+ 	}
  	
 }

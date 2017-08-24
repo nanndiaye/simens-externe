@@ -4,8 +4,9 @@
 	var tabUrl = base_url.split("public");
 	//BOITE DE DIALOG POUR LA CONFIRMATION DE SUPPRESSION
     function confirmation(id, idPatient, idService){
-	  $( "#confirmation" ).dialog({
-	    resizable: false,
+    	
+	  $( "#confirmation" ).dialog({	
+		 resizable: false,
 	    height:170,
 	    width:435,
 	    autoOpen: false,
@@ -13,7 +14,7 @@
 	    buttons: {
 	        "Oui": function() {
 	            $( this ).dialog( "close" );
-	            
+	           
 	            var cle = id;
 	            var chemin = tabUrl[0]+'public/chururgie/supprimer-admission';
 	            $.ajax({
@@ -24,7 +25,7 @@
 	                success: function(data) {
 	                	     var result = jQuery.parseJSON(data);  
 	                	     if(result == 1){
-	                	    	 alert('impossible de supprimer le patient est deja consulter'); return false;
+	                	    	 alert('impossible de supprimer le patient est deja consulte'); return false;
 	                	     } else {
 		                	     $("#"+cle).fadeOut(function(){$("#"+cle).empty();}); 
 	                	     }
