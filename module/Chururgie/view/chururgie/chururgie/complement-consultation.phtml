@@ -569,7 +569,7 @@ echo $this->form()->openTag($form);
 							</table>
 
 							<script>
-                        var nbMotif = "<?php echo $this->nbMotifs;?>";
+                        var nbMotif = 0;
                         cacherToutMotif();
                         if(nbMotif == 0){ nbMotif = 1; }
                         afficherMotif(nbMotif);
@@ -646,7 +646,6 @@ echo $this->form()->openTag($form);
 								<div id="erreur_frequence"></div>
 							</td>
 							<td>
-								<div id="erreur_glycemie"></div>
 							</td>
 						</tr>
 
@@ -742,13 +741,7 @@ echo $this->form()->openTag($form);
 
 
 			<script>
-             if(<?php echo $this->temoin;?> != 1){ 
-      			 $('#BUcheckbox').toggle(false);
-       			 dep();
-			 }else {
-				 $("#depliantBandelette").replaceWith("<img id='depliantBandelette' style='cursor: pointer; position: absolute; padding-right: 120px; margin-left: -5px;' src='../img/light/minus.png' />");
-				 dep1();
-				 }
+          
 
              /****** MASK DE SAISIE ********/
           	 maskSaisie();
@@ -1531,8 +1524,7 @@ echo $this->form()->openTag($form);
 		<!-- ********************Examen complementaire (examen et analyse)******************-->
 		<!-- ********************Examen complementaire (examen et analyse)******************-->
 		<!--*4*-->
-		<div style='font-family: police2; font-size: 17px; font-weight: bold;'>Actes
-			et Examens compl&eacute;mentaires</div>
+		<div style='font-family: police2; font-size: 17px; font-weight: bold;'> Examens compl&eacute;mentaires</div>
 		<div style='max-height: 600px;'>
 
 			<div id="accordionsss" style=''>
@@ -1565,7 +1557,7 @@ echo $this->form()->openTag($form);
                         ?>
                           <div
 							style='font-family: police2; font-size: 15px; font-weight: bold; color: green;'>
-							Actes</div>
+							Examens Fonctionnels</div>
 						<div>
 							<div
 								style="margin-bottom: 5px; border-bottom: 1.5px solid #cccccc; margin-top: -15px;"></div>
@@ -1587,7 +1579,7 @@ echo $this->form()->openTag($form);
 										<tr style="width: 100%; height: 40px; font-family: police2;">
 											<th style="width: 4%; font-weight: bold; font-size: 15px;">N&ordm;</th>
 											<th
-												style="width: 35%; font-weight: bold; font-size: 15px; text-align: left;">Acte</th>
+												style="width: 35%; font-weight: bold; font-size: 15px; text-align: left;">Examen</th>
 										<!--  	<th
 												style="width: 15%; font-weight: bold; font-size: 15px; text-align: left;">Tarif
 												(frs)</th>-->
@@ -2408,18 +2400,18 @@ echo $this->form()->openTag($form);
 
 		</div>
 
-		<!-- *******************************Diagnostic***********************************-->
-		<!-- *******************************Diagnostic***********************************-->
-		<!-- *******************************Diagnostic***********************************-->
+		<!-- *******************************Diagnostic et Pathologies***********************************-->
+		<!-- *******************************Diagnostic  et Pathologies***********************************-->
+		<!-- *******************************Diagnostic  et Pathologies***********************************-->
 
 		<!--*5*-->
 		<div style='font-family: police2; font-size: 17px; font-weight: bold;'>Diagnostic et Pathologies
 			</div>
-		<div style='max-height: 280px;'>
+		<div style='max-height: 450px;'>
 		<div id="accordions_diagnostic_pathologies">
 		<div style='font-family: police2; font-size: 17px; font-weight: bold;'>
 					Diagnostic (pr&eacute;liminaire et/ou final) </div>
-			<div style='min-height: 180px;'>
+			<div style='min-height: 220px;'>
 			<p style='color: white; opacity: 0.5;'>
 
 <img id="" src='<?php echo $this->basePath().'/images_icons/diag.png'?>' alt="consult-motif"
@@ -2592,7 +2584,7 @@ src='../images_icons/plus-green.png' title='ajouter' />
 				<div
 					style='font-family: police2; font-size: 17px; font-weight: bold;'>
 					Les Pathologies</div>
-				<div style='min-height: 180px;'>
+				<div style='min-height: 260px;'>
 
 					
                   

@@ -267,19 +267,19 @@ function desactivationChamps(){
 	
 }
 
-function getTarifActe(id, pos){
-
-	$.ajax({
-		type: 'POST',
-		url: tabUrl[0]+'public/consultation/tarifacte',
-		data:{'id':id},
-		success: function(data) {    
-			var result = jQuery.parseJSON(data);  
-			$("#tarifActe"+pos).val(result);
-		},
-    
-		error:function(e){ console.log(e); alert("Une erreur interne est survenue!"); },
-		dataType: "html"
-	});
-
-}
+//function getTarifActe(id, pos){
+//
+//	$.ajax({
+//		type: 'POST',
+//		url: tabUrl[0]+'public/consultation/tarifacte',
+//		data:{'id':id},
+//		success: function(data) {    
+//			var result = jQuery.parseJSON(data);  
+//			$("#tarifActe"+pos).val(result);
+//		},
+//    
+//		error:function(e){ console.log(e); alert("Une erreur interne est survenue!"); },
+//		dataType: "html"
+//	});
+//
+//}

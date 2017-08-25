@@ -87,14 +87,14 @@ $(window).load(function () {
 					    </a>&nbsp;&nbsp;
 					    
 
-					    <?php if(!in_array($id, $this->listePatientsCons) ) { ?>
+					    <?php //if(!in_array($id, $this->listePatientsCons) ) { ?>
 					      <a href="javascript:envoyer('<?php echo $this->escapeHtml($donnees['Id_admission']);?>','<?php echo $this->escapeHtml($donnees['Id']);?>','<?php echo $this->escapeHtml($donnees['Id_Service']);?>')" >
 					    	 <img  src='<?php echo $this->basePath().'/images_icons/symbol_supprimer.png'?>' title="Annuler" />
 					      </a>&nbsp;
-					    <?php } ?>
+					    <?php //} ?>
 
 					    <a id='<?php echo 'Service'.$id ?>'>
-					    <?php echo $this->escapeHtml($donnees['Nomservice']);?>
+					    <?php //echo $this->escapeHtml($donnees['Nomservice']);?>
 					    </a>
 
 					</td>
@@ -136,7 +136,7 @@ $(window).load(function () {
 
 </div>
 
-<!-- POP UP pour Confirmation Suppression -->
+                            <!-- POP UP pour Confirmation Suppression -->
                             <div id="confirmation" title="Confirmation de l'annulation" style="display:none;">
                               <p style="font-size: 19px;">
                                  <span style="float:left; margin:0 0px 20px 0; ">
