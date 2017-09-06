@@ -72,7 +72,7 @@ function nbListe () {
 
 //SUPPRIMER LE DERNIER ELEMENT
 $(function () {
-	//Au début on cache la suppression
+	//Au dï¿½but on cache la suppression
 	$("#supprimer_element").click(function(){
 		//ON PEUT SUPPRIMER QUAND C'EST PLUS DE DEUX LISTE
 		if(nbListe () >  1){$("#Element_"+nbListe ()).remove();}
@@ -93,7 +93,7 @@ $(function () {
 	});
 });
 
-//FONCTION INITIALISATION (Par défaut)
+//FONCTION INITIALISATION (Par dï¿½faut)
 function partDefaut (Liste, n) {
 	var i = 0;
 	for( i ; i < n ; i++){
@@ -173,18 +173,18 @@ var tabUrl = base_url.split("public");
 function ValiderDemande(){
 $(function(){
 	//Au debut on affiche pas le bouton modifier
-	$("#bouton_morpho_modifier_demande").toggle(false);
+	//$("#bouton_morpho_modifier_demande").toggle(false);
 	//Au debut on affiche le bouton valider
-	$("#bouton_morpho_valider_demande").toggle(true);
+	//$("#bouton_morpho_valider_demande").toggle(true);
 	
 	//Au debut on desactive tous les champs
-	for(var i = 1; i <= nbListe(); i++ ){
-		$('#element_name_'+i).attr('disabled',false);
-		$("#note_"+i+" input").attr('disabled',false);
-	}
+//	for(var i = 1; i <= nbListe(); i++ ){
+//		$('#element_name_'+i).attr('disabled',false);
+//		$("#note_"+i+" input").attr('disabled',false);
+//	}
 	
-	$("#bouton_morpho_valider_demande button").click(function(){ 
-		//RECUPERATION DES DONNEES DU TABLEAU
+	//$("#bouton_morpho_valider_demande button").click(function(){ 
+	//RECUPERATION DES DONNEES DU TABLEAU
 		var id_cons = $('#id_cons').val();
 		var examens = [];
 		var notes = [];
@@ -197,8 +197,7 @@ $(function(){
 		}
 		
 		$.ajax({
-	        type: 'POST',
-	        url: tabUrl[0]+'public/consultation/demande-examen',
+	        type: 'POST',	        url: tabUrl[0]+'public/chururgie/demande-examen',
 	        data: {'id_cons':id_cons, 'examens': examens, 'notes':notes},
 	        success: function(data) {
 	            //var result = jQuery.parseJSON(data); 
@@ -208,9 +207,9 @@ $(function(){
 	        	$('.imageRadio').toggle(false); 
         		$('.imageEchographie').toggle(false);
         		$('.imageIRM').toggle(false);
-        		$('.imageScanner').toggle(false); 
-        		$('.imageFibroscopie').toggle(false);
-        		$('.bouton_valider_examen_morpho').toggle(false);
+	     $('.imageScanner').toggle(false); 
+       		$('.imageFibroscopie').toggle(false);
+				//$('.bouton_valider_examen_morpho').toggle(false);
         		
 	        	//ON AFFICHE UNIQUEMENT CEUX AYANT ETE DEMANDE
 	        	for(var k = 1; k<=nbListe(); k++){
@@ -223,45 +222,49 @@ $(function(){
 	        	
 	        	
 	            for(var i = 1; i <= nbListe(); i++ ){
-	    			$('#element_name_'+i).attr('disabled',true); $('#element_name_'+i).css({'background':'#f8f8f8'});
-	    			$("#note_"+i+" input").attr('disabled',true); $("#note_"+i+" input").css({'background':'#f8f8f8'});
+	    		//	$('#element_name_'+i).attr('disabled',true); 
+	    			$('#element_name_'+i).css({'background':'#f8f8f8'});
+	    		//	$("#note_"+i+" input").attr('disabled',true); 
+	    			$("#note_"+i+" input").css({'background':'#f8f8f8'});
 	    		}
 	    		$("#controls_element div").toggle(false);
 	    		$("#icone_supp_vider a img").toggle(false);
-	    		$("#bouton_morpho_modifier_demande").toggle(true);
-	    		$("#bouton_morpho_valider_demande").toggle(false);
+	    		//$("#bouton_morpho_modifier_demande").toggle(true);
+	    		//$("#bouton_morpho_valider_demande").toggle(false);
 	    		return false;
-	      },
+      },
 	      error:function(e){console.log(e);alert("Une erreur interne est survenue!");},
 	      dataType: "html"
 		});
 		return false;
-	});
+	//});
 	
-	$("#bouton_morpho_modifier_demande").click(function(){
-		for(var i = 1; i <= nbListe(); i++ ){
-			$('#element_name_'+i).attr('disabled',false); $('#element_name_'+i).css({'background':'white'});
-			$("#note_"+i+" input").attr('disabled',false); $("#note_"+i+" input").css({'background':'white'});
-		}
-		$("#controls_element div").toggle(true);
-		if(nbListe() == 1){
-			$("#supprimer_element").toggle(false);
-		}
-		$("#icone_supp_vider a img").toggle(true);
-		$("#bouton_morpho_modifier_demande").toggle(false);
-		$("#bouton_morpho_valider_demande").toggle(true);
-		return false;
-	});
-	
+//	$("#bouton_morpho_modifier_demande").click(function(){
+//		for(var i = 1; i <= nbListe(); i++ ){
+//			$('#element_name_'+i).attr('disabled',false); $('#element_name_'+i).css({'background':'white'});
+//			$("#note_"+i+" input").attr('disabled',false); $("#note_"+i+" input").css({'background':'white'});
+//		}
+//		$("#controls_element div").toggle(true);
+//		if(nbListe() == 1){
+//			$("#supprimer_element").toggle(false);
+//		}
+//		$("#icone_supp_vider a img").toggle(true);
+//		$("#bouton_morpho_modifier_demande").toggle(false);
+//		$("#bouton_morpho_valider_demande").toggle(true);
+//		return false;
+//	});
+//	
 	$("#demandeExamenBioMorpho").click(function(){
 		for(var i = 1; i <= nbListe(); i++ ){
-			$('#element_name_'+i).attr('disabled',false); $('#element_name_'+i).css({'background':'white'});
-			$("#note_"+i+" input").attr('disabled',false); $("#note_"+i+" input").css({'background':'white'});
+		//$('#element_name_'+i).attr('disabled',false);
+		$('#element_name_'+i).css({'background':'white'});
+			//$("#note_"+i+" input").attr('disabled',false); 
+			$("#note_"+i+" input").css({'background':'white'});
 		}
 		$("#controls_element div").toggle(true);
 		if(nbListe() == 1){
 			$("#supprimer_element").toggle(false);
-		}
+	}
 		$("#icone_supp_vider a img").toggle(true);
 		$("#bouton_morpho_modifier_demande").toggle(false);
 		$("#bouton_morpho_valider_demande").toggle(true);

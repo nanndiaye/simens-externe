@@ -199,11 +199,11 @@ var tabUrl = base_url.split("public");
 function ValiderOrdonnance() {
     $(function () {
         //Au debut on affiche pas le bouton modifier
-        $("#bouton_Medicament_modifier_demande").toggle(false);
+       // $("#bouton_Medicament_modifier_demande").toggle(false);
         //Au debut on affiche le bouton valider
-        $("#bouton_Medicament_valider_demande").toggle(true);
+       // $("#bouton_Medicament_valider_demande").toggle(true);
 
-        $("#bouton_Medicament_valider_demande button").click(function () {
+        $("#bouton_Medicament_valider_demande ").click(function () {
 //		//RECUPERATION DES DONNEES DU TABLEAU
 //		var id_cons = $('#id_cons').val();
 //		var examensBio = [];
@@ -243,50 +243,50 @@ function ValiderOrdonnance() {
 //		return false;
         });
 
-        $("#ordonnance").click(function () {
-            for (var i = 1; i <= nbListeMedicaments(); i++) {
-                $('#medicament_0' + i).attr('disabled', false);
-                $('#medicament_0' + i).css({'background': 'white'});
-                $("#noteMedicament_" + i + " input").attr('disabled', false);
-                $("#noteMedicament_" + i + " input").css({'background': 'white'});
-                $("#noteMedicament2_" + i + " input").attr('disabled', false);
-                $("#noteMedicament2_" + i + " input").css({'background': 'white'});
-            }
-            setTimeout(function () {
-                for (var i = 1; i <= nbListeMedicaments(); i++) {
-                    $('#medicament_0' + i).attr('disabled', true);
-                    $('#medicament_0' + i).css({'background': '#f8f8f8'});
-                    $("#noteMedicament_" + i + " input").attr('disabled', true);
-                    $("#noteMedicament_" + i + " input").css({'background': '#f8f8f8'});
-                    $("#noteMedicament2_" + i + " input").attr('disabled', true);
-                    $("#noteMedicament2_" + i + " input").css({'background': '#f8f8f8'});
-                }
-                $("#controls_medicament div").toggle(false);
-                $("#iconeMedicament_supp_vider a img").toggle(false);
-                $("#bouton_Medicament_modifier_demande").toggle(true);
-                $("#bouton_Medicament_valider_demande").toggle(false);
-                $("#increm_decrem img").toggle(false);
-            }, 1500);
-        });
+//        $("#ordonnance").click(function () {
+//            for (var i = 1; i <= nbListeMedicaments(); i++) {
+//                $('#medicament_0' + i).attr('disabled', false);
+//                $('#medicament_0' + i).css({'background': 'white'});
+//                $("#noteMedicament_" + i + " input").attr('disabled', false);
+//                $("#noteMedicament_" + i + " input").css({'background': 'white'});
+//                $("#noteMedicament2_" + i + " input").attr('disabled', false);
+//                $("#noteMedicament2_" + i + " input").css({'background': 'white'});
+//            }
+//            setTimeout(function () {
+//                for (var i = 1; i <= nbListeMedicaments(); i++) {
+//                    $('#medicament_0' + i).attr('disabled', true);
+//                    $('#medicament_0' + i).css({'background': '#f8f8f8'});
+//                    $("#noteMedicament_" + i + " input").attr('disabled', true);
+//                    $("#noteMedicament_" + i + " input").css({'background': '#f8f8f8'});
+//                    $("#noteMedicament2_" + i + " input").attr('disabled', true);
+//                    $("#noteMedicament2_" + i + " input").css({'background': '#f8f8f8'});
+//                }
+//                $("#controls_medicament div").toggle(false);
+//                $("#iconeMedicament_supp_vider a img").toggle(false);
+//                $("#bouton_Medicament_modifier_demande").toggle(true);
+//                $("#bouton_Medicament_valider_demande").toggle(false);
+//                $("#increm_decrem img").toggle(false);
+//            }, 1500);
+//        });
 
-        $("#bouton_Medicament_modifier_demande").click(function () {
-            for (var i = 1; i <= nbListeMedicaments(); i++) {
-                $('#medicament_0' + i).attr('disabled', false);
-                $('#medicament_0' + i).css({'background': 'white'});
-                $("#noteMedicament_" + i + " input").attr('disabled', false);
-                $("#noteMedicament_" + i + " input").css({'background': 'white'});
-                $("#noteMedicament2_" + i + " input").attr('disabled', false);
-                $("#noteMedicament2_" + i + " input").css({'background': 'white'});
-            }
-            $("#controls_medicament div").toggle(true);
-            if (nbListeMedicaments() == 1) {
-                $("#supprimer_medicament").toggle(false);
-            }
-            $("#iconeMedicament_supp_vider a img").toggle(true);
-            $("#bouton_Medicament_modifier_demande").toggle(false);
-            $("#bouton_Medicament_valider_demande").toggle(true);
-            $("#increm_decrem img").toggle(true);
-            return false;
-        });
+//        $("#bouton_Medicament_modifier_demande").click(function () {
+//            for (var i = 1; i <= nbListeMedicaments(); i++) {
+//                $('#medicament_0' + i).attr('disabled', false);
+//                $('#medicament_0' + i).css({'background': 'white'});
+//                $("#noteMedicament_" + i + " input").attr('disabled', false);
+//                $("#noteMedicament_" + i + " input").css({'background': 'white'});
+//                $("#noteMedicament2_" + i + " input").attr('disabled', false);
+//                $("#noteMedicament2_" + i + " input").css({'background': 'white'});
+//            }
+//            $("#controls_medicament div").toggle(true);
+//            if (nbListeMedicaments() == 1) {
+//                $("#supprimer_medicament").toggle(false);
+//            }
+//            $("#iconeMedicament_supp_vider a img").toggle(true);
+//            $("#bouton_Medicament_modifier_demande").toggle(false);
+//            $("#bouton_Medicament_valider_demande").toggle(true);
+//            $("#increm_decrem img").toggle(true);
+//            return false;
+//        });
     });
 }

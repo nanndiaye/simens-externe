@@ -7,7 +7,7 @@ $('#liste_recherche_style').css({'font-weight':'bold','color':'white','font-size
 //$( "button" ).button();
 </script>
 
-<?php use Facturation\View\Helper\DateHelper; ?>
+<?php use Chururgie\View\Helper\DateHelper; ?>
 
 <!-- SCRIPT DU NOUVEAU CODE POUR LA GESTION DES IMAGES  -->
 <!-- SCRIPT DU NOUVEAU CODE POUR LA GESTION DES IMAGES  -->
@@ -142,7 +142,7 @@ function getservices(cle)
 {
      $.ajax({
         type: 'POST',
-        url: '<?php echo $this->basePath().'/consultation/services' ?>',
+        url: '<?php echo $this->basePath().'/chururgie/services' ?>',
         data: 'id='+cle,
         success: function(data) {
             var result = jQuery.parseJSON(data);
@@ -288,7 +288,7 @@ $(window).load(function () {
 <?php $Control = new DateHelper();
 $form = $this->form;
 $form->setName('AVIS');
-$form->setAttribute('action', $this->url('consultation', array('action'=>'espace-recherche-med')));
+$form->setAttribute('action', $this->url('chururgie', array('action'=>'espace-recherche-med')));
 //$form->setAttribute('target', '_blank');
 $form->setAttribute('method', 'post');
 $form->prepare();
@@ -441,7 +441,7 @@ echo $this->form()->openTag($form); ?>
            <!-- **1** -->
               <div style='font-family: police2;font-size: 17px; font-weight: bold;'> Motifs d'admission </div>
                <div>
-                <?php echo  $this->headScript()->appendFile($this->basePath().'/js/consultation/ajouterMotifs.js');?>
+                <?php echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterMotifs.js');?>
                 <div style='width: 100%; height: 30px;'>
                    <div style='width: 70%; float: left; '>
                        <table id="respondeMotif" style='width: 100%;'>
@@ -603,9 +603,9 @@ echo $this->form()->openTag($form); ?>
 
      </div>
 
-     <!-- ********************Antécédents ou Terrain particulier ******************-->
-     <!-- ********************Antécédents ou Terrain particulier ******************-->
-     <!-- ********************Antécédents ou Terrain particulier ******************--> 
+     <!-- ********************Antï¿½cï¿½dents ou Terrain particulier ******************-->
+     <!-- ********************Antï¿½cï¿½dents ou Terrain particulier ******************-->
+     <!-- ********************Antï¿½cï¿½dents ou Terrain particulier ******************--> 
 
         <div style='font-family: police2;font-size: 17px; font-weight: bold;'>Historiques ou Terrain particulier</div>  
         <div style=' max-height: 410px;'>
@@ -786,7 +786,7 @@ echo $this->form()->openTag($form); ?>
                 </tr>
                 
                 <tr id="labelDesAntecedentsMedicaux_1" style="width:100%;">
-                  <!-- Emplacement des autres antecedents médicaux ajouter à partir du champ autre -->
+                  <!-- Emplacement des autres antecedents mï¿½dicaux ajouter ï¿½ partir du champ autre -->
                 </tr>
                 
                 
@@ -1005,7 +1005,7 @@ echo $this->form()->openTag($form); ?>
                     <td style="width:35%;" > <?php echo $tabInfoSurv[$donnees['ID_CONS']]; ?> </td>
                     <td style="width:35%;" > <?php echo $donnees['PRENOM'];?>  <?php echo $donnees['NOM'];?> </td>
                     <td style="width:5%;" >
-            		   <a href="<?php echo $this->url('consultation', array('action'=>'visualisation-consultation'),  array('query'=>array('id_patient'=>$this->escapeHtml($donnees['ID_PATIENT']),'id_cons'=>$this->escapeHtml($donnees['ID_CONS']))));?>" target="_blank">
+            		   <a href="<?php echo $this->url('chururgie', array('action'=>'visualisation-consultation'),  array('query'=>array('id_patient'=>$this->escapeHtml($donnees['ID_PATIENT']),'id_cons'=>$this->escapeHtml($donnees['ID_CONS']))));?>" target="_blank">
 					       <img style="display: inline;"  src='<?php echo $this->basepath().'/images_icons/voird.PNG'?>' alt='Constantes' title="Voir les d&eacute;tails de la consultation" />
 					   </a>&nbsp;
 					</td>
@@ -1047,7 +1047,7 @@ echo $this->form()->openTag($form); ?>
                     <td style="width:35%;" > <?php echo $donnees['PrenomMedecin'];?>  <?php echo $donnees['NomMedecin'];?></td>
                     <td style="width:35%;" > <?php echo $Control->convertDateTime($donnees['date_fin']);?>  </td>
                     <td style="width:5%;" >
-            		   <a href="<?php echo $this->url('consultation', array('action'=>'visualisation-consultation'),  array('query'=>array('id_patient'=>$this->escapeHtml($donnees['id']),'id_cons'=>$this->escapeHtml($donnees['id_cons']), 'id_demande_hospi'=>$this->escapeHtml($donnees['id_demande_hospi']))));?>" target="_blank"> 
+            		   <a href="<?php echo $this->url('chururgie', array('action'=>'visualisation-consultation'),  array('query'=>array('id_patient'=>$this->escapeHtml($donnees['id']),'id_cons'=>$this->escapeHtml($donnees['id_cons']), 'id_demande_hospi'=>$this->escapeHtml($donnees['id_demande_hospi']))));?>" target="_blank"> 
 					       <img style="display: inline;"  src='<?php echo $this->basepath().'/images_icons/voird.PNG'?>' alt='Constantes' title="Voir les d&eacute;tails sur l'hospitalisation" />
 					   </a>&nbsp;
 					</td>
@@ -1081,7 +1081,7 @@ echo $this->form()->openTag($form); ?>
         <p style='color: white; opacity: 0.5;'>
            <img id="" src='<?php echo $this->basePath().'/images_icons/examenphysique.jpg'?>'  alt="consult-motif" style='float:right; margin-right:0px; width:32%; height:270px;'/>
         </p>
-        <?php echo  $this->headScript()->appendFile($this->basePath().'/js/consultation/ajouterDonnees.js');?>
+        <?php echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterDonnees.js');?>
         <table id="responde" style="width:65%;">
             <tr id="donnee1" class="form-author">
                <th><?php echo $this->formRow($form->get('examen_donnee1'));?> <span id="labelSupDonnee"> <img class='supprimerDonnee1' style='cursor: pointer;' src='../images/images/sup.png' title='supprimer' /> </span> </th>
@@ -1142,7 +1142,7 @@ echo $this->form()->openTag($form); ?>
      <!-- ********************Examen complï¿½mentaire (examen et analyse)******************-->
      <!-- ********************Examen complï¿½mentaire (examen et analyse)******************-->
     <!--*4*-->
-     <div style='font-family: police2;font-size: 17px; font-weight: bold;'>Actes et Examens compl&eacute;mentaires</div>
+     <div style='font-family: police2;font-size: 17px; font-weight: bold;'> Examens compl&eacute;mentaires</div>
         <div>
                <div id="accordionsss" style='height: 600px;'>
                <!--**************** DEMANDE ************************-->
@@ -1168,7 +1168,7 @@ echo $this->form()->openTag($form); ?>
                            *===================== Les Actes  --- Les Actes  ===========================
                            *===========================================================================
                            **/?>
-                          <div style='font-family: police2;font-size: 15px; font-weight: bold; color:green;'> Actes </div>
+                          <div style='font-family: police2;font-size: 15px; font-weight: bold; color:green;'> Examen Fonctionnel </div>
                            <div>
                            <div style="margin-bottom: 5px; border-bottom: 1.5px solid #cccccc; margin-top:-15px;"></div>
 
@@ -1178,7 +1178,7 @@ echo $this->form()->openTag($form); ?>
                             *=============================================================================================
                             *=============================================================================================
                             **/
-                            echo  $this->headScript()->appendFile($this->basePath().'/js/consultation/ajouterActes.js');
+                            echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterActes.js');
                            ?>    
                                    
 				            <div id="lesActes" style="width: 100%; height:260px;">
@@ -1187,8 +1187,7 @@ echo $this->form()->openTag($form); ?>
 			                          <thead style="width: 100%;">
 				                        <tr style="width: 100%; height: 40px; font-family: police2;">
 				                           <th style="width:  4%; font-weight: bold; font-size: 15px; ">N&ordm;</th>
-					                       <th style="width: 35%; font-weight: bold; font-size: 15px; text-align: left;">Acte</th>
-					                       <th style="width: 15%; font-weight: bold; font-size: 15px; text-align: left;">Tarif (frs) </th>
+					                       <th style="width: 35%; font-weight: bold; font-size: 15px; text-align: left;">Examen</th>
 					                       <th style="width: 37%; font-weight: bold; font-size: 15px; text-align: left;">Note</th>
 					                       <th style="width:  9%; font-weight: bold; font-size: 15px; ">Options</th>
 				                        </tr>
@@ -1223,7 +1222,7 @@ echo $this->form()->openTag($form); ?>
                                
                                partDefautActe(myArrayActe, '<?php echo $nbDemandeActe; ?>');
                                
-                               //Descactiver la visualisation des resultats pour afficher uniquement ceux selectionnés
+                               //Descactiver la visualisation des resultats pour afficher uniquement ceux selectionnï¿½s
                                setTimeout(function(){ desactiverResutatsActe (); }, 500);
 
                                var indLigneActe = 0;
@@ -1263,7 +1262,7 @@ echo $this->form()->openTag($form); ?>
                             *=============================================================================================
                             *=============================================================================================
                             **/
-                            echo  $this->headScript()->appendFile($this->basePath().'/js/consultation/ajouterExamensBio.js');
+                            echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterExamensBio.js');
                            ?>    
                                    
 				            <div id="lesExamensBiologiques" style="width: 100%; height:260px;">
@@ -1336,7 +1335,7 @@ echo $this->form()->openTag($form); ?>
                             </script>
                                    
                             <script>
-                               //Descactiver la visualisation des resultats pour afficher uniquement ceux selectionnés
+                               //Descactiver la visualisation des resultats pour afficher uniquement ceux selectionnï¿½s
                                desactiverResutatsBio ();
                                //SELECTION DES LIGNES ET CHARGEMENT DE LEUR CONTENU 
                                <?php foreach($this->listeDemandesBiologiques as $Liste) {?>
@@ -1365,7 +1364,7 @@ echo $this->form()->openTag($form); ?>
                              *=============================================================================================
                              *=============================================================================================
                             **/
-                            echo  $this->headScript()->appendFile($this->basePath().'/js/consultation/ajouter.js');
+                            echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouter.js');
                             ?>    
                                    
 				            <div id="lesElements" style="width: 100%;">
@@ -1662,7 +1661,7 @@ echo $this->form()->openTag($form); ?>
                        <div style=' max-height: 320px; '>
                        <div style="margin-bottom: 8px; border-bottom: 1px solid #cccccc; margin-top:-15px;"></div>
                            
-                          <?php echo  $this->headScript()->appendFile($this->basePath().'/js/consultation/majComplementCons.js');?>
+                          <?php echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/majComplementCons.js');?>
                             
                             <!-- AFFICHAGE DES EXAMENS N'AYANT PAS ENCORE D'IMAGES -->
                             <!-- AFFICHAGE DES EXAMENS N'AYANT PAS ENCORE D'IMAGES -->
@@ -1797,7 +1796,7 @@ echo $this->form()->openTag($form); ?>
                    echo $this->headLink()->appendStylesheet($this->basePath().'/js/plugins/jPlayer-2.9.2/dist/skin/blue.monday/css/jplayer.blue.monday.min.css');
                    echo $this->headScript()->appendFile($this->basePath().'/js/plugins/jPlayer-2.9.2/dist/jplayer/jquery.jplayer.min.js');
                    echo $this->headScript()->appendFile($this->basePath().'/js/plugins/jPlayer-2.9.2/dist/add-on/jplayer.playlist.min.js');
-                   echo $this->headScript()->appendFile($this->basePath().'/js/consultation/jsAjouterSuppimerVideos.js');
+                   echo $this->headScript()->appendFile($this->basePath().'/js/chururgie/jsAjouterSuppimerVideos.js');
                  ?>
                             <table id="respondeee" class="imageScanner" style="width: 100%;">
                                    <tr class="form-examen-morphologique" style="width: 100%;">
@@ -1978,7 +1977,7 @@ echo $this->form()->openTag($form); ?>
         <p style='color: white; opacity: 0.5;'>
                    <img id="" src='<?php echo $this->basePath().'/images_icons/diag.png'?>'  alt="consult-motif" style='float:right; margin-right:10px; width:28%; height:220px;'/>
         </p>
-        <?php echo  $this->headScript()->appendFile($this->basePath().'/js/consultation/ajouterDiagnostic.js');?>
+        <?php echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterDiagnostic.js');?>
 
         <table id="responded" style="width: 65%;">
                  <tr id="diag1" class="form-diag" style="width: 65%; height: 40px;">
@@ -2084,7 +2083,7 @@ echo $this->form()->openTag($form); ?>
                        *=============================================================================================
                        *=============================================================================================
                        **/
-                   echo  $this->headScript()->appendFile($this->basePath().'/js/consultation/ajouterMedicaments.js');
+                   echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterMedicaments.js');
                   ?>    
                                    
                  <div id="listeMedicaments" style="float:left; width: 100%;">
@@ -2191,7 +2190,7 @@ echo $this->form()->openTag($form); ?>
                    }
                    ?>
 
-                   //Remplissage de la durée du traitement
+                   //Remplissage de la durï¿½e du traitement
                    $('#duree_traitement_ord').val('<?php echo $this->duree_traitement;?>');
                    
                  </script>
@@ -2308,7 +2307,7 @@ echo $this->form()->openTag($form); ?>
                    <?php } ?>
                    
                    <script type="text/javascript">
-                   <?php echo $this->headScript()->appendFile($this->basePath().'/js/consultation/jsAjouterSuppimerMp3.js');?>
+                   <?php echo $this->headScript()->appendFile($this->basePath().'/js/chururgie/jsAjouterSuppimerMp3.js');?>
                    </script>
                    
                    </div>

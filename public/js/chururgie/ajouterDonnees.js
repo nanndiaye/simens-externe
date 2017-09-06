@@ -179,9 +179,9 @@ $(function(){
 	var donnee5 = $("#examen_donnee5");
 	
 	//Au debut on affiche pas le bouton modifier
-	$("#bouton_donnee_modifier").toggle(false);
+//	$("#bouton_donnee_modifier").toggle(false);
 	//Au debut on affiche le bouton valider
-	$("#bouton_donnee_valider").toggle(true);
+//	$("#bouton_donnee_valider").toggle(true);
 	
 	//Au debut on desactive tous les champs
 	donnee1.attr( 'readonly', false);
@@ -190,37 +190,37 @@ $(function(){
 	donnee4.attr( 'readonly', false);
 	donnee5.attr( 'readonly', false);
 	
-	$("#bouton_donnee_valider").click(function(){
-		donnee1.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		donnee2.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		donnee3.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		donnee4.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		donnee5.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		$("#bouton_donnee_modifier").toggle(true);
-		$("#bouton_donnee_valider").toggle(false);
-		
-		$('#ajouter_donnee_img').toggle(false);
-		$('#supprimer_donnee_img').toggle(false);
-		
-		$('.supprimerDonnee1, .supprimerDonnee2, .supprimerDonnee3, .supprimerDonnee4, .supprimerDonnee5').toggle(false);
-		return false;
-	});
+//	$("#bouton_donnee_valider").click(function(){
+//		donnee1.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		donnee2.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		donnee3.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		donnee4.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		donnee5.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		$("#bouton_donnee_modifier").toggle(true);
+//		$("#bouton_donnee_valider").toggle(false);
+//		
+//		$('#ajouter_donnee_img').toggle(false);
+//		$('#supprimer_donnee_img').toggle(false);
+//		
+//		$('.supprimerDonnee1, .supprimerDonnee2, .supprimerDonnee3, .supprimerDonnee4, .supprimerDonnee5').toggle(false);
+//		return false;
+//	});
 	
-	$("#bouton_donnee_modifier").click(function(){
-		donnee1.attr( 'readonly', false).css({'background':'#fff'});
-		donnee2.attr( 'readonly', false).css({'background':'#fff'});
-		donnee3.attr( 'readonly', false).css({'background':'#fff'});
-		donnee4.attr( 'readonly', false).css({'background':'#fff'});
-		donnee5.attr( 'readonly', false).css({'background':'#fff'});
-		$("#bouton_donnee_modifier").toggle(false);
-		$("#bouton_donnee_valider").toggle(true);
-		
-		if(nbChampDonnee != 5) { $('#ajouter_donnee_img').toggle(true); }
-		if(nbChampDonnee != 1) { $('#supprimer_donnee_img').toggle(true); }
-		
-		$('.supprimerDonnee1, .supprimerDonnee2, .supprimerDonnee3, .supprimerDonnee4, .supprimerDonnee5').toggle(true);
-		return false;
-	});
+//	$("#bouton_donnee_modifier").click(function(){
+//		donnee1.attr( 'readonly', false).css({'background':'#fff'});
+//		donnee2.attr( 'readonly', false).css({'background':'#fff'});
+//		donnee3.attr( 'readonly', false).css({'background':'#fff'});
+//		donnee4.attr( 'readonly', false).css({'background':'#fff'});
+//		donnee5.attr( 'readonly', false).css({'background':'#fff'});
+//		$("#bouton_donnee_modifier").toggle(false);
+//		$("#bouton_donnee_valider").toggle(true);
+//		
+//		if(nbChampDonnee != 5) { $('#ajouter_donnee_img').toggle(true); }
+//		if(nbChampDonnee != 1) { $('#supprimer_donnee_img').toggle(true); }
+//		
+//		$('.supprimerDonnee1, .supprimerDonnee2, .supprimerDonnee3, .supprimerDonnee4, .supprimerDonnee5').toggle(true);
+//		return false;
+//	});
 	
 });
 

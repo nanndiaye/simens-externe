@@ -182,9 +182,9 @@ $(function(){
 	var motif5 = $("#motif_admission5");
 	
 	//Au debut on affiche pas le bouton modifier
-	$("#bouton_motif_modifier").toggle(false);
+	//$("#bouton_motif_modifier").toggle(false);
 	//Au debut on affiche le bouton valider
-	$("#bouton_motif_valider").toggle(true);
+	//$("#bouton_motif_valider").toggle(true);
 	
 	//Au debut on desactive tous les champs
 	motif1.attr( 'readonly', false);
@@ -193,36 +193,36 @@ $(function(){
 	motif4.attr( 'readonly', false);
 	motif5.attr( 'readonly', false);
 	
-	$("#bouton_motif_valider").click(function(){
-		motif1.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		motif2.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		motif3.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		motif4.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		motif5.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		$("#bouton_motif_modifier").toggle(true);
-		$("#bouton_motif_valider").toggle(false);
-		
-		$('#ajouter_motif_img').toggle(false);
-		$('#supprimer_motif_img').toggle(false);
-		
-		$('.supprimerMotif1, .supprimerMotif2, .supprimerMotif3, .supprimerMotif4, .supprimerMotif5').toggle(false);
-		return false;
-	});
+//	$("#bouton_motif_valider").click(function(){
+//		motif1.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		motif2.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		motif3.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		motif4.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		motif5.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		$("#bouton_motif_modifier").toggle(true);
+//		$("#bouton_motif_valider").toggle(false);
+//		
+//		$('#ajouter_motif_img').toggle(false);
+//		$('#supprimer_motif_img').toggle(false);
+//		
+//		$('.supprimerMotif1, .supprimerMotif2, .supprimerMotif3, .supprimerMotif4, .supprimerMotif5').toggle(false);
+//		return false;
+//	});
 	
-	$("#bouton_motif_modifier").click(function(){
-		motif1.attr( 'readonly', false).css({'background':'#fff'});
-		motif2.attr( 'readonly', false).css({'background':'#fff'});
-		motif3.attr( 'readonly', false).css({'background':'#fff'});
-		motif4.attr( 'readonly', false).css({'background':'#fff'});
-		motif5.attr( 'readonly', false).css({'background':'#fff'});
-		$("#bouton_motif_modifier").toggle(false);
-		$("#bouton_motif_valider").toggle(true);
-		
-		if(nbChampMotif != 5) { $('#ajouter_motif_img').toggle(true); }
-		if(nbChampMotif != 1) { $('#supprimer_motif_img').toggle(true); }
-		
-		$('.supprimerMotif1, .supprimerMotif2, .supprimerMotif3, .supprimerMotif4, .supprimerMotif5').toggle(true);
-		return false;
-	});
+//	$("#bouton_motif_modifier").click(function(){
+//		motif1.attr( 'readonly', false).css({'background':'#fff'});
+//		motif2.attr( 'readonly', false).css({'background':'#fff'});
+//		motif3.attr( 'readonly', false).css({'background':'#fff'});
+//		motif4.attr( 'readonly', false).css({'background':'#fff'});
+//		motif5.attr( 'readonly', false).css({'background':'#fff'});
+//		$("#bouton_motif_modifier").toggle(false);
+//		$("#bouton_motif_valider").toggle(true);
+//		
+//		if(nbChampMotif != 5) { $('#ajouter_motif_img').toggle(true); }
+//		if(nbChampMotif != 1) { $('#supprimer_motif_img').toggle(true); }
+//		
+//		$('.supprimerMotif1, .supprimerMotif2, .supprimerMotif3, .supprimerMotif4, .supprimerMotif5').toggle(true);
+//		return false;
+//	});
 	
 });

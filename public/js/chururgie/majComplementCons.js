@@ -6,11 +6,11 @@ $(function() {
 	 * CACHER TOUTES LES LIGNES DES EXAMENS MORPHOLOGIQUES
 	 * CACHER TOUTES LES LIGNES DES EXAMENS MORPHOLOGIQUES
 	 */
-	 $('.imageRadio').toggle(false);
-	 $('.imageEchographie').toggle(false);
-	 $('.imageIRM').toggle(false);
-	 $('.imageScanner').toggle(false);
-	 $('.imageFibroscopie').toggle(false);
+	 $('.imageRadio').toggle(true);
+	 $('.imageEchographie').toggle(true);
+	 $('.imageIRM').toggle(true);
+	 $('.imageScanner').toggle(true);
+	 $('.imageFibroscopie').toggle(true);
 
 	/**
 	 * RECUPER LE TYPE D'EXAMEN AU SURVOL SUR RADIO
@@ -63,7 +63,7 @@ function raffraichirimagesExamensMorphologiques(typeExamen)
 	 var id_cons = $("#id_cons").val();
      $.ajax({
         type: 'POST',
-        url: tabUrl[0]+'public/consultation/imagesExamensMorphologiques',
+        url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
         data: {'id_cons':id_cons, 'ajout':0, 'typeExamen':typeExamen},
         success: function(data) {
             var result = jQuery.parseJSON(data);
@@ -204,7 +204,7 @@ function confirmerSuppression(id, typeExamen){
           $( this ).dialog( "close" );
 
           var id_cons = $("#id_cons").val();
-          var chemin = tabUrl[0]+'public/consultation/supprimerImage';
+          var chemin = tabUrl[0]+'public/chururgie/supprimerImage';
           $.ajax({
               type: 'POST',
               url: chemin ,
@@ -267,7 +267,7 @@ function getimagesExamensMorphologiques()
 	 var id_cons = $("#id_cons").val();
      $.ajax({
         type: 'POST',
-        url: tabUrl[0]+'public/consultation/imagesExamensMorphologiques',
+        url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
         data: {'id_cons':id_cons, 'ajout':0, 'typeExamen':8},
         success: function(data) {
         	Recupererimage();
@@ -320,7 +320,7 @@ function getimagesExamensMorphologiques()
 			    var id_cons = $("#id_cons").val();
 		    	$.ajax({
 		            type: 'POST',
-		            url: tabUrl[0]+'public/consultation/imagesExamensMorphologiques',
+		            url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
 		            data: {'ajout':1 , 'id_cons':id_cons , 'fichier_tmp': $("#fichier_tmp").val() , 'typeExamen':typeExamen},
 		            success: function(data) {
 		                var result = jQuery.parseJSON(data); 
@@ -375,7 +375,7 @@ function getimagesEchographieExamensMorphologiques()
 	 var id_cons = $("#id_cons").val();
      $.ajax({
         type: 'POST',
-        url: tabUrl[0]+'public/consultation/imagesExamensMorphologiques',
+        url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
         data: {'id_cons':id_cons, 'ajout':0, 'typeExamen':9},
         success: function(data) {
         	RecupererImageEchographie();
@@ -427,7 +427,7 @@ function RecupererImageEchographie(){
 		    var id_cons = $("#id_cons").val();
 	    	$.ajax({
 	            type: 'POST',
-	            url: tabUrl[0]+'public/consultation/imagesExamensMorphologiques',
+	            url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
 	            data: {'ajout':1 , 'id_cons':id_cons , 'fichier_tmp': $("#fichierEchographie_tmp").val() , 'typeExamen':9},
 	            success: function(data) {
 	                var result = jQuery.parseJSON(data);
@@ -483,7 +483,7 @@ function getimagesIRMExamensMorphologiques()
 	 var id_cons = $("#id_cons").val();
      $.ajax({
         type: 'POST',
-        url: tabUrl[0]+'public/consultation/imagesExamensMorphologiques',
+        url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
         data: {'id_cons':id_cons, 'ajout':0, 'typeExamen':10},
         success: function(data) {
         	RecupererImageIRM();
@@ -534,7 +534,7 @@ function RecupererImageIRM(){
 		    var id_cons = $("#id_cons").val();
 	    	$.ajax({
 	            type: 'POST',
-	            url: tabUrl[0]+'public/consultation/imagesExamensMorphologiques',
+	            url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
 	            data: {'ajout':1 , 'id_cons':id_cons , 'fichier_tmp': $("#fichierIRM_tmp").val() , 'typeExamen':10},
 	            success: function(data) {
 	                var result = jQuery.parseJSON(data); 
@@ -589,7 +589,7 @@ function getimagesScannerExamensMorphologiques()
 	 var id_cons = $("#id_cons").val();
      $.ajax({
         type: 'POST',
-        url: tabUrl[0]+'public/consultation/imagesExamensMorphologiques',
+        url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
         data: {'id_cons':id_cons, 'ajout':0, 'typeExamen':11},
         success: function(data) {
         	RecupererImageScanner();
@@ -640,7 +640,7 @@ function RecupererImageScanner(){
 		    var id_cons = $("#id_cons").val();
 	    	$.ajax({
 	            type: 'POST',
-	            url: tabUrl[0]+'public/consultation/imagesExamensMorphologiques',
+	            url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
 	            data: {'ajout':1 , 'id_cons':id_cons , 'fichier_tmp': $("#fichierScanner_tmp").val() , 'typeExamen':11},
 	            success: function(data) {
 	                var result = jQuery.parseJSON(data); 
@@ -695,7 +695,7 @@ function getimagesFibroscopieExamensMorphologiques()
 	 var id_cons = $("#id_cons").val();
      $.ajax({
         type: 'POST',
-        url: tabUrl[0]+'public/consultation/imagesExamensMorphologiques',
+        url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
         data: {'id_cons':id_cons, 'ajout':0, 'typeExamen':12},
         success: function(data) {
         	RecupererImageFibroscopie();
@@ -746,7 +746,7 @@ function RecupererImageFibroscopie(){
 		    var id_cons = $("#id_cons").val();
 	    	$.ajax({
 	            type: 'POST',
-	            url: tabUrl[0]+'public/consultation/imagesExamensMorphologiques',
+	            url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
 	            data: {'ajout':1 , 'id_cons':id_cons , 'fichier_tmp': $("#fichierFibroscopie_tmp").val() , 'typeExamen':12},
 	            success: function(data) {
 	                var result = jQuery.parseJSON(data); 
@@ -787,12 +787,12 @@ $(function(){
 	setTimeout(function() {
 		
 		if(ind == 0){
-			$('.imageRadio').toggle(false);
-			$('.imageEchographie').toggle(false);
-			$('.imageIRM').toggle(false);
-			$('.imageScanner').toggle(false); 
-			$('.imageFibroscopie').toggle(false);
-			$('.bouton_valider_examen_morpho').toggle(false);
+			$('.imageRadio').toggle(true);
+			$('.imageEchographie').toggle(true);
+			$('.imageIRM').toggle(true);
+			$('.imageScanner').toggle(true); 
+			$('.imageFibroscopie').toggle(true);
+			$('.bouton_valider_examen_morpho').toggle(true);
 			ind++;
 		}
 
