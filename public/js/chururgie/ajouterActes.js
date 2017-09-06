@@ -10,7 +10,7 @@ function creerLalisteActe ($listeDesElements) {
                              "</th >"+
                              
                              "<th id='SelectActe_"+(index+1)+"' style='width: 35%;'>"+
-                             "<select   onchange='getTarifActe(this.value,"+(index+1)+")'  style='width: 100%; margin-top: 3px; margin-bottom: 0px; font-size: 13px;' name='acte_name_"+(index+1)+"' id='acte_name_"+(index+1)+"'>"+
+                             "<select     style='width: 100%; margin-top: 3px; margin-bottom: 0px; font-size: 13px;' name='acte_name_"+(index+1)+"' id='acte_name_"+(index+1)+"'>"+
 			                 "<option value='' > -- S&eacute;l&eacute;ctionner un examen -- </option>";
                              for(var i = 1 ; i < $listeDesElements.length ; i++){
                             	 if($listeDesElements[i]){
@@ -129,8 +129,8 @@ function supprimer_acte_selectionne(id) {
 		var note = $('#noteActe_'+i+' input').val();
 		$("#noteActe_"+(i-1)+" input").val(note);
 		
-		var note = $('#tarifActe_'+i+' input').val();
-		$("#tarifActe_"+(i-1)+" input").val(note);
+//		var note = $('#tarifActe_'+i+' input').val();
+//		$("#tarifActe_"+(i-1)+" input").val(note);
 	}
 
 	if(nbListeActe() <= 2 && id <= 2){
@@ -154,23 +154,23 @@ function supprimer_acte_selectionne(id) {
 function vider_acte_selectionne(id) {
 	$("#SelectActe_"+id+" option[value='']").attr('selected','selected');
 	$("#noteActe_"+id+" input").val("");
-	$("#tarifActe_"+id+" input").val("");
+	//$("#tarifActe_"+id+" input").val("");
 }
 
 //CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
 //CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
 //CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
-function desactiverResutatsActe () {
-	//ON CACHE TOUT
-	var i = 1;
-	for(i; i <= 19; i++){
-		$('#acte_'+i).toggle(false); 
-	}
-}
+//function desactiverResutatsActe () {
+//	//ON CACHE TOUT
+//	var i = 1;
+//	for(i; i <= 19; i++){
+//		$('#acte_'+i).toggle(fa); 
+//	}
+//}
 
 function chargementModificationActe (index, element, tarif, note) {
 	$("#SelectActe_"+(index+1)+" option[value='"+element+"']").attr('selected','selected'); 
-	$("#tarifActe_"+(index+1)+" input").val(tarif);
+	//$("#tarifActe_"+(index+1)+" input").val(tarif);
 	$("#noteActe_"+(index+1)+" input").val(note);
 	
 	//ON AFFICHE UNIQUEMENT CEUX AYANT ETE DEMANDE
@@ -188,13 +188,13 @@ var tabUrl = base_url.split("public");
 function ValiderDemandeActe(){
 $(function(){
 	//Au debut on affiche pas le bouton modifier
-	$("#bouton_Acte_modifier_demande").toggle(false);
+	//$("#bouton_Acte_modifier_demande").toggle(false);
 	//Au debut on affiche le bouton valider
-	$("#bouton_Acte_valider_demande").toggle(true);
+	//$("#bouton_Acte_valider_demande").toggle(true);
 	
-	$("#bouton_Acte_valider_demande button").click(function(){
+	//$("#bouton_Acte_valider_demande button").click(function(){
 		//ON CACHE TOUT
-    	desactiverResutatsActe();
+    	//desactiverResutatsActe();
 
     	//RECUPERATION DES DONNEES DU TABLEAU
 		var id_cons = $('#id_cons').val();
@@ -213,19 +213,21 @@ $(function(){
 		
 		$.ajax({
 	        type: 'POST',
-	        url: tabUrl[0]+'public/consultation/demande-acte',
+	        url: tabUrl[0]+'public/chururgie/demande-acte',
 	        data: {'id_cons':id_cons, 'examensActe': examensActe, 'notesActe':notesActe},
 	        success: function() {
 	        	
 	        	for(var i = 1; i <= nbListeActe(); i++ ){
-	    			$('#acte_name_'+i).attr('disabled',true); $('#acte_name_'+i).css({'background':'#f8f8f8'});
-	    			$("#noteActe_"+i+" input").attr('disabled',true); $("#noteActe_"+i+" input").css({'background':'#f8f8f8'});
+	    			//$('#acte_name_'+i).attr('disabled',true); 
+	    			$('#acte_name_'+i).css({'background':'#f8f8f8'});
+	    			//$("#noteActe_"+i+" input").attr('disabled',true);
+	    			$("#noteActe_"+i+" input").css({'background':'#f8f8f8'});
 	    		}
 	            
 	    		$("#controls_acte div").toggle(false);
 	    		$("#iconeActe_supp_vider a img").toggle(false);
-	    		$("#bouton_Acte_modifier_demande").toggle(true);
-	    		$("#bouton_Acte_valider_demande").toggle(false);
+	    		//$("#bouton_Acte_modifier_demande").toggle(true);
+	    		//$("#bouton_Acte_valider_demande").toggle(false);
 	    		return false;
 	      },
 	      
@@ -235,12 +237,14 @@ $(function(){
 		
 		return false;
 
-	});
+	//});
 	
 	$("#bouton_Acte_modifier_demande").click(function(){
 		for(var i = 1; i <= nbListeActe(); i++ ){
-			$('#acte_name_'+i).attr('disabled',false); $('#acte_name_'+i).css({'background':'white'});
-			$("#noteActe_"+i+" input").attr('disabled',false); $("#noteActe_"+i+" input").css({'background':'white'});
+			//$('#acte_name_'+i).attr('disabled',false);
+			$('#acte_name_'+i).css({'background':'white'});
+			//$("#noteActe_"+i+" input").attr('disabled',false);
+			$("#noteActe_"+i+" input").css({'background':'white'});
 		}
 		$("#controls_acte div").toggle(true);
 		if(nbListeActe() == 1){
@@ -260,8 +264,8 @@ $(function(){
 function desactivationChamps(){
 	
 	for(var i = 1; i <= nbListeActe(); i++ ){
-		$('#acte_name_'+i).attr('disabled',true).css({'background':'#f8f8f8'}); 
-		$("#noteActe_"+i+" input").attr('disabled',true).css({'background':'#f8f8f8'});
+		//$('#acte_name_'+i).attr('disabled',true).css({'background':'#f8f8f8'}); 
+		//$("#noteActe_"+i+" input").attr('disabled',true).css({'background':'#f8f8f8'});
 	}
 	$("#iconeActe_supp_vider a img").toggle(false);
 	

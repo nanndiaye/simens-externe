@@ -219,6 +219,56 @@ class ChururgieController extends AbstractActionController {
 		
 	}
 	
+	
+	
+	
+	//************************************************************************************
+	//************************************************************************************
+	//************************************************************************************
+	public function demandeActeAction() {
+	    
+	    $id_cons = $this->params()->fromPost('id_cons');
+	    $examensActe = $this->params()->fromPost('examensActe');
+	    $notesActe = $this->params()->fromPost('notesActe');
+	    
+	    
+	    $this->getDemandeActe()->addDemandeActe($id_cons, $examensActe, $notesActe);
+	    
+	    $this->getResponse()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html' );
+	    return $this->getResponse ()->setContent(Json::encode (  ));
+	}
+	//************************************************************************************
+	//************************************************************************************
+	//************************************************************************************
+	public function demandeExamenAction()
+	{
+	    $id_cons = $this->params()->fromPost('id_cons');
+	    $examens = $this->params()->fromPost('examens');
+	    $notes = $this->params()->fromPost('notes');
+	    
+	    
+	    $this->demandeExamensTable()->saveDemandesExamensMorphologiques($id_cons, $examens, $notes);
+	    
+	    $this->getResponse()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html' );
+	    return $this->getResponse ()->setContent(Json::encode (  ));
+	}
+	
+	//************************************************************************************
+	//************************************************************************************
+	//************************************************************************************
+	public function demandeExamenBiologiqueAction()
+	{
+	    $id_cons = $this->params()->fromPost('id_cons');
+	    $examensBio = $this->params()->fromPost('examensBio');
+	    $notesBio = $this->params()->fromPost('notesBio');
+	    
+	    
+	    $this->demandeExamensTable()->saveDemandesExamensBiologiques($id_cons, $examensBio, $notesBio);
+	    
+	    $this->getResponse()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html' );
+	    return $this->getResponse ()->setContent(Json::encode (  ));
+	}
+	
 // 	
 // 	    GESTION DES RENDEZ-VOUS DES PATIENTS
 // 	   GESTION DES RENDEZ-VOUS DES PATIENTS
@@ -415,11 +465,11 @@ class ChururgieController extends AbstractActionController {
 	    if(array_key_exists($id_pat, $tabPatientRV)){
 	        $resultRV = $tabPatientRV[ $id_pat ];
 	    }
-	    
+	    //var_dump("tester");exit();
 	    //POUR LES CONSTANTES
 	    //POUR LES CONSTANTES
 	    //POUR LES CONSTANTES
-	    $consult = $this->getConsultationTable ()->getConsult ( $id );
+	    $consult = $this->getConsultationTable ()->getConsult ( $id_pat );
 	    $pos = strpos($consult->pression_arterielle, '/') ;
 	    $tensionmaximale = substr($consult->pression_arterielle, 0, $pos);
 	    $tensionminimale = substr($consult->pression_arterielle, $pos+1);
@@ -1703,6 +1753,9 @@ class ChururgieController extends AbstractActionController {
 		$listeTypePathologie=$this->getConsultationTable()->getTypePathologie();
 		//var_dump($listeTypePathologie);exit();
 		//var_dump("je tes");exit();
+		$today = new \DateTime ( 'now' );
+		$date = $today->format ( 'dd/mm/yy' );
+		$heure = $today->format ( "H:i" );
 		return array (
 		          'lesOrganes' => $listeOrgane,
 		          'listeclassePathologie'=>$listeclassePathologie,
@@ -1712,8 +1765,8 @@ class ChururgieController extends AbstractActionController {
 				//'nbMotifs' => $nbMotif,
 				'image' => $image,
 				'form' => $form,
-				//'heure_cons' => $consult->heurecons,
-				//'dateonly' => $consult->dateonly,
+		          'heure_cons' => $heure,
+		           'dateonly' => $date,
 				'liste_med' => $listeMedicament,
 				//'temoin' => $bandelettes['temoin'],
 				'listeForme' => $listeForme,
@@ -2605,6 +2658,727 @@ class ChururgieController extends AbstractActionController {
 			
 	}
 
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	/***** LECTEUR MP3 ---- LECTEUR MP3  *****/
+	/***** LECTEUR MP3 ---- LECTEUR MP3  *****/
+	/***** LECTEUR MP3 ---- LECTEUR MP3  *****/
+	public function lecteurMp3Action($ListeDesSons){
+	    $html ='<script>
+				 var tab = [];
+		        </script>';
+	    $i = 0;
+	    foreach ($ListeDesSons as $Liste) {
+	        $html .='<script>
+        		 tab['.$i++.'] = {
+	                     "title":"'. $Liste['titre'] .'<span class=\"supprimerSon'.$i.'\" >  </span>",
+		                 "mp3":"/simens/public/audios/'. $Liste['nom'] .'",
+		         };
+		                     
+		         setTimeout(function() {
+	                $(function () {
+		              $(".supprimerSon'.$i.'").click(function () { return false; });
+		              $(".supprimerSon'.$i.'").dblclick(function () { supprimerAudioMp3('.$i.'); return false; });
+	                });
+                 }, 1000);
+        		 </script>';
+	    }
+	    
+	    $html .='<script>
+        		$(function(){
+	              new jPlayerPlaylist({
+		          jPlayer: "#jquery_jplayer_2",
+		          cssSelectorAncestor: "#jp_container_2"
+	            }, tab , {
+		        swfPath: "/simens/public/js/plugins/jPlayer-2.9.2/dist/jplayer",
+		        supplied: "mp3",
+		        wmode: "window",
+		        useStateClassSkin: true,
+		        autoBlur: false,
+		        smoothPlayBar: true,
+		        keyEnabled: true,
+		        remainingDuration: true,
+		        toggleDuration: true
+	            });
+                });
+        		scriptAjoutMp3();
+                </script>';
+	    
+	    $html .='
+				<form id="my_form" method="post" action="/simens/public/chururgie/ajouter-mp3" enctype="multipart/form-data">
+                <div id="jquery_jplayer_2" class="jp-jplayer" style="margin-bottom: 30px;"></div>
+                <div id="jp_container_2" class="jp-audio" role="application" aria-label="media player"  style="margin-bottom: 30px;">
+	            <div class="jp-type-playlist">
+		         <div class="jp-gui jp-interface">
+			       <div class="jp-controls">
+				      <button class="jp-previous" role="button" tabindex="0">previous</button>
+				      <button class="jp-play" role="button" tabindex="0">play</button>
+				      <button class="jp-next" role="button" tabindex="0">next</button>
+				      <button class="jp-stop" role="button" tabindex="0">stop</button>
+			       </div>
+			   <div class="jp-progress">
+				<div class="jp-seek-bar">
+					<div class="jp-play-bar"></div>
+				</div>
+			   </div>
+			   <div class="jp-volume-controls">
+				<button class="jp-mute" role="button" tabindex="0">mute</button>
+				<button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+				<div class="jp-volume-bar">
+					<div class="jp-volume-bar-value"></div>
+				</div>
+			   </div>
+			   <div class="jp-time-holder">
+				<div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+				<div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+			   </div>
+			   <div class="jp-toggles">
+				<button class="jp-repeat" role="button" tabindex="0">repeat</button>
+				<!-- button class="jp-shuffle" role="button" tabindex="0">shuffle</button-->
+				<div class="jp-ajouter" id="ajouter">
+				  <input type="file" name="fichier" id="fichier">
+				</div>
+			   </div>
+		       </div>
+		       <div class="jp-playlist">
+			      <ul>
+				     <li>&nbsp;</li>
+			      </ul>
+		       </div>
+	           </div>
+               </div>
+               </form>';
+	    return $html;
+	}
+	
+	public function lecteurMp3InstrumentalAction($ListeDesSons){
+	    $html ='<script>
+				 var tab = [];
+		        </script>';
+	    $i = 0;
+	    foreach ($ListeDesSons as $Liste) {
+	        $html .='<script>
+        		 tab['.$i++.'] = {
+	                     "title":"'. $Liste['titre'] .'<span class=\"supprimerSonIns'.$i.'\" >  </span>",
+		                 "mp3":"/simens/public/audios/'. $Liste['nom'] .'",
+		         };
+		                     
+		         setTimeout(function() {
+	                $(function () {
+		              $(".supprimerSonIns'.$i.'").click(function () { return false; });
+		              $(".supprimerSonIns'.$i.'").dblclick(function () { supprimerAudioMp3('.$i.'); return false; });
+	                });
+                 }, 1000);
+        		 </script>';
+	    }
+	    
+	    $html .='<script>
+        		$(function(){
+	              new jPlayerPlaylist({
+		          jPlayer: "#jquery_jplayer",
+		          cssSelectorAncestor: "#jp_container"
+	            }, tab , {
+		        swfPath: "/simens/public/js/plugins/jPlayer-2.9.2/dist/jplayer",
+		        supplied: "mp3",
+		        wmode: "window",
+		        useStateClassSkin: true,
+		        autoBlur: false,
+		        smoothPlayBar: true,
+		        keyEnabled: true,
+		        remainingDuration: true,
+		        toggleDuration: true
+	            });
+                });
+        		scriptAjoutMp3_Instrumental();
+                </script>';
+	    
+	    $html .='
+				<form id="my_form2" method="post" action="/simens/public/chururgie/ajouter-mp3" enctype="multipart/form-data">
+                <div id="jquery_jplayer" class="jp-jplayer" style="margin-bottom: 30px;"></div>
+                <div id="jp_container" class="jp-audio" role="application" aria-label="media player"  style="margin-bottom: 30px;">
+	            <div class="jp-type-playlist">
+		         <div class="jp-gui jp-interface">
+			       <div class="jp-controls">
+				      <button class="jp-previous" role="button" tabindex="0">previous</button>
+				      <button class="jp-play" role="button" tabindex="0">play</button>
+				      <button class="jp-next" role="button" tabindex="0">next</button>
+				      <button class="jp-stop" role="button" tabindex="0">stop</button>
+			       </div>
+			   <div class="jp-progress">
+				<div class="jp-seek-bar">
+					<div class="jp-play-bar"></div>
+				</div>
+			   </div>
+			   <div class="jp-volume-controls">
+				<button class="jp-mute" role="button" tabindex="0">mute</button>
+				<button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+				<div class="jp-volume-bar">
+					<div class="jp-volume-bar-value"></div>
+				</div>
+			   </div>
+			   <div class="jp-time-holder">
+				<div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+				<div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+			   </div>
+			   <div class="jp-toggles">
+				<button class="jp-repeat" role="button" tabindex="0">repeat</button>
+				<!-- button class="jp-shuffle" role="button" tabindex="0">shuffle</button-->
+				<div class="jp-ajouter" id="ajouter2">
+				  <input type="file" name="fichier" id="fichier">
+				</div>
+			   </div>
+		       </div>
+		       <div class="jp-playlist">
+			      <ul>
+				     <li>&nbsp;</li>
+			      </ul>
+		       </div>
+	           </div>
+               </div>
+               </form>';
+	    return $html;
+	}
+	
+	public function afficherMp3Action(){
+	    $id_cons = $this->params()->fromPost('id_cons', 0);
+	    $type = (int)$this->params()->fromPost('type', 0);
+	    
+	    $ListeDesSons = $this->getConsultationTable ()->getMp3($id_cons, $type);
+	    
+	    $html = null;
+	    if($type == 1){
+	        $html = $this->lecteurMp3Action($ListeDesSons);
+	    }else {
+	        $html = $this->lecteurMp3InstrumentalAction($ListeDesSons);
+	    }
+	    
+	    
+	    $this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+	    return $this->getResponse ()->setContent ( Json::encode ($html) );
+	}
+	
+	public function supprimerMp3Action(){
+	    $id = $this->params()->fromPost('id', 0);
+	    $id_cons = $this->params()->fromPost('id_cons', 0);
+	    $type = $this->params()->fromPost('type', 0);
+	    
+	    $this->getConsultationTable ()->supprimerMp3($id, $id_cons, $type);
+	    
+	    $ListeDesSons = $this->getConsultationTable ()->getMp3($id_cons, $type);
+	    
+	    $html = null;
+	    if($type == 1){
+	        $html = $this->lecteurMp3Action($ListeDesSons);
+	    }else {
+	        $html = $this->lecteurMp3InstrumentalAction($ListeDesSons);
+	    }
+	    $this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+	    return $this->getResponse ()->setContent ( Json::encode ($html) );
+	}
+	
+	public function ajouterMp3Action(){
+	    
+	    $type = $_FILES['fichier']['type'];
+	    //$nom_file = $_FILES['fichier']['name'];
+	    $tmp = $_FILES['fichier']['tmp_name'];
+	    
+	    $date = new \DateTime();
+	    $aujourdhui = $date->format('H-i-s_d-m-y');
+	    $nom_file = "audio_".$aujourdhui.".mp3";
+	    
+	    if($type == 'audio/mp3'){
+	        $result = move_uploaded_file($tmp, 'C:\wamp\www\simens\public\audios\\'.$nom_file);
+	    } else {
+	        $nom_file = 0;
+	    }
+	    
+	    $this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+	    return $this->getResponse ()->setContent ( Json::encode ($nom_file) );
+	    
+	}
+	
+	public function insererBdMp3Action(){
+	    $id_cons = $this->params()->fromPost('id_cons', 0);
+	    $nom_file = $this->params()->fromPost('nom_file', 0);
+	    $type = $this->params()->fromPost('type', 0);
+	    
+	    $this->getConsultationTable ()->insererMp3($nom_file, $nom_file, $id_cons, $type);
+	    $ListeDesSons = $this->getConsultationTable ()->getMp3($id_cons, $type);
+	    
+	    $html = null;
+	    if($type == 1){
+	        $html = $this->lecteurMp3Action($ListeDesSons);
+	    }else {
+	        $html = $this->lecteurMp3InstrumentalAction($ListeDesSons);
+	    }
+	    
+	    $this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+	    return $this->getResponse ()->setContent ( Json::encode ($html) );
+	}
+	
+	
+	/***** LECTEUR VIDEO ---- LECTEUR VIDEO  *****/
+	/***** LECTEUR VIDEO ---- LECTEUR VIDEO  *****/
+	/***** LECTEUR VIDEO ---- LECTEUR VIDEO  *****/
+	public function lecteurVideoAction($ListeDesVideos){
+	    
+	    $html ='<script>
+				 var tab = [];
+		        </script>';
+	    $i = 0;
+	    foreach ($ListeDesVideos as $Liste) {
+	        
+	        if($Liste['format'] == "video/mp4" || $Liste['format'] == "video/m4v") {
+	            $html .='<script>
+        		 tab['.$i++.'] = {
+	                     "title":"'. $Liste['titre'] .' <span class=\'supprimerVideoIns'.$i.'\' >  </span>",
+		                 "m4v":"/simens/public/videos/'. $Liste['nom'] .'",
+		         };
+		                     
+		         setTimeout(function() {
+	                $(function () {
+		              $(".supprimerVideoIns'.$i.'").click(function () { return false; });
+		              $(".supprimerVideoIns'.$i.'").dblclick(function () { supprimerVideo('.$Liste['id'].'); return false; });
+	                });
+                 }, 1000);
+        		 </script>';
+	        }
+	        else
+	            if($Liste['format'] == "video/webm") {
+	                $html .='<script>
+        		 tab['.$i++.'] = {
+	                     "title":"'. $Liste['titre'] .'<span class=\'supprimerVideoIns'.$i.'\' >  </span>",
+		                 "webmv":"/simens/public/videos/'. $Liste['nom'] .'",
+		         };
+		                     
+		         setTimeout(function() {
+	                $(function () {
+		              $(".supprimerVideoIns'.$i.'").click(function () { return false; });
+		              $(".supprimerVideoIns'.$i.'").dblclick(function () { supprimerVideo('.$Liste['id'].'); return false; });
+	                });
+                 }, 1000);
+        		 </script>';
+	            }
+	    }
+	    
+	    $html .='<script>
+				 $(document).ready(function(){
+	        
+	               new jPlayerPlaylist({
+		             jPlayer: "#jquery_jplayer_1",
+		             cssSelectorAncestor: "#jp_container_1"
+	               },
+				      tab
+				    ,{
+		               swfPath: "../../dist/jplayer",
+		               supplied: "webmv, ogv, m4v",
+		               useStateClassSkin: true,
+		               autoBlur: false,
+		               smoothPlayBar: true,
+		               keyEnabled: true
+	               });
+	        
+                 });
+	        
+				scriptAjoutVideo();
+		        </script>';
+	    
+	    $html .='
+	        
+		<form id="my_form_video" method="post" action="/simens/public/chururgie/ajouter-video" enctype="multipart/form-data">
+		<div id="jp_container_1" class="jp-video jp-video-270p" role="application" aria-label="media player" style="margin: auto;">
+	    <div class="jp-type-playlist">
+		<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+		<div class="jp-gui">
+			<div class="jp-video-play">
+				<button class="jp-video-play-icon" role="button" tabindex="0">play</button>
+			</div>
+			<div class="jp-interface">
+				<div class="jp-progress">
+					<div class="jp-seek-bar">
+						<div class="jp-play-bar"></div>
+					</div>
+				</div>
+				<div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+				<div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+				<div class="jp-controls-holder">
+					<div class="jp-controls">
+						<button class="jp-previous" role="button" tabindex="0">previous</button>
+						<button class="jp-play" role="button" tabindex="0">play</button>
+						<button class="jp-next" role="button" tabindex="0">next</button>
+						<button class="jp-stop" role="button" tabindex="0">stop</button>
+					</div>
+					<div class="jp-volume-controls">
+						<button class="jp-mute" role="button" tabindex="0">mute</button>
+						<button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+						<div class="jp-volume-bar">
+							<div class="jp-volume-bar-value"></div>
+						</div>
+					</div>
+					<div class="jp-toggles">
+						<button class="jp-full-screen" role="button" tabindex="0">full screen</button>
+					</div>
+	        
+				    <div class="jp-toggles2" id="jp-toggles-video" >
+				        <div class="jp-ajouter-video">
+				           <input type="file" name="fichier-video" id="fichier-video">
+				        </div>
+					</div>
+	        
+				</div>
+				<div class="jp-details">
+					<div class="jp-title" aria-label="title">&nbsp;</div>
+				</div>
+			</div>
+		</div>
+		<div class="jp-playlist">
+			<ul>
+				<li>&nbsp;</li>
+			</ul>
+		</div>
+	    </div>
+        </div>
+		</form>';
+	    return $html;
+	}
+	
+	public function afficherVideoAction(){
+	    $id_cons = $this->params()->fromPost('id_cons', 0);
+	    $listeDesVideos = $this->getConsultationTable()->getVideos($id_cons);
+	    $html = $this->lecteurVideoAction($listeDesVideos);
+	    
+	    $this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+	    return $this->getResponse ()->setContent ( Json::encode ( $html ) );
+	}
+	
+	
+	public function ajouterVideoAction(){
+	    
+	    $type = $_FILES['fichier-video']['type'];
+	    $nom_file = ""; //$_FILES['fichier-video']['name'];
+	    $tmp = $_FILES['fichier-video']['tmp_name'];
+	    
+	    $date = new \DateTime();
+	    $aujourdhui = $date->format('H-i-s_d-m-y');
+	    
+	    /**
+	     * 'video/mp4' pour chrome
+	     * 'video/x-m4v pour firefox
+	     */
+	    
+	    if($type == 'video/webm' || $type == 'video/mp4' || $type == 'video/x-m4v'){
+	        if($type == 'video/webm'){
+	            $nom_file ="v_scan_".$aujourdhui.".webm";
+	        }
+	        else
+	            if($type == 'video/mp4'){
+	                $nom_file ="v_scan_".$aujourdhui.".mp4";
+	        }
+	        else
+	            if($type == 'video/x-m4v'){
+	                $nom_file ="v_scan_".$aujourdhui.".m4v";
+	                $type = 'video/m4v';
+	        }
+	        $result = move_uploaded_file($tmp, 'C:\wamp\www\simens\public\videos\\'.$nom_file);
+	    }
+	    
+	    $html = array($nom_file, $type);
+	    $this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+	    return $this->getResponse ()->setContent ( Json::encode ($html) );
+	    
+	}
+	
+	
+	public function insererBdVideoAction(){
+	    $id_cons = $this->params()->fromPost('id_cons', 0);
+	    $nom_file = $this->params()->fromPost('nom_file', 0);
+	    $type_file = $this->params()->fromPost('type_file', 0);
+	    
+	    $html = 0;
+	    if($type_file == 'video/webm' || $type_file == 'video/mp4' || $type_file == 'video/m4v'){
+	        $this->getConsultationTable ()->insererVideo($nom_file, $nom_file, $type_file, $id_cons);
+	        $ListeDesVideos = $this->getConsultationTable ()->getVideos($id_cons);
+	        $html = $this->lecteurVideoAction($ListeDesVideos);
+	    }
+	    
+	    
+	    $this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+	    return $this->getResponse ()->setContent ( Json::encode ($html) );
+	}
+	
+	public function supprimerVideoAction(){
+	    $id = $this->params()->fromPost('id', 0);
+	    
+	    $result = $this->getConsultationTable ()->supprimerVideo($id);
+	    
+	    $this->getResponse ()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html; charset=utf-8' );
+	    return $this->getResponse ()->setContent ( Json::encode ($result) );
+	}
+	
+	
+	
+	
+	
+	//********************************************************
+	//********************************************************
+	//********************************************************
+	public function imagesExamensMorphologiquesAction()
+	{
+	    $id_cons = $this->params()->fromPost( 'id_cons' );
+	    $ajout = (int)$this->params()->fromPost( 'ajout' );
+	    $idExamen = (int)$this->params()->fromPost( 'typeExamen' ); /*Le type d'examen*/
+	    $utilisateur = (int)$this->params()->fromPost( 'utilisateur' ); /* 1==radiologue sinon Medecin  */
+	    
+	    $user = $this->layout()->user;
+	    $id_personne = $user['id_personne'];
+	    
+	    /***
+	     * INSERTION DE LA NOUVELLE IMAGE
+	     */
+	    if($ajout == 1) {
+	        /***
+	         * Enregistrement de l'image
+	         * Enregistrement de l'image
+	         * Enregistrement de l'image
+	         */
+	        $today = new \DateTime ( 'now' );
+	        $nomImage = $today->format ( 'dmy_His' );
+	        if($idExamen == 8) { $nomImage = "radio_".$nomImage;}
+	        if($idExamen == 9) { $nomImage = "echographie_".$nomImage;}
+	        if($idExamen == 10) { $nomImage = "irm_".$nomImage;}
+	        if($idExamen == 11) { $nomImage = "scanner_".$nomImage;}
+	        if($idExamen == 12) { $nomImage = "fibroscopie_".$nomImage;}
+	        
+	        $date_enregistrement = $today->format ( 'Y-m-d H:i:s' );
+	        $fileBase64 = $this->params ()->fromPost ( 'fichier_tmp' );
+	        
+	        $typeFichier = substr ( $fileBase64, 5, 5 );
+	        $formatFichier = substr ($fileBase64, 11, 4 );
+	        $fileBase64 = substr ( $fileBase64, 23 );
+	        
+	        if($utilisateur == 1){
+	            
+	            if($fileBase64 && $typeFichier == 'image' && $formatFichier =='jpeg'){
+	                $img = imagecreatefromstring(base64_decode($fileBase64));
+	                if($img){
+	                    $resultatAjout = $this->demandeExamensTable()->ajouterImageMorpho($id_cons, $idExamen, $nomImage, $date_enregistrement, $id_personne);
+	                }
+	                if($resultatAjout){
+	                    imagejpeg ( $img, 'C:\wamp\www\simens\public\images\images\\' . $nomImage . '.jpg' );
+	                }
+	            }
+	            
+	        }else {
+	            
+	            if($fileBase64 && $typeFichier == 'image' && $formatFichier =='jpeg'){
+	                $img = imagecreatefromstring(base64_decode($fileBase64));
+	                if($img){
+	                    $resultatAjout = $this->demandeExamensTable()->ajouterImage($id_cons, $idExamen, $nomImage, $date_enregistrement, $id_personne);
+	                }
+	                if($resultatAjout){
+	                    imagejpeg ( $img, 'C:\wamp\www\simens\public\images\images\\' . $nomImage . '.jpg' );
+	                }
+	            }
+	            
+	        }
+	        
+	    }
+	    
+	    /**
+	     * RECUPERATION DE TOUS LES RESULTATS DES EXAMENS MORPHOLOGIQUES
+	     */
+	    if($utilisateur == 1){
+	        $result = $this->demandeExamensTable()->resultatExamensMorpho($id_cons);
+	    }else {
+	        $result = $this->demandeExamensTable()->resultatExamens($id_cons);
+	    }
+	    
+	    $radio = false;
+	    $echographie = false;
+	    $irm = false;
+	    $scanner = false;
+	    $fibroscopie = false;
+	    
+	    $html = "";
+	    $pickaChoose = "";
+	    
+	    if($result){
+	        foreach ($result as $resultat) {
+	            /**==========================**/
+	            /**Recuperer les images RADIO**/
+	            /**==========================**/
+	            if($resultat['idExamen'] == 8 && $idExamen == 8){
+	                $radio = true;
+	                $pickaChoose .=" <li><a href='../images/images/".$resultat['NomImage'].".jpg'><img src='../images/images/".$resultat['NomImage'].".jpg'/></a><span></span></li>";
+	            } else
+	                /**================================**/
+	                    /**Recuperer les images ECHOGRAPHIE**/
+	                        /**================================**/
+	                            if($resultat['idExamen'] == 9 && $idExamen == 9){
+	                                $echographie = true;
+	                                $pickaChoose .=" <li><a href='../images/images/".$resultat['NomImage'].".jpg'><img src='../images/images/".$resultat['NomImage'].".jpg'/></a><span></span></li>";
+	                        } else
+	                            /**================================**/
+	                                /**Recuperer les images IRM**/
+	                                    /**================================**/
+	                                        if($resultat['idExamen'] == 10 && $idExamen == 10){
+	                                            $irm = true;
+	                                            $pickaChoose .=" <li><a href='../images/images/".$resultat['NomImage'].".jpg'><img src='../images/images/".$resultat['NomImage'].".jpg'/></a><span></span></li>";
+	                                    } else
+	                                        /**================================**/
+	                                            /**Recuperer les images SCANNER**/
+	                                                /**================================**/
+	                                                    if($resultat['idExamen'] == 11 && $idExamen == 11){
+	                                                        $scanner = true;
+	                                                        $pickaChoose .=" <li><a href='../images/images/".$resultat['NomImage'].".jpg'><img src='../images/images/".$resultat['NomImage'].".jpg'/></a><span></span></li>";
+	                                                } else
+	                                                    /**================================**/
+	                                                        /**Recuperer les images FIBROSCOPIE**/
+	                                                            /**================================**/
+	                                                                if($resultat['idExamen'] == 12 && $idExamen == 12){
+	                                                                    $fibroscopie = true;
+	                                                                    $pickaChoose .=" <li><a href='../images/images/".$resultat['NomImage'].".jpg'><img src='../images/images/".$resultat['NomImage'].".jpg'/></a><span></span></li>";
+	                                                            }
+	        }
+	    }
+	    
+	    if($radio) {
+	        $html ="<div id='pika2'>
+				    <div class='pikachoose' style='height: 210px;'>
+                      <ul id='pikame' class='jcarousel-skin-pika'>";
+	        $html .=$pickaChoose;
+	        $html .=" </ul>
+                     </div>
+				     </div>";
+	        
+	        $html.="<script>
+					  $(function(){ $('.imageRadio').toggle(true);});
+					  scriptExamenMorpho();
+					</script>";
+	    } else
+	        if($echographie) {
+	            $html ="<div id='pika4'>
+				        <div class='pikachoose' style='height: 210px;'>
+                          <ul id='pikameEchographie' class='jcarousel-skin-pika'>";
+	            $html .=$pickaChoose;
+	            $html .=" </ul>
+                         </div>
+				         </div>";
+	            
+	            $html.="<script>
+						  $(function(){ $('.imageEchographie').toggle(true);});
+					      scriptEchographieExamenMorpho();
+					    </script>";
+	        } else
+	            if($irm) {
+	                $html ="<div id='pika6'>
+				             <div class='pikachoose' style='height: 210px;'>
+                              <ul id='pikameIRM' class='jcarousel-skin-pika'>";
+	                $html .=$pickaChoose;
+	                $html .=" </ul>
+                              </div>
+				             </div>";
+	                
+	                $html.="<script>
+						     $(function(){ $('.imageIRM').toggle(true);});
+					         scriptIRMExamenMorpho();
+					        </script>";
+	            } else
+	                if($scanner) {
+	                    $html ="<div id='pika8'>
+				             <div class='pikachoose' style='height: 210px;'>
+                              <ul id='pikameScanner' class='jcarousel-skin-pika'>";
+	                    $html .=$pickaChoose;
+	                    $html .=" </ul>
+                              </div>
+				             </div>";
+	                    
+	                    $html.="<script>
+						     $(function(){ $('.imageScanner').toggle(true);});
+					         scriptScannerExamenMorpho();
+					        </script>";
+	                } else
+	                    if($fibroscopie) {
+	                        $html ="<div id='pika10'>
+				             <div class='pikachoose' style='height: 210px;'>
+                              <ul id='pikameFibroscopie' class='jcarousel-skin-pika'>";
+	                        $html .=$pickaChoose;
+	                        $html .=" </ul>
+                              </div>
+				             </div>";
+	                        
+	                        $html.="<script>
+						     $(function(){ $('.imageFibroscopie').toggle(true);});
+					         scriptFibroscopieExamenMorpho();
+					        </script>";
+	                    }
+	                
+	                $this->getResponse()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html' );
+	                return $this->getResponse ()->setContent(Json::encode ( $html ));
+	}
+	
+	
+	//************************************************************************************
+	//************************************************************************************
+	//************************************************************************************
+	public function supprimerImageAction()
+	{
+	    $id_cons = $this->params()->fromPost('id_cons');
+	    $id = $this->params()->fromPost('id'); //numero de l'image dans le diapo
+	    $typeExamen = $this->params()->fromPost('typeExamen');
+	    
+	    /**
+	     * RECUPERATION DE TOUS LES RESULTATS DES EXAMENS MORPHOLOGIQUES
+	     */
+	    $result = $this->demandeExamensTable()->recupererDonneesExamen($id_cons, $id, $typeExamen);
+	    /**
+	     * SUPPRESSION PHYSIQUE DE L'IMAGE
+	     */
+	    unlink ( 'C:\wamp\www\simens\public\images\images\\' . $result['NomImage'] . '.jpg' );
+	    /**
+	     * SUPPRESSION DE L'IMAGE DANS LA BASE
+	     */
+	    $this->demandeExamensTable()->supprimerImage($result['IdImage']);
+	    
+	    $this->getResponse()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html' );
+	    return $this->getResponse ()->setContent(Json::encode ( ));
+	}
+	
+	/** POUR LES EXAMENS MORPHOLOGIQUES **/
+	/** POUR LES EXAMENS MORPHOLOGIQUES **/
+	/** POUR LES EXAMENS MORPHOLOGIQUES **/
+	public function supprimerImageMorphoAction()
+	{
+	    $id_cons = $this->params()->fromPost('id_cons');
+	    $id = $this->params()->fromPost('id'); //numero de l'image dans le diapo
+	    $typeExamen = $this->params()->fromPost('typeExamen');
+	    
+	    /**
+	     * RECUPERATION DE TOUS LES RESULTATS DES EXAMENS MORPHOLOGIQUES
+	     */
+	    $result = $this->demandeExamensTable()->recupererDonneesExamenMorpho($id_cons, $id, $typeExamen);
+	    /**
+	     * SUPPRESSION PHYSIQUE DE L'IMAGE
+	     */
+	    unlink ( 'C:\wamp\www\simens\public\images\images\\' . $result['NomImage'] . '.jpg' );
+	    /**
+	     * SUPPRESSION DE L'IMAGE DANS LA BASE
+	     */
+	    $this->demandeExamensTable()->supprimerImage($result['IdImage']);
+	    
+	    $this->getResponse()->getHeaders ()->addHeaderLine ( 'Content-Type', 'application/html' );
+	    return $this->getResponse ()->setContent(Json::encode ());
+	}
+	
 }
 
 

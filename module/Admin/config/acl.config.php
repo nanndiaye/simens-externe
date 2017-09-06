@@ -187,6 +187,18 @@ return array(
     						          'vue-patient-admis'=> array('secretaire','medecin'),
     						           'liste-rendez-vous'=> array('secretaire','medecin'),
     						    'supprimer-admission'=> array('secretaire','medecin'),
+    						        'lecteurMp3Action'=>'medecin',
+    						        'lecteurMp3InstrumentalAction'=>'medecin',
+    						        'insererBdMp3Action'=>'medecin',
+    						        'afficherMp3Action'=>'medecin',
+    						        'supprimerMp3Action'=>'medecin',
+    						         'ajouterMp3Action'=>'medecin',
+    						          'insererBdMp3Action'=>'medecin',
+    						          'lecteurVideoAction'=>'medecin',
+    						              'afficherVideoAction'=>'medecin',
+    						              'ajouterVideoAction'=>'medecin',
+    						              'insererBdVideoAction'=>'medecin',
+    						              'supprimerVideoAction'=>'medecin',
     					
     						
     								/*MENU MEDECIN GENERALE*/
@@ -200,7 +212,11 @@ return array(
     								'update-complement-consultation'=> array('medecin'),
     						         'visualisation-consultation'=> array('medecin'),
     						          'espace-recherche-med'=>'medecin',
-    						    
+    						          'recherche-visualisation-consultation'=>'medecin',
+    						          'demande-acte'=>'medecin',
+    						              'demande-examen-biologique'=>'medecin',
+    						          'imagesExamensMorphologiques'=>'medecin',
+    						          'supprimerImage'=>'medecin',
     						),
     						
     						/***

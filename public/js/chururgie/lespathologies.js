@@ -25,12 +25,12 @@ function creerLalistePathologie($ListeOrgane, $ListeClassePathologie, $ListeType
             "<table class='table table-bordered' style='margin-bottom: 0px; width: 100%;'>" +
             "<tr style='width: 100%;'>" +
            
-            "<th id='Selectorgane_" + (index + 1) + "' style='width: 30%;'>";
-    $liste += "<khass> <input style='width: 100%; margin-top: 3px; margin-bottom: 0px; font-size: 13px; height: 30px; font-size: 15px; padding-left: 10px;' id='pathologie_0" + (index + 1) + "' name='pathologie_0" + (index + 1) + "' type='text' > </khass>";
-    $liste += "</th>" +
-            "<th id='selectClassePathologie_" + (index + 1) + "' style='width: 30%;'  >" +
-            "<khassClassePathologie><input type='text' id='classepathologie" + (index + 1) + "' name='classepathologie" + (index + 1) + "' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' > </khassClassePathologie>" +
-            "</th >" +
+//            "<th id='Selectorgane_" + (index + 1) + "' style='width: 30%;'>";
+//    $liste += "<khass> <input style='width: 100%; margin-top: 3px; margin-bottom: 0px; font-size: 13px; height: 30px; font-size: 15px; padding-left: 10px;' id='pathologie_0" + (index + 1) + "' name='pathologie_0" + (index + 1) + "' type='text' > </khass>";
+//    $liste += "</th>" +
+//            "<th id='selectClassePathologie_" + (index + 1) + "' style='width: 30%;'  >" +
+//            "<khassClassePathologie><input type='text' id='classepathologie" + (index + 1) + "' name='classepathologie" + (index + 1) + "' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' > </khassClassePathologie>" +
+//            "</th >" +
             "<th id='notePathologie2_" + (index + 1) + "' style='width: 30%;'  >" +
             "<khassTypePathologie><input type='text' id='typepathologie" + (index + 1) + "' name='typepathologie" + (index + 1) + "' style='float: left; width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' > </khassTypePathologie>" +
             "</th >" +
@@ -167,7 +167,7 @@ function supprimer_pathologie_selectionne(id) {
 
 //VIDER LES CHAMPS DE L'ELEMENT SELECTIONNER
 function vider_Pathologie_selectionne(id) {
-    $("#pathologie_0" + id).val("");
+   $("#pathologie_0" + id).val("");
     $("#SelectClassePathologie" + id + " input").val("");
     $("#notePathologie2_" + id + " input").val("");
 }
@@ -185,31 +185,31 @@ function ValiderPathologie() {
         //Au debut on affiche pas le bouton modifier
         $("#bouton_Pathologie_modifier_demande").toggle(false);
         //Au debut on affiche le bouton valider
-        $("#bouton_Pathologie_valider_demande").toggle(true);
+     $("#bouton_Pathologie_valider_demande").toggle(true);
 
         $("#bouton_Pathologie_valider_demande button").click(function () {
-//		//RECUPERATION DES DONNEES DU TABLEAU
-//		var id_cons = $('#id_cons').val();
-//		var examensBio = [];
-//		var notesBio = [];
-//		for(var i = 1, j = 1; i <= nbListePathologies(); i++ ){
-//			if($('#pathologie_0'+i).val()) {
-//				examensBio[j] = $('#pathologie_0'+i).val();
-//				notesBio[j] = $('#SelectClassePathologie'+i+' input').val();
-//				j++;
-//			}
-//		}
-//		
-//		$.ajax({
-//	        type: 'POST',
-//	        url: tabUrl[0]+'public/consultation/demande-examen-biologique',
-//	        data: {'id_cons':id_cons, 'examensBio': examensBio, 'notesBio':notesBio},
-//	        success: function(data) {
+		//RECUPERATION DES DONNEES DU TABLEAU
+		var id_cons = $('#id_cons').val();
+		var examensBio = [];
+		var notesBio = [];
+		for(var i = 1, j = 1; i <= nbListePathologies(); i++ ){
+			if($('#pathologie_0'+i).val()) {
+				examensBio[j] = $('#pathologie_0'+i).val();
+				notesBio[j] = $('#SelectClassePathologie'+i+' input').val();
+				j++;
+			}
+		}
+		
+		$.ajax({
+	        type: 'POST',
+	        url: tabUrl[0]+'public/consultation/demande-examen-biologique',
+	        data: {'id_cons':id_cons, 'examensBio': examensBio, 'notesBio':notesBio},
+	        success: function(data) {
 
             for (var i = 1; i <= nbListePathologies(); i++) {
             	
                 $('#pathologie_0' + i).attr('disabled', true);
-                $("#classepathologie" + i ).attr('disabled', true);
+               $("#classepathologie" + i ).attr('disabled', true);
                 $("#typepathologie" + i ).attr('disabled', true);
             }
             $("#controls_pathologie div").toggle(false);
@@ -218,11 +218,11 @@ function ValiderPathologie() {
             $("#bouton_Pathologie_valider_demande").toggle(false);
             $("#increm_decrem img").toggle(false);
             return false;
-//	      },
-//	      error:function(e){console.log(e);alert("Une erreur interne est survenue!");},
-//	      dataType: "html"
-//		});
-//		return false;
+	      },
+	      error:function(e){console.log(e);alert("Une erreur interne est survenue!");},
+	      dataType: "html"
+		});
+		return false;
         });
 
         $("#ordonnance").click(function () {

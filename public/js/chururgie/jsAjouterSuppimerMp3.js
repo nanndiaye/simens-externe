@@ -4,7 +4,7 @@ $("#AfficherLecteur").hover(function(){ $('#temoinAudio').val(1); });
 $("#AfficherLecteurInstrumental").hover(function(){ $('#temoinAudio').val(2); });
                    
                     function AppelLecteurMp3(){
-                      var chemin = tabUrl[0]+'public/consultation/afficher-mp3';
+                      var chemin = tabUrl[0]+'public/chururgie/afficher-mp3';
                       var id_cons = $('#id_cons').val(); 
                       $.ajax({
  	                    url: chemin ,
@@ -24,7 +24,7 @@ $("#AfficherLecteurInstrumental").hover(function(){ $('#temoinAudio').val(2); })
                     function scriptAjoutMp3(){
                     	$(function () { 
                     	    $('#my_form').change(function (e) {
-                    	        // On empêche le navigateur de soumettre le formulaire
+                    	        // On empï¿½che le navigateur de soumettre le formulaire
                     	        e.preventDefault();
                     	        var id_cons = $('#id_cons').val(); 
                     	        var $form = $(this);
@@ -38,7 +38,7 @@ $("#AfficherLecteurInstrumental").hover(function(){ $('#temoinAudio').val(2); })
                     	        
                     	        var type = $('#temoinAudio').val();
                     	        
-                   	        var chemin = tabUrl[0]+'public/consultation/ajouter-mp3';
+                   	        var chemin = tabUrl[0]+'public/chururgie/ajouter-mp3';
                    	        $.ajax({
                    	        	url: chemin ,
                    	            type: $form.attr('method'),
@@ -46,18 +46,18 @@ $("#AfficherLecteurInstrumental").hover(function(){ $('#temoinAudio').val(2); })
                    	            processData: false, // obligatoire pour de l'upload
                    	            data: data,
                    	            success: function (response) { 
-                   	                // La réponse du serveur
+                   	                // La rï¿½ponse du serveur
                    	            	var result = jQuery.parseJSON(response); 
                    	            	if(result == 0){
                    	            		alert('format non reconnu: Choissisez un fichier mp3');
                    	            		return false;
                    	            	}
                    	            	$.ajax({
-                           	        	url: tabUrl[0]+'public/consultation/inserer-bd-mp3',
+                           	        	url: tabUrl[0]+'public/chururgie/inserer-bd-mp3',
                            	            type: $form.attr('method'),
                            	            data: {'id_cons':id_cons, 'type': type , 'nom_file': result},
                            	            success: function (response) { 
-                           	                // La réponse du serveur
+                           	                // La rï¿½ponse du serveur
                            	            	var result = jQuery.parseJSON(response); 
                        	            		$('#AfficherLecteur').empty(); 
                            	            	$('#AfficherLecteur').html(result);
@@ -71,7 +71,7 @@ $("#AfficherLecteurInstrumental").hover(function(){ $('#temoinAudio').val(2); })
                     }
                     
                    	function supprimerAudioMp3(id){ 
-                   		var chemin = tabUrl[0]+'public/consultation/supprimer-mp3';
+                   		var chemin = tabUrl[0]+'public/chururgie/supprimer-mp3';
                    		var id_cons = $('#id_cons').val(); 
                    		var type = $('#temoinAudio').val();
                    	    $.ajax({
@@ -101,7 +101,7 @@ $("#AfficherLecteurInstrumental").hover(function(){ $('#temoinAudio').val(2); })
                     //POUR LES TRAITEMENTS INSTRUMENTAUX
                     //POUR LES TRAITEMENTS INSTRUMENTAUX
                    	function AppelLecteurMp3_Instrumental(){
-                        var chemin = tabUrl[0]+'public/consultation/afficher-mp3';
+                        var chemin = tabUrl[0]+'public/chururgie/afficher-mp3';
                         var id_cons = $('#id_cons').val();
                         $.ajax({
    	                    url: chemin ,
@@ -121,7 +121,7 @@ $("#AfficherLecteurInstrumental").hover(function(){ $('#temoinAudio').val(2); })
                    	 function scriptAjoutMp3_Instrumental(){
                      	$(function () {
                      	    $('#my_form2').change(function (e) {
-                     	        // On empêche le navigateur de soumettre le formulaire
+                     	        // On empï¿½che le navigateur de soumettre le formulaire
                      	        e.preventDefault();
                      	        var id_cons = $('#id_cons').val(); 
                      	        var $form = $(this);
@@ -135,7 +135,7 @@ $("#AfficherLecteurInstrumental").hover(function(){ $('#temoinAudio').val(2); })
                      	       
                      	        var type = $('#temoinAudio').val();
                      	        
-                    	        var chemin = tabUrl[0]+'public/consultation/ajouter-mp3';
+                    	        var chemin = tabUrl[0]+'public/chururgie/ajouter-mp3';
                     	        $.ajax({
                     	        	url: chemin ,
                     	            type: $form.attr('method'),
@@ -143,18 +143,18 @@ $("#AfficherLecteurInstrumental").hover(function(){ $('#temoinAudio').val(2); })
                     	            processData: false, // obligatoire pour de l'upload
                     	            data: data,
                     	            success: function (response) { 
-                    	                // La réponse du serveur
+                    	                // La rï¿½ponse du serveur
                     	            	var result = jQuery.parseJSON(response); 
                     	            	if(result == 0){
                        	            		alert('format non reconnu: Choissisez un fichier mp3');
                        	            		return false;
                        	            	}
                     	            	$.ajax({
-                            	        	url: tabUrl[0]+'public/consultation/inserer-bd-mp3',
+                            	        	url: tabUrl[0]+'public/chururgie/inserer-bd-mp3',
                             	            type: $form.attr('method'),
                             	            data: {'id_cons':id_cons, 'type': type , 'nom_file': result},
                             	            success: function (response) { 
-                            	                // La réponse du serveur
+                            	                // La rï¿½ponse du serveur
                             	            	var result = jQuery.parseJSON(response); 
                            	            		$('#AfficherLecteurInstrumental').empty(); 
                                 	            $('#AfficherLecteurInstrumental').html(result);
