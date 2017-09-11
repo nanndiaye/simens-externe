@@ -108,7 +108,7 @@ $(window).load(function () {
 					alt='Liste' /> A Confirmer</span></a>
 		</div>
 		<div style="margin-left: 30px; height: 40px; padding-top: 20px;">
-			<a href="<?php echo $this->basePath()."/chururgie/liste-rendez-vous";?>"> <span
+			<a href="<?php echo $this->basePath()."/chururgie/liste-rendez-vous-a-confirmer";?>"> <span
 				id="admission_style"
 				style="margin-left: 5px; color: white; font-size: 15px; font-family: Times New Roman;"><img
 					style="display: inline;"
@@ -351,7 +351,7 @@ $('#deces').click(function(){
 //RENDEZ-VOUS SECRETARIAT
 function dep_admission1(){
 	$('#rv-secretaire').click(function(){
-		$("#admission").replaceWith("<li id='rv-secretaire'><a href=''><span style='margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/plus-green1.png' alt='Liste' /> Admission </span></a></li>");
+		$("#rv-secretaire").replaceWith("<li id='rv-secretaire'><a href=''><span style='margin-left:0px; color: #48ce77; font-weight:bold; font-size:20px; font-family:Times New Roman;'> <img style='display: inline;' src='/simens/public/images_icons/plus-green1.png' alt='Liste' /> Admission </span></a></li>");
 		dep_admission2();
 	    $('#plus_rv-secretaire').animate({
 	        height : 'toggle'

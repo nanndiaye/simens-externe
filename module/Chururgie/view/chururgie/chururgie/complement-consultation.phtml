@@ -423,6 +423,8 @@ echo $this->form()->openTag($form);
 						<div id="aa">
 							<a style="text-decoration: underline;">Adresse</a><br>
 							<p style='font-weight: bold; font-size: 19px;'><?php echo $this->lesdetails['ADRESSE'];?></p>
+							
+							
 						</div>
 
 					</td>
@@ -478,7 +480,8 @@ echo $this->form()->openTag($form);
 		<div style='max-height: 460px;'>
 
 
-           <?php echo $this->formHidden($form->get('id_patient'));?>
+           <?php echo $this->formHidden($form->get(id_patient));?>
+          
            <?php echo $this->formHidden($form->get('id_medecin'));?>
            <?php echo $this->formHidden($form->get('id_cons'));?>
 
@@ -2002,11 +2005,14 @@ echo $this->form()->openTag($form);
 
 
 
+
+
 						<!--**************** ANALYSE BIOLOGIQUE ************************-->
 						<!--**************** ANALYSE BIOLOGIQUE ************************-->
 						<div
 							style='font-family: police2; font-size: 15px; font-weight: bold; color: green;'>
 							Examens Biologiques</div>
+							
 						<div style='max-height: 320px;'>
 							<div
 								style="margin-bottom: 20px; border-bottom: 1px solid #cccccc; margin-top: -15px;"></div>
@@ -3221,7 +3227,8 @@ src='../images_icons/plus-green.png' title='ajouter' />
 
 							<th class="form-rendezvous2" style="width: 27%;"> <?php echo $this->formRow($form->get('date_rv')); ?> </th>
 							<th class="form-rendezvous2" style="width: 17%;"> <?php echo $this->formRow($form->get('heure_rv'));?> </th>
-
+							<th class="form-rendezvous2" style="width: 17%;"> <?php echo $this->formRow($form->get('delai_rv'));?> </th>
+							
 							<th style="width: 10%;">
 							
 							<th>

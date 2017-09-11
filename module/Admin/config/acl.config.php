@@ -199,6 +199,12 @@ return array(
     						              'ajouterVideoAction'=>'medecin',
     						              'insererBdVideoAction'=>'medecin',
     						              'supprimerVideoAction'=>'medecin',
+    						    'modifier-infos-patient-rv' =>array('secretaire','medecin'),
+    						    'info-patient-rv'=>array('secretaire','medecin'),
+    						    'liste-rendez-vous'=>array('secretaire','medecin'),
+    						    'liste-rendez-vous-ajax'=>array('secretaire','medecin'),
+    						    'liste-rendez-vous-a-confirmer'=>array('secretaire','medecin'),
+    						    'liste-rendez-vous-a-confirmer-ajax'=>array('secretaire','medecin'),
     					
     						
     								/*MENU MEDECIN GENERALE*/

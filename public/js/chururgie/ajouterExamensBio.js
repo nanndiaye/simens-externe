@@ -92,6 +92,7 @@ $(function () {
 
 //FONCTION INITIALISATION (Par d�faut)
 function partDefautExamenBio (Liste, n) { 
+	
 	var i = 0;
 	for( i ; i < n ; i++){
 		creerLalisteExamenBio(Liste);
@@ -301,3 +302,4 @@ $(function(){
 	
 });
 }
+

@@ -208,9 +208,9 @@ function ValiderPathologie() {
 
             for (var i = 1; i <= nbListePathologies(); i++) {
             	
-                $('#pathologie_0' + i).attr('disabled', true);
-               $("#classepathologie" + i ).attr('disabled', true);
-                $("#typepathologie" + i ).attr('disabled', true);
+               // $('#pathologie_0' + i).attr('disabled', true);
+               //$("#classepathologie" + i ).attr('disabled', true);
+                //$("#typepathologie" + i ).attr('disabled', true);
             }
             $("#controls_pathologie div").toggle(false);
             $("#iconePathologie_supp_vider a img").toggle(false);
@@ -225,47 +225,47 @@ function ValiderPathologie() {
 		return false;
         });
 
-        $("#ordonnance").click(function () {
-            for (var i = 1; i <= nbListePathologies(); i++) {
-                $('#patholoie_0' + i).attr('disabled', false);
-                $('#pathologie_0' + i).css({'background': 'white'});
-                $("#SelectClassePathologie" + i + " input").attr('disabled', false);
-                $("#SelectClassePathologie" + i + " input").css({'background': 'white'});
-                $("#notePathologie2_" + i + " input").attr('disabled', false);
-                $("#notePathologie2_" + i + " input").css({'background': 'white'});
-            }
-            setTimeout(function () {
-                for (var i = 1; i <= nbListePathologies(); i++) {
-                    $('#pathologie_0' + i).attr('disabled', true);
-                    $('#pathologie_0' + i).css({'background': '#f8f8f8'});
-                    $("#SelectClassePathologie" + i + " input").attr('disabled', true);
-                    $("#SelectClassePathologie" + i + " input").css({'background': '#f8f8f8'});
-                    $("#notePathologie2_" + i + " input").attr('disabled', true);
-                    $("#notePathologie2_" + i + " input").css({'background': '#f8f8f8'});
-                }
-                $("#controls_pathologie div").toggle(false);
-                $("#iconePathologie_supp_vider a img").toggle(false);
-                $("#bouton_Pathologie_modifier_demande").toggle(true);
-                $("#bouton_Pathologie_valider_demande").toggle(false);
-                $("#increm_decrem img").toggle(false);
-            }, 1500);
-        });
+//        $("#ordonnance").click(function () {
+//            for (var i = 1; i <= nbListePathologies(); i++) {
+//                //$('#patholoie_0' + i).attr('disabled', false);
+//                $('#pathologie_0' + i).css({'background': 'white'});
+//               // $("#SelectClassePathologie" + i + " input").attr('disabled', false);
+//                $("#SelectClassePathologie" + i + " input").css({'background': 'white'});
+//               // $("#notePathologie2_" + i + " input").attr('disabled', false);
+//                $("#notePathologie2_" + i + " input").css({'background': 'white'});
+//            }
+//            setTimeout(function () {
+//                for (var i = 1; i <= nbListePathologies(); i++) {
+//                   // $('#pathologie_0' + i).attr('disabled', true);
+//                    $('#pathologie_0' + i).css({'background': '#f8f8f8'});
+//                   // $("#SelectClassePathologie" + i + " input").attr('disabled', true);
+//                    $("#SelectClassePathologie" + i + " input").css({'background': '#f8f8f8'});
+//                    //$("#notePathologie2_" + i + " input").attr('disabled', true);
+//                    $("#notePathologie2_" + i + " input").css({'background': '#f8f8f8'});
+//                }
+//                $("#controls_pathologie div").toggle(false);
+//                $("#iconePathologie_supp_vider a img").toggle(false);
+//                $("#bouton_Pathologie_modifier_demande").toggle(true);
+//                $("#bouton_Pathologie_valider_demande").toggle(false);
+//                $("#increm_decrem img").toggle(false);
+//            }, 1500);
+//        });
 
-        $("#bouton_Pathologie_modifier_demande").click(function () {
-            for (var i = 1; i <= nbListePathologies(); i++) {
-            	$('#pathologie_0' + i).attr('disabled', false);
-                $("#classepathologie" + i ).attr('disabled', false);
-                $("#typepathologie" + i ).attr('disabled', false);
-            }
-            $("#controls_pathologie div").toggle(true);
-            if (nbListePathologies() == 1) {
-                $("#supprimer_pathologie").toggle(false);
-            }
-            $("#iconePathologie_supp_vider a img").toggle(true);
-            $("#bouton_Pathologie_modifier_demande").toggle(false);
-            $("#bouton_Pathologie_valider_demande").toggle(true);
-            $("#increm_decrem img").toggle(true);
-            return false;
-        });
+//        $("#bouton_Pathologie_modifier_demande").click(function () {
+//            for (var i = 1; i <= nbListePathologies(); i++) {
+//            	//$('#pathologie_0' + i).attr('disabled', false);
+//               // $("#classepathologie" + i ).attr('disabled', false);
+//                //$("#typepathologie" + i ).attr('disabled', false);
+//            }
+//            $("#controls_pathologie div").toggle(true);
+//            if (nbListePathologies() == 1) {
+//                $("#supprimer_pathologie").toggle(false);
+//            }
+//            $("#iconePathologie_supp_vider a img").toggle(true);
+//            $("#bouton_Pathologie_modifier_demande").toggle(false);
+//            $("#bouton_Pathologie_valider_demande").toggle(true);
+//            $("#increm_decrem img").toggle(true);
+//            return false;
+//        });
     });
 }
