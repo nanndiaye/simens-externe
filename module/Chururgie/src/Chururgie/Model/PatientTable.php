@@ -12,6 +12,19 @@ class PatientTable {
 	protected $tableGateway;
 	
 	
+	
+	public function getRvPatientParIdcons($id_cons) {
+	    $db = $this->tableGateway->getAdapter();
+	    $sql = new Sql($db);
+	    $sQuery = $sql->select()
+	    ->from(array('rv' => 'rendezvous_consultation'))
+	    ->columns( array( '*' ))
+	    ->where(array('ID_CONS' => $id_cons));
+	    
+	    return $sql->prepareStatementForSqlObject($sQuery)->execute()->current();
+	}
+	
+	
 	public function laListePatientsAjax(){
 	    $db = $this->tableGateway->getAdapter();
 	    $aColumns = array('Numero_Dossier','Nom','Prenom', 'Age','Sexe','Adresse', 'id', 'Idpatient');

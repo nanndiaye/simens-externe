@@ -278,15 +278,17 @@ class ChururgieController extends AbstractActionController {
 // 	
 	
 	public function infoPatientRvAction() {
+	   
 	    $id_pat = $this->params()->fromQuery ( 'id_patient', 0 );
 	    $id_cons = $this->params()->fromQuery ( 'id_cons' );
 	    
 	    $this->layout ()->setTemplate ( 'layout/chururgie' );
+	   
 	    
 	    $form = new ConsultationForm();
 	    $form->populateValues(array('id_cons' => $id_cons));
 	    
-	    //var_dump($form); exit();
+	   
 	    
 	    $user = $this->layout()->user;
 	    $IdDuService = $user['IdService'];
@@ -299,7 +301,7 @@ class ChururgieController extends AbstractActionController {
 	    
 	    $rv = $patient->getRvPatientParIdcons($id_cons);
 	    $form->populateValues(array('delai_rv' => $rv['DELAI']));
-	    //var_dump($rv);exit();
+	   // var_dump($rv);exit();
 	    return array (
 	        'form'=>$form,
 	        'lesdetails' => $unPatient,
@@ -325,6 +327,8 @@ class ChururgieController extends AbstractActionController {
 	    $user = $this->layout()->user;
 	    $IdDuService = $user['IdService'];
 	    
+	  
+	    
 	    $patient = $this->getPatientTable ();
 	    $unPatient = $patient->getInfoPatient( $id_pat );
 	    $rv = $patient->getRvPatientParIdcons($id_cons);
@@ -338,7 +342,7 @@ class ChururgieController extends AbstractActionController {
 	    );
 	    
 	    $form->populateValues($donneesRv);
-	    
+	   // var_dump(""); exit();
 	    return array (
 	        'form'=>$form,
 	        'lesdetails' => $unPatient,
@@ -347,9 +351,36 @@ class ChururgieController extends AbstractActionController {
 	        'date_enregistrement' => $unPatient['DATE_ENREGISTREMENT']
 	    );
 	}
+	
+	
+	
+	
+	public function listeRendezVousAConfirmerAction() {
+	    
+	    //$formConsultation = new ConsultationForm();
+	    $layout = $this->layout ();
+	    $layout->setTemplate ( 'layout/chururgie' );
+	    
+	    $user = $this->layout()->user;
+	    $idService = $user['IdService'];
+	    $id_cons = $this->params()->fromPost('id_cons');
+	    $id_patient = $this->params()->fromPost('id_patient');
+	    
+	    $leRendezVous = $this->getRvPatientConsTable()->getTousRVAConfirmer();
+	}
+	
+	public function listeRendezVousAConfirmerAjaxAction() {
+	    $output = $this->getRvPatientConsTable()->getTousRVAConfirmer();
+	    
+	    //$patient = $this->getPatientTable ();
+	    return $this->getResponse ()->setContent ( Json::encode ( $output, array (
+	        'enableJsonExprFinder' => true
+	    ) ) );
+	}
+	
 	public function listeRendezVousAjaxAction() {
 	    $output = $this->getRvPatientConsTable()->getTousRV();
-	    //var_dump("$output"); exit();
+	    
 	    //$patient = $this->getPatientTable ();
 	    return $this->getResponse ()->setContent ( Json::encode ( $output, array (
 	        'enableJsonExprFinder' => true
@@ -366,9 +397,9 @@ class ChururgieController extends AbstractActionController {
 	    $idService = $user['IdService'];
 	    $id_cons = $this->params()->fromPost('id_cons');
 	    $id_patient = $this->params()->fromPost('id_patient');
-	  
+	      
 	    $leRendezVous = $this->getRvPatientConsTable()->getTousRV();
-	   
+	    
 	    
 	    
 	    //$lespatients = $this->getConsultationTable()->listePatientsConsParMedecin ( $idService );
@@ -376,6 +407,7 @@ class ChururgieController extends AbstractActionController {
 	    //RECUPERER TOUS LES PATIENTS AYANT UN RV aujourd'hui
 	    
 	    $tabPatientRV = $this->getConsultationTable ()->getPatientsRV($idService);
+	   
 	    //var_dump($tabPatientRV);exit();
 	    //   		if($leRendezVous) {
 	    
@@ -428,7 +460,7 @@ class ChururgieController extends AbstractActionController {
 	
 	    return new ViewModel ( array (
 	        //'donnees' => $leRendezVous,
-	        'tabPatientRV' => $tabPatientRV,
+	        //'tabPatientRV' => $tabPatientRV,
 	        //  				'listeRendezVous' => $patientsRV->getPatientsRV (),
 	    //  				'form' => $formConsultation,
 	    ) );
@@ -1623,6 +1655,7 @@ class ChururgieController extends AbstractActionController {
 		$id_medecin = $user['id_personne'];
 	
 		$id_pat = $this->params ()->fromQuery ( 'id_patient', 0 );
+		//var_dump($id_pat);exit();
 		$id_cons = $this->params ()->fromQuery ( 'id_cons' );
 		$id= $this->params ()->fromQuery ('id_admission');
 		
@@ -1752,17 +1785,20 @@ class ChururgieController extends AbstractActionController {
 		
 		$listeTypePathologie=$this->getConsultationTable()->getTypePathologie();
 		//var_dump($listeTypePathologie);exit();
-		//var_dump("je tes");exit();
+		//var_dump($liste);exit();
 		$today = new \DateTime ( 'now' );
-		$date = $today->format ( 'dd/mm/yy' );
+		$date = $today->format ( 'dd/mm/yyyy' );
 		$heure = $today->format ( "H:i" );
+		
+		$form->populateValues(array('id_patient' => $id_pat));
+		
 		return array (
 		          'lesOrganes' => $listeOrgane,
 		          'listeclassePathologie'=>$listeclassePathologie,
 		          'listeTypePathologie'=> $listeTypePathologie,
 				'lesdetails' => $liste,
 		         'id_cons' => $id_cons,
-				//'nbMotifs' => $nbMotif,
+				'id_patient' => $id_pat,
 				'image' => $image,
 				'form' => $form,
 		          'heure_cons' => $heure,
@@ -2331,23 +2367,28 @@ class ChururgieController extends AbstractActionController {
 		
 		$user = $this->layout()->user;
 		$serviceMedecin = $user['NomService'];
-	
+	      
 		$nomMedecin = $user['Nom'];
 		$prenomMedecin = $user['Prenom'];
 		$donneesMedecin = array('nomMedecin' => $nomMedecin, 'prenomMedecin' => $prenomMedecin);
-	
+		//var_dump($donneesMedecin);exit();
 
 		//*************************************
 		//*************************************
 		//***DONNEES COMMUNES A TOUS LES PDF***
 		//*************************************
 		//*************************************
+// 		$id_pat = $this->params ()->fromRoute ( 'val', 0 );
+// 		var_dump($id_pat);exit();
 		$id_patient = $this->params ()->fromPost ( 'id_patient', 0 );
+		//$id_patient= $this->params()->fromQuery ( 'id_patient', 0 );
 		$id_cons = $this->params ()->fromPost ( 'id_cons', 0 );
 	
+		//var_dump($id_patient);exit();
+		
 		//*************************************
 		$donneesPatientOR = $this->getConsultationTable()->getInfoPatient($id_patient);
-		//var_dump($donneesPatientOR); exit();
+		//var_dump($id_patient); exit();
 		//**********ORDONNANCE*****************
 		//**********ORDONNANCE*****************
 		//**********ORDONNANCE*****************

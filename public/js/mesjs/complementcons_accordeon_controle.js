@@ -47,6 +47,90 @@
   });
   /*** FIN ***/
 
+  $(function(){
+		//********************* Activation Resultat Examens Biologiques *****************************
+		//********************* Activation Resultat Examen Biologiques *****************************
+		
+		var groupe_sanguin = $("#groupe_sanguin");
+		var hemogramme_sanguin = $("#hemogramme_sanguin");
+		var bilan_hemolyse = $("#bilan_hemolyse");
+		var bilan_hepatique = $("#bilan_hepatique");
+		var bilan_renal = $("#bilan_renal");
+		var bilan_inflammatoire = $("#bilan_inflammatoire");
+		
+		
+		
+		//Au debut on desactive tous les champs
+		groupe_sanguin.attr( 'readonly', false);
+		hemogramme_sanguin.attr( 'readonly', false);
+		bilan_hemolyse.attr( 'readonly', false);
+		bilan_hepatique.attr( 'readonly', false);
+		bilan_renal.attr( 'readonly', false);
+		bilan_inflammatoire.attr( 'readonly', false);
+
+		
+	});
+	  
+  
+  
+  
+  
+$(function(){
+	//********************* Activation Resultat Examen Fonctionnel *****************************
+	//********************* Activation Resultat Examen Fonctionnel *****************************
+	var doppler_couleur_pulse = $("#doppler_couleur_pulse");
+	var echographie_de_stress = $("#echographie_de_stress");
+	var holter_ecg = $("#holter_ecg");
+	var holter_tensionnel = $("#holter_tensionnel");
+	var fibroscopie_bronchique = $("#fibroscopie_bronchique");
+	var fibroscopie_gastrique = $("#fibroscopie_gastrique");
+	var colposcopie = $("#colposcopie");
+	var echographie_gynecologique = $("#echographie_gynecologique");
+	var echographie_obstetrique = $("#echographie_obstetrique");
+	var cpn = $("#cpn");
+	var consultation_senologie = $("#consultation_senologie");
+	var plannification_familiale = $("#plannification_familiale");
+	var ecg = $("#ecg");
+	var eeg = $("#eeg");
+	var efr = $("#efr");
+	var emg = $("#emg");
+	var circoncision = $("#circoncision");
+	var vaccination = $("#vaccination");
+	var soins_infirmiers = $("#soins_infirmiers");
+	 
+	
+
+	//Au debut on desactive tous les champs
+	doppler_couleur_pulse.attr( 'readonly', false);
+	echographie_de_stress.attr( 'readonly', false);
+	holter_ecg.attr( 'readonly', false);
+	holter_tensionnel.attr( 'readonly', false);
+	fibroscopie_bronchique.attr( 'readonly', false);
+	fibroscopie_gastrique.attr( 'readonly', false);
+	colposcopie.attr( 'readonly', false);
+	echographie_gynecologique.attr( 'readonly', false);
+	echographie_obstetrique.attr( 'readonly', false);
+	consultation_senologie.attr( 'readonly', false);
+	plannification_familiale.attr( 'readonly', false);
+	cpn.attr( 'readonly', false);
+	ecg.attr( 'readonly', false);
+	eeg.attr( 'readonly', false);
+	efr.attr( 'readonly', false);
+	emg.attr( 'readonly', false);
+	circoncision.attr( 'readonly', false);
+	vaccination.attr( 'readonly', false);
+	soins_infirmiers.attr( 'readonly', false);
+	
+	
+
+	
+});
+  
+
+  
+  
+  
+  
 //********************* ANALYSE MORPHOLOGIQUE *****************************
 //********************* ANALYSE MORPHOLOGIQUE *****************************
 $(function(){
