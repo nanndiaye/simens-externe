@@ -869,6 +869,53 @@ class ChururgieController extends AbstractActionController {
 		$user = $this->layout()->user;
 		$IdDuService = $user['IdService'];
 		$id_medecin = $user['id_personne'];
+		
+		
+		
+		/**** Pathologie ****/
+		/**** Pathologie ****/
+		
+		
+		$typePathologie = "";
+		 
+		
+		$tab = array();
+		$j = 1;
+		for($i = 1 ; $i < 10 ; $i++ ){
+
+		    if($this->params()->fromPost("typepathologie".$i)){
+		        
+		        $typePathologie = $this->params()->fromPost("typepathologie".$i);
+		        
+		        
+		        if($typePathologie){
+		           
+		            $result1 = $this->getConsultationTable()->getPathologiesByName($typePathologie);
+		            
+		            if($result1){
+		                $tab[$j++] = $result1["id_type_pathologie"];
+		               //
+		            } else {
+		                $idPathologie=  $this->getConsultationTable()->addPathologie($this->params()->fromPost("typepathologie".$i));
+		                $tab[$j++] = $idPathologie;
+		              //  $tab[$j++] = $typePathologie;
+		              //  $this->getConsultationTable()->addConsPatho($id_cons,$tab);
+		                
+		            }
+		        }
+		        
+		    }
+		}
+		
+		for($k=1;$k<count($tab);$k++){
+		   // var_dump($tab[$k++]);exit();
+		    $this->getConsultationTable()->addConsPatho($id_cons,$tab[$k++]);
+		}
+		
+		
+		var_dump(count($tab)); exit();
+		
+		
 	
 		//**********-- MODIFICATION DES CONSTANTES --********
 		//**********-- MODIFICATION DES CONSTANTES --********
@@ -876,12 +923,12 @@ class ChururgieController extends AbstractActionController {
 		$form = new ConsultationForm ();
 		$formData = $this->getRequest ()->getPost ();
 		$form->setData ( $formData );
-	
+		
 		// les antecedents medicaux du patient a ajouter addAntecedentMedicauxPersonne
 		$this->getConsultationTable()->addAntecedentMedicaux($formData);
 		
 		$this->getConsultationTable()->addAntecedentMedicauxPersonne($formData);
-		//var_dump($formData); exit();
+		
 		
 		// mettre a jour les motifs d'admission
 		$this->getMotifAdmissionTable ()->deleteMotifAdmission ( $id_cons );
@@ -890,7 +937,7 @@ class ChururgieController extends AbstractActionController {
 		
 		//mettre a jour la consultation
 		$this->getConsultationTable ()->updateConsultation ( $form );
-	
+		
 		//Recuperer les donnees sur les bandelettes urinaires
 		//Recuperer les donnees sur les bandelettes urinaires
 		$bandelettes = array(
@@ -919,7 +966,7 @@ class ChururgieController extends AbstractActionController {
 				'donnee5' => $this->params()->fromPost('examen_donnee5')
 		);
 		$this->getDonneesExamensPhysiquesTable()->updateExamenPhysique($info_donnees_examen_physique);
-	
+		
 		//POUR LES ANTECEDENTS ANTECEDENTS ANTECEDENTS
 		//POUR LES ANTECEDENTS ANTECEDENTS ANTECEDENTS
 		//POUR LES ANTECEDENTS ANTECEDENTS ANTECEDENTS
@@ -981,7 +1028,7 @@ class ChururgieController extends AbstractActionController {
 		//POUR LES RESULTATS DES EXAMENS MORPHOLOGIQUES
 		//POUR LES RESULTATS DES EXAMENS MORPHOLOGIQUES
 		//POUR LES RESULTATS DES EXAMENS MORPHOLOGIQUES
-	
+		
 		$info_examen_morphologique = array(
 				'id_cons'=> $id_cons,
 				'8'  => $this->params()->fromPost('radio_'),
@@ -992,7 +1039,7 @@ class ChururgieController extends AbstractActionController {
 		);
 	
 		$this->getNotesExamensMorphologiquesTable()->updateNotesExamensMorphologiques($info_examen_morphologique);
-
+		
 		//POUR LES DIAGNOSTICS
 		//POUR LES DIAGNOSTICS
 		//POUR LES DIAGNOSTICS
@@ -1003,8 +1050,23 @@ class ChururgieController extends AbstractActionController {
 				'diagnostic3' => $this->params()->fromPost('diagnostic3'),
 				'diagnostic4' => $this->params()->fromPost('diagnostic4'),
 		);
-	
+		
 		$this->getDiagnosticsTable()->updateDiagnostics($info_diagnostics);
+		//POUR LES PATHOLOGIES
+		//POUR LES PATHOLOGIES
+		//POUR LES PATHOLOGIES
+// 		$info_diagnostics = array(
+// 		    'id_cons' => $id_cons,
+// 		    'typepathologie1' => $this->params()->fromPost('typepathologie1'),
+// 		    'typepathologie2' => $this->params()->fromPost('typepathologie2'),
+// 		    'typepathologie3' => $this->params()->fromPost('typepathologie3'),
+// 		    'typepathologie4' => $this->params()->fromPost('typepathologie4'),
+// 		    'typepathologie5' => $this->params()->fromPost('typepathologie5'),
+// 		    'typepathologie6' => $this->params()->fromPost('typepathologie6'),
+// 		);
+		
+		//$this->getDiagnosticsTable()->updateDiagnostics($info_diagnostics);
+		
 		
 		//POUR LES TRAITEMENTS
 		//POUR LES TRAITEMENTS
@@ -1049,43 +1111,7 @@ class ChururgieController extends AbstractActionController {
 			}
 		}
 		
-		/**** Pathologie ****/
-		/**** Pathologie ****/
 		
-		
-		$nomOrgane = "";
-		$classePatho = "";
-		$typePathologie = "";
-		
-		for($i = 1 ; $i < 10 ; $i++ ){
-		    if($this->params()->fromPost("pathologie_0".$i)){
-		        
-		        $nomOrgane = $this->params()->fromPost("pathologie_0".$i);
-		        $classePatho = $this->params()->fromPost("classepathologie".$i);
-		        $typePathologie = $this->params()->fromPost("typepathologie".$i);
-		      
-		        
- 		        if($this->params()->fromPost("pathologie_0".$i)){
- 		           //var_dump($this->params()->fromPost("pathologie_0".$i));exit();
- 		            $result1 = $this->getConsultationTable()->getOrganeByName($nomOrgane);
- 		             
- 		            var_dump($result1);exit();
- 		            if($result1){
-		                $tab[$j++] = $result1;
-		                $tab[$j++] = $formeMedicament; $Consommable->addFormes($formeMedicament);
-		                $tab[$j++] = $this->params()->fromPost("nb_medicament_".$i);
-		                $tab[$j++] = $quantiteMedicament; $Consommable->addQuantites($quantiteMedicament);
- 		           } else {
-		                $idMedicaments = $Consommable->addMedicaments($nomMedicament);
-		                $tab[$j++] = $idMedicaments;
-		                $tab[$j++] = $formeMedicament; $Consommable->addFormes($formeMedicament);
-		                $tab[$j++] = $this->params()->fromPost("nb_medicament_".$i);
-		                $tab[$j++] = $quantiteMedicament; $Consommable->addQuantites($quantiteMedicament);
-		           }
-	        }
-		        
-		    }
-		}
 		
 		/*Mettre a jour la duree du traitement de l'ordonnance*/
 		$idOrdonnance = $this->getOrdonnanceTable()->updateOrdonnance($tab, $donnees);
@@ -1119,6 +1145,7 @@ class ChururgieController extends AbstractActionController {
 				'autres_interventions' => $this->params()->fromPost('autresIntervention'),
 		);
 		
+		
 		$this->getConsultationTable()->addTraitementsInstrumentaux($traitement_instrumental);
 		
 		//POUR LES COMPTES RENDU DES TRAITEMENTS
@@ -1134,7 +1161,8 @@ class ChururgieController extends AbstractActionController {
 		//POUR LES RENDEZ VOUS
 		$id_patient = $this->params()->fromPost('id_patient');
 		$date_RV_Recu = $this->params()->fromPost('date_rv');
-		//var_dump($date_RV_Recu);exit();
+		$delai_rv = $this->params()->fromPost('delai_rv');
+		
 		if($date_RV_Recu){
 			$date_RV = $this->dateHelper->convertDateInAnglais($date_RV_Recu);
 		}
@@ -1145,6 +1173,7 @@ class ChururgieController extends AbstractActionController {
 				'ID_CONS' => $id_cons,
 				'NOTE'    => $this->params()->fromPost('motif_rv'),
 				'HEURE'   => $this->params()->fromPost('heure_rv'),
+		          'DELAI'   => $this->params()->fromPost('delai_rv'),
 				'DATE'    => $date_RV,
 		);
 		$this->getRvPatientConsTable()->updateRendezVous($infos_rv);
@@ -1172,7 +1201,8 @@ class ChururgieController extends AbstractActionController {
 				'date_fin_prevue_hospi' => $this->dateHelper->convertDateInAnglais($this->params()->fromPost('date_fin_hospitalisation_prevue')),
 				'id_cons' => $id_cons,
 		);
-	
+
+		
 		$this->getDemandeHospitalisationTable()->saveDemandehospitalisation($infoDemandeHospitalisation);
 	
 		//POUR LA PAGE complement-consultation
@@ -1787,7 +1817,7 @@ class ChururgieController extends AbstractActionController {
 		//var_dump($listeTypePathologie);exit();
 		//var_dump($liste);exit();
 		$today = new \DateTime ( 'now' );
-		$date = $today->format ( 'dd/mm/yyyy' );
+		$date = $today->format ( 'dd/mm/yy' );
 		$heure = $today->format ( "H:i" );
 		
 		$form->populateValues(array('id_patient' => $id_pat));

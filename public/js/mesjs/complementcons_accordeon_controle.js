@@ -372,9 +372,9 @@ $(function(){
 	$( "#bouton_transfert_modifier" ).toggle(false);
 
 	//Au debut on desactive tous les champs
-	motif_transfert.attr( 'readonly', false ).css({'background':'#fff'});;
-	hopital_accueil.attr( 'disabled', false ).css({'background':'#fff'});;
-	service_accueil.attr( 'disabled', false ).css({'background':'#fff'});;
+	//motif_transfert.attr( 'readonly', false ).css({'background':'#fff'});;
+	//hopital_accueil.attr( 'disabled', false ).css({'background':'#fff'});;
+	//service_accueil.attr( 'disabled', false ).css({'background':'#fff'});;
 
 	//Valider(cach�) avec le bouton 'valider'
 	$( "#bouton_transfert_valider" ).click(function(){
@@ -458,6 +458,7 @@ $(function(){
  var motif_rv = $('#motif_rv');
  var date_rv = $( "#date_rv" );
  var heure_rv = $("#heure_rv");
+ var delai_rv = $("#delai_rv");
    date_rv.attr('autocomplete', 'off');
    $( "#disable" ).click(function(){
 	  motif_rv.attr( 'readonly', true ).css({'background':'#f8f8f8'});     //d�sactiver le motif
@@ -465,6 +466,8 @@ $(function(){
       date_rv.attr( 'disabled', true ).css({'background':'#f8f8f8'});     //d�sactiver la date
       $("#heure_rv_tampon").val(heure_rv.val()); //Placer l'heure dans heure_rv_tampon avant la desacivation
       heure_rv.attr( 'disabled', true ).css({'background':'#f8f8f8'});   //d�sactiver l'heure
+      $("#delai_rv_tampon").val(delai_rv.val()); //Placer delai dans delai_rv_tampon avant la desacivation
+      delai_rv.attr( 'disabled', true ).css({'background':'#f8f8f8'});   //d�sactiver delai
       $("#disable_bouton").toggle(true);  //on affiche le bouton permettant de modifier les champs
       $("#enable_bouton").toggle(false); //on cache le bouton permettant de valider les champs
  
@@ -483,7 +486,10 @@ $(function(){
    motif_rv.attr( 'readonly', false ).css({'background':'#fff'});
    date_rv.attr( 'disabled', false ).css({'background':'#fff'});
    heure_rv.attr( 'disabled', false ).css({'background':'#fff'});
-
+   delai_rv.attr( 'disabled', false ).css({'background':'#fff'});
+   
+   
+   
    //Valider(cach�) avec le bouton 'valider'
    $( "#enable_bouton" ).click(function(){
 	  motif_rv.attr( 'readonly', true ).css({'background':'#f8f8f8'});     //d�sactiver le motif
@@ -491,6 +497,10 @@ $(function(){
       date_rv.attr( 'disabled', true ).css({'background':'#f8f8f8'});     //d�sactiver la date
       $("#heure_rv_tampon").val(heure_rv.val()); //Placer l'heure dans heure_rv_tampon avant la desacivation
 	  heure_rv.attr( 'disabled', true ).css({'background':'#f8f8f8'});   //d�sactiver l'heure
+	  
+	  $("#delai_rv_tampon").val(delai_rv.val()); //Placer delai dans delai_rv_tampon avant la desacivation
+	  delai_rv.attr( 'disabled', true ).css({'background':'#f8f8f8'});   //d�sactiver delai
+	  
 	  $("#disable_bouton").toggle(true);  //on affiche le bouton permettant de modifier les champs
 	  $("#enable_bouton").toggle(false); //on cache le bouton permettant de valider les champs
 	  
@@ -502,6 +512,7 @@ $(function(){
 	  motif_rv.attr( 'readonly', false ).css({'background':'#fff'});      //activer le motif
 	  date_rv.attr( 'disabled', false ).css({'background':'#fff'});      //activer la date
 	  heure_rv.attr( 'disabled', false ).css({'background':'#fff'});    //activer l'heure
+	  delai_rv.attr('disabled', false).css({'background':'#fff'}); 	//activer le delai
  	  $("#disable_bouton").toggle(false);   //on cache le bouton permettant de modifier les champs
  	  $("#enable_bouton").toggle(true);    //on affiche le bouton permettant de valider les champs
  	  
@@ -770,6 +781,22 @@ $(function(){
 	    donnees['id_cons']    = $("#id_cons").val();
 	    donnees['terminer'] = 'save';
 	    
+	    
+	    //*********** PATHOLOGIE ************
+	    //*********** PATHOLOGIE ************
+	    
+	     
+	    for(var i = 1 ; i < 10 ; i++ ){
+	     	if($("#typepathologie"+i).val()){
+	     		//donnees['pathologie_0'+i] = $("#pathologie_0"+i).val();
+	     		//donnees['classepathologie'+i] = $("#classepathologie"+i).val();
+	     		donnees['typepathologie'+i] = $("#typepathologie"+i).val();
+	     	}
+	     }
+	    //alert(donnees['typepathologie'+i]);
+	    
+	    
+	    
 	    // **********-- Donnees de l'examen physique --*******
         // **********-- Donnees de l'examen physique --*******
 	    donnees['examen_donnee1'] = $("#examen_donnee1").val();
@@ -816,20 +843,7 @@ $(function(){
 	     }
 	    
 	    
-	    //*********** PATHOLOGIE ************
-	    //*********** PATHOLOGIE ************
-	    
-	     
-	    for(var i = 1 ; i < 10 ; i++ ){
-	     	if($("#pathologie_0"+i).val()){
-	     		donnees['pathologie_0'+i] = $("#pathologie_0"+i).val();
-	     		donnees['classepathologie'+i] = $("#classepathologie"+i).val();
-	     		donnees['typepathologie'+i] = $("#typepathologie"+i).val();
-	     		
-	     	}
-	     }
-	    alert(donnees['typepathologie'+i]);
-	    
+	   
 	    //*********** TRAITEMENTS CHIRURGICAUX ************
 		//*********** TRAITEMENTS CHIRURGICAUX ************
 	    donnees['diagnostic_traitement_chirurgical'] = $("#diagnostic_traitement_chirurgical").val();
@@ -856,6 +870,8 @@ $(function(){
 		donnees['date_rv']    = $("#date_rv_tampon").val();
 		donnees['motif_rv']   = $("#motif_rv").val();
 		donnees['heure_rv']   = $("#heure_rv").val();
+		donnees['delai_rv']   = $("#delai_rv").val();
+		
 		
 		// **********-- Hospitalisation --*******
         // **********-- Hospitalisation --*******
@@ -1046,6 +1062,7 @@ $(function(){
 		$("#motif_rv").val("");
 		$("#date_rv").val("");
 		document.getElementById('heure_rv').value="";
+		document.getElementById('delai_rv').value="";
 		return false;
 	});
 	

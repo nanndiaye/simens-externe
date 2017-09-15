@@ -18,6 +18,7 @@ use Chururgie\Model\Service;
 use Chururgie\Model\Admission;
 use Chururgie\Model\AdmissionTable;
 
+
 use Chururgie\Model\Consultation;
 use Chururgie\Model\ConsultationTable;
 use Chururgie\Model\MotifAdmission;
@@ -106,7 +107,9 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Se
 		return array (
 				'factories' => array (
                                     
-                                     
+                         
+		
+				    
                                     'Chururgie\Model\TypePathologieTable' => function ($sm) {
 				    $tableGateway = $sm->get('typePathologieFactGateway');
 				    $table = new TypePathologieTable($tableGateway);

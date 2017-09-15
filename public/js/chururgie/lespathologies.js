@@ -187,7 +187,7 @@ function ValiderPathologie() {
         //Au debut on affiche le bouton valider
      $("#bouton_Pathologie_valider_demande").toggle(true);
 
-        $("#bouton_Pathologie_valider_demande button").click(function () {
+        $("#button").click(function () {
 		//RECUPERATION DES DONNEES DU TABLEAU
 		var id_cons = $('#id_cons').val();
 		var examensBio = [];
@@ -202,7 +202,7 @@ function ValiderPathologie() {
 		
 		$.ajax({
 	        type: 'POST',
-	        url: tabUrl[0]+'public/consultation/demande-examen-biologique',
+	        url: tabUrl[0]+'public/chururgie/demande-examen-biologique',
 	        data: {'id_cons':id_cons, 'examensBio': examensBio, 'notesBio':notesBio},
 	        success: function(data) {
 

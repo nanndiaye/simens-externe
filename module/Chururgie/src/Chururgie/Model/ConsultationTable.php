@@ -9,18 +9,49 @@ use Zend\Db\Sql\Where;
 class ConsultationTable {
 
     
+ 
     /**
+     * Ajouter une nouvelle pathologie dans la base de donn�es
+     */
+    public function addPathologie($medicament){
+        $db = $this->tableGateway->getAdapter();
+        $sql = new Sql($db);
+        $sQuery = $sql->insert()
+        ->into('type_pathologie')
+        ->values(array('nom_type_pathologie' => $medicament));
+        $requete = $sql->prepareStatementForSqlObject($sQuery);
+        return $requete->execute()->getGeneratedValue();
+    }
+    
+    /**
+     * Ajouter des pathologies
+     */
+    public function addConsPatho($ID_CONS,$id_type_pathologie){
+        //if( $this->existeFormes($libelleForme) == false ){
+      // var_dump($ID_CONS,$id_type_pathologie);exit();
+            $db = $this->tableGateway->getAdapter();
+            $sql = new Sql($db);
+            $sQuery = $sql->insert()
+            ->into('consultation')
+            ->values(array('ID_CONS' => $ID_CONS, 'id_type_pathologie'=> $id_type_pathologie));
+            $sql->prepareStatementForSqlObject($sQuery)->execute();
+       // }
+    }
+    
+    
+    
+ /**
      * verifier si la pathologie existe dans la base de donnees
      */
     
-    public function getOrganeByName($lesorganes){
+    public function getPathologiesByName($lestypesPathologies){
         
         $adapter = $this->tableGateway->getAdapter ();
         $sql = new Sql ( $adapter );
         $select = $sql->select ();
         $select->columns( array('*'));
-        $select->from( array( 'c' => 'organe' ));
-        $select->where ( array( 'c.LESORGANES' => $lesorganes));
+        $select->from( array( 'c' => 'type_pathologie' ));
+        $select->where ( array( 'c.nom_type_pathologie' => $lestypesPathologies));
         
         $stat = $sql->prepareStatementForSqlObject ( $select );
         $result = $stat->execute ()->current();
