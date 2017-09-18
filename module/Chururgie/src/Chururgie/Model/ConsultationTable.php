@@ -32,8 +32,8 @@ class ConsultationTable {
             $db = $this->tableGateway->getAdapter();
             $sql = new Sql($db);
             $sQuery = $sql->insert()
-            ->into('consultation')
-            ->values(array('ID_CONS' => $ID_CONS, 'id_type_pathologie'=> $id_type_pathologie));
+            ->into('consultationpathologie')
+            ->values(array('ID_CONS' => $ID_CONS, 'type_patho'=> $id_type_pathologie));
             $sql->prepareStatementForSqlObject($sQuery)->execute();
        // }
     }
@@ -248,14 +248,15 @@ class ConsultationTable {
 		$this->tableGateway->update($donnees, array('ID_CONS'=> $values['ID_CONS']));
 	}
 	
-	public function addConsultation($values , $IdDuService){
+	public function addConsultation($values , $IdDuService,$id_medecin,$id_admission ){
 		$this->tableGateway->getAdapter()->getDriver()->getConnection()->beginTransaction();
 		try {
 		
 			$dataconsultation = array(
 					'ID_CONS'=> $values->get ( "id_cons" )->getValue (), 
-					'ID_SURVEILLANT'=> $values->get ( "id_surveillant" )->getValue (), 
-					'ID_PATIENT'=> $values->get ( "id_patient" )->getValue (), 
+			          'ID_MEDECIN'=> $id_medecin, 
+					'ID_PATIENT'=> $values->get ( "id_patient" )->getValue (),
+			         'id_admission'=>$id_admission,
 					'DATE'=> $values->get ( "date_cons" )->getValue (), 
 					'POIDS' => $values->get ( "poids" )->getValue (), 
 					'TAILLE' => $values->get ( "taille" )->getValue (), 
@@ -267,8 +268,10 @@ class ConsultationTable {
 					'DATEONLY' => $values->get ( "dateonly" )->getValue (),
 					'HEURECONS' => $values->get ( "heure_cons" )->getValue (),
 					'ID_SERVICE' => $IdDuService
+			         
 			);
-			$this->tableGateway->insert($dataconsultation);
+			//var_dump($values->get ( "id_cons" )->getValue ());exit();
+			$this->tableGateway->insert($dataconsultation)->current();
 
 			$this->tableGateway->getAdapter()->getDriver()->getConnection()->commit();
 		} catch (\Exception $e) {

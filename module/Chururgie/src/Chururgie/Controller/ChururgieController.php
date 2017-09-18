@@ -865,6 +865,8 @@ class ChururgieController extends AbstractActionController {
 		$this->getDateHelper();
 		$id_cons = $this->params()->fromPost('id_cons');
 		$id_patient = $this->params()->fromPost('id_patient');
+		$id_admission = $this->params()->fromPost('id_admission');
+		
 	
 		$user = $this->layout()->user;
 		$IdDuService = $user['IdService'];
@@ -872,51 +874,7 @@ class ChururgieController extends AbstractActionController {
 		
 		
 		
-		/**** Pathologie ****/
-		/**** Pathologie ****/
 		
-		
-		$typePathologie = "";
-		 
-		
-		$tab = array();
-		$j = 1;
-		for($i = 1 ; $i < 10 ; $i++ ){
-
-		    if($this->params()->fromPost("typepathologie".$i)){
-		        
-		        $typePathologie = $this->params()->fromPost("typepathologie".$i);
-		        
-		        
-		        if($typePathologie){
-		           
-		            $result1 = $this->getConsultationTable()->getPathologiesByName($typePathologie);
-		            
-		            if($result1){
-		                $tab[$j++] = $result1["id_type_pathologie"];
-		               //
-		            } else {
-		                $idPathologie=  $this->getConsultationTable()->addPathologie($this->params()->fromPost("typepathologie".$i));
-		                $tab[$j++] = $idPathologie;
-		              //  $tab[$j++] = $typePathologie;
-		              //  $this->getConsultationTable()->addConsPatho($id_cons,$tab);
-		                
-		            }
-		        }
-		        
-		    }
-		}
-		
-		for($k=1;$k<count($tab);$k++){
-		   // var_dump($tab[$k++]);exit();
-		    $this->getConsultationTable()->addConsPatho($id_cons,$tab[$k++]);
-		}
-		
-		
-		var_dump(count($tab)); exit();
-		
-		
-	
 		//**********-- MODIFICATION DES CONSTANTES --********
 		//**********-- MODIFICATION DES CONSTANTES --********
 		//**********-- MODIFICATION DES CONSTANTES --********
@@ -924,17 +882,22 @@ class ChururgieController extends AbstractActionController {
 		$formData = $this->getRequest ()->getPost ();
 		$form->setData ( $formData );
 		
+		
+		
+		//consultation
+		$this->getConsultationTable()->addConsultation($form,$IdDuService, $id_medecin,$id_admission);
+		var_dump("");exit();
 		// les antecedents medicaux du patient a ajouter addAntecedentMedicauxPersonne
 		$this->getConsultationTable()->addAntecedentMedicaux($formData);
 		
 		$this->getConsultationTable()->addAntecedentMedicauxPersonne($formData);
-		
+	
 		
 		// mettre a jour les motifs d'admission
 		$this->getMotifAdmissionTable ()->deleteMotifAdmission ( $id_cons );
 		
 		$this->getMotifAdmissionTable ()->addMotifAdmission ( $form );
-		
+		var_dump($formData);exit();
 		//mettre a jour la consultation
 		$this->getConsultationTable ()->updateConsultation ( $form );
 		
@@ -952,8 +915,9 @@ class ChururgieController extends AbstractActionController {
 		
 		//mettre a jour les bandelettes urinaires
 		$this->getConsultationTable ()->deleteBandelette($id_cons);
-		$this->getConsultationTable ()->addBandelette($bandelettes);
 		
+		$this->getConsultationTable ()->addBandelette($bandelettes);
+		var_dump($form);exit();
 		//POUR LES EXAMENS PHYSIQUES
 		//POUR LES EXAMENS PHYSIQUES
 		//POUR LES EXAMENS PHYSIQUES
@@ -1020,7 +984,7 @@ class ChururgieController extends AbstractActionController {
 		'htaAF' => $this->params()->fromPost('htaAF'),
 		'NoteHtaAF' => $this->params()->fromPost('NoteHtaAF'),
 		);
-	
+		
 		$id_personne = $this->getAntecedantPersonnelTable()->getIdPersonneParIdCons($id_cons);
 		$this->getAntecedantPersonnelTable()->addAntecedentsPersonnels($donneesDesAntecedents, $id_personne, $id_medecin);
 		$this->getAntecedantsFamiliauxTable()->addAntecedentsFamiliaux($donneesDesAntecedents, $id_personne, $id_medecin);
@@ -1112,7 +1076,45 @@ class ChururgieController extends AbstractActionController {
 		}
 		
 		
+		/**** Pathologie ****/
+		/**** Pathologie ****/
 		
+		
+		$typePathologie = "";
+		
+		
+		$tab = array();
+		$j = 1;
+		for($i = 1 ; $i < 10 ; $i++ ){
+		    
+		    if($this->params()->fromPost("typepathologie".$i)){
+		        
+		        $typePathologie = $this->params()->fromPost("typepathologie".$i);
+		        
+		        
+		        if($typePathologie){
+		            
+		            $result1 = $this->getConsultationTable()->getPathologiesByName($typePathologie);
+		            
+		            if($result1){
+		                $tab[$j++] = $result1["id_type_pathologie"];
+		                //
+		            } else {
+		                $idPathologie=  $this->getConsultationTable()->addPathologie($this->params()->fromPost("typepathologie".$i));
+		                $tab[$j++] = $idPathologie;
+		                //  $tab[$j++] = $typePathologie;
+		                //  $this->getConsultationTable()->addConsPatho($id_cons,$tab);
+		                
+		            }
+		        }
+		        
+		    }
+		}
+		
+		for($k=1;$k<count($tab);$k++){
+		    // var_dump($tab[$k++]);exit();
+		    $this->getConsultationTable()->addConsPatho($id_cons,$tab[$k++]);
+		}
 		/*Mettre a jour la duree du traitement de l'ordonnance*/
 		$idOrdonnance = $this->getOrdonnanceTable()->updateOrdonnance($tab, $donnees);
 		
@@ -1176,6 +1178,7 @@ class ChururgieController extends AbstractActionController {
 		          'DELAI'   => $this->params()->fromPost('delai_rv'),
 				'DATE'    => $date_RV,
 		);
+		
 		$this->getRvPatientConsTable()->updateRendezVous($infos_rv);
 		
 		//POUR LES TRANSFERT

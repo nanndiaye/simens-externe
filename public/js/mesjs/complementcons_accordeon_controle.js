@@ -354,52 +354,52 @@ $(function(){
 	var motif_transfert = $("#motif_transfert");
 	var hopital_accueil = $("#hopital_accueil");
 	var service_accueil = $("#service_accueil");
-	$("#transfert").click(function(){ 
-		motif_transfert.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		$("#hopital_accueil_tampon").val(hopital_accueil.val());
-		//hopital_accueil.attr( 'disabled', true).css({'background':'#f8f8f8'});
-		$("#service_accueil_tampon").val(service_accueil.val());
-		//service_accueil.attr( 'disabled', true).css({'background':'#f8f8f8'});
-		$("#bouton_transfert_modifier").toggle(true);  //on affiche le bouton permettant de modifier les champs
-	    $("#bouton_transfert_valider").toggle(false); //on cache le bouton permettant de valider les champs
-	});
-
-	$( "bouton_valider_transfert" ).button();
-	$( "bouton_modifier_transfert" ).button();
-
-	//Au debut on cache le bouton modifier et on affiche le bouton valider
-	$( "#bouton_transfert_valider" ).toggle(true);
-	$( "#bouton_transfert_modifier" ).toggle(false);
+//	$("#transfert").click(function(){ 
+//		motif_transfert.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		$("#hopital_accueil_tampon").val(hopital_accueil.val());
+//		//hopital_accueil.attr( 'disabled', true).css({'background':'#f8f8f8'});
+//		$("#service_accueil_tampon").val(service_accueil.val());
+//		//service_accueil.attr( 'disabled', true).css({'background':'#f8f8f8'});
+//		$("#bouton_transfert_modifier").toggle(true);  //on affiche le bouton permettant de modifier les champs
+//	    $("#bouton_transfert_valider").toggle(false); //on cache le bouton permettant de valider les champs
+//	});
+//
+//	$( "bouton_valider_transfert" ).button();
+//	$( "bouton_modifier_transfert" ).button();
+//
+//	//Au debut on cache le bouton modifier et on affiche le bouton valider
+//	$( "#bouton_transfert_valider" ).toggle(true);
+//	$( "#bouton_transfert_modifier" ).toggle(false);
 
 	//Au debut on desactive tous les champs
-	//motif_transfert.attr( 'readonly', false ).css({'background':'#fff'});;
-	//hopital_accueil.attr( 'disabled', false ).css({'background':'#fff'});;
-	//service_accueil.attr( 'disabled', false ).css({'background':'#fff'});;
+	motif_transfert.attr( 'readonly', false ).css({'background':'#fff'});;
+	hopital_accueil.attr( 'disabled', false ).css({'background':'#fff'});;
+	service_accueil.attr( 'disabled', false ).css({'background':'#fff'});;
 
 	//Valider(cach�) avec le bouton 'valider'
-	$( "#bouton_transfert_valider" ).click(function(){
-		motif_transfert.attr( 'readonly', true ).css({'background':'#f8f8f8'});     //d�sactiver le motif transfert
-		$("#hopital_accueil_tampon").val(hopital_accueil.val());
-		hopital_accueil.attr( 'disabled', true ).css({'background':'#f8f8f8'});     //d�sactiver hopital accueil
-		$("#service_accueil_tampon").val(service_accueil.val());
-		service_accueil.attr( 'disabled', true ).css({'background':'#f8f8f8'});   //d�sactiver service accueil
-		$("#bouton_transfert_modifier").toggle(true);  //on affiche le bouton permettant de modifier les champs
-		$("#bouton_transfert_valider").toggle(false); //on cache le bouton permettant de valider les champs
-		
-		$("#annulertransfert").attr('disabled', true);
-		return false; 
-	});
-	//Activer(d�cach�) avec le bouton 'modifier'
-	$( "#bouton_transfert_modifier" ).click(function(){
-		motif_transfert.attr( 'readonly', false ).css({'background':'#fff'});
-		hopital_accueil.attr( 'disabled', false ).css({'background':'#fff'});
-		service_accueil.attr( 'disabled', false ).css({'background':'#fff'});
-	 	$("#bouton_transfert_modifier").toggle(false);   //on cache le bouton permettant de modifier les champs
-	 	$("#bouton_transfert_valider").toggle(true);    //on affiche le bouton permettant de valider les champs
-	 	
-	 	$("#annulertransfert").attr('disabled', false);
-	 	return  false;
-	});
+//	$( "#bouton_transfert_valider" ).click(function(){
+//		motif_transfert.attr( 'readonly', true ).css({'background':'#f8f8f8'});     //d�sactiver le motif transfert
+//		$("#hopital_accueil_tampon").val(hopital_accueil.val());
+//		hopital_accueil.attr( 'disabled', true ).css({'background':'#f8f8f8'});     //d�sactiver hopital accueil
+//		$("#service_accueil_tampon").val(service_accueil.val());
+//		service_accueil.attr( 'disabled', true ).css({'background':'#f8f8f8'});   //d�sactiver service accueil
+//		$("#bouton_transfert_modifier").toggle(true);  //on affiche le bouton permettant de modifier les champs
+//		$("#bouton_transfert_valider").toggle(false); //on cache le bouton permettant de valider les champs
+//		
+//		$("#annulertransfert").attr('disabled', true);
+//		return false; 
+//	});
+//	//Activer(d�cach�) avec le bouton 'modifier'
+//	$( "#bouton_transfert_modifier" ).click(function(){
+//		motif_transfert.attr( 'readonly', false ).css({'background':'#fff'});
+//		hopital_accueil.attr( 'disabled', false ).css({'background':'#fff'});
+//		service_accueil.attr( 'disabled', false ).css({'background':'#fff'});
+//	 	$("#bouton_transfert_modifier").toggle(false);   //on cache le bouton permettant de modifier les champs
+//	 	$("#bouton_transfert_valider").toggle(true);    //on affiche le bouton permettant de valider les champs
+//	 	
+//	 	$("#annulertransfert").attr('disabled', false);
+//	 	return  false;
+//	});
 });
 
 //********************* HOSPITALISATION *****************************
