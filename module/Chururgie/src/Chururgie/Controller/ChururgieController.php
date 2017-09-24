@@ -16,6 +16,7 @@ use Chururgie\View\Helper\TraitementInstrumentalPdf;
 use Chururgie\View\Helper\TransfertPdf;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
+//use Zend\Stdlib\DateTime;
 use Zend\Stdlib\DateTime;
 use Zend\View\Model\ViewModel;
 
@@ -865,9 +866,9 @@ class ChururgieController extends AbstractActionController {
 		$this->getDateHelper();
 		$id_cons = $this->params()->fromPost('id_cons');
 		$id_patient = $this->params()->fromPost('id_patient');
-		$id_admission = $this->params()->fromPost('id_admission');
 		
-	
+		
+		//
 		$user = $this->layout()->user;
 		$IdDuService = $user['IdService'];
 		$id_medecin = $user['id_personne'];
@@ -880,13 +881,14 @@ class ChururgieController extends AbstractActionController {
 		//**********-- MODIFICATION DES CONSTANTES --********
 		$form = new ConsultationForm ();
 		$formData = $this->getRequest ()->getPost ();
-		$form->setData ( $formData );
+		$form->setData ( $form );
+		$id_admission = $this->params()->fromPost('id_admission',0);
 		
-		
-		
+		//var_dump($id_patient);exit();
 		//consultation
-		$this->getConsultationTable()->addConsultation($form,$IdDuService, $id_medecin,$id_admission);
-		var_dump("");exit();
+		//var_dump($formData);exit();
+		$this->getConsultationTable()->addConsultation($formData,$IdDuService, $id_medecin,$id_admission);
+		//var_dump($formData);exit();
 		// les antecedents medicaux du patient a ajouter addAntecedentMedicauxPersonne
 		$this->getConsultationTable()->addAntecedentMedicaux($formData);
 		
@@ -897,7 +899,7 @@ class ChururgieController extends AbstractActionController {
 		$this->getMotifAdmissionTable ()->deleteMotifAdmission ( $id_cons );
 		
 		$this->getMotifAdmissionTable ()->addMotifAdmission ( $form );
-		var_dump($formData);exit();
+		
 		//mettre a jour la consultation
 		$this->getConsultationTable ()->updateConsultation ( $form );
 		
@@ -917,7 +919,7 @@ class ChururgieController extends AbstractActionController {
 		$this->getConsultationTable ()->deleteBandelette($id_cons);
 		
 		$this->getConsultationTable ()->addBandelette($bandelettes);
-		var_dump($form);exit();
+		
 		//POUR LES EXAMENS PHYSIQUES
 		//POUR LES EXAMENS PHYSIQUES
 		//POUR LES EXAMENS PHYSIQUES
@@ -1690,7 +1692,7 @@ class ChururgieController extends AbstractActionController {
 		$id_pat = $this->params ()->fromQuery ( 'id_patient', 0 );
 		//var_dump($id_pat);exit();
 		$id_cons = $this->params ()->fromQuery ( 'id_cons' );
-		$id= $this->params ()->fromQuery ('id_admission');
+		$id= $this->params ()->fromQuery ('id_admission',0);
 		
             $listeOrgane=$this->getConsultationTable()->listeDeTousLesOrganes();
           //
@@ -1715,7 +1717,7 @@ class ChururgieController extends AbstractActionController {
 		}
 		//var_dump($id);exit();
 		$form = new ConsultationForm ();
-		
+		//var_dump($form);exit();
 		// instancier la consultation et r�cup�rer l'enregistrement
 		//$consult = $this->getConsultationTable ()->getConsult ( $id_cons );
 		
@@ -1819,11 +1821,15 @@ class ChururgieController extends AbstractActionController {
 		$listeTypePathologie=$this->getConsultationTable()->getTypePathologie();
 		//var_dump($listeTypePathologie);exit();
 		//var_dump($liste);exit();
-		$today = new \DateTime ( 'now' );
-		$date = $today->format ( 'dd/mm/yy' );
+		//$today = new \DateTime ( 'now' );
+		$today = new DateTime("now");
+		$date = $today->format ( 'dd/mm/yyyy' );
 		$heure = $today->format ( "H:i" );
-		
+	
+		//var_dump($id);exit();
 		$form->populateValues(array('id_patient' => $id_pat));
+	
+		$form->populateValues(array('id_admission' => $id));
 		
 		return array (
 		          'lesOrganes' => $listeOrgane,
@@ -1831,6 +1837,7 @@ class ChururgieController extends AbstractActionController {
 		          'listeTypePathologie'=> $listeTypePathologie,
 				'lesdetails' => $liste,
 		         'id_cons' => $id_cons,
+		          'id_admission' => $id,
 				'id_patient' => $id_pat,
 				'image' => $image,
 				'form' => $form,
@@ -2032,6 +2039,18 @@ class ChururgieController extends AbstractActionController {
 				'form' => $formAdmission
 		);
 	}
+	
+	public function baseUrl() {
+	    $baseUrl = $_SERVER ['REQUEST_URI'];
+	    $tabURI = explode ( 'public', $baseUrl );
+	    return $tabURI [0];
+	}
+	
+	public function baseUrlRacine() {
+	    $baseUrl = $_SERVER ['SCRIPT_FILENAME'];
+	    $tabURI = explode ( 'public', $baseUrl );
+	    return $tabURI[0];
+	}
 	// Enregistrement du patient ajout�
 	public function enregistrementAction() {
 		$user = $this->layout ()->user;
@@ -2084,7 +2103,7 @@ class ChururgieController extends AbstractActionController {
 				
 				$donnees ['PHOTO'] = $nomfile;
 				// ENREGISTREMENT DE LA PHOTO
-				imagejpeg ( $img, 'C:\wamp\www\simens\public\img\photos_patients\\' . $nomfile . '.jpg' );
+				imagejpeg ( $img, $this->baseUrlRacine().'public/img/photos_patients/' . $nomfile . '.jpg' );
 				// ENREGISTREMENT DES DONNEES
 				$Patient->addPatient ( $donnees, $date_enregistrement, $id_employe, $sexe );
 				
@@ -2171,9 +2190,9 @@ class ChururgieController extends AbstractActionController {
 				$ancienneImage = $lePatient ['PHOTO'];
 				
 				if ($ancienneImage) {
-					unlink ( 'C:\wamp\www\simens\public\img\photos_patients\\' . $ancienneImage . '.jpg' );
+				    unlink ( $this->baseUrlRacine().'public/img/photos_patients/'. $ancienneImage . '.jpg' );
 				}
-				imagejpeg ( $img, 'C:\wamp\www\simens\public\img\photos_patients\\' . $nomfile . '.jpg' );
+				imagejpeg ( $img, $this->baseUrlRacine().'public/img/photos_patients/'. $nomfile . '.jpg' );
 				
 				$donnees ['PHOTO'] = $nomfile;
 				$Patient->updatePatient ( $donnees, $id_patient, $date_modification, $id_employe );

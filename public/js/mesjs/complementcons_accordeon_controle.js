@@ -784,7 +784,7 @@ $(function(){
 	    
 	    //*********** PATHOLOGIE ************
 	    //*********** PATHOLOGIE ************
-	    
+	    donnees['id_admission'] = $("#id_admission").val();
 	     
 	    for(var i = 1 ; i < 10 ; i++ ){
 	     	if($("#typepathologie"+i).val()){

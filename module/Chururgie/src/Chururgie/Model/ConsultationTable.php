@@ -251,28 +251,27 @@ class ConsultationTable {
 	public function addConsultation($values , $IdDuService,$id_medecin,$id_admission ){
 		$this->tableGateway->getAdapter()->getDriver()->getConnection()->beginTransaction();
 		try {
-		
+		   // var_dump($values);exit();
 			$dataconsultation = array(
-					'ID_CONS'=> $values->get ( "id_cons" )->getValue (), 
+					'ID_CONS'=> $values->id_cons, 
 			          'ID_MEDECIN'=> $id_medecin, 
-					'ID_PATIENT'=> $values->get ( "id_patient" )->getValue (),
+					'ID_PATIENT'=> $values->id_patient,
 			         'id_admission'=>$id_admission,
-					'DATE'=> $values->get ( "date_cons" )->getValue (), 
-					'POIDS' => $values->get ( "poids" )->getValue (), 
-					'TAILLE' => $values->get ( "taille" )->getValue (), 
-					'TEMPERATURE' => $values->get ( "temperature" )->getValue (), 
-					'PRESSION_ARTERIELLE' => $values->get ( "pressionarterielle" )->getValue (), 
-					'POULS' => $values->get ( "pouls" )->getValue (), 
-					'FREQUENCE_RESPIRATOIRE' => $values->get ( "frequence_respiratoire" )->getValue (), 
-					'GLYCEMIE_CAPILLAIRE' => $values->get ( "glycemie_capillaire" )->getValue (), 
-					'DATEONLY' => $values->get ( "dateonly" )->getValue (),
-					'HEURECONS' => $values->get ( "heure_cons" )->getValue (),
+					'DATE'=> $values->date_cons, 
+					'POIDS' => $values->poids, 
+					'TAILLE' => $values->taille, 
+					'TEMPERATURE' => $values->temperature, 
+					'PRESSION_ARTERIELLE' => $values->pressionarterielle, 
+					'POULS' => $values->pouls, 
+					'FREQUENCE_RESPIRATOIRE' => $values->frequence_respiratoire, 
+					'GLYCEMIE_CAPILLAIRE' => $values->glycemie_capillaire, 
+					'DATEONLY' => $values->dateonly,
+					'HEURECONS' => $values->heure_cons,
 					'ID_SERVICE' => $IdDuService
 			         
 			);
-			//var_dump($values->get ( "id_cons" )->getValue ());exit();
-			$this->tableGateway->insert($dataconsultation)->current();
-
+			//var_dump($dataconsultation);exit();
+			$this->tableGateway->insert($dataconsultation);
 			$this->tableGateway->getAdapter()->getDriver()->getConnection()->commit();
 		} catch (\Exception $e) {
 			$this->tableGateway->getAdapter()->getDriver()->getConnection()->rollback();
@@ -294,15 +293,7 @@ class ConsultationTable {
 	  //var_dump($id_admission);exit();
 	}
 	
-	public function addConsultationEffective($id_cons){
-		$db = $this->tableGateway->getAdapter();
-		$sql = new Sql($db);
-		$sQuery = $sql->insert()
-		->into('consultation_effective')
-		->values(array('ID_CONS' => $id_cons));
-		$requete = $sql->prepareStatementForSqlObject($sQuery);
-		$requete->execute();
-	}
+	
 	
 	public function getInfoPatientMedecin($idcons){
 		$adapter = $this->tableGateway->getAdapter ();
@@ -341,16 +332,19 @@ class ConsultationTable {
 		if($bandelettes['corpscetonique'] == 1){
 			$values[] = array('ID_TYPE_BANDELETTE'=>3, 'ID_CONS'=>$bandelettes['id_cons'], 'CROIX_BANDELETTE'=>(int)$bandelettes['croixcorpscetonique']);
 		}
-		
+	
 		for($i = 0 ; $i < count($values) ; $i++ ){
+		  
 			$db = $this->tableGateway->getAdapter();
 			$sql = new Sql($db);
 			$sQuery = $sql->insert()
 			->into('bandelette')
 			->columns(array('ID_TYPE_BANDELETTE', 'ID_CONS', 'CROIX_BANDELETTE'))
 			->values($values[$i]);
+			//var_dump($values[$i]);exit();
 			$stat = $sql->prepareStatementForSqlObject($sQuery);
 			$stat->execute();
+			
 		}
 	}
 	

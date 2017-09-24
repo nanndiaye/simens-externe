@@ -27,6 +27,19 @@ class ConsultationForm extends Form {
 						'id' => 'id_cons'
 				)
 		) );
+		
+		
+		$this->add ( array (
+		    'name' => 'id_admission',
+		    'type' => 'Hidden',
+		    'options' => array (
+		        //'decorators' => $this->decor
+		    ),
+		    'attributes' => array (
+		        'id' => 'id_admission'
+		    )
+		) );
+		
 		$this->add ( array (
 				'name' => 'heure_cons',
 				'type' => 'Hidden',
@@ -44,6 +57,7 @@ class ConsultationForm extends Form {
 						'id' => 'id_medecin'
 				)
 		) );
+	
 		$this->add ( array (
 				'name' => 'id_surveillant',
 				'type' => 'Hidden',
