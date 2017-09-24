@@ -249,15 +249,17 @@ class ConsultationTable {
 	}
 	
 	public function addConsultation($values , $IdDuService,$id_medecin,$id_admission ){
+	    $today = new \DateTime();
+	    $date = $today->format('Y-m-d');
 		$this->tableGateway->getAdapter()->getDriver()->getConnection()->beginTransaction();
 		try {
-		   // var_dump($values);exit();
+		    //var_dump($values->dateonly);exit();
 			$dataconsultation = array(
 					'ID_CONS'=> $values->id_cons, 
 			          'ID_MEDECIN'=> $id_medecin, 
 					'ID_PATIENT'=> $values->id_patient,
 			         'id_admission'=>$id_admission,
-					'DATE'=> $values->date_cons, 
+			          'DATE'=> $date, 
 					'POIDS' => $values->poids, 
 					'TAILLE' => $values->taille, 
 					'TEMPERATURE' => $values->temperature, 
@@ -265,7 +267,7 @@ class ConsultationTable {
 					'POULS' => $values->pouls, 
 					'FREQUENCE_RESPIRATOIRE' => $values->frequence_respiratoire, 
 					'GLYCEMIE_CAPILLAIRE' => $values->glycemie_capillaire, 
-					'DATEONLY' => $values->dateonly,
+			         'DATEONLY' => $date,
 					'HEURECONS' => $values->heure_cons,
 					'ID_SERVICE' => $IdDuService
 			         
@@ -426,6 +428,52 @@ class ConsultationTable {
 		return $result;
 	}
 	
+	
+	
+	//liste des patients à consulter par le medecin dans le service de ce dernier
+	public function listePatientsConsultes($idService){
+	    $today = new \DateTime();
+	    $date = $today->format('Y-m-d');
+	    $adapter = $this->tableGateway->getAdapter ();
+	    $sql = new Sql ( $adapter );
+	    $select = $sql->select ();
+	    $select->from ( array (
+	        'p' => 'patient'
+	    ) );
+	    $select->columns(array ('NUMERO_DOSSIER'=> 'NUMERO_DOSSIER') );
+	    $select->join(array('pers'=>'personne'), 'pers.ID_PERSONNE = p.ID_PERSONNE', array(
+	        'Nom' => 'NOM',
+	        'Prenom' => 'PRENOM',
+	        'Datenaissance' => 'DATE_NAISSANCE',
+	        'AGE'=>'AGE',
+	        'Sexe' => 'SEXE',
+	        'Adresse' => 'ADRESSE',
+	        'Nationalite' => 'NATIONALITE_ACTUELLE',
+	        'Id' => 'ID_PERSONNE'
+	    ));
+	   
+	    $select->join(array('c' => 'consultation'), 'p.ID_PERSONNE = c.ID_PATIENT', array('*'));
+	    $select->join(array('a' => 'admission'), 'c.id_admission = a.id_admission', array('*'));
+	   
+	    $select->where(array('c.ID_SERVICE' => $idService, 'DATEONLY' => $date));
+	  
+	    $select->order('c.ID_CONS ASC');
+	    
+// 	    $select->join(array('a' => 'admission'), 'a.ID_PATIENT = p.ID_PERSONNE', array('Id_admission' => 'id_admission','date_admise'=>'date_admise',
+// 	        'type_consultation'=>'type_consultation','id_service'=>'id_service'));
+// 	    $select->join(array('type_cons' => 'type_consultation'), 'type_cons.ID = a.type_consultation', array('designation' => 'designation'));
+// 	    $select->join(array('c' => 'consultation'), 'a.Id_admission = c.Id_admission', array('ID_CONS'=>'ID_CONS','CONSPRISE' => 'CONSPRISE','date'=>'DATEONLY'));
+// 	    $select->where(array('a.id_service' => $idService, 'a.date_admise' => $date, 'c.CONSPRISE'=> 1));
+// 	    $select->order('id_admission ASC');
+	    
+	    $stmt = $sql->prepareStatementForSqlObject($select);
+	    $result = $stmt->execute();
+	    
+	    return $result;
+	    
+	}
+	
+	
 	//liste des patients à consulter par le medecin dans le service de ce dernier
 	public function listePatientsConsParMedecin($idService){
 		$today = new \DateTime();
@@ -448,14 +496,14 @@ class ConsultationTable {
 				'Id' => 'ID_PERSONNE'
 		));
 		//
-		//$select->join(array('c' => 'consultation'), 'p.ID_PERSONNE = c.ID_PATIENT', array('Id_cons' => 'ID_CONS', 'dateonly' => 'DATEONLY', 'date' => 'DATE'));
-		//$select->join(array('cons_eff' => 'consultationchururgiegenerale'), 'cons_eff.ID_CONS = c.ID_CONS' , array('*'));
+		//
+		
 		
 		$select->join(array('a' => 'admission'), 'a.ID_PATIENT = p.ID_PERSONNE', array('Id_admission' => 'id_admission','date_admise'=>'date_admise',
 		 'type_consultation'=>'type_consultation','id_service'=>'id_service'));
 		
 		$select->join(array('type_cons' => 'type_consultation'), 'type_cons.ID = a.type_consultation', array('designation' => 'designation'));
-		//var_dump("tes");exit();
+		
 		$select->where(array('a.id_service' => $idService, 'a.date_admise' => $date));
 		$select->order('id_admission ASC');
 	
