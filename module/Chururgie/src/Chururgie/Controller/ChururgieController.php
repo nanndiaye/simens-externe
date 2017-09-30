@@ -6,6 +6,9 @@ use Chururgie\Form\AdmissionForm;
 use Chururgie\Form\ConsultationForm;
 use Chururgie\Form\PatientForm;
 use Chururgie\View\Helper\DateHelper;
+use Chururgie\View\Helper\DemandeExamenBioPdf;
+use Chururgie\View\Helper\DemandeExamenFonctionnelPdf;
+use Chururgie\View\Helper\DemandeExamenMorphoPdf;
 use Chururgie\View\Helper\DemandeExamenPdf;
 use Chururgie\View\Helper\DocumentPdf;
 use Chururgie\View\Helper\HospitalisationPdf;
@@ -3096,10 +3099,10 @@ class ChururgieController extends AbstractActionController {
 			$DocPdf->getDocument();
 		}
 		else
-		//**********DEMANDES D'EXAMENS****************
-		//**********DEMANDES D'EXAMENS****************
-		//**********DEMANDES D'EXAMENS****************
-		if(isset ($_POST['demandeExamenBioMorpho'])){
+		//*********************************DEMANDES D'EXAMENS Fonctionnels****************
+		//*********************************DEMANDES D'EXAMENS FOnctionnels****************
+		//*********************************DEMANDES D'EXAMENS Fonctionnels****************
+		if(isset ($_POST['demandeExamenFonctionnel'])){
 		    $i = 1; $j = 1;
 		    $donneesExamensFonc = array();
 		    $notesExamensFonc = array();
@@ -3112,35 +3115,11 @@ class ChururgieController extends AbstractActionController {
 		    }
 		    
 		    
-		    
-		    $i = 1; $j = 1;
-			$donneesExamensBio = array();
-			$notesExamensBio = array();
-			//R�cup�ration des donn�es examens biologiques
-			for( ; $i <= 6; $i++){
-				if($this->params ()->fromPost ( 'examenBio_name_'.$i )){
-					$donneesExamensBio[$j] = $this->params ()->fromPost ( 'examenBio_name_'.$i );
-					$notesExamensBio[$j++ ] = $this->params ()->fromPost ( 'noteExamenBio_'.$i  );
-				}
-			}
-	
-			$k = 1; $l = $j;
-			$donneesExamensMorph = array();
-			$notesExamensMorph = array();
-			//R�cup�ration des donn�es examens morphologiques
-			for( ; $k <= 11; $k++){
-				if($this->params ()->fromPost ( 'element_name_'.$k )){
-					$donneesExamensMorph[$l] = $this->params ()->fromPost ( 'element_name_'.$k );
-					$notesExamensMorph[$l++ ] = $this->params ()->fromPost ( 'note_'.$k  );
-				}
-			}
-	
-	
 			//CREATION DU DOCUMENT PDF
 			//Cr�er le document
 			$DocPdf = new DocumentPdf();
 			//Cr�er la page
-			$page = new DemandeExamenPdf();
+			$page = new DemandeExamenFonctionnelPdf();
 			//Envoi Id de la consultation
 			$page->setIdConsBio($id_cons);
 			$page->setService($serviceMedecin);
@@ -3152,10 +3131,10 @@ class ChururgieController extends AbstractActionController {
 			$page->setDonneesDemandeFonctionnel($donneesExamensFonc);
 			$page->setNotesDemandeFonctionnel($notesExamensFonc);
 			
-			$page->setDonneesDemandeBio($donneesExamensBio);
-			$page->setNotesDemandeBio($notesExamensBio);
-			$page->setDonneesDemandeMorph($donneesExamensMorph);
-			$page->setNotesDemandeMorph($notesExamensMorph);
+// 			$page->setDonneesDemandeBio($donneesExamensBio);
+// 			$page->setNotesDemandeBio($notesExamensBio);
+// 			$page->setDonneesDemandeMorph($donneesExamensMorph);
+// 			$page->setNotesDemandeMorph($notesExamensMorph);
 	
 				
 			//Ajouter les donnees a la page
@@ -3167,6 +3146,108 @@ class ChururgieController extends AbstractActionController {
 			$DocPdf->getDocument();
 		}
 			
+		
+		
+		else
+		    //*********************************DEMANDES D'EXAMENS Biologique****************
+		    //*********************************DEMANDES D'EXAMENS Biologique****************
+		    //*********************************DEMANDES D'EXAMENS Biologique****************
+		    if(isset ($_POST['demandeExamenBio'])){
+		 
+		        
+		        $i = 1; $j = 1;
+		        $donneesExamensBio = array();
+		        $notesExamensBio = array();
+		        //R�cup�ration des donn�es examens biologiques
+		        for( ; $i <= 6; $i++){
+		            if($this->params ()->fromPost ( 'examenBio_name_'.$i )){
+		                $donneesExamensBio[$j] = $this->params ()->fromPost ( 'examenBio_name_'.$i );
+		                $notesExamensBio[$j++ ] = $this->params ()->fromPost ( 'noteExamenBio_'.$i  );
+		            }
+		        }
+		        
+		        //CREATION DU DOCUMENT PDF
+		        //Cr�er le document
+		        $DocPdf = new DocumentPdf();
+		        //Cr�er la page
+		        $page = new DemandeExamenBioPdf();
+		        //Envoi Id de la consultation
+		        $page->setIdConsBio($id_cons);
+		        $page->setService($serviceMedecin);
+		        //Envoi des donn�es du patient
+		        $page->setDonneesPatientBio($donneesPatientOR);
+		        //Envoi des donn�es du medecin
+		        $page->setDonneesMedecinBio($donneesMedecin);
+		        //Envoi les donn�es de la demande
+// 		        $page->setDonneesDemandeFonctionnel($donneesExamensFonc);
+// 		        $page->setNotesDemandeFonctionnel($notesExamensFonc);
+		        
+		        $page->setDonneesDemandeBio($donneesExamensBio);
+		        $page->setNotesDemandeBio($notesExamensBio);
+// 		        $page->setDonneesDemandeMorph($donneesExamensMorph);
+// 		        $page->setNotesDemandeMorph($notesExamensMorph);
+		        
+		        
+		        //Ajouter les donnees a la page
+		        $page->addNoteBio();
+		        //Ajouter la page au document
+		        $DocPdf->addPage($page->getPage());
+		        
+		        //Afficher le document contenant la page
+		        $DocPdf->getDocument();
+		}
+		
+		
+		else
+		    //*********************************DEMANDES D'EXAMENS Biologique****************
+		    //*********************************DEMANDES D'EXAMENS Biologique****************
+		    //*********************************DEMANDES D'EXAMENS Biologique****************
+		    if(isset ($_POST['demandeExamenMorpho'])){
+		        
+		       
+		        
+		        $k = 1; $l = $j;
+		        $donneesExamensMorph = array();
+		        $notesExamensMorph = array();
+		        //R�cup�ration des donn�es examens morphologiques
+		        for( ; $k <= 11; $k++){
+		            if($this->params ()->fromPost ( 'element_name_'.$k )){
+		                $donneesExamensMorph[$l] = $this->params ()->fromPost ( 'element_name_'.$k );
+		                $notesExamensMorph[$l++ ] = $this->params ()->fromPost ( 'note_'.$k  );
+		            }
+		        }
+		        
+		        
+		        //CREATION DU DOCUMENT PDF
+		        //Cr�er le document
+		        $DocPdf = new DocumentPdf();
+		        //Cr�er la page
+		        $page = new DemandeExamenMorphoPdf();
+		        //Envoi Id de la consultation
+		        $page->setIdConsBio($id_cons);
+		        $page->setService($serviceMedecin);
+		        //Envoi des donn�es du patient
+		        $page->setDonneesPatientBio($donneesPatientOR);
+		        //Envoi des donn�es du medecin
+		        $page->setDonneesMedecinBio($donneesMedecin);
+		        //Envoi les donn�es de la demande
+// 		        $page->setDonneesDemandeFonctionnel($donneesExamensFonc);
+// 		        $page->setNotesDemandeFonctionnel($notesExamensFonc);
+		        
+// 		        $page->setDonneesDemandeBio($donneesExamensBio);
+// 		        $page->setNotesDemandeBio($notesExamensBio);
+		        $page->setDonneesDemandeMorph($donneesExamensMorph);
+		        $page->setNotesDemandeMorph($notesExamensMorph);
+		        
+		        
+		        //Ajouter les donnees a la page
+		        $page->addNoteBio();
+		        //Ajouter la page au document
+		        $DocPdf->addPage($page->getPage());
+		        
+		        //Afficher le document contenant la page
+		        $DocPdf->getDocument();
+		}
 	}
 
 

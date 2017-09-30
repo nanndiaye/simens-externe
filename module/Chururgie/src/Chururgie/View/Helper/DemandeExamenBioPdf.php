@@ -8,7 +8,7 @@ use Chururgie\Model\Consultation;
 use Chururgie\View\Helper\DateHelper; 
 
 
-class DemandeExamenPdf
+class DemandeExamenBioPdf
 {
 	protected $_page;
 	protected $_yPosition;
@@ -117,7 +117,7 @@ class DemandeExamenPdf
 		$this->_yPosition -= 35;
 		$this->_page->setFont($this->_newTime, 15);
 		$this->_page->setFillColor(new ZendPdf\Color\Html('green'));
-		$this->_page->drawText('Demande d\'examen Bio & Morpho',
+		$this->_page->drawText('Demande d\'examen Biologique',
 				$this->_leftMargin+155,
 				$this->_yPosition);
 		$this->_yPosition -= 5;
@@ -328,22 +328,22 @@ class DemandeExamenPdf
 		        
 		        $this->_yPosition -= $noteLineHeight;
 		    } 
-		    if($i <= $examensFonctionnel){
+// 		    if($i <= $examensFonctionnel){
 		        
-		        if($this->_DonneesDemandeFonctionnel[$i]){
+// 		        if($this->_DonneesDemandeFonctionnel[$i]){
 		            
-		            $this->_page->setFont($this->_newTimeGras, 12);
-		            $this->_page->drawText($i.') '.iconv ('UTF-8' ,'ISO-8859-1' ,$this->listeDesExamensFonctionnel()[$this->_DonneesDemandeFonctionnel[$i]].':'),
-		                $this->_leftMargin,
-		                $this->_yPosition);
-		            $this->_page->setFont($this->_policeContenu, 12);
-		            $this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,$this->_NotesDemandeFonctionnel[$i]),
-		                $this->_leftMargin+138,
-		                $this->_yPosition);
+// 		            $this->_page->setFont($this->_newTimeGras, 12);
+// 		            $this->_page->drawText($i.') '.iconv ('UTF-8' ,'ISO-8859-1' ,$this->listeDesExamensFonctionnel()[$this->_DonneesDemandeFonctionnel[$i]].':'),
+// 		                $this->_leftMargin,
+// 		                $this->_yPosition);
+// 		            $this->_page->setFont($this->_policeContenu, 12);
+// 		            $this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,$this->_NotesDemandeFonctionnel[$i]),
+// 		                $this->_leftMargin+138,
+// 		                $this->_yPosition);
 		            
-		        }
+// 		        }
 		        
-		    }
+// 		    }
 		    
 			if($this->_DonneesDemande && $i == 1){
 				$this->_page->setFont($this->_courier, 15);
@@ -381,43 +381,43 @@ class DemandeExamenPdf
 				
 			}
 			
-			if($this->_DonneesDemandeMorph && $i == count($this->_DonneesDemande)+1){
+// 			if($this->_DonneesDemandeMorph && $i == count($this->_DonneesDemande)+1){
 			
-				$this->_page->setFont($this->_courier, 15);
-				$this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,'Examens Morphologiques:'),
-				$this->_leftMargin,
-				$this->_yPosition);
+// 				$this->_page->setFont($this->_courier, 15);
+// 				$this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,'Examens Morphologiques:'),
+// 				$this->_leftMargin,
+// 				$this->_yPosition);
 				
-				$this->_page->setlineColor(new ZendPdf\Color\Html('gray'));
-				//$this->_page->setLineWidth(0.7);
-				//$this->_page->setLineDashingPattern(array(0, 0));
-				$this->_page->drawLine(
-						$this->_leftMargin,
-						$this->_yPosition-5,
-						$this->_pageWidth - $this->_leftMargin - 345,
-						$this->_yPosition-5
-				);
+// 				$this->_page->setlineColor(new ZendPdf\Color\Html('gray'));
+// 				//$this->_page->setLineWidth(0.7);
+// 				//$this->_page->setLineDashingPattern(array(0, 0));
+// 				$this->_page->drawLine(
+// 						$this->_leftMargin,
+// 						$this->_yPosition-5,
+// 						$this->_pageWidth - $this->_leftMargin - 345,
+// 						$this->_yPosition-5
+// 				);
 				
-				$this->_yPosition -= $noteLineHeight;
+// 				$this->_yPosition -= $noteLineHeight;
 			
-			}
+// 			}
 			
- 			if( $i > $examensBio && $i <= ($examensBio+$examensMorpho) ){
+//  			if( $i > $examensBio && $i <= ($examensBio+$examensMorpho) ){
 
- 				if($this->_DonneesDemandeMorph[$i]){
+//  				if($this->_DonneesDemandeMorph[$i]){
 			
-					$this->_page->setFont($this->_newTimeGras, 12);
-					$this->_page->drawText($n++.') '.iconv ('UTF-8' ,'ISO-8859-1' ,$this->listeDesExamensBioMorpho()[$this->_DonneesDemandeMorph[$i]].':'),
-							$this->_leftMargin,
-							$this->_yPosition);
-					$this->_page->setFont($this->_policeContenu, 12);
-					$this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,$this->_notesDemandeMorph[$i]),
-							$this->_leftMargin+138,
-							$this->_yPosition);
+// 					$this->_page->setFont($this->_newTimeGras, 12);
+// 					$this->_page->drawText($n++.') '.iconv ('UTF-8' ,'ISO-8859-1' ,$this->listeDesExamensBioMorpho()[$this->_DonneesDemandeMorph[$i]].':'),
+// 							$this->_leftMargin,
+// 							$this->_yPosition);
+// 					$this->_page->setFont($this->_policeContenu, 12);
+// 					$this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,$this->_notesDemandeMorph[$i]),
+// 							$this->_leftMargin+138,
+// 							$this->_yPosition);
 			
-				}
+// 				}
 			
- 			}
+//  			}
 			
 			$i++;
 			
