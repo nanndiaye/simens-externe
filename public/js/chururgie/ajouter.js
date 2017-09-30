@@ -223,15 +223,15 @@ $(function(){
 	        	
 	            for(var i = 1; i <= nbListe(); i++ ){
 	    		//	$('#element_name_'+i).attr('disabled',true); 
-	    			$('#element_name_'+i).css({'background':'#f8f8f8'});
+	    			//$('#element_name_'+i).css({'background':'#f8f8f8'});
 	    		//	$("#note_"+i+" input").attr('disabled',true); 
-	    			$("#note_"+i+" input").css({'background':'#f8f8f8'});
+	    			//$("#note_"+i+" input").css({'background':'#f8f8f8'});
 	    		}
-	    		$("#controls_element div").toggle(false);
-	    		$("#icone_supp_vider a img").toggle(false);
+	    		//$("#controls_element div").toggle(false);
+	    		//$("#icone_supp_vider a img").toggle(false);
 	    		//$("#bouton_morpho_modifier_demande").toggle(true);
 	    		//$("#bouton_morpho_valider_demande").toggle(false);
-	    		return false;
+	    		//return false;
       },
 	      error:function(e){console.log(e);alert("Une erreur interne est survenue!");},
 	      dataType: "html"
@@ -266,8 +266,8 @@ $(function(){
 			$("#supprimer_element").toggle(false);
 	}
 		$("#icone_supp_vider a img").toggle(true);
-		$("#bouton_morpho_modifier_demande").toggle(false);
-		$("#bouton_morpho_valider_demande").toggle(true);
+		//$("#bouton_morpho_modifier_demande").toggle(false);
+		//$("#bouton_morpho_valider_demande").toggle(true);
 	});
 	
 });

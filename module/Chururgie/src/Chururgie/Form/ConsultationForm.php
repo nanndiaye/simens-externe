@@ -27,6 +27,27 @@ class ConsultationForm extends Form {
 						'id' => 'id_cons'
 				)
 		) );
+		// Pour la partie de l'historique
+		$this->add ( array (
+		    'name' => 'examen_historique',
+		    'type' => 'Textarea',
+		    'options' => array (
+		     //   'label' => 'Examen'
+		    ),
+		    'attributes' => array (
+		       'id' => 'examen_historique'
+		    )
+		) );
+		$this->add ( array (
+		    'name' => 'autre_historique',
+		    'type' => 'Textarea',
+		    'options' => array (
+		        //'label' => 'autre dans historique'
+		    ),
+		    'attributes' => array (
+		        'id' => 'autre_historique'
+		    )
+		) );
 		
 		
 		$this->add ( array (
@@ -177,7 +198,7 @@ class ConsultationForm extends Form {
 				'name' => 'examen_donnee2',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnee 2') 
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 2') 
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -188,7 +209,7 @@ class ConsultationForm extends Form {
 				'name' => 'examen_donnee3',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnee 3') 
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 3') 
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -199,7 +220,7 @@ class ConsultationForm extends Form {
 				'name' => 'examen_donnee4',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnee 4') 
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 4') 
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -210,7 +231,7 @@ class ConsultationForm extends Form {
 				'name' => 'examen_donnee5',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnee 5') 
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 5') 
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -313,7 +334,7 @@ class ConsultationForm extends Form {
 				'name' => 'echographie_gynecologique',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Echographie gyn&eacute;cologique:')
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Echographie gynécologique:')
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -325,7 +346,7 @@ class ConsultationForm extends Form {
 				'name' => 'echographie_obstetrique',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Echographie obst&eacute;trique:')
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Echographie obstétrique:')
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -349,7 +370,7 @@ class ConsultationForm extends Form {
 				'name' => 'consultation_senologie',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Consultation s&eacute;nologie:')
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Consultation sénologie:')
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -480,7 +501,7 @@ class ConsultationForm extends Form {
 				'name' => 'bilan_hemolyse',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan de l\'h&eacute;mostase:' )
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan de l\'hémostase:' )
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -491,7 +512,7 @@ class ConsultationForm extends Form {
 				'name' => 'bilan_hepatique',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan h&eacute;patique:' )
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan hépatique:' )
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -502,7 +523,7 @@ class ConsultationForm extends Form {
 				'name' => 'bilan_renal',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan r&eacute;nal:' )
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan rénal:' )
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -547,7 +568,7 @@ class ConsultationForm extends Form {
 				'name' => 'ecographie',
 				'type' => 'Textarea',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Echographie: ' )
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Échographie: ' )
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -718,7 +739,7 @@ class ConsultationForm extends Form {
 				'name' => 'temperature',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Temp&eacute;rature (�C)' )
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Température (C)' )
 				),
 				'attributes' => array (
 						'class' => 'temperature_only_numeric',
@@ -744,7 +765,7 @@ class ConsultationForm extends Form {
 				'name' => 'pressionarterielle',
 				'type' => 'Text',
 				'options' => array (
-						//'label' => iconv('ISO-8859-1', 'UTF-8', 'Pression art�rielle (mmHg)')
+				'label' => iconv('ISO-8859-1', 'UTF-8', 'Pression artérielle (mmHg)')
 				),
 				'attributes' => array (
 						'class' => 'tension_only_numeric',
@@ -786,7 +807,7 @@ class ConsultationForm extends Form {
 				'name' => 'frequence_respiratoire',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv('ISO-8859-1', 'UTF-8','Fr&eacute;quence respiratoire')
+						'label' => iconv('ISO-8859-1', 'UTF-8','Fréquence respiratoire')
 				),
 				'attributes' => array (
 						'class' => 'frequence_only_numeric',
@@ -798,7 +819,7 @@ class ConsultationForm extends Form {
 				'name' => 'glycemie_capillaire',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv('ISO-8859-1', 'UTF-8', 'Glyc&eacute;mie capillaire (g/l)') 
+						'label' => iconv('ISO-8859-1', 'UTF-8', 'Glycémie capillaire (g/l)') 
 				),
 				'attributes' => array (
 						'class' => 'glycemie_only_numeric',
@@ -964,11 +985,11 @@ class ConsultationForm extends Form {
 				'name' => 'type_anesthesie_demande',
 				'type' => 'Zend\Form\Element\Select',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Type d\'anesth&eacute;sie :' ),
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Type d\'anesthésie :' ),
 						'value_options' => array (
-								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anesth&eacute;sie1' ),
-								'2' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anesth&eacute;sie2' ),
-								'3' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anesth&eacute;sie3' )
+								'1' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anesthésie1' ),
+								'2' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anesthésie2' ),
+								'3' => iconv ( 'ISO-8859-1', 'UTF-8', 'Anesthésie3' )
 						)
 				),
 				'attributes' => array (
@@ -980,7 +1001,7 @@ class ConsultationForm extends Form {
 				'name' => 'intervention_prevue',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Intervention Pr&eacute;vue :')
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Intervention Prévue :')
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -991,7 +1012,7 @@ class ConsultationForm extends Form {
 				'name' => 'numero_vpa',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'VPA Num&eacute;ro:' )
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'VPA Numéro:' )
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -1099,7 +1120,7 @@ class ConsultationForm extends Form {
 				'name' => 'date_fin_hospitalisation_prevue',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Date fin prevue :'),
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Date fin prévue :'),
 				),
 				'attributes' => array (
 						'id' => 'date_fin_hospitalisation_prevue'
@@ -1163,7 +1184,7 @@ class ConsultationForm extends Form {
 				'name' => 'antecedent_familial1',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','Antecedent 1')
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8','Antécédent 1')
 				),
 				'attributes' => array (
 						'id'  => 'antecedent_familial1'
@@ -1173,7 +1194,7 @@ class ConsultationForm extends Form {
 				'name' => 'antecedent_familial2',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','Antecedent 2')
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8','Antécédent 2')
 				),
 				'attributes' => array (
 						'id'  => 'antecedent_familial2'
@@ -1183,7 +1204,7 @@ class ConsultationForm extends Form {
 				'name' => 'antecedent_familial3',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','Antecedent 3')
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8','Antécédent 3')
 				),
 				'attributes' => array (
 						'id'  => 'antecedent_familial3'
@@ -1193,7 +1214,7 @@ class ConsultationForm extends Form {
 				'name' => 'antecedent_familial4',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','Antecedent 4')
+						'label' => iconv ( 'ISO-8859-1', 'UTF-8','Antécédent 4')
 				),
 				'attributes' => array (
 						'id'  => 'antecedent_familial4'
@@ -1392,7 +1413,7 @@ class ConsultationForm extends Form {
 				'name' => 'asthmeAM',
 				'type' => 'checkbox',
 				'attributes' => array (
-						'id' => 'asthmeAM'
+						'id' => 'asthmeAM',
 				)
 		) );
 		/*Autre*/
@@ -1664,7 +1685,7 @@ class ConsultationForm extends Form {
 		        'value_options' => array (
 		            'Tous' =>  'Tous' ,
 		            'Normal' =>  'Normal',
-		            'Presentation Resultat' =>'Presentation resultat',
+		            'Presentation Resultat' =>'Présentation résultat',
 		            'Rendez-vous' => 'Rendez-vous' 
 		        )
 		    ),
@@ -1679,10 +1700,10 @@ class ConsultationForm extends Form {
 		    'name' => 'antecedents_chirugicaux',
 		    'type' => 'Textarea',
 		    'options' => array (
-		        'label' => 'Antecedent :'
+		       // 'label' => 'Antécédent :'
 		    ),
 		    'attributes' => array (
-		        'id' => 'motif_hospitalisation'
+		        'id' => 'antecedents_chirugicaux'
 		    )
 		) );
 	}

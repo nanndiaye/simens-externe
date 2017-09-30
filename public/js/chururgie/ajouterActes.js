@@ -219,13 +219,13 @@ $(function(){
 	        	
 	        	for(var i = 1; i <= nbListeActe(); i++ ){
 	    			//$('#acte_name_'+i).attr('disabled',true); 
-	    			$('#acte_name_'+i).css({'background':'#f8f8f8'});
+	    			//$('#acte_name_'+i).css({'background':'#f8f8f8'});
 	    			//$("#noteActe_"+i+" input").attr('disabled',true);
-	    			$("#noteActe_"+i+" input").css({'background':'#f8f8f8'});
+	    			//$("#noteActe_"+i+" input").css({'background':'#f8f8f8'});
 	    		}
 	            
-	    		$("#controls_acte div").toggle(false);
-	    		$("#iconeActe_supp_vider a img").toggle(false);
+	    		//$("#controls_acte div").toggle(false);
+	    		//$("#iconeActe_supp_vider a img").toggle(false);
 	    		//$("#bouton_Acte_modifier_demande").toggle(true);
 	    		//$("#bouton_Acte_valider_demande").toggle(false);
 	    		return false;
@@ -239,22 +239,22 @@ $(function(){
 
 	//});
 	
-	$("#bouton_Acte_modifier_demande").click(function(){
-		for(var i = 1; i <= nbListeActe(); i++ ){
-			//$('#acte_name_'+i).attr('disabled',false);
-			$('#acte_name_'+i).css({'background':'white'});
-			//$("#noteActe_"+i+" input").attr('disabled',false);
-			$("#noteActe_"+i+" input").css({'background':'white'});
-		}
-		$("#controls_acte div").toggle(true);
-		if(nbListeActe() == 1){
-			$("#supprimer_acte").toggle(false);
-		}
-		$("#iconeActe_supp_vider a img").toggle(true);
-		$("#bouton_Acte_modifier_demande").toggle(false);
-		$("#bouton_Acte_valider_demande").toggle(true);
-		return false;
-	});
+//	$("#bouton_Acte_modifier_demande").click(function(){
+//		for(var i = 1; i <= nbListeActe(); i++ ){
+//			//$('#acte_name_'+i).attr('disabled',false);
+//			$('#acte_name_'+i).css({'background':'white'});
+//			//$("#noteActe_"+i+" input").attr('disabled',false);
+//			$("#noteActe_"+i+" input").css({'background':'white'});
+//		}
+//		$("#controls_acte div").toggle(true);
+//		if(nbListeActe() == 1){
+//			$("#supprimer_acte").toggle(false);
+//		}
+//		$("#iconeActe_supp_vider a img").toggle(true);
+//		$("#bouton_Acte_modifier_demande").toggle(false);
+//		$("#bouton_Acte_valider_demande").toggle(true);
+//		return false;
+//	});
 	
 	
 });

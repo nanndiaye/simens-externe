@@ -234,7 +234,7 @@ class ChururgieController extends AbstractActionController {
 	//************************************************************************************
 	public function majComplementConsultationAction() {
 	    
-	    $this->layout ()->setTemplate ( 'layout/consultation' );
+	    $this->layout ()->setTemplate ( 'layout/chururgie' );
 	    
 	    $user = $this->layout()->user;
 	    $IdDuService = $user['IdService'];
@@ -243,12 +243,12 @@ class ChururgieController extends AbstractActionController {
 	    $this->getDateHelper();
 	    $id_pat = $this->params()->fromQuery ( 'id_patient', 0 );
 	    $id = $this->params()->fromQuery ( 'id_cons' );
-	    $id_admission = $this->params()->fromQuery ( 'id_admission' );
+	    $id_admission = $this->params()->fromQuery ('id_admission');
 	    $form = new ConsultationForm();
-	    
+	  
 	    $liste = $this->getConsultationTable()->getInfoPatient ( $id_pat );
 	    $image = $this->getConsultationTable()->getPhoto ( $id_pat );
-	    
+	   
 	    
 	    //GESTION DES ALERTES
 	    //GESTION DES ALERTES
@@ -259,15 +259,17 @@ class ChururgieController extends AbstractActionController {
 	    if(array_key_exists($id_pat, $tabPatientRV)){
 	        $resultRV = $tabPatientRV[ $id_pat ];
 	    }
-	    
+	   
 	    //POUR LES CONSTANTES
 	    //POUR LES CONSTANTES
 	    //POUR LES CONSTANTES
 	    $consult = $this->getConsultationTable ()->getConsult ( $id );
+	  
 	    $pos = strpos($consult->pression_arterielle, '/') ;
+	   
 	    $tensionmaximale = substr($consult->pression_arterielle, 0, $pos);
 	    $tensionminimale = substr($consult->pression_arterielle, $pos+1);
-	    
+	 
 	    $data = array (
 	        'id_cons' => $consult->id_cons,
 	        'id_medecin' => $consult->id_medecin,
@@ -282,7 +284,7 @@ class ChururgieController extends AbstractActionController {
 	        'frequence_respiratoire' => $consult->frequence_respiratoire,
 	        'glycemie_capillaire' => $consult->glycemie_capillaire,
 	    );
-	    
+	   
 	    //POUR LES MOTIFS D'ADMISSION
 	    //POUR LES MOTIFS D'ADMISSION
 	    //POUR LES MOTIFS D'ADMISSION
@@ -296,7 +298,7 @@ class ChururgieController extends AbstractActionController {
 	        $data ['motif_admission' . $k] = $Motifs ['Libelle_motif'];
 	        $k ++;
 	    }
-	    
+	 
 	    //POUR LES EXAMEN PHYSIQUES
 	    //POUR LES EXAMEN PHYSIQUES
 	    //POUR LES EXAMEN PHYSIQUES
@@ -308,7 +310,7 @@ class ChururgieController extends AbstractActionController {
 	        $data['examen_donnee'.$kPhysique] = $Examen['libelle_examen'];
 	        $kPhysique++;
 	    }
-	    
+	   
 	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
 	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
 	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
@@ -323,7 +325,7 @@ class ChururgieController extends AbstractActionController {
 	            $tabInfoSurv [$listeCons['ID_CONS']] = '_________';
 	        }
 	    }
-	    
+	    var_dump($data);exit();
 	    $listeConsultation = $this->getConsultationTable ()->getConsultationPatientSaufActu($id_pat, $id);
 	    
 	    //*** Liste des Hospitalisations
@@ -1273,17 +1275,25 @@ class ChururgieController extends AbstractActionController {
 		$form->setData ( $form );
 		$id_admission = $this->params()->fromPost('id_admission',0);
 		
-		//var_dump($id_patient);exit();
+		
+		
+		//Ajouter les antécédents chirurgicaux
+		$this->getConsultationTable()->addAntecedentsChirurgicaux($formData,$id_patient);
+		
 		//consultation
 		//var_dump($formData);exit();
 		$this->getConsultationTable()->addConsultation($formData,$IdDuService, $id_medecin,$id_admission);
 		//var_dump($formData);exit();
+		
+		
+		
 		// les antecedents medicaux du patient a ajouter addAntecedentMedicauxPersonne
-		$this->getConsultationTable()->addAntecedentMedicaux($formData);
 		
-		$this->getConsultationTable()->addAntecedentMedicauxPersonne($formData);
+		$this->getConsultationTable()->addAntecedentMedicaux($formData,$id_medecin);
 	
-		
+		$this->getConsultationTable()->addAntecedentMedicauxPersonne($formData,$id_medecin);
+	
+	
 		// mettre a jour les motifs d'admission
 		$this->getMotifAdmissionTable ()->deleteMotifAdmission ( $id_cons );
 		
@@ -2057,13 +2067,13 @@ class ChururgieController extends AbstractActionController {
 	    //
 	    $form= new ConsultationForm();
 	    $lespatients = $this->getConsultationTable()->listePatientsConsultes ( $idService );
-	   // var_dump($lespatients);exit();
-	    $cons=$form->get('id_cons')->getValue();
-	    //var_dump($cons);exit();
+	   //var_dump($lespatients);exit();
+	    //$cons=$lespatients->ID_CONS;
+	  //  var_dump($cons);exit();
 	    return new ViewModel ( array (
 	        'donnees' => $lespatients,
 	        'form'=> $form,
-	        'id_cons'=>$cons,
+	        //'id_cons'=>$cons,
 	    ) );
 	}
 	
@@ -2098,7 +2108,7 @@ class ChururgieController extends AbstractActionController {
 		$id_medecin = $user['id_personne'];
 	
 		$id_pat = $this->params ()->fromQuery ( 'id_patient', 0 );
-		//var_dump($id_pat);exit();
+		
 		$id_cons = $this->params ()->fromQuery ( 'id_cons' );
 		$id= $this->params ()->fromQuery ('id_admission',0);
 		
@@ -2229,9 +2239,9 @@ class ChururgieController extends AbstractActionController {
 		$listeTypePathologie=$this->getConsultationTable()->getTypePathologie();
 		//var_dump($listeTypePathologie);exit();
 		//var_dump($liste);exit();
-		//$today = new \DateTime ( 'now' );
-		$today = new DateTime("now");
-		$date = $today->format ( 'dd/mm/yyyy' );
+		$today = new \DateTime ( 'now' );
+		
+		$date = $today->format ( 'd/m/Y' );
 		$heure = $today->format ( "H:i" );
 	
 		//var_dump($id);exit();
@@ -2848,7 +2858,7 @@ class ChururgieController extends AbstractActionController {
 		
 		//*************************************
 		$donneesPatientOR = $this->getConsultationTable()->getInfoPatient($id_patient);
-		//var_dump($id_patient); exit();
+		//var_dump($donneesPatientOR); exit();
 		//**********ORDONNANCE*****************
 		//**********ORDONNANCE*****************
 		//**********ORDONNANCE*****************

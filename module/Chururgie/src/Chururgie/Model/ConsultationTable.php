@@ -9,7 +9,21 @@ use Zend\Db\Sql\Where;
 class ConsultationTable {
 
     
- 
+    //  Inserer antécédents chirurgicaux
+    //  Inserer antécédents chirurgicaux
+    public function addAntecedentsChirurgicaux($formData,$id_patient){
+        
+       // var_dump($formData->antecedents_chirugicaux);exit();
+        $db = $this->tableGateway->getAdapter();
+        $sql = new Sql($db);
+        $sQuery = $sql->insert()
+        ->into('antecedents_chirurgicaux')
+        ->values(array('note_antecedents' => $formData->antecedents_chirugicaux, 'id_patient'=> $id_patient));
+        $sql->prepareStatementForSqlObject($sQuery)->execute();
+   
+    }
+    
+    
     /**
      * Ajouter une nouvelle pathologie dans la base de donn�es
      */
@@ -131,14 +145,15 @@ class ConsultationTable {
 	public function getConsult($id){
 	   
 	    $id = (String) $id;
-	    
+	  
 	    $rowset = $this->tableGateway->select ( array (
-	        'ID_PATIENT' => $id
+	        'ID_CONS' => $id
 	    ) );
 	    $row =  $rowset->current ();
 	    if (! $row) {
 	        throw new \Exception ( "Could not find row $id" );
 	    }
+	   // var_dump($row);exit();
 	    return $row;
 	}
 	
@@ -269,7 +284,8 @@ class ConsultationTable {
 					'GLYCEMIE_CAPILLAIRE' => $values->glycemie_capillaire, 
 			         'DATEONLY' => $date,
 					'HEURECONS' => $values->heure_cons,
-					'ID_SERVICE' => $IdDuService
+					'ID_SERVICE' => $IdDuService,
+			    
 			         
 			);
 			//var_dump($dataconsultation);exit();
@@ -501,6 +517,7 @@ class ConsultationTable {
 		
 		$select->join(array('a' => 'admission'), 'a.ID_PATIENT = p.ID_PERSONNE', array('Id_admission' => 'id_admission','date_admise'=>'date_admise',
 		 'type_consultation'=>'type_consultation','id_service'=>'id_service'));
+		//$select->join(array('c' => 'consultation'), 'a.Id_admission = c.Id_admission', array('ID_CONS'=>'ID_CONS','CONSPRISE' => 'CONSPRISE','date'=>'DATEONLY'));
 		
 		$select->join(array('type_cons' => 'type_consultation'), 'type_cons.ID = a.type_consultation', array('designation' => 'designation'));
 		
@@ -988,11 +1005,11 @@ class ConsultationTable {
  	
  	//Ajout des ant�c�dents m�dicaux
  	//Ajout des ant�c�dents m�dicaux
- 	public function addAntecedentMedicaux($data){
+ 	public function addAntecedentMedicaux($data,$id_medecin){
  		$date = (new \DateTime())->format('Y-m-d H:i:s');
  		$db = $this->tableGateway->getAdapter();
  		$sql = new Sql($db);
- 		
+ 		//var_dump($data,$id_medecin);exit();
  		for($i = 0; $i<$data->nbCheckboxAM; $i++){
  			$champ = "champTitreLabel_".$i;
  			$libelle =  $data->$champ;
@@ -1000,7 +1017,7 @@ class ConsultationTable {
  			if(!$this->getAntecedentMedicauxParLibelle($libelle)){
  				$sQuery = $sql->insert()
  				->into('ant_medicaux')
- 				->values(array('libelle' => $libelle, 'date_enregistrement' => $date, 'id_medecin' => $data->med_id_personne));
+ 				->values(array('libelle' => $libelle, 'date_enregistrement' => $date, 'id_medecin' => $id_medecin));
  				$sql->prepareStatementForSqlObject($sQuery)->execute();
  			}
  			
@@ -1046,7 +1063,7 @@ class ConsultationTable {
  	
  	//Ajout des ant�c�dents m�dicaux de la personne
  	//Ajout des ant�c�dents m�dicaux de la personne
- 	public function addAntecedentMedicauxPersonne($data){
+ 	public function addAntecedentMedicauxPersonne($data,$id_medecin){
  		$date = (new \DateTime())->format('Y-m-d H:i:s');
  		$db = $this->tableGateway->getAdapter();
  		$sql = new Sql($db);
@@ -1066,7 +1083,7 @@ class ConsultationTable {
  				if(!$this->getAntecedentMedicauxPersonneParId($antecedent['id'], $data->id_patient)){
  					$sQuery = $sql->insert()
  					->into('ant_medicaux_personne')
- 					->values(array('id_ant_medicaux' => $antecedent['id'], 'id_patient' => $data->id_patient, 'date_enregistrement' => $date, 'id_medecin' => $data->med_id_personne));
+ 					->values(array('id_ant_medicaux' => $antecedent['id'], 'id_patient' => $data->id_patient, 'date_enregistrement' => $date, 'id_medecin' => $id_medecin));
  					$sql->prepareStatementForSqlObject($sQuery)->execute();
  				}
  			}

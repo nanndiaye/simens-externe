@@ -83,11 +83,11 @@ class HospitalisationPdf
 				650); //+y
 		
 		$this->_page->setFont($this->_newTime, 10);
-		$this->_page->drawText('R�publique du S�n�gal',
+		$this->_page->drawText('République du Sénégal',
 				$this->_leftMargin,
 				$this->_pageHeight - 50);
 		$this->_page->setFont($this->_newTime, 10);
-		$this->_page->drawText('Minist�re de la sant� et de l\'action sociale',
+		$this->_page->drawText('Ministère de la santé et de l\'action sociale',
 				$this->_leftMargin,
 				$this->_pageHeight - 65);
 		$this->_page->setFont($this->_newTime, 10);
@@ -102,7 +102,7 @@ class HospitalisationPdf
 		$this->_page->setFont($font, 8);
 		$today = new \DateTime ();
 		$dateNow = $today->format ( 'd/m/Y' );
-		$this->_page->drawText('Saint-Louis le, ' . $dateNow, 510,
+		$this->_page->drawText('Saint-Louis, le ' . $dateNow, 510,
 				$this->_pageHeight - 50);
 		
 		$this->_yPosition -= 35;
@@ -212,11 +212,11 @@ class HospitalisationPdf
 			$this->_yPosition -= 15;// allez a ligne suivante
 			//----- -----------------------------------------
 			$this->_page->setFont($this->_newTimeGras, 9);
-			$this->_page->drawText('DATE DE NAISSANCE :',
-					$this->_leftMargin+135,
+			$this->_page->drawText('AGE :',
+					$this->_leftMargin+210,
 					$this->_yPosition);
 			$this->_page->setFont($this->_newTime, 11);
-			$this->_page->drawText($Control->convertDate($this->_DonneesPatient['DATE_NAISSANCE'])."  (".$this->nbAnnees($this->_DonneesPatient['DATE_NAISSANCE'],$date_actu)." ans)",
+			$this->_page->drawText($this->_DonneesPatient['AGE']." ans)",
 					$this->_leftMargin+240,
 					$this->_yPosition);
 			

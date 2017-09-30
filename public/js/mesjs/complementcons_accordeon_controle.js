@@ -797,6 +797,20 @@ $(function(){
 	    
 	    
 	    
+	    // **********-- Donnees de l'entecedents chirugicaux  --*******
+        // **********-- Donnees de l'entecedents chirugicaux --*******
+	    donnees['antecedents_chirugicaux'] = $("#antecedents_chirugicaux").val();
+	   
+	    
+	    
+	    // **********-- Donnees de l'examen et autre de l'historique  --*******
+        // **********-- Donnees de l'examen et autre de l'historique --*******
+	    donnees['examen_historique'] = $("#examen_historique").val();
+	    donnees['autre_historique'] = $("#autre_historique").val();
+	    
+	    
+	    
+	    
 	    // **********-- Donnees de l'examen physique --*******
         // **********-- Donnees de l'examen physique --*******
 	    donnees['examen_donnee1'] = $("#examen_donnee1").val();
@@ -1081,6 +1095,21 @@ $(function(){
  /**************************************************************************************************************/
  function AntecedentScript(){
 	 $(function(){
+		 
+		//Autre de l'historique
+			//Autre de l'historique
+		 $("#titreTableauautrehistorique").toggle(false);
+			$("#autre_historique").toggle(false);
+			$("#autreprhistorique").toggle(false);
+			$("#boutonTerminerautrehistorique").toggle(false);
+			
+			//Examen de l'historique
+			//Examen de l'historique
+		 $("#titreTableauexamenhistorique").toggle(false);
+			$("#examen_historique").toggle(false);
+			$("#examenprhistorique").toggle(false);
+			$("#boutonTerminerexamenhistorique").toggle(false);
+			
 		//CONSULTATION
 		//CONSULTATION
 		$("#titreTableauConsultation").toggle(false);
@@ -1141,7 +1170,57 @@ $(function(){
 		});
 		
 		
+		
+		//Examen historique
+		//Examen historique
+		$(".image3").click(function(){
+			 $("#MenuAntecedent").fadeOut(function(){ 
+				 $("#titreTableauexamenhistorique").fadeIn("fast");
+			     $("#boutonTerminerexamenhistorique").toggle(true);
+			     $("#examen_historique").fadeIn("fast");
+			     $("#examenprhistorique").fadeIn("fast");
+			  
+			 });
+		});
+		
+		$("#Terminerexamen").click(function(){
+			$("#boutonTerminerexamenhistorique").fadeOut();
+			$("#examen_historique").fadeOut();
+			$("#examenprhistorique").fadeOut();
+			$("#titreTableauexamenhistorique").fadeOut(function(){ 
+			    $("#MenuAntecedent").fadeIn("fast");
+			});
+		});
+		
+		//Autre pour historique
+		//Autre pour historique
+		$(".image4").click(function(){
+			 $("#MenuAntecedent").fadeOut(function(){ 
+				 $("#titreTableauautrehistorique").fadeIn("fast");
+			     $("#boutonTerminerautrehistorique").toggle(true);
+			     $("#autre_historique").fadeIn("fast");
+			     $("#autreprhistorique").fadeIn("fast");
+			  
+			 });
+		});
+		
+		$("#Terminerautre").click(function(){
+			$("#boutonTerminerautrehistorique").fadeOut();
+			$("#autre_historique").fadeOut();
+			$("#autreprhistorique").fadeOut();
+			$("#titreTableauautrehistorique").fadeOut(function(){ 
+			    $("#MenuAntecedent").fadeIn("fast");
+			});
+		});
+		
 	 });
+	 
+	 
+	 
+	 
+		
+	
+	
 
 	 /*************************************************************************************************************/
 	 
