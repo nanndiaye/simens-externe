@@ -60,14 +60,7 @@
 		
 		
 		
-		//Au debut on desactive tous les champs
-		groupe_sanguin.attr( 'readonly', false);
-		hemogramme_sanguin.attr( 'readonly', false);
-		bilan_hemolyse.attr( 'readonly', false);
-		bilan_hepatique.attr( 'readonly', false);
-		bilan_renal.attr( 'readonly', false);
-		bilan_inflammatoire.attr( 'readonly', false);
-
+		
 		
 	});
 	  
@@ -121,8 +114,29 @@ $(function(){
 	vaccination.attr( 'readonly', false);
 	soins_infirmiers.attr( 'readonly', false);
 	
+	// ********************** ON cache les résultats de l 'examen fonctionnel ******************
+	// ********************** ON cache les résultats de l 'examen fonctionnel ******************
+	// ********************** ON cache les résultats de l 'examen fonctionnel ******************
+	$("#acte_1").toggle(false);
+	$("#acte_2").toggle(false);
+	$("#acte_3").toggle(false);
+	$("#acte_4").toggle(false);
+	$("#acte_5").toggle(false);
+	$("#acte_6").toggle(false);
+	$("#acte_7").toggle(false);
+	$("#acte_8").toggle(false);
+	$("#acte_9").toggle(false);
+	$("#acte_10").toggle(false);
+	$("#acte_11").toggle(false);
+	$("#acte_12").toggle(false);
+	$("#acte_13").toggle(false);
+	$("#acte_14").toggle(false);
+	$("#acte_15").toggle(false);
+	$("#acte_16").toggle(false);
+	$("#acte_17").toggle(false);
+	$("#acte_18").toggle(false);
+	$("#acte_19").toggle(false);
 	
-
 	
 });
   
@@ -140,12 +154,22 @@ $(function(){
 	var scanner = $("#scanner");
 	var irm = $("#irm");
 	
-	//Au debut on affiche pas le bouton modifier
-	$("#bouton_morpho_modifier").toggle(false);
-	//Au debut on affiche le bouton valider
-	$("#bouton_morpho_valider").toggle(true);
 	
-	//Au debut on desactive tous les champs
+	
+	//Au debut on affiche pas le bouton modifier
+	//$("#bouton_morpho_modifier").toggle(false);
+	//Au debut on affiche le bouton valider
+	//$("#bouton_morpho_valider").toggle(true);
+	
+	//Au debut on desactive et on cache tous les champs
+	
+	$("#resultat_radio").toggle(false);
+	$("#resultat_ecographie").toggle(false);
+	$("#resultat_irm").toggle(false);
+	$("#resultat_scanner").toggle(false);
+	$("#resultat_fibrocospie").toggle(false);
+	
+	
 	radio.attr( 'readonly', false);
 	ecographie.attr( 'readonly', false);
 	fibrocospie.attr( 'readonly', false);
@@ -187,14 +211,14 @@ $(function(){
 	var intervention_prevue = $("#intervention_prevue");
 	var observation = $("#observation");
 	
-	$("#chirurgical1").click(function(){
-		diagnostic_traitement_chirurgical.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		intervention_prevue.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		observation.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		
-		$("#bouton_chirurgical_modifier").toggle(true);
-		$("#bouton_chirurgical_valider").toggle(false);	
-	});
+//	$("").click(function(){
+//		diagnostic_traitement_chirurgical.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		intervention_prevue.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		observation.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		
+//		$("#bouton_chirurgical_modifier").toggle(true);
+//		$("#bouton_chirurgical_valider").toggle(false);	
+//	});
 	
 	//Au debut on affiche pas le bouton modifier, on l'affiche seulement apres impression
 	//$("#bouton_chirurgical_modifier").toggle(false);
@@ -781,6 +805,9 @@ $(function(){
 	    donnees['id_cons']    = $("#id_cons").val();
 	    donnees['terminer'] = 'save';
 	    
+	    // Histoire de la maladie
+	    
+	    donnees['histoire_maladie'] = $("#histoire_maladie").val();
 	    
 	    //*********** PATHOLOGIE ************
 	    //*********** PATHOLOGIE ************
@@ -1056,8 +1083,39 @@ $(function(){
 		donnees['NoteHtaAF'] = $("#NoteHtaAF").val();
 		
 		donnees['autresAF'] = $("#autresAF:checked").val(); 
-		if(!donnees['autresAF']){ donnees['autresAF'] = 0;}
+		if(!donnees['autresAF']){ donnees['autresApF'] = 0;}
 		donnees['NoteAutresAF'] = $("#NoteAutresAF").val();
+		
+		/*Dislipid�mie*/
+		donnees['dislipidemieAF'] = $("#dislipidemieAF:checked").val(); 
+		if(!donnees['dislipidemieAF']){ donnees['dislipidemieAF'] = 0;}
+		/*Asthme*/ 
+		donnees['asthmeAF'] = $("#asthmeAF:checked").val(); 
+		if(!donnees['asthmeAF']){ donnees['asthmeAF'] = 0;}
+		
+		/*Ajout automatique des antecedents familiaux*/
+		var $nbCheckboxAF = ($('#nbCheckboxAF').val())+1;
+		var $nbCheck = 0;
+		var $ligne;
+		var $reste = ( $nbCheckboxAF - 1 ) % 5;
+  		var $nbElement = parseInt( ( $nbCheckboxAF - 1 ) / 5 ); 
+  		if($reste != 0){ $ligne = $nbElement + 1; }
+  		else { $ligne = $nbElement; }
+  		
+  		var k=0;
+  		var i;
+		for(var j=1 ; j<=$ligne ; j++){
+			for( i=0 ; i<5 ; i++){
+				var $champValider = $('#champValider_'+j+'_'+i+':checked').val();
+				if($champValider == 'on'){
+					donnees['champValider_'+k] = 1;
+					donnees['champTitreLabel_'+k] = $('#champTitreLabel_'+j+'_'+i).val();
+					k++;
+					$nbCheck++;
+				}
+			}
+			i=0; 
+		}
 		
 		updateexecuterRequetePost(donnees);
 	});
@@ -1480,40 +1538,83 @@ $(function(){
 			
 			//ANTECEDENTS FAMILIAUX TESTER SI C'EST COCHE
 			//ANTECEDENTS FAMILIAUX TESTER SI C'EST COCHE
-			if(temoinDiabeteAF != 1){
-				$("#DivNoteDiabeteAF").toggle(false);
-			}
-			if(temoinDrepanocytoseAF != 1){
-				$("#DivNoteDrepanocytoseAF").toggle(false);
-			}
-			if(temoinhtaAF != 1){
-				$("#DivNoteHtaAF").toggle(false);
-			}
-			$("#DivNoteAutresAF").toggle(false);
 			
-			$('#AntecedentsFamiliaux input[name=DiabeteAF]').click(function(){ 
-				var boutons = $('#AntecedentsFamiliaux input[name=DiabeteAF]');
-				if( boutons[1].checked){ $("#DivNoteDiabeteAF").toggle(true); }
-				if(!boutons[1].checked){ $("#DivNoteDiabeteAF").toggle(false); }
-			});
 			
-			$('#AntecedentsFamiliaux input[name=DrepanocytoseAF]').click(function(){ 
-				var boutons = $('#AntecedentsFamiliaux input[name=DrepanocytoseAF]');
-				if( boutons[1].checked){ $("#DivNoteDrepanocytoseAF").toggle(true); }
-				if(!boutons[1].checked){ $("#DivNoteDrepanocytoseAF").toggle(false); }
-			});
 			
-			$('#AntecedentsFamiliaux input[name=htaAF]').click(function(){ 
-				var boutons = $('#AntecedentsFamiliaux input[name=htaAF]');
-				if( boutons[1].checked){ $("#DivNoteHtaAF").toggle(true); }
-				if(!boutons[1].checked){ $("#DivNoteHtaAF").toggle(false); }
-			});
 			
-			$('#AntecedentsFamiliaux input[name=autresAF]').click(function(){ 
-				var boutons = $('#AntecedentsFamiliaux input[name=autresAF]');
-				if( boutons[1].checked){ $("#DivNoteAutresAF").toggle(true); }
-				if(!boutons[1].checked){ $("#DivNoteAutresAF").toggle(false); }
-			});
+			
+			//ANTECEDENTS MEDICAUX TESTER SI C'EST COCHE
+			//ANTECEDENTS MEDICAUX TESTER SI C'EST COCHE
+//			if(temoinDiabeteAF != 1){
+//				$(".imageValiderDiabeteAF").toggle(false);
+//			}
+//			if(temoinhtaAF != 1){
+//				$(".imageValiderHtaAF").toggle(false);
+//			}
+//			if(temoindrepanocytoseAF != 1){
+//				$(".imageValiderDrepanocytoseAF").toggle(false);
+//			}
+//			
+//			
+//			$('#AntecedentFamiliaux input[name=DiabeteAF]').click(function(){
+//				var boutons = $('#AntecedentFamiliaux input[name=DiabeteAF]');
+//				if( boutons[1].checked){ $(".imageValiderDiabeteAF").toggle(true); }
+//				if(!boutons[1].checked){ $(".imageValiderDiabeteAF").toggle(false); }
+//			});
+//			
+//			$('#AntecedentFamiliaux input[name=htaAF]').click(function(){
+//				var boutons = $('#AntecedentFamiliaux input[name=htaAF]');
+//				if( boutons[1].checked){ $(".imageValiderHtaAF").toggle(true); }
+//				if(!boutons[1].checked){ $(".imageValiderHtaAF").toggle(false); }
+//			});
+//			
+//			$('#AntecedentFamiliaux input[name=DrepanocytoseAF]').click(function(){
+//				var boutons = $('#AntecedentFamiliaux input[name=DrepanocytoseAF]');
+//				if( boutons[1].checked){ $(".imageValiderDrepanocytoseAF").toggle(true); }
+//				if(!boutons[1].checked){ $(".imageValiderDrepanocytoseAF").toggle(false); }
+//			});
+			
+			
+			
+			
+			
+			
+			
+			
+//			if(temoinDiabeteAF != 1){
+//				$("#DivNoteDiabeteAF").toggle(false);
+//			}
+//			if(temoinDrepanocytoseAF != 1){
+//				$("#DivNoteDrepanocytoseAF").toggle(false);
+//			}
+//			if(temoinhtaAF != 1){
+//				$("#DivNoteHtaAF").toggle(false);
+//			}
+//			$("#DivNoteAutresAF").toggle(false);
+//			
+//			$('#AntecedentsFamiliaux input[name=DiabeteAF]').click(function(){ 
+//				var boutons = $('#AntecedentsFamiliaux input[name=DiabeteAF]');
+//				if( boutons[1].checked){ $("#DivNoteDiabeteAF").toggle(true); }
+//				if(!boutons[1].checked){ $("#DivNoteDiabeteAF").toggle(false); }
+//			});
+//			
+//			$('#AntecedentsFamiliaux input[name=DrepanocytoseAF]').click(function(){ 
+//				var boutons = $('#AntecedentsFamiliaux input[name=DrepanocytoseAF]');
+//				if( boutons[1].checked){ $("#DivNoteDrepanocytoseAF").toggle(true); }
+//				if(!boutons[1].checked){ $("#DivNoteDrepanocytoseAF").toggle(false); }
+//			});
+//			
+//			$('#AntecedentsFamiliaux input[name=htaAF]').click(function(){ 
+//				var boutons = $('#AntecedentsFamiliaux input[name=htaAF]');
+//				if( boutons[1].checked){ $("#DivNoteHtaAF").toggle(true); }
+//				if(!boutons[1].checked){ $("#DivNoteHtaAF").toggle(false); }
+//			});
+			
+//			$('#AntecedentsFamiliaux input[name=autresAF]').click(function(){ 
+//				var boutons = $('#AntecedentsFamiliaux input[name=autresAF]');
+//				if( boutons[1].checked){ $("#DivNoteAutresAF").toggle(true); }
+//				if(!boutons[1].checked){ $("#DivNoteAutresAF").toggle(false); }
+//			});
     //******************************************************************************
 	//******************************************************************************
 			$(".image2_TP").click(function(){
@@ -1922,7 +2023,156 @@ $(function(){
 						yearSuffix: '',
 				}
 		);
+		//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//=============================================Antecedents Familiaux===============================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	var itab = 1;
+	  	var ligne = 0; 
+	  	var tableau = [];
 	  	
+	  	function ajouterToutLabelAntecedentsFamiliaux(tableau_){
+	  		for(var l = 1; l <= ligne; l++){
+	  			if( l == 1 ){
+		  			$("#labelDesAntecedentsFamiliaux_"+1).html("").css({'height' : '0px'});
+		  			itab = 1;
+	  			} else {
+		  			$("#labelDesAntecedentsFamiliaux_"+l).remove();
+	  			}
+	  		}
+	  		
+	  		var tab = [];
+	  		var j = 1;
+	  		
+	  		for(var i=1 ; i<tableau_.length ; i++){
+	  			if( tableau_[i] ){
+	  				tab[j++] = tableau_[i];
+	  				itab++;
+	  				ajouterLabelAntecedentsFamiliaux(tableau_[i]);
+	  			}
+	  		}
+
+	  		tableau = tab;
+	  		itab = j;
+	  		$('#nbCheckboxAF').val(itab);
+
+	  		stopPropagation();
+	  	}
+	  	
+	  	
+	  //Ajouter des labels au click sur ajouter pour antecedents familiaux
+	  	//Ajouter des labels au click sur ajouter pour antecedents familiaux
+	  	//Ajouter des labels au click sur ajouter pour antecedents familiaux
+	  	var scriptLabel = "";
+	  	function ajouterLabelAntecedentsFamiliaux(nomLabel){
+	  		
+	  		if(!nomLabel){ stopPropagation(); }
+	  		
+	  		var reste = ( itab - 1 ) % 5; 
+	  		var nbElement = parseInt( ( itab - 1 ) / 5 ); 
+	  		if(reste != 0){ ligne = nbElement + 1; }
+	  		else { ligne = nbElement; }
+	  		
+	  		var i = 0;
+	  		if(ligne == 1){
+		  		i = $("#labelDesAntecedentsFamiliaux_"+ligne+" td").length;
+	  		} else {
+	  			if(reste == 1){
+		  			$("#labelDesAntecedentsFamiliaux_"+(ligne-1)).after(
+	            			"<tr id='labelDesAntecedentsFamiliaux_"+ligne+"' style='width:100%; '>"+
+	            			"</tr>");
+	  			}
+	  			i = $("#labelDesAntecedentsFamiliaux_"+ligne+" td").length;
+	  		}
+	  		
+	  		scriptLabel = 
+  				"<td id='BUcheckbox' class='label_"+ligne+"_"+i+"' style='min-width: 45%; '> "+
+                "<div > "+
+                " <label style='width: 50%; height:30px; text-align:right; font-family: time new romans; font-size: 18px;'> "+
+                "       <a href='javascript:supprimerLabelAF("+ligne+","+i+");' ><img class='imageSupprimerAsthmeAF' style='cursor: pointer; float: right; margin-right: -10px; width:10px; height: 10px;' src='"+tabUrl[0]+"public/images_icons/sup.png' /></a> "+ 
+                nomLabel +"  <input type='checkbox' checked='${this.checked}' name='champValider_"+ligne+"_"+i+"' id='champValider_"+ligne+"_"+i+"' > "+
+                " <input type='hidden'  id='champTitreLabel_"+ligne+"_"+i+"' value='"+nomLabel+"' > "+
+                " </label> "+
+                "</div> "+
+                "</td> "+
+                
+                "<script>"+
+                "$('#champValider_"+ligne+"_"+i+"').click(function(){"+
+	  			"var boutons = $('#champValider_"+ligne+"_"+i+"');"+
+	  			"if( boutons[0].checked){ $('.imageValider_"+ligne+"_"+i+"').toggle(true);  }"+
+	  			"if(!boutons[0].checked){ $('.imageValider_"+ligne+"_"+i+"').toggle(false); }"+
+	  		    "});"+
+	  		    "</script>"
+                ;
+	  		
+	  		if( i == 0 ){
+	  			//AJOUTER ELEMENT SUIVANT
+	            $("#labelDesAntecedentsFamiliaux_"+ligne).html(scriptLabel);
+	            $("#labelDesAntecedentsFamiliaux_"+ligne).css({'height' : '50px'});
+	  	    } else if( i < 5 ){
+	  	    	//AJOUTER ELEMENT SUIVANT
+	            $("#labelDesAntecedentsFamiliaux_"+ligne+" .label_"+ligne+"_"+(i-1)).after(scriptLabel);
+	  	    }
+	  		
+	  	}
+	  	
+	  	//Ajouter un label dans antecedents Familiaux --- Ajouter un label dans antecedents Familiaux
+	  	//Ajouter un label dans antecedents Familiaux --- Ajouter un label dans antecedents Familiaux
+	  	//Ajouter un label dans antecedents Familiaux --- Ajouter un label dans antecedents Familiaux
+
+	  	$('#imgIconeAjouterLabelAF').click(function(){
+	  		if(!$('#autresAF').val()){ stopPropagation(); }
+	  		else{
+	  			tableau[itab++] = $('#autresAF').val();
+	  			ajouterLabelAntecedentsFamiliaux($('#autresAF').val());
+	  			$('#nbCheckboxAF').val(itab);
+	  			$('#autresAF').val("");
+	  		}
+	  		stopPropagation();
+	  	});
+	  	
+	  	
+	  	//Supprimer un label ajouter pour antecedents familiaux --- Supprimer un label ajouter pour antecedents familiaux
+	  	//Supprimer un label ajouter pour antecedents familiaux --- Supprimer un label ajouter pour antecedents familiaux
+	  	//Supprimer un label ajouter pour antecedents familiaux --- Supprimer un label ajouter pour antecedents familiaux
+	  	function supprimerLabelAF(ligne, i){
+	  		
+	  		var pos = ((ligne - 1)*5)+i;
+	  		var indiceTableau = pos+1; 
+	  		tableau[indiceTableau] = "";
+	  		
+	  		$("#labelDesAntecedentsFamiliaux_"+ligne+" .label_"+ligne+"_"+i).fadeOut(
+	  			function(){	ajouterToutLabelAntecedentsFamiliaux(tableau); }
+	  		);
+		  	
+	  	}
+	  	function autocompletionAntecedentAF(myArrayMedicament){
+		  	$( "#imageIconeAjouterLabelAF label input" ).autocomplete({
+			  	  source: myArrayMedicament
+			    });
+	  	}
+	  	
+	  	function affichageAntecedentsFamiliauxDuPatient(nbElement, tableau_){
+	  		for(var i=1 ; i<=nbElement ; i++){
+	  			itab++;
+	  			ajouterLabelAntecedentsFamiliaux(tableau_[i]);
+	  		}
+	  		tableau = tableau_;
+	  	}
 	  	//===================================================================================================================
 	  	//===================================================================================================================
 	  	//===================================================================================================================
@@ -2032,6 +2282,12 @@ $(function(){
 	  	    }
 	  		
 	  	}
+	  	
+	  	
+
+	  	
+	  	
+	  	
 
 	  	//Ajouter un label --- Ajouter un label
 	  	//Ajouter un label --- Ajouter un label
@@ -2064,6 +2320,8 @@ $(function(){
 		  	
 	  	}
         
+
+	  	
 	  	//Ajout de l'auto-completion sur le champ autre
 	    //Ajout de l'auto-completion sur le champ autre
 	  	
@@ -2072,8 +2330,7 @@ $(function(){
 			  	  source: myArrayMedicament
 			    });
 	  	}
-	  	
-	  	
+	 	
 	  //Ajout de l'auto-completion sur le champ autre pour pathologie
 	    //Ajout de l'auto-completion sur le champ autre pour pathologie
 	  	

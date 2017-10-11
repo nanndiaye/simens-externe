@@ -9,7 +9,7 @@ function creerLalisteActe ($listeDesElements) {
                              "<label style='width: 100%; margin-top: 10px; margin-left: 5px; font-weight: bold; font-family: police2; font-size: 14px;' >"+(index+1)+"<span id='element_label'></span></label>" +
                              "</th >"+
                              
-                             "<th id='SelectActe_"+(index+1)+"' style='width: 35%;'>"+
+                             "<th id='SelectActe_"+(index+1)+"' style='width: 32%;'>"+
                              "<select     style='width: 100%; margin-top: 3px; margin-bottom: 0px; font-size: 13px;' name='acte_name_"+(index+1)+"' id='acte_name_"+(index+1)+"'>"+
 			                 "<option value='' > -- S&eacute;l&eacute;ctionner un examen -- </option>";
                              for(var i = 1 ; i < $listeDesElements.length ; i++){
@@ -20,11 +20,11 @@ function creerLalisteActe ($listeDesElements) {
                     $liste +="</select>"+                           
                              "</th>"+
                             
-                             "<th id='noteActe_"+(index+1)+"'  style='width: 37%;'  >"+
+                             "<th id='noteActe_"+(index+1)+"'  style='width: 50%;'  >"+
                              "<input name='noteActe_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' >" +
                              "</th >"+
                              
-                             "<th id='iconeActe_supp_vider' style='width: 9%;'  >"+
+                             "<th id='iconeActe_supp_vider' style='width: 13%;'  >"+
                              "<a id='supprimer_acte_selectionne_"+ (index+1) +"'  style='width:50%;' >"+
                              "<img class='supprimerActe' style='margin-left: 5px; margin-top: 10px; cursor: pointer;' src='../images/images/sup.png' title='supprimer' />"+
                              "</a>"+
@@ -32,6 +32,10 @@ function creerLalisteActe ($listeDesElements) {
                              "<a id='vider_acte_selectionne_"+ (index+1) +"'  style='width:50%;' >"+
                              "<img class='viderActe' style='margin-left: 15px; margin-top: 10px; cursor: pointer;' src='../images_icons/gomme.png' title='vider' />"+
                              "</a>"+
+                             
+                             "<hass> <input type='submit' value='' name='demandeExamenFonctionnel_"+ (index+1) +"' id='demandeExamenFonctionnel_"+ (index+1) +"' " +
+                             		" style='width: 32px; height: 32px; background: url(../images_icons/pdf.PNG) no-repeat	right top;'  title='Imprimer'/> </hass>"+
+                             
                              "</th >"+
                              
                              "</tr>" +

@@ -48,7 +48,17 @@ class ConsultationForm extends Form {
 		        'id' => 'autre_historique'
 		    )
 		) );
-		
+		/*Histoire de la maladie*/
+		$this->add ( array (
+		    'name' => 'histoire_maladie',
+		    'type' => 'Textarea',
+		    'options' => array (
+		   'label' => 'Histoire de la Maladie'
+		    ),
+		    'attributes' => array (
+		        'id' => 'histoire_maladie'
+		    )
+		) );
 		
 		$this->add ( array (
 		    'name' => 'id_admission',
@@ -1603,13 +1613,41 @@ class ConsultationForm extends Form {
 				)
 		) );
 		
-		/*Autres*/
+	
+		
+		/*Autre*/
 		$this->add ( array (
-				'name' => 'autresAF',
-				'type' => 'checkbox',
-				'attributes' => array (
-						'id' => 'autresAF'
-				)
+		    'name' => 'autresAF',
+		    'type' => 'text',
+		    'attributes' => array (
+		        'id' => 'autresAF',
+		        'maxlength' => 13,
+		    )
+		) );
+		/*Dislipidemie*/
+		$this->add ( array (
+		    'name' => 'dislipidemieAF',
+		    'type' => 'checkbox',
+		    'attributes' => array (
+		        'id' => 'dislipidemieAF'
+		    )
+		) );
+		/*Asthme*/
+		$this->add ( array (
+		    'name' => 'asthmeAF',
+		    'type' => 'checkbox',
+		    'attributes' => array (
+		        'id' => 'asthmeAF',
+		    )
+		) );
+		
+		/*nbCheckbox*/
+		$this->add ( array (
+		    'name' => 'nbCheckboxAF',
+		    'type' => 'hidden',
+		    'attributes' => array (
+		        'id' => 'nbCheckboxAF',
+		    )
 		) );
 		/*Note Autres*/
 		$this->add ( array (

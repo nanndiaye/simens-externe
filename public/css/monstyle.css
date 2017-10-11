@@ -444,6 +444,63 @@ tr:hover /* Apparence au survol des liens */
 	color: green;
 }
 
+
+
+/****************** STYLE HISTOIRE DE LA MALADIE ***************************/
+
+#histoiremaladie .form-histoiremaladie label  
+{/* le label*/
+line-height: 2.0em;
+
+background-color: #eeeeee;
+
+background-image: none;
+
+background-repeat: repeat;
+
+background-attachment: scroll;
+
+background-position: 50% 50%;
+
+background-clip: border-box;
+
+background-origin: padding-box;
+
+background-size: auto auto;
+
+box-shadow: 1px 2px 2px rgba(204, 204, 204, 0.8);
+
+color: black;
+
+display: inline-block;
+
+font-size: 13px;
+
+float: left;
+
+width: 260px;
+
+padding-top: 7px;
+
+padding-right: 10px;
+
+padding-bottom: 4px;
+
+padding-left: 10px;
+
+
+top: 6px;
+
+z-index: 1;
+
+margin-right: 4px;
+}
+
+
+
+
+
+
 /************************************ style du tableau N°1 ****************************************/
 
 #responde input[type="text"], #respond textarea , #respondeMotif input[type="text"]
@@ -4175,9 +4232,9 @@ box-shadow: 1px 2px 2px rgba(204, 204, 204, 0.8);
 
 display: inline-block;
 
-font-size: 13px;
+font-size: 10px;
 
-width: 210px;
+width: 100px;
 
 padding-top: 8px;
 
@@ -4204,7 +4261,7 @@ float: left;
 
 display: block;
 
-height: 50px; /*la hauteur du champ input*/
+height: 75px; /*la hauteur du champ input*/
 
 width: 100%; /* la largeur du champ input*/
 

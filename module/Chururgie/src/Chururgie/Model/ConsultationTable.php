@@ -8,6 +8,57 @@ use Zend\Db\Sql\Where;
 
 class ConsultationTable {
 
+
+    
+    
+    //  Inserer la note de l'histoire de  la maladie
+    //  Inserer la note de l'histoire de la  maladie
+    public function addHistoireMaladie($formData,$ID_CONS,$id_medecin){
+        
+      
+        $db = $this->tableGateway->getAdapter();
+        $sql = new Sql($db);
+        $sQuery = $sql->insert()
+        ->into('histoire_maladie')
+        ->values(array('histoire_maladie' => $formData->histoire_maladie, 'ID_CONS'=> $ID_CONS, 
+            'date_enregistrement'=>$formData->dateonly,'id_employe_e'=>$id_medecin));
+        $sql->prepareStatementForSqlObject($sQuery)->execute();
+      
+    }
+    
+    
+    
+    //  Inserer la note de l'autre de l'hisrorique
+    //  Inserer la note de l'autre de l'hisrorique
+    public function addAutreHistorique($formData,$ID_CONS){
+        
+       // var_dump($formData->autre_historique);exit();
+        $db = $this->tableGateway->getAdapter();
+        $sql = new Sql($db);
+        $sQuery = $sql->insert()
+        ->into('autre_historique')
+        ->values(array('note_autre_historique' => $formData->autre_historique, 'ID_CONS'=> $ID_CONS));
+        $sql->prepareStatementForSqlObject($sQuery)->execute();
+        
+    }
+    
+    
+    
+    //  Inserer la note de l'examen de l'hisrorique
+    //  Inserer la note de l'examen de l'hisrorique
+    public function addExamenHistorique($formData,$ID_CONS){
+        
+        
+        $db = $this->tableGateway->getAdapter();
+        $sql = new Sql($db);
+        $sQuery = $sql->insert()
+        ->into('examen_historique')
+        ->values(array('note_historique_examen' => $formData->examen_historique, 'ID_CONS'=> $ID_CONS));
+        $sql->prepareStatementForSqlObject($sQuery)->execute();
+        
+    }
+    
+    
     
     //  Inserer antécédents chirurgicaux
     //  Inserer antécédents chirurgicaux
@@ -157,7 +208,7 @@ class ConsultationTable {
 	    return $row;
 	}
 	
-	public function getConsultationPatient($id_pat, $id_cons){
+	public function getConsultationPatient($id_pat){
 	
 		$adapter = $this->tableGateway->getAdapter ();
 		$sql = new Sql ( $adapter );
@@ -173,7 +224,7 @@ class ConsultationTable {
 		//On affiche toutes les consultations sauf celle ouverte
 		$where = new Where();
 		$where->equalTo('c.ID_PATIENT', $id_pat);
-		$where->notEqualTo('c.ID_CONS', $id_cons);
+		//$where->notEqualTo('c.ID_CONS', $id_cons);
 		$select->where($where);
 		$select->order('DATEONLY DESC');
 		
@@ -654,7 +705,7 @@ class ConsultationTable {
 				'Id' => 'ID_PERSONNE'
 		));
 		$select->join(array('c' => 'consultation'), 'p.ID_PERSONNE = c.ID_PATIENT', array('Id_cons' => 'ID_CONS', 'Dateonly' => 'DATEONLY', 'Consprise' => 'CONSPRISE', 'date' => 'DATE'));
-		$select->join(array('cons_eff' => 'consultationchururgiegenerale'), 'cons_eff.ID_CONS = c.ID_CONS' , array('*'));
+		//$select->join(array('cons_eff' => 'consultationchururgiegenerale'), 'cons_eff.ID_CONS = c.ID_CONS' , array('*'));
 		$select->join( array('e1' => 'employe'), 'e1.id_personne = c.ID_MEDECIN' , array('*'));
 		$select->join(array('s' => 'service'), 'c.ID_SERVICE = s.ID_SERVICE', array('Nomservice' => 'NOM'));
 		$where = new Where();
@@ -1105,6 +1156,55 @@ class ConsultationTable {
  		}
  			
  	}
+ 	
+ 	
+ 	
+ 	//Ajout des ant�c�dents familiaux de la personne
+ 	//Ajout des ant�c�dents familiaux de la personne
+ 	public function addAntecedentFamiliauxPersonne($data,$id_medecin){
+ 	    $date = (new \DateTime())->format('Y-m-d H:i:s');
+ 	    $db = $this->tableGateway->getAdapter();
+ 	    $sql = new Sql($db);
+ 	    //var_dump($data);exit();
+ 	    //Tableau des nouveaux antecedents ajouter
+ 	    $tableau = array();
+ 	    
+ 	    for($i = 0; $i<$data->nbCheckboxAF; $i++){
+ 	        $champ = "champTitreLabel_".$i;
+ 	        $libelle =  $data->$champ;
+ 	        
+ 	        //Ajout des nouveaux libelles dans le tableau
+ 	        $tableau[] = $libelle;
+ 	        
+ 	        $antecedent = $this->getAntecedentMedicauxParLibelle($libelle);
+ 	        if($antecedent){
+ 	            if(!$this->getAntecedentMedicauxPersonneParId($antecedent['id'], $data->id_patient)){
+ 	                $sQuery = $sql->insert()
+ 	                ->into('ant_medicaux_personne')
+ 	                ->values(array('id_ant_medicaux' => $antecedent['id'], 'id_patient' => $data->id_patient, 'date_enregistrement' => $date, 'id_medecin' => $id_medecin));
+ 	                $sql->prepareStatementForSqlObject($sQuery)->execute();
+ 	            }
+ 	        }
+ 	    }
+ 	    
+ 	    //Tableau de tous les antecedents medicaux du patient avant la mise � jour
+ 	    $tableau2 = $this->getAntecedentsMedicauxPatient($data->id_patient);
+ 	    
+ 	    //var_dump($data->nbCheckboxAM); exit();
+ 	    //Suppression des antecedents non s�lectionn�s
+ 	    for($i=0; $i<count($tableau2); $i++){
+ 	        if(!in_array($tableau2[$i], $tableau)){
+ 	            $id_ant_medicaux = $this->getAntecedentMedicauxParLibelle($tableau2[$i])['id'];
+ 	            $sQuery = $sql->delete()
+ 	            ->from('ant_medicaux_personne')
+ 	            ->where(array('id_ant_medicaux' => $id_ant_medicaux, 'id_patient' => $data->id_patient));
+ 	            $sql->prepareStatementForSqlObject($sQuery)->execute();
+ 	        }
+ 	    }
+ 	    
+ 	}
+ 	
+ 	
  	
  	
  	//Recupere les antecedents m�dicaux de la personne
