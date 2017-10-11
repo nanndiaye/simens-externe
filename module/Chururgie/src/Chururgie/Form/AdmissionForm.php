@@ -126,7 +126,7 @@ class AdmissionForm extends Form{
 				'options' => array (
 						'value_options' => array(
 								'1' => 'Normal',
-						    '2' => iconv ( 'UTF-8','ISO-8859-1', 'Pr&eacute;sentation R&eacute;sultat') ,
+						    '2' => iconv ( 'UTF-8','ISO-8859-1', 'Presentation Resultat') ,
 						    '3' => iconv ('UTF-8',  'ISO-8859-1', 'Rendez-vous') ,
 						),
 				),

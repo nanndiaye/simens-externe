@@ -223,6 +223,8 @@ return array(
     						              'demande-examen-biologique'=>'medecin',
     						          'imagesExamensMorphologiques'=>'medecin',
     						          'supprimerImage'=>'medecin',
+    						         'patients-consultes'=>'medecin',
+    						    'maj-complement-consultation'=>'medecin',
     						),
     						
     						/***

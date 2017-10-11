@@ -60,14 +60,7 @@
 		
 		
 		
-		//Au debut on desactive tous les champs
-		groupe_sanguin.attr( 'readonly', false);
-		hemogramme_sanguin.attr( 'readonly', false);
-		bilan_hemolyse.attr( 'readonly', false);
-		bilan_hepatique.attr( 'readonly', false);
-		bilan_renal.attr( 'readonly', false);
-		bilan_inflammatoire.attr( 'readonly', false);
-
+		
 		
 	});
 	  
@@ -121,8 +114,29 @@ $(function(){
 	vaccination.attr( 'readonly', false);
 	soins_infirmiers.attr( 'readonly', false);
 	
+	// ********************** ON cache les résultats de l 'examen fonctionnel ******************
+	// ********************** ON cache les résultats de l 'examen fonctionnel ******************
+	// ********************** ON cache les résultats de l 'examen fonctionnel ******************
+	$("#acte_1").toggle(false);
+	$("#acte_2").toggle(false);
+	$("#acte_3").toggle(false);
+	$("#acte_4").toggle(false);
+	$("#acte_5").toggle(false);
+	$("#acte_6").toggle(false);
+	$("#acte_7").toggle(false);
+	$("#acte_8").toggle(false);
+	$("#acte_9").toggle(false);
+	$("#acte_10").toggle(false);
+	$("#acte_11").toggle(false);
+	$("#acte_12").toggle(false);
+	$("#acte_13").toggle(false);
+	$("#acte_14").toggle(false);
+	$("#acte_15").toggle(false);
+	$("#acte_16").toggle(false);
+	$("#acte_17").toggle(false);
+	$("#acte_18").toggle(false);
+	$("#acte_19").toggle(false);
 	
-
 	
 });
   
@@ -140,12 +154,22 @@ $(function(){
 	var scanner = $("#scanner");
 	var irm = $("#irm");
 	
-	//Au debut on affiche pas le bouton modifier
-	$("#bouton_morpho_modifier").toggle(false);
-	//Au debut on affiche le bouton valider
-	$("#bouton_morpho_valider").toggle(true);
 	
-	//Au debut on desactive tous les champs
+	
+	//Au debut on affiche pas le bouton modifier
+	//$("#bouton_morpho_modifier").toggle(false);
+	//Au debut on affiche le bouton valider
+	//$("#bouton_morpho_valider").toggle(true);
+	
+	//Au debut on desactive et on cache tous les champs
+	
+	$("#resultat_radio").toggle(false);
+	$("#resultat_ecographie").toggle(false);
+	$("#resultat_irm").toggle(false);
+	$("#resultat_scanner").toggle(false);
+	$("#resultat_fibrocospie").toggle(false);
+	
+	
 	radio.attr( 'readonly', false);
 	ecographie.attr( 'readonly', false);
 	fibrocospie.attr( 'readonly', false);
@@ -187,14 +211,14 @@ $(function(){
 	var intervention_prevue = $("#intervention_prevue");
 	var observation = $("#observation");
 	
-	$("#chirurgical1").click(function(){
-		diagnostic_traitement_chirurgical.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		intervention_prevue.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		observation.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		
-		$("#bouton_chirurgical_modifier").toggle(true);
-		$("#bouton_chirurgical_valider").toggle(false);	
-	});
+//	$("").click(function(){
+//		diagnostic_traitement_chirurgical.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		intervention_prevue.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		observation.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		
+//		$("#bouton_chirurgical_modifier").toggle(true);
+//		$("#bouton_chirurgical_valider").toggle(false);	
+//	});
 	
 	//Au debut on affiche pas le bouton modifier, on l'affiche seulement apres impression
 	//$("#bouton_chirurgical_modifier").toggle(false);
@@ -354,22 +378,22 @@ $(function(){
 	var motif_transfert = $("#motif_transfert");
 	var hopital_accueil = $("#hopital_accueil");
 	var service_accueil = $("#service_accueil");
-	$("#transfert").click(function(){ 
-		motif_transfert.attr( 'readonly', true).css({'background':'#f8f8f8'});
-		$("#hopital_accueil_tampon").val(hopital_accueil.val());
-		//hopital_accueil.attr( 'disabled', true).css({'background':'#f8f8f8'});
-		$("#service_accueil_tampon").val(service_accueil.val());
-		//service_accueil.attr( 'disabled', true).css({'background':'#f8f8f8'});
-		$("#bouton_transfert_modifier").toggle(true);  //on affiche le bouton permettant de modifier les champs
-	    $("#bouton_transfert_valider").toggle(false); //on cache le bouton permettant de valider les champs
-	});
-
-	$( "bouton_valider_transfert" ).button();
-	$( "bouton_modifier_transfert" ).button();
-
-	//Au debut on cache le bouton modifier et on affiche le bouton valider
-	$( "#bouton_transfert_valider" ).toggle(true);
-	$( "#bouton_transfert_modifier" ).toggle(false);
+//	$("#transfert").click(function(){ 
+//		motif_transfert.attr( 'readonly', true).css({'background':'#f8f8f8'});
+//		$("#hopital_accueil_tampon").val(hopital_accueil.val());
+//		//hopital_accueil.attr( 'disabled', true).css({'background':'#f8f8f8'});
+//		$("#service_accueil_tampon").val(service_accueil.val());
+//		//service_accueil.attr( 'disabled', true).css({'background':'#f8f8f8'});
+//		$("#bouton_transfert_modifier").toggle(true);  //on affiche le bouton permettant de modifier les champs
+//	    $("#bouton_transfert_valider").toggle(false); //on cache le bouton permettant de valider les champs
+//	});
+//
+//	$( "bouton_valider_transfert" ).button();
+//	$( "bouton_modifier_transfert" ).button();
+//
+//	//Au debut on cache le bouton modifier et on affiche le bouton valider
+//	$( "#bouton_transfert_valider" ).toggle(true);
+//	$( "#bouton_transfert_modifier" ).toggle(false);
 
 	//Au debut on desactive tous les champs
 	motif_transfert.attr( 'readonly', false ).css({'background':'#fff'});;
@@ -377,29 +401,29 @@ $(function(){
 	service_accueil.attr( 'disabled', false ).css({'background':'#fff'});;
 
 	//Valider(cach�) avec le bouton 'valider'
-	$( "#bouton_transfert_valider" ).click(function(){
-		motif_transfert.attr( 'readonly', true ).css({'background':'#f8f8f8'});     //d�sactiver le motif transfert
-		$("#hopital_accueil_tampon").val(hopital_accueil.val());
-		hopital_accueil.attr( 'disabled', true ).css({'background':'#f8f8f8'});     //d�sactiver hopital accueil
-		$("#service_accueil_tampon").val(service_accueil.val());
-		service_accueil.attr( 'disabled', true ).css({'background':'#f8f8f8'});   //d�sactiver service accueil
-		$("#bouton_transfert_modifier").toggle(true);  //on affiche le bouton permettant de modifier les champs
-		$("#bouton_transfert_valider").toggle(false); //on cache le bouton permettant de valider les champs
-		
-		$("#annulertransfert").attr('disabled', true);
-		return false; 
-	});
-	//Activer(d�cach�) avec le bouton 'modifier'
-	$( "#bouton_transfert_modifier" ).click(function(){
-		motif_transfert.attr( 'readonly', false ).css({'background':'#fff'});
-		hopital_accueil.attr( 'disabled', false ).css({'background':'#fff'});
-		service_accueil.attr( 'disabled', false ).css({'background':'#fff'});
-	 	$("#bouton_transfert_modifier").toggle(false);   //on cache le bouton permettant de modifier les champs
-	 	$("#bouton_transfert_valider").toggle(true);    //on affiche le bouton permettant de valider les champs
-	 	
-	 	$("#annulertransfert").attr('disabled', false);
-	 	return  false;
-	});
+//	$( "#bouton_transfert_valider" ).click(function(){
+//		motif_transfert.attr( 'readonly', true ).css({'background':'#f8f8f8'});     //d�sactiver le motif transfert
+//		$("#hopital_accueil_tampon").val(hopital_accueil.val());
+//		hopital_accueil.attr( 'disabled', true ).css({'background':'#f8f8f8'});     //d�sactiver hopital accueil
+//		$("#service_accueil_tampon").val(service_accueil.val());
+//		service_accueil.attr( 'disabled', true ).css({'background':'#f8f8f8'});   //d�sactiver service accueil
+//		$("#bouton_transfert_modifier").toggle(true);  //on affiche le bouton permettant de modifier les champs
+//		$("#bouton_transfert_valider").toggle(false); //on cache le bouton permettant de valider les champs
+//		
+//		$("#annulertransfert").attr('disabled', true);
+//		return false; 
+//	});
+//	//Activer(d�cach�) avec le bouton 'modifier'
+//	$( "#bouton_transfert_modifier" ).click(function(){
+//		motif_transfert.attr( 'readonly', false ).css({'background':'#fff'});
+//		hopital_accueil.attr( 'disabled', false ).css({'background':'#fff'});
+//		service_accueil.attr( 'disabled', false ).css({'background':'#fff'});
+//	 	$("#bouton_transfert_modifier").toggle(false);   //on cache le bouton permettant de modifier les champs
+//	 	$("#bouton_transfert_valider").toggle(true);    //on affiche le bouton permettant de valider les champs
+//	 	
+//	 	$("#annulertransfert").attr('disabled', false);
+//	 	return  false;
+//	});
 });
 
 //********************* HOSPITALISATION *****************************
@@ -458,6 +482,7 @@ $(function(){
  var motif_rv = $('#motif_rv');
  var date_rv = $( "#date_rv" );
  var heure_rv = $("#heure_rv");
+ var delai_rv = $("#delai_rv");
    date_rv.attr('autocomplete', 'off');
    $( "#disable" ).click(function(){
 	  motif_rv.attr( 'readonly', true ).css({'background':'#f8f8f8'});     //d�sactiver le motif
@@ -465,6 +490,8 @@ $(function(){
       date_rv.attr( 'disabled', true ).css({'background':'#f8f8f8'});     //d�sactiver la date
       $("#heure_rv_tampon").val(heure_rv.val()); //Placer l'heure dans heure_rv_tampon avant la desacivation
       heure_rv.attr( 'disabled', true ).css({'background':'#f8f8f8'});   //d�sactiver l'heure
+      $("#delai_rv_tampon").val(delai_rv.val()); //Placer delai dans delai_rv_tampon avant la desacivation
+      delai_rv.attr( 'disabled', true ).css({'background':'#f8f8f8'});   //d�sactiver delai
       $("#disable_bouton").toggle(true);  //on affiche le bouton permettant de modifier les champs
       $("#enable_bouton").toggle(false); //on cache le bouton permettant de valider les champs
  
@@ -483,7 +510,10 @@ $(function(){
    motif_rv.attr( 'readonly', false ).css({'background':'#fff'});
    date_rv.attr( 'disabled', false ).css({'background':'#fff'});
    heure_rv.attr( 'disabled', false ).css({'background':'#fff'});
-
+   delai_rv.attr( 'disabled', false ).css({'background':'#fff'});
+   
+   
+   
    //Valider(cach�) avec le bouton 'valider'
    $( "#enable_bouton" ).click(function(){
 	  motif_rv.attr( 'readonly', true ).css({'background':'#f8f8f8'});     //d�sactiver le motif
@@ -491,6 +521,10 @@ $(function(){
       date_rv.attr( 'disabled', true ).css({'background':'#f8f8f8'});     //d�sactiver la date
       $("#heure_rv_tampon").val(heure_rv.val()); //Placer l'heure dans heure_rv_tampon avant la desacivation
 	  heure_rv.attr( 'disabled', true ).css({'background':'#f8f8f8'});   //d�sactiver l'heure
+	  
+	  $("#delai_rv_tampon").val(delai_rv.val()); //Placer delai dans delai_rv_tampon avant la desacivation
+	  delai_rv.attr( 'disabled', true ).css({'background':'#f8f8f8'});   //d�sactiver delai
+	  
 	  $("#disable_bouton").toggle(true);  //on affiche le bouton permettant de modifier les champs
 	  $("#enable_bouton").toggle(false); //on cache le bouton permettant de valider les champs
 	  
@@ -502,6 +536,7 @@ $(function(){
 	  motif_rv.attr( 'readonly', false ).css({'background':'#fff'});      //activer le motif
 	  date_rv.attr( 'disabled', false ).css({'background':'#fff'});      //activer la date
 	  heure_rv.attr( 'disabled', false ).css({'background':'#fff'});    //activer l'heure
+	  delai_rv.attr('disabled', false).css({'background':'#fff'}); 	//activer le delai
  	  $("#disable_bouton").toggle(false);   //on cache le bouton permettant de modifier les champs
  	  $("#enable_bouton").toggle(true);    //on affiche le bouton permettant de valider les champs
  	  
@@ -770,6 +805,39 @@ $(function(){
 	    donnees['id_cons']    = $("#id_cons").val();
 	    donnees['terminer'] = 'save';
 	    
+	    // Histoire de la maladie
+	    
+	    donnees['histoire_maladie'] = $("#histoire_maladie").val();
+	    
+	    //*********** PATHOLOGIE ************
+	    //*********** PATHOLOGIE ************
+	    donnees['id_admission'] = $("#id_admission").val();
+	     
+	    for(var i = 1 ; i < 10 ; i++ ){
+	     	if($("#typepathologie"+i).val()){
+	     		//donnees['pathologie_0'+i] = $("#pathologie_0"+i).val();
+	     		//donnees['classepathologie'+i] = $("#classepathologie"+i).val();
+	     		donnees['typepathologie'+i] = $("#typepathologie"+i).val();
+	     	}
+	     }
+	    //alert(donnees['typepathologie'+i]);
+	    
+	    
+	    
+	    // **********-- Donnees de l'entecedents chirugicaux  --*******
+        // **********-- Donnees de l'entecedents chirugicaux --*******
+	    donnees['antecedents_chirugicaux'] = $("#antecedents_chirugicaux").val();
+	   
+	    
+	    
+	    // **********-- Donnees de l'examen et autre de l'historique  --*******
+        // **********-- Donnees de l'examen et autre de l'historique --*******
+	    donnees['examen_historique'] = $("#examen_historique").val();
+	    donnees['autre_historique'] = $("#autre_historique").val();
+	    
+	    
+	    
+	    
 	    // **********-- Donnees de l'examen physique --*******
         // **********-- Donnees de l'examen physique --*******
 	    donnees['examen_donnee1'] = $("#examen_donnee1").val();
@@ -816,20 +884,7 @@ $(function(){
 	     }
 	    
 	    
-	    //*********** PATHOLOGIE ************
-	    //*********** PATHOLOGIE ************
-	    
-	     
-	    for(var i = 1 ; i < 10 ; i++ ){
-	     	if($("#pathologie_0"+i).val()){
-	     		donnees['pathologie_0'+i] = $("#pathologie_0"+i).val();
-	     		donnees['classepathologie'+i] = $("#classepathologie"+i).val();
-	     		donnees['typepathologie'+i] = $("#typepathologie"+i).val();
-	     		
-	     	}
-	     }
-	    alert(donnees['typepathologie'+i]);
-	    
+	   
 	    //*********** TRAITEMENTS CHIRURGICAUX ************
 		//*********** TRAITEMENTS CHIRURGICAUX ************
 	    donnees['diagnostic_traitement_chirurgical'] = $("#diagnostic_traitement_chirurgical").val();
@@ -856,6 +911,8 @@ $(function(){
 		donnees['date_rv']    = $("#date_rv_tampon").val();
 		donnees['motif_rv']   = $("#motif_rv").val();
 		donnees['heure_rv']   = $("#heure_rv").val();
+		donnees['delai_rv']   = $("#delai_rv").val();
+		
 		
 		// **********-- Hospitalisation --*******
         // **********-- Hospitalisation --*******
@@ -1026,8 +1083,39 @@ $(function(){
 		donnees['NoteHtaAF'] = $("#NoteHtaAF").val();
 		
 		donnees['autresAF'] = $("#autresAF:checked").val(); 
-		if(!donnees['autresAF']){ donnees['autresAF'] = 0;}
+		if(!donnees['autresAF']){ donnees['autresApF'] = 0;}
 		donnees['NoteAutresAF'] = $("#NoteAutresAF").val();
+		
+		/*Dislipid�mie*/
+		donnees['dislipidemieAF'] = $("#dislipidemieAF:checked").val(); 
+		if(!donnees['dislipidemieAF']){ donnees['dislipidemieAF'] = 0;}
+		/*Asthme*/ 
+		donnees['asthmeAF'] = $("#asthmeAF:checked").val(); 
+		if(!donnees['asthmeAF']){ donnees['asthmeAF'] = 0;}
+		
+		/*Ajout automatique des antecedents familiaux*/
+		var $nbCheckboxAF = ($('#nbCheckboxAF').val())+1;
+		var $nbCheck = 0;
+		var $ligne;
+		var $reste = ( $nbCheckboxAF - 1 ) % 5;
+  		var $nbElement = parseInt( ( $nbCheckboxAF - 1 ) / 5 ); 
+  		if($reste != 0){ $ligne = $nbElement + 1; }
+  		else { $ligne = $nbElement; }
+  		
+  		var k=0;
+  		var i;
+		for(var j=1 ; j<=$ligne ; j++){
+			for( i=0 ; i<5 ; i++){
+				var $champValider = $('#champValider_'+j+'_'+i+':checked').val();
+				if($champValider == 'on'){
+					donnees['champValider_'+k] = 1;
+					donnees['champTitreLabel_'+k] = $('#champTitreLabel_'+j+'_'+i).val();
+					k++;
+					$nbCheck++;
+				}
+			}
+			i=0; 
+		}
 		
 		updateexecuterRequetePost(donnees);
 	});
@@ -1046,6 +1134,7 @@ $(function(){
 		$("#motif_rv").val("");
 		$("#date_rv").val("");
 		document.getElementById('heure_rv').value="";
+		document.getElementById('delai_rv').value="";
 		return false;
 	});
 	
@@ -1064,6 +1153,21 @@ $(function(){
  /**************************************************************************************************************/
  function AntecedentScript(){
 	 $(function(){
+		 
+		//Autre de l'historique
+			//Autre de l'historique
+		 $("#titreTableauautrehistorique").toggle(false);
+			$("#autre_historique").toggle(false);
+			$("#autreprhistorique").toggle(false);
+			$("#boutonTerminerautrehistorique").toggle(false);
+			
+			//Examen de l'historique
+			//Examen de l'historique
+		 $("#titreTableauexamenhistorique").toggle(false);
+			$("#examen_historique").toggle(false);
+			$("#examenprhistorique").toggle(false);
+			$("#boutonTerminerexamenhistorique").toggle(false);
+			
 		//CONSULTATION
 		//CONSULTATION
 		$("#titreTableauConsultation").toggle(false);
@@ -1124,7 +1228,57 @@ $(function(){
 		});
 		
 		
+		
+		//Examen historique
+		//Examen historique
+		$(".image3").click(function(){
+			 $("#MenuAntecedent").fadeOut(function(){ 
+				 $("#titreTableauexamenhistorique").fadeIn("fast");
+			     $("#boutonTerminerexamenhistorique").toggle(true);
+			     $("#examen_historique").fadeIn("fast");
+			     $("#examenprhistorique").fadeIn("fast");
+			  
+			 });
+		});
+		
+		$("#Terminerexamen").click(function(){
+			$("#boutonTerminerexamenhistorique").fadeOut();
+			$("#examen_historique").fadeOut();
+			$("#examenprhistorique").fadeOut();
+			$("#titreTableauexamenhistorique").fadeOut(function(){ 
+			    $("#MenuAntecedent").fadeIn("fast");
+			});
+		});
+		
+		//Autre pour historique
+		//Autre pour historique
+		$(".image4").click(function(){
+			 $("#MenuAntecedent").fadeOut(function(){ 
+				 $("#titreTableauautrehistorique").fadeIn("fast");
+			     $("#boutonTerminerautrehistorique").toggle(true);
+			     $("#autre_historique").fadeIn("fast");
+			     $("#autreprhistorique").fadeIn("fast");
+			  
+			 });
+		});
+		
+		$("#Terminerautre").click(function(){
+			$("#boutonTerminerautrehistorique").fadeOut();
+			$("#autre_historique").fadeOut();
+			$("#autreprhistorique").fadeOut();
+			$("#titreTableauautrehistorique").fadeOut(function(){ 
+			    $("#MenuAntecedent").fadeIn("fast");
+			});
+		});
+		
 	 });
+	 
+	 
+	 
+	 
+		
+	
+	
 
 	 /*************************************************************************************************************/
 	 
@@ -1384,40 +1538,83 @@ $(function(){
 			
 			//ANTECEDENTS FAMILIAUX TESTER SI C'EST COCHE
 			//ANTECEDENTS FAMILIAUX TESTER SI C'EST COCHE
-			if(temoinDiabeteAF != 1){
-				$("#DivNoteDiabeteAF").toggle(false);
-			}
-			if(temoinDrepanocytoseAF != 1){
-				$("#DivNoteDrepanocytoseAF").toggle(false);
-			}
-			if(temoinhtaAF != 1){
-				$("#DivNoteHtaAF").toggle(false);
-			}
-			$("#DivNoteAutresAF").toggle(false);
 			
-			$('#AntecedentsFamiliaux input[name=DiabeteAF]').click(function(){ 
-				var boutons = $('#AntecedentsFamiliaux input[name=DiabeteAF]');
-				if( boutons[1].checked){ $("#DivNoteDiabeteAF").toggle(true); }
-				if(!boutons[1].checked){ $("#DivNoteDiabeteAF").toggle(false); }
-			});
 			
-			$('#AntecedentsFamiliaux input[name=DrepanocytoseAF]').click(function(){ 
-				var boutons = $('#AntecedentsFamiliaux input[name=DrepanocytoseAF]');
-				if( boutons[1].checked){ $("#DivNoteDrepanocytoseAF").toggle(true); }
-				if(!boutons[1].checked){ $("#DivNoteDrepanocytoseAF").toggle(false); }
-			});
 			
-			$('#AntecedentsFamiliaux input[name=htaAF]').click(function(){ 
-				var boutons = $('#AntecedentsFamiliaux input[name=htaAF]');
-				if( boutons[1].checked){ $("#DivNoteHtaAF").toggle(true); }
-				if(!boutons[1].checked){ $("#DivNoteHtaAF").toggle(false); }
-			});
 			
-			$('#AntecedentsFamiliaux input[name=autresAF]').click(function(){ 
-				var boutons = $('#AntecedentsFamiliaux input[name=autresAF]');
-				if( boutons[1].checked){ $("#DivNoteAutresAF").toggle(true); }
-				if(!boutons[1].checked){ $("#DivNoteAutresAF").toggle(false); }
-			});
+			
+			//ANTECEDENTS MEDICAUX TESTER SI C'EST COCHE
+			//ANTECEDENTS MEDICAUX TESTER SI C'EST COCHE
+//			if(temoinDiabeteAF != 1){
+//				$(".imageValiderDiabeteAF").toggle(false);
+//			}
+//			if(temoinhtaAF != 1){
+//				$(".imageValiderHtaAF").toggle(false);
+//			}
+//			if(temoindrepanocytoseAF != 1){
+//				$(".imageValiderDrepanocytoseAF").toggle(false);
+//			}
+//			
+//			
+//			$('#AntecedentFamiliaux input[name=DiabeteAF]').click(function(){
+//				var boutons = $('#AntecedentFamiliaux input[name=DiabeteAF]');
+//				if( boutons[1].checked){ $(".imageValiderDiabeteAF").toggle(true); }
+//				if(!boutons[1].checked){ $(".imageValiderDiabeteAF").toggle(false); }
+//			});
+//			
+//			$('#AntecedentFamiliaux input[name=htaAF]').click(function(){
+//				var boutons = $('#AntecedentFamiliaux input[name=htaAF]');
+//				if( boutons[1].checked){ $(".imageValiderHtaAF").toggle(true); }
+//				if(!boutons[1].checked){ $(".imageValiderHtaAF").toggle(false); }
+//			});
+//			
+//			$('#AntecedentFamiliaux input[name=DrepanocytoseAF]').click(function(){
+//				var boutons = $('#AntecedentFamiliaux input[name=DrepanocytoseAF]');
+//				if( boutons[1].checked){ $(".imageValiderDrepanocytoseAF").toggle(true); }
+//				if(!boutons[1].checked){ $(".imageValiderDrepanocytoseAF").toggle(false); }
+//			});
+			
+			
+			
+			
+			
+			
+			
+			
+//			if(temoinDiabeteAF != 1){
+//				$("#DivNoteDiabeteAF").toggle(false);
+//			}
+//			if(temoinDrepanocytoseAF != 1){
+//				$("#DivNoteDrepanocytoseAF").toggle(false);
+//			}
+//			if(temoinhtaAF != 1){
+//				$("#DivNoteHtaAF").toggle(false);
+//			}
+//			$("#DivNoteAutresAF").toggle(false);
+//			
+//			$('#AntecedentsFamiliaux input[name=DiabeteAF]').click(function(){ 
+//				var boutons = $('#AntecedentsFamiliaux input[name=DiabeteAF]');
+//				if( boutons[1].checked){ $("#DivNoteDiabeteAF").toggle(true); }
+//				if(!boutons[1].checked){ $("#DivNoteDiabeteAF").toggle(false); }
+//			});
+//			
+//			$('#AntecedentsFamiliaux input[name=DrepanocytoseAF]').click(function(){ 
+//				var boutons = $('#AntecedentsFamiliaux input[name=DrepanocytoseAF]');
+//				if( boutons[1].checked){ $("#DivNoteDrepanocytoseAF").toggle(true); }
+//				if(!boutons[1].checked){ $("#DivNoteDrepanocytoseAF").toggle(false); }
+//			});
+//			
+//			$('#AntecedentsFamiliaux input[name=htaAF]').click(function(){ 
+//				var boutons = $('#AntecedentsFamiliaux input[name=htaAF]');
+//				if( boutons[1].checked){ $("#DivNoteHtaAF").toggle(true); }
+//				if(!boutons[1].checked){ $("#DivNoteHtaAF").toggle(false); }
+//			});
+			
+//			$('#AntecedentsFamiliaux input[name=autresAF]').click(function(){ 
+//				var boutons = $('#AntecedentsFamiliaux input[name=autresAF]');
+//				if( boutons[1].checked){ $("#DivNoteAutresAF").toggle(true); }
+//				if(!boutons[1].checked){ $("#DivNoteAutresAF").toggle(false); }
+//			});
     //******************************************************************************
 	//******************************************************************************
 			$(".image2_TP").click(function(){
@@ -1826,7 +2023,156 @@ $(function(){
 						yearSuffix: '',
 				}
 		);
+		//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//=============================================Antecedents Familiaux===============================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	//===================================================================================================================
+	  	var itab = 1;
+	  	var ligne = 0; 
+	  	var tableau = [];
 	  	
+	  	function ajouterToutLabelAntecedentsFamiliaux(tableau_){
+	  		for(var l = 1; l <= ligne; l++){
+	  			if( l == 1 ){
+		  			$("#labelDesAntecedentsFamiliaux_"+1).html("").css({'height' : '0px'});
+		  			itab = 1;
+	  			} else {
+		  			$("#labelDesAntecedentsFamiliaux_"+l).remove();
+	  			}
+	  		}
+	  		
+	  		var tab = [];
+	  		var j = 1;
+	  		
+	  		for(var i=1 ; i<tableau_.length ; i++){
+	  			if( tableau_[i] ){
+	  				tab[j++] = tableau_[i];
+	  				itab++;
+	  				ajouterLabelAntecedentsFamiliaux(tableau_[i]);
+	  			}
+	  		}
+
+	  		tableau = tab;
+	  		itab = j;
+	  		$('#nbCheckboxAF').val(itab);
+
+	  		stopPropagation();
+	  	}
+	  	
+	  	
+	  //Ajouter des labels au click sur ajouter pour antecedents familiaux
+	  	//Ajouter des labels au click sur ajouter pour antecedents familiaux
+	  	//Ajouter des labels au click sur ajouter pour antecedents familiaux
+	  	var scriptLabel = "";
+	  	function ajouterLabelAntecedentsFamiliaux(nomLabel){
+	  		
+	  		if(!nomLabel){ stopPropagation(); }
+	  		
+	  		var reste = ( itab - 1 ) % 5; 
+	  		var nbElement = parseInt( ( itab - 1 ) / 5 ); 
+	  		if(reste != 0){ ligne = nbElement + 1; }
+	  		else { ligne = nbElement; }
+	  		
+	  		var i = 0;
+	  		if(ligne == 1){
+		  		i = $("#labelDesAntecedentsFamiliaux_"+ligne+" td").length;
+	  		} else {
+	  			if(reste == 1){
+		  			$("#labelDesAntecedentsFamiliaux_"+(ligne-1)).after(
+	            			"<tr id='labelDesAntecedentsFamiliaux_"+ligne+"' style='width:100%; '>"+
+	            			"</tr>");
+	  			}
+	  			i = $("#labelDesAntecedentsFamiliaux_"+ligne+" td").length;
+	  		}
+	  		
+	  		scriptLabel = 
+  				"<td id='BUcheckbox' class='label_"+ligne+"_"+i+"' style='min-width: 45%; '> "+
+                "<div > "+
+                " <label style='width: 50%; height:30px; text-align:right; font-family: time new romans; font-size: 18px;'> "+
+                "       <a href='javascript:supprimerLabelAF("+ligne+","+i+");' ><img class='imageSupprimerAsthmeAF' style='cursor: pointer; float: right; margin-right: -10px; width:10px; height: 10px;' src='"+tabUrl[0]+"public/images_icons/sup.png' /></a> "+ 
+                nomLabel +"  <input type='checkbox' checked='${this.checked}' name='champValider_"+ligne+"_"+i+"' id='champValider_"+ligne+"_"+i+"' > "+
+                " <input type='hidden'  id='champTitreLabel_"+ligne+"_"+i+"' value='"+nomLabel+"' > "+
+                " </label> "+
+                "</div> "+
+                "</td> "+
+                
+                "<script>"+
+                "$('#champValider_"+ligne+"_"+i+"').click(function(){"+
+	  			"var boutons = $('#champValider_"+ligne+"_"+i+"');"+
+	  			"if( boutons[0].checked){ $('.imageValider_"+ligne+"_"+i+"').toggle(true);  }"+
+	  			"if(!boutons[0].checked){ $('.imageValider_"+ligne+"_"+i+"').toggle(false); }"+
+	  		    "});"+
+	  		    "</script>"
+                ;
+	  		
+	  		if( i == 0 ){
+	  			//AJOUTER ELEMENT SUIVANT
+	            $("#labelDesAntecedentsFamiliaux_"+ligne).html(scriptLabel);
+	            $("#labelDesAntecedentsFamiliaux_"+ligne).css({'height' : '50px'});
+	  	    } else if( i < 5 ){
+	  	    	//AJOUTER ELEMENT SUIVANT
+	            $("#labelDesAntecedentsFamiliaux_"+ligne+" .label_"+ligne+"_"+(i-1)).after(scriptLabel);
+	  	    }
+	  		
+	  	}
+	  	
+	  	//Ajouter un label dans antecedents Familiaux --- Ajouter un label dans antecedents Familiaux
+	  	//Ajouter un label dans antecedents Familiaux --- Ajouter un label dans antecedents Familiaux
+	  	//Ajouter un label dans antecedents Familiaux --- Ajouter un label dans antecedents Familiaux
+
+	  	$('#imgIconeAjouterLabelAF').click(function(){
+	  		if(!$('#autresAF').val()){ stopPropagation(); }
+	  		else{
+	  			tableau[itab++] = $('#autresAF').val();
+	  			ajouterLabelAntecedentsFamiliaux($('#autresAF').val());
+	  			$('#nbCheckboxAF').val(itab);
+	  			$('#autresAF').val("");
+	  		}
+	  		stopPropagation();
+	  	});
+	  	
+	  	
+	  	//Supprimer un label ajouter pour antecedents familiaux --- Supprimer un label ajouter pour antecedents familiaux
+	  	//Supprimer un label ajouter pour antecedents familiaux --- Supprimer un label ajouter pour antecedents familiaux
+	  	//Supprimer un label ajouter pour antecedents familiaux --- Supprimer un label ajouter pour antecedents familiaux
+	  	function supprimerLabelAF(ligne, i){
+	  		
+	  		var pos = ((ligne - 1)*5)+i;
+	  		var indiceTableau = pos+1; 
+	  		tableau[indiceTableau] = "";
+	  		
+	  		$("#labelDesAntecedentsFamiliaux_"+ligne+" .label_"+ligne+"_"+i).fadeOut(
+	  			function(){	ajouterToutLabelAntecedentsFamiliaux(tableau); }
+	  		);
+		  	
+	  	}
+	  	function autocompletionAntecedentAF(myArrayMedicament){
+		  	$( "#imageIconeAjouterLabelAF label input" ).autocomplete({
+			  	  source: myArrayMedicament
+			    });
+	  	}
+	  	
+	  	function affichageAntecedentsFamiliauxDuPatient(nbElement, tableau_){
+	  		for(var i=1 ; i<=nbElement ; i++){
+	  			itab++;
+	  			ajouterLabelAntecedentsFamiliaux(tableau_[i]);
+	  		}
+	  		tableau = tableau_;
+	  	}
 	  	//===================================================================================================================
 	  	//===================================================================================================================
 	  	//===================================================================================================================
@@ -1936,6 +2282,12 @@ $(function(){
 	  	    }
 	  		
 	  	}
+	  	
+	  	
+
+	  	
+	  	
+	  	
 
 	  	//Ajouter un label --- Ajouter un label
 	  	//Ajouter un label --- Ajouter un label
@@ -1968,6 +2320,8 @@ $(function(){
 		  	
 	  	}
         
+
+	  	
 	  	//Ajout de l'auto-completion sur le champ autre
 	    //Ajout de l'auto-completion sur le champ autre
 	  	
@@ -1976,8 +2330,7 @@ $(function(){
 			  	  source: myArrayMedicament
 			    });
 	  	}
-	  	
-	  	
+	 	
 	  //Ajout de l'auto-completion sur le champ autre pour pathologie
 	    //Ajout de l'auto-completion sur le champ autre pour pathologie
 	  	

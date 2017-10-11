@@ -1,4 +1,4 @@
-<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/admin/styleAuthentification.css');?> 
+<?php echo $this->headLink()->appendStylesheet($this->basePath().'/css/admin/styleAuthentification.css');?>
 <script type="application/x-javascript"> 
 addEventListener("load", 
 		function() { 
@@ -11,8 +11,8 @@ addEventListener("load",
 </script>
 
 <div class="login-form">
-   <div class="head">						
-      <img src="/simens/public/images/logoAuth7.jpg" alt=""/>						
+   <div class="head">	
+      <img src="<?php echo $this->basePath().'/images/logoAuth7.jpg'; ?>" >					
    </div>
 <?php
 $form = $this->loginForm;

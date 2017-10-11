@@ -20,11 +20,11 @@ function creerLaliste ($listeDesElements) {
                     $liste +="</select>"+                           
                              "</th>"+
                              
-                             "<th id='note_"+(index+1)+"' style='width: 59%;'  >"+
+                             "<th id='note_"+(index+1)+"' style='width: 54%;'  >"+
                              "<input  name='note_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' >" +
                              "</th >"+
                              
-                             "<th id='icone_supp_vider' style='width: 9%;'  >"+
+                             "<th id='icone_supp_vider' style='width: 20%;'  >"+
                              "<a id='supprimer_element_selectionne_"+ (index+1) +"'  style='width:50%;' >"+
                              "<img class='supprimer' style='margin-left: 5px; margin-top: 10px; cursor: pointer;' src='../images/images/sup.png' title='supprimer' />"+
                              "</a>"+
@@ -32,6 +32,11 @@ function creerLaliste ($listeDesElements) {
                              "<a id='vider_element_selectionne_"+ (index+1) +"'  style='width:50%;' >"+
                              "<img class='vider' style='margin-left: 15px; margin-top: 10px; cursor: pointer;' src='../images_icons/gomme.png' title='vider' />"+
                              "</a>"+
+                             
+                             "<input type='submit' value='' name='demandeExamenMorpho_"+ (index+1) +"' id='demandeExamenMorpho_"+ (index+1) +"' " +
+                      		" style='width: 32px; height: 32px; background: url(../images_icons/pdf.PNG) no-repeat	right top;'  title='Imprimer'/>"+
+                      
+                      		"</th >"+
                              "</th >"+
                              
                              "</tr>" +
@@ -223,15 +228,15 @@ $(function(){
 	        	
 	            for(var i = 1; i <= nbListe(); i++ ){
 	    		//	$('#element_name_'+i).attr('disabled',true); 
-	    			$('#element_name_'+i).css({'background':'#f8f8f8'});
+	    			//$('#element_name_'+i).css({'background':'#f8f8f8'});
 	    		//	$("#note_"+i+" input").attr('disabled',true); 
-	    			$("#note_"+i+" input").css({'background':'#f8f8f8'});
+	    			//$("#note_"+i+" input").css({'background':'#f8f8f8'});
 	    		}
-	    		$("#controls_element div").toggle(false);
-	    		$("#icone_supp_vider a img").toggle(false);
+	    		//$("#controls_element div").toggle(false);
+	    		//$("#icone_supp_vider a img").toggle(false);
 	    		//$("#bouton_morpho_modifier_demande").toggle(true);
 	    		//$("#bouton_morpho_valider_demande").toggle(false);
-	    		return false;
+	    		//return false;
       },
 	      error:function(e){console.log(e);alert("Une erreur interne est survenue!");},
 	      dataType: "html"
@@ -266,8 +271,8 @@ $(function(){
 			$("#supprimer_element").toggle(false);
 	}
 		$("#icone_supp_vider a img").toggle(true);
-		$("#bouton_morpho_modifier_demande").toggle(false);
-		$("#bouton_morpho_valider_demande").toggle(true);
+		//$("#bouton_morpho_modifier_demande").toggle(false);
+		//$("#bouton_morpho_valider_demande").toggle(true);
 	});
 	
 });

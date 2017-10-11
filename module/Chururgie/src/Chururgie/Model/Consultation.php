@@ -25,6 +25,7 @@ class Consultation implements InputFilterAwareInterface{
 	public $id_service;
 	public $archivage;
 	public $id_admission;
+	public $antecedents_chirurgicaux;
 	
 	
 	protected $inputFilter;
@@ -49,6 +50,7 @@ class Consultation implements InputFilterAwareInterface{
 		$this->heurecons = (! empty ( $data ['HEURECONS'] )) ? $data ['HEURECONS'] : null;
 		$this->id_service = (! empty ( $data ['ID_SERVICE'] )) ? $data ['ID_SERVICE'] : null;
 		$this->archivage = (! empty ( $data ['ARCHIVAGE'] )) ? $data ['ARCHIVAGE'] : null;
+		$this->antecedents_chirurgicaux = (! empty($data['antecedents_chirurgicaux'])) ? $data['antecedents_chirurgicaux']:null;
 	}
 
 	public function getArrayCopy() {

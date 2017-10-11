@@ -36,12 +36,15 @@ class MotifAdmissionTable{
 	}
 	
 	public function addMotifAdmission($values){
+	   
 		for($i=1 ; $i<=5; $i++){ 
 			if($values->get ( 'motif_admission'.$i )->getValue ()){ 
+			    //
 				$datamotifadmission	 = array(
 						'libelle_motif' => $values->get ( 'motif_admission'.$i )->getValue (),
 						'id_cons' => $values->get ( 'id_cons' )->getValue (),
 				);
+				
 				$this->tableGateway->insert($datamotifadmission);
 			}
 

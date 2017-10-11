@@ -6,6 +6,9 @@ use Chururgie\Form\AdmissionForm;
 use Chururgie\Form\ConsultationForm;
 use Chururgie\Form\PatientForm;
 use Chururgie\View\Helper\DateHelper;
+use Chururgie\View\Helper\DemandeExamenBioPdf;
+use Chururgie\View\Helper\DemandeExamenFonctionnelPdf;
+use Chururgie\View\Helper\DemandeExamenMorphoPdf;
 use Chururgie\View\Helper\DemandeExamenPdf;
 use Chururgie\View\Helper\DocumentPdf;
 use Chururgie\View\Helper\HospitalisationPdf;
@@ -16,8 +19,10 @@ use Chururgie\View\Helper\TraitementInstrumentalPdf;
 use Chururgie\View\Helper\TransfertPdf;
 use Zend\Json\Json;
 use Zend\Mvc\Controller\AbstractActionController;
+//use Zend\Stdlib\DateTime;
 use Zend\Stdlib\DateTime;
 use Zend\View\Model\ViewModel;
+use Zend\Code\Reflection\FunctionReflection;
 
 class ChururgieController extends AbstractActionController {
 	protected $patientTable;
@@ -44,6 +49,8 @@ class ChururgieController extends AbstractActionController {
 	protected $ordonConsommableTable;
 	protected $hopitalTable;
 	protected $organeTable;
+	
+	
 	
 	public function getOrganeTable() {
 	    if (! $this->organeTable) {
@@ -220,6 +227,396 @@ class ChururgieController extends AbstractActionController {
 	}
 	
 	
+	
+	
+	
+	//************************************************************************************
+	//*************************Mise A jour Consultation du Medecin************************
+	//*************************Mise A jour Consultation du Medecin************************
+	//*************************Mise A jour Consultation du Medecin************************
+	//*************************Mise A jour Consultation du Medecin************************
+	
+	//************************************************************************************
+	public function majComplementConsultationAction() {
+	    
+	    $this->layout ()->setTemplate ( 'layout/chururgie' );
+	    
+	    $user = $this->layout()->user;
+	    $IdDuService = $user['IdService'];
+	    $id_medecin = $user['id_personne'];
+	    
+	    $this->getDateHelper();
+	    $id_pat = $this->params()->fromQuery ( 'id_patient', 0 );
+	    $id = $this->params()->fromQuery ( 'id_cons' );
+	    $id_admission = $this->params()->fromQuery ('id_admission');
+	    $form = new ConsultationForm();
+	  
+	    $liste = $this->getConsultationTable()->getInfoPatient ( $id_pat );
+	    $image = $this->getConsultationTable()->getPhoto ( $id_pat );
+	   
+	    
+	    //GESTION DES ALERTES
+	    //GESTION DES ALERTES
+	    //GESTION DES ALERTES
+	    //RECUPERER TOUS LES PATIENTS AYANT UN RV aujourd'hui
+	    $tabPatientRV = $this->getConsultationTable()->getPatientsRV($IdDuService);
+	    $resultRV = null;
+	    if(array_key_exists($id_pat, $tabPatientRV)){
+	        $resultRV = $tabPatientRV[ $id_pat ];
+	    }
+	   
+	    //POUR LES CONSTANTES
+	    //POUR LES CONSTANTES
+	    //POUR LES CONSTANTES
+	    $consult = $this->getConsultationTable ()->getConsult ( $id );
+	  
+	    $pos = strpos($consult->pression_arterielle, '/') ;
+	   
+	    $tensionmaximale = substr($consult->pression_arterielle, 0, $pos);
+	    $tensionminimale = substr($consult->pression_arterielle, $pos+1);
+	 
+	    $data = array (
+	        'id_cons' => $consult->id_cons,
+	        'id_medecin' => $consult->id_medecin,
+	        'id_patient' => $consult->id_patient,
+	        'date_cons' => $consult->date,
+	        'poids' => $consult->poids,
+	        'taille' => $consult->taille,
+	        'temperature' => $consult->temperature,
+	        'tensionmaximale' => $tensionmaximale,
+	        'tensionminimale' => $tensionminimale,
+	        'pouls' => $consult->pouls,
+	        'frequence_respiratoire' => $consult->frequence_respiratoire,
+	        'glycemie_capillaire' => $consult->glycemie_capillaire,
+	    );
+	   
+	    //POUR LES MOTIFS D'ADMISSION
+	    //POUR LES MOTIFS D'ADMISSION
+	    //POUR LES MOTIFS D'ADMISSION
+	    // instancier le motif d'admission et recup�rer l'enregistrement
+	    $motif_admission = $this->getMotifAdmissionTable ()->getMotifAdmission ( $id );
+	    $nbMotif = $this->getMotifAdmissionTable ()->nbMotifs ( $id );
+	    
+	    //POUR LES MOTIFS D'ADMISSION
+	    $k = 1;
+	    foreach ( $motif_admission as $Motifs ) {
+	        $data ['motif_admission' . $k] = $Motifs ['Libelle_motif'];
+	        $k ++;
+	    }
+	 
+	    //POUR LES EXAMEN PHYSIQUES
+	    //POUR LES EXAMEN PHYSIQUES
+	    //POUR LES EXAMEN PHYSIQUES
+	    $examen_physique = $this->getDonneesExamensPhysiquesTable()->getExamensPhysiques($id);
+	    
+	    //POUR LES EXAMEN PHYSIQUES
+	    $kPhysique = 1;
+	    foreach ($examen_physique as $Examen) {
+	        $data['examen_donnee'.$kPhysique] = $Examen['libelle_examen'];
+	        $kPhysique++;
+	    }
+	   
+	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
+	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
+	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
+	    $listeConsultation = $this->getConsultationTable ()->getConsultationPatientSaufActu($id_pat, $id);
+	    
+	    //Recuperer les informations sur le surveillant de service pour les consultations qui diff�rent des consultations prises lors des archives
+	    $tabInfoSurv = array();
+	    foreach ($listeConsultation as $listeCons){
+	        if($listeCons['ID_SURVEILLANT']){
+	            $tabInfoSurv [$listeCons['ID_CONS']] = $this->getConsultationTable ()->getInfosSurveillant($listeCons['ID_SURVEILLANT'])['PRENOM'].' '.$this->getConsultationTable ()->getInfosSurveillant($listeCons['ID_SURVEILLANT'])['NOM'];
+	        }else{
+	            $tabInfoSurv [$listeCons['ID_CONS']] = '_________';
+	        }
+	    }
+	    var_dump($data);exit();
+	    $listeConsultation = $this->getConsultationTable ()->getConsultationPatientSaufActu($id_pat, $id);
+	    
+	    //*** Liste des Hospitalisations
+	    $listeHospitalisation = $this->getDemandeHospitalisationTable()->getDemandeHospitalisationWithIdPatient($id_pat);
+	    
+	    //POUR LES EXAMENS COMPLEMENTAIRES
+	    //POUR LES EXAMENS COMPLEMENTAIRES
+	    //POUR LES EXAMENS COMPLEMENTAIRES
+	    // DEMANDES DES EXAMENS COMPLEMENTAIRES
+	    $listeDemandesMorphologiques = $this->demandeExamensTable()->getDemandeExamensMorphologiques($id);
+	    $listeDemandesBiologiques = $this->demandeExamensTable()->getDemandeExamensBiologiques($id);
+	    $listeDemandesActes = $this->getDemandeActe()->getDemandeActe($id);
+	    
+	    //Liste des examens biologiques
+	    $listeDesExamensBiologiques = $this->demandeExamensTable()->getDemandeDesExamensBiologiques();
+	    //Liste des examens Morphologiques
+	    $listeDesExamensMorphologiques = $this->demandeExamensTable()->getDemandeDesExamensMorphologiques();
+	    
+	    //var_dump($listeDesExamensBiologiques); exit();
+	    
+	    ////RESULTATS DES EXAMENS BIOLOGIQUES DEJA EFFECTUES ET ENVOYER PAR LE BIOLOGISTE
+	    $listeDemandesBiologiquesEffectuerEnvoyer = $this->demandeExamensTable()->getDemandeExamensBiologiquesEffectuesEnvoyer($id);
+	    $listeDemandesBiologiquesEffectuer = $this->demandeExamensTable()->getDemandeExamensBiologiquesEffectues($id);
+	    
+	    $tableauResultatsExamensBio = array(
+	        'temoinGSan' => 0,
+	        'temoinHSan' => 0,
+	        'temoinBHep' => 0,
+	        'temoinBRen' => 0,
+	        'temoinBHem' => 0,
+	        'temoinBInf' => 0,
+	    );
+	    foreach ($listeDemandesBiologiquesEffectuerEnvoyer as $listeExamenBioEffectues){
+	        if($listeExamenBioEffectues['idExamen'] == 1){
+	            $data['groupe_sanguin'] =  $listeExamenBioEffectues['noteResultat'];
+	            $tableauResultatsExamensBio['groupe_sanguin_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
+	            $tableauResultatsExamensBio['groupe_sanguin_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+	            $tableauResultatsExamensBio['groupe_sanguin_conclusion'] = $listeExamenBioEffectues['conclusion'];
+	            $tableauResultatsExamensBio['temoinGSan'] = 1;
+	        }
+	        if($listeExamenBioEffectues['idExamen'] == 2){
+	            $data['hemogramme_sanguin'] =  $listeExamenBioEffectues['noteResultat'];
+	            $tableauResultatsExamensBio['hemogramme_sanguin_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
+	            $tableauResultatsExamensBio['hemogramme_sanguin_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+	            $tableauResultatsExamensBio['hemogramme_sanguin_conclusion'] = $listeExamenBioEffectues['conclusion'];
+	            $tableauResultatsExamensBio['temoinHSan'] = 1;
+	        }
+	        if($listeExamenBioEffectues['idExamen'] == 3){
+	            $data['bilan_hepatique'] =  $listeExamenBioEffectues['noteResultat'];
+	            $tableauResultatsExamensBio['bilan_hepatique_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
+	            $tableauResultatsExamensBio['bilan_hepatique_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+	            $tableauResultatsExamensBio['bilan_hepatique_conclusion'] = $listeExamenBioEffectues['conclusion'];
+	            $tableauResultatsExamensBio['temoinBHep'] = 1;
+	        }
+	        if($listeExamenBioEffectues['idExamen'] == 4){
+	            $data['bilan_renal'] =  $listeExamenBioEffectues['noteResultat'];
+	            $tableauResultatsExamensBio['bilan_renal_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
+	            $tableauResultatsExamensBio['bilan_renal_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+	            $tableauResultatsExamensBio['bilan_renal_conclusion'] = $listeExamenBioEffectues['conclusion'];
+	            $tableauResultatsExamensBio['temoinBRen'] = 1;
+	        }
+	        if($listeExamenBioEffectues['idExamen'] == 5){
+	            $data['bilan_hemolyse'] =  $listeExamenBioEffectues['noteResultat'];
+	            $tableauResultatsExamensBio['bilan_hemolyse_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
+	            $tableauResultatsExamensBio['bilan_hemolyse_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+	            $tableauResultatsExamensBio['bilan_hemolyse_conclusion'] = $listeExamenBioEffectues['conclusion'];
+	            $tableauResultatsExamensBio['temoinBHem'] = 1;
+	        }
+	        if($listeExamenBioEffectues['idExamen'] == 6){
+	            $data['bilan_inflammatoire'] =  $listeExamenBioEffectues['noteResultat'];
+	            $tableauResultatsExamensBio['bilan_inflammatoire_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
+	            $tableauResultatsExamensBio['bilan_inflammatoire_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+	            $tableauResultatsExamensBio['bilan_inflammatoire_conclusion'] = $listeExamenBioEffectues['conclusion'];
+	            $tableauResultatsExamensBio['temoinBInf'] = 1;
+	        }
+	    }
+	    
+	    ////RESULTATS DES EXAMENS MORPHOLOGIQUE
+	    $examen_morphologique = $this->getNotesExamensMorphologiquesTable()->getNotesExamensMorphologiques($id);
+	    
+	    $data['radio'] = $examen_morphologique['radio'];
+	    $data['ecographie'] = $examen_morphologique['ecographie'];
+	    $data['fibrocospie'] = $examen_morphologique['fibroscopie'];
+	    $data['scanner'] = $examen_morphologique['scanner'];
+	    $data['irm'] = $examen_morphologique['irm'];
+	    
+	    ////RESULTATS DES EXAMENS MORPHOLOGIQUES DEJA EFFECTUES ET ENVOYER PAR LE BIOLOGISTE
+	    $listeDemandesMorphologiquesEffectuer = $this->demandeExamensTable()->getDemandeExamensMorphologiquesEffectues($id);
+	    
+	    //DIAGNOSTICS
+	    //DIAGNOSTICS
+	    //DIAGNOSTICS
+	    $infoDiagnostics = $this->getDiagnosticsTable()->getDiagnostics($id);
+	    // POUR LES DIAGNOSTICS
+	    $k = 1;
+	    foreach ($infoDiagnostics as $diagnos){
+	        $data['diagnostic'.$k] = $diagnos['libelle_diagnostics'];
+	        $k++;
+	    }
+	    
+	    //TRAITEMENT (Ordonnance) *********************************************************
+	    //TRAITEMENT (Ordonnance) *********************************************************
+	    //TRAITEMENT (Ordonnance) *********************************************************
+	    
+	    //POUR LES MEDICAMENTS
+	    //POUR LES MEDICAMENTS
+	    //POUR LES MEDICAMENTS
+	    // INSTANCIATION DES MEDICAMENTS de l'ordonnance
+	    $listeMedicament = $this->getConsultationTable()->listeDeTousLesMedicaments();
+	    $listeForme = $this->getConsultationTable()->formesMedicaments();
+	    $listetypeQuantiteMedicament = $this->getConsultationTable()->typeQuantiteMedicaments();
+	    
+	    // INSTANTIATION DE L'ORDONNANCE
+	    $infoOrdonnance = $this->getOrdonnanceTable()->getOrdonnanceNonHospi($id);
+	    
+	    if($infoOrdonnance) {
+	        $idOrdonnance = $infoOrdonnance->id_document;
+	        $duree_traitement = $infoOrdonnance->duree_traitement;
+	        //LISTE DES MEDICAMENTS PRESCRITS
+	        $listeMedicamentsPrescrits = $this->getOrdonnanceTable()->getMedicamentsParIdOrdonnance($idOrdonnance);
+	        $nbMedPrescrit = $listeMedicamentsPrescrits->count();
+	    }else{
+	        $nbMedPrescrit = null;
+	        $listeMedicamentsPrescrits =null;
+	        $duree_traitement = null;
+	    }
+	    
+	    //POUR LA DEMANDE PRE-ANESTHESIQUE
+	    //POUR LA DEMANDE PRE-ANESTHESIQUE
+	    //POUR LA DEMANDE PRE-ANESTHESIQUE
+	    $donneesDemandeVPA = $this->getDemandeVisitePreanesthesiqueTable()->getDemandeVisitePreanesthesique($id);
+	    
+	    $resultatVpa = null;
+	    if($donneesDemandeVPA) {
+	        $data['diagnostic_traitement_chirurgical'] = $donneesDemandeVPA['DIAGNOSTIC'];
+	        $data['observation'] = $donneesDemandeVPA['OBSERVATION'];
+	        $data['intervention_prevue'] = $donneesDemandeVPA['INTERVENTION_PREVUE'];
+	        
+	        $resultatVpa = $this->getResultatVpa()->getResultatVpa($donneesDemandeVPA['idVpa']);
+	    }
+	    
+	    
+	    /**** INSTRUMENTAL ****/
+	    /**** INSTRUMENTAL ****/
+	    /**** INSTRUMENTAL ****/
+	    $traitement_instrumental = $this->getConsultationTable()->getTraitementsInstrumentaux($id);
+	    
+	    $data['endoscopieInterventionnelle'] = $traitement_instrumental['endoscopie_interventionnelle'];
+	    $data['radiologieInterventionnelle'] = $traitement_instrumental['radiologie_interventionnelle'];
+	    $data['cardiologieInterventionnelle'] = $traitement_instrumental['cardiologie_interventionnelle'];
+	    $data['autresIntervention'] = $traitement_instrumental['autres_interventions'];
+	    
+	    //POUR LES COMPTES RENDU OPERATOIRE
+	    //POUR LES COMPTES RENDU OPERATOIRE
+	    $compte_rendu_chirurgical = $this->getConsultationTable()->getCompteRenduOperatoire(1, $id);
+	    $data['note_compte_rendu_operatoire'] = $compte_rendu_chirurgical['note'];
+	    $compte_rendu_instrumental = $this->getConsultationTable()->getCompteRenduOperatoire(2, $id);
+	    $data['note_compte_rendu_operatoire_instrumental'] = $compte_rendu_instrumental['note'];
+	    
+	    //POUR LE TRANSFERT
+	    //POUR LE TRANSFERT
+	    //POUR LE TRANSFERT
+	    // INSTANCIATION DU TRANSFERT
+	    // RECUPERATION DE LA LISTE DES HOPITAUX
+	    $hopital = $this->getTransfererPatientServiceTable ()->fetchHopital ();
+	    
+	    //LISTE DES HOPITAUX
+	    $form->get ( 'hopital_accueil' )->setValueOptions ( $hopital );
+	    // RECUPERATION DU SERVICE OU EST TRANSFERE LE PATIENT
+	    $transfertPatientService = $this->getTransfererPatientServiceTable ()->getServicePatientTransfert($id);
+	    
+	    if( $transfertPatientService ){
+	        $idService = $transfertPatientService['ID_SERVICE'];
+	        // RECUPERATION DE L'HOPITAL DU SERVICE
+	        $transfertPatientHopital = $this->getTransfererPatientServiceTable ()->getHopitalPatientTransfert($idService);
+	        $idHopital = $transfertPatientHopital['ID_HOPITAL'];
+	        // RECUPERATION DE LA LISTE DES SERVICES DE L'HOPITAL OU SE TROUVE LE SERVICE OU IL EST TRANSFERE
+	        $serviceHopital = $this->getTransfererPatientServiceTable ()->fetchServiceWithHopital($idHopital);
+	        
+	        // LISTE DES SERVICES DE L'HOPITAL
+	        $form->get ( 'service_accueil' )->setValueOptions ($serviceHopital);
+	        
+	        // SELECTION DE L'HOPITAL ET DU SERVICE SUR LES LISTES
+	        $data['hopital_accueil'] = $idHopital;
+	        $data['service_accueil'] = $idService;
+	        $data['motif_transfert'] = $transfertPatientService['MOTIF_TRANSFERT'];
+	        $hopitalSelect = 1;
+	    }else {
+	        $hopitalSelect = 0;
+	        // RECUPERATION DE L'HOPITAL DU SERVICE
+	        $transfertPatientHopital = $this->getTransfererPatientServiceTable ()->getHopitalPatientTransfert($IdDuService);
+	        $idHopital = $transfertPatientHopital['ID_HOPITAL'];
+	        $data['hopital_accueil'] = $idHopital;
+	        // RECUPERATION DE LA LISTE DES SERVICES DE L'HOPITAL OU SE TROUVE LE SERVICE OU LE MEDECIN TRAVAILLE
+	        $serviceHopital = $this->getTransfererPatientServiceTable ()->fetchServiceWithHopitalNotServiceActual($idHopital, $IdDuService);
+	        // LISTE DES SERVICES DE L'HOPITAL
+	        $form->get ( 'service_accueil' )->setValueOptions ($serviceHopital);
+	    }
+	    
+	    //POUR LE RENDEZ VOUS
+	    //POUR LE RENDEZ VOUS
+	    //POUR LE RENDEZ VOUS
+	    // RECUPERE LE RENDEZ VOUS
+	    $leRendezVous = $this->getRvPatientConsTable()->getRendezVous($id);
+	    
+	    if($leRendezVous) {
+	        $data['heure_rv'] = $leRendezVous->heure;
+	        $data['date_rv']  = $this->dateHelper->convertDate($leRendezVous->date);
+	        $data['motif_rv'] = $leRendezVous->note;
+	    }
+	    // Pour recuper les bandelettes
+	    $bandelettes = $this->getConsultationTable ()->getBandelette($id);
+	    
+	    //RECUPERATION DES ANTECEDENTS
+	    //RECUPERATION DES ANTECEDENTS
+	    //RECUPERATION DES ANTECEDENTS
+	    $donneesAntecedentsPersonnels = $this->getAntecedantPersonnelTable()->getTableauAntecedentsPersonnels($id_pat);
+	    $donneesAntecedentsFamiliaux = $this->getAntecedantsFamiliauxTable()->getTableauAntecedentsFamiliaux($id_pat);
+	    
+	    
+	    //Recuperer les antecedents medicaux ajouter pour le patient
+	    //Recuperer les antecedents medicaux ajouter pour le patient
+	    $antMedPat = $this->getConsultationTable()->getAntecedentMedicauxPersonneParIdPatient($id_pat);
+	    
+	    //Recuperer les antecedents medicaux
+	    //Recuperer les antecedents medicaux
+	    $listeAntMed = $this->getConsultationTable()->getAntecedentsMedicaux();
+	    
+	    
+	    //Recuperer la liste des actes
+	    //Recuperer la liste des actes
+	    $listeActes = $this->getConsultationTable()->getListeDesActes();
+	    
+	    //FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
+	    //FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
+	    
+	    //POUR LES DEMANDES D'HOSPITALISATION
+	    //POUR LES DEMANDES D'HOSPITALISATION
+	    //POUR LES DEMANDES D'HOSPITALISATION
+	    $donneesHospi = $this->getDemandeHospitalisationTable()->getDemandehospitalisationParIdcons($id);
+	    if($donneesHospi){
+	        $data['motif_hospitalisation'] = $donneesHospi->motif_demande_hospi;
+	        $data['date_fin_hospitalisation_prevue'] = $this->dateHelper->convertDate($donneesHospi->date_fin_prevue_hospi);
+	    }
+	    $form->populateValues ( array_merge($data,$bandelettes,$donneesAntecedentsPersonnels,$donneesAntecedentsFamiliaux) );
+	    return array(
+	        'id_cons' => $id,
+	        'lesdetails' => $liste,
+	        'form' => $form,
+	        'nbMotifs' => $nbMotif,
+	        'image' => $image,
+	        'heure_cons' => $consult->heurecons,
+	        'liste' => $listeConsultation,
+	        'liste_med' => $listeMedicament,
+	        'nb_med_prescrit' => $nbMedPrescrit,
+	        'liste_med_prescrit' => $listeMedicamentsPrescrits,
+	        'duree_traitement' => $duree_traitement,
+	        'verifieRV' => $leRendezVous,
+	        'listeDemandesMorphologiques' => $listeDemandesMorphologiques,
+	        'listeDemandesBiologiques' => $listeDemandesBiologiques,
+	        'listeDemandesActes' => $listeDemandesActes,
+	        'hopitalSelect' =>$hopitalSelect,
+	        'nbDiagnostics'=> $infoDiagnostics->count(),
+	        'nbDonneesExamenPhysique' => $kPhysique,
+	        'dateonly' => $consult->dateonly,
+	        'temoin' => $bandelettes['temoin'],
+	        'listeForme' => $listeForme,
+	        'listetypeQuantiteMedicament'  => $listetypeQuantiteMedicament,
+	        'donneesAntecedentsPersonnels' => $donneesAntecedentsPersonnels,
+	        'donneesAntecedentsFamiliaux'  => $donneesAntecedentsFamiliaux,
+	        'resultRV' => $resultRV,
+	        'listeDemandesBioEff' => $listeDemandesBiologiquesEffectuer->count(),
+	        'listeDemandesMorphoEff' => $listeDemandesMorphologiquesEffectuer->count(),
+	        'resultatVpa' => $resultatVpa,
+	        'listeHospitalisation' => $listeHospitalisation,
+	        'tabInfoSurv' => $tabInfoSurv,
+	        'tableauResultatsExamensBio' => $tableauResultatsExamensBio,
+	        'listeDesExamensBiologiques' => $listeDesExamensBiologiques,
+	        'listeDesExamensMorphologiques' => $listeDesExamensMorphologiques,
+	        'listeAntMed' => $listeAntMed,
+	        'antMedPat' => $antMedPat,
+	        'nbAntMedPat' => $antMedPat->count(),
+	        'listeActes' => $listeActes,
+	    );
+	    
+	}
 	
 	
 	//************************************************************************************
@@ -501,7 +898,7 @@ class ChururgieController extends AbstractActionController {
 	    //POUR LES CONSTANTES
 	    //POUR LES CONSTANTES
 	    //POUR LES CONSTANTES
-	    $consult = $this->getConsultationTable ()->getConsult ( $id_pat );
+	    $consult = $this->getConsultationTable ()->getConsult ( $id  );
 	    $pos = strpos($consult->pression_arterielle, '/') ;
 	    $tensionmaximale = substr($consult->pression_arterielle, 0, $pos);
 	    $tensionminimale = substr($consult->pression_arterielle, $pos+1);
@@ -590,42 +987,42 @@ class ChururgieController extends AbstractActionController {
 	        if($listeExamenBioEffectues['idExamen'] == 1){
 	            $data['groupe_sanguin'] =  $listeExamenBioEffectues['noteResultat'];
 	            $tableauResultatsExamensBio['groupe_sanguin_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
-	            $tableauResultatsExamensBio['groupe_sanguin_date_enregistrement'] = $this->controlDate->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+	            $tableauResultatsExamensBio['groupe_sanguin_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
 	            $tableauResultatsExamensBio['groupe_sanguin_conclusion'] = $listeExamenBioEffectues['conclusion'];
 	            $tableauResultatsExamensBio['temoinGSan'] = 1;
 	        }
 	        if($listeExamenBioEffectues['idExamen'] == 2){
 	            $data['hemogramme_sanguin'] =  $listeExamenBioEffectues['noteResultat'];
 	            $tableauResultatsExamensBio['hemogramme_sanguin_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
-	            $tableauResultatsExamensBio['hemogramme_sanguin_date_enregistrement'] = $this->controlDate->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+	            $tableauResultatsExamensBio['hemogramme_sanguin_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
 	            $tableauResultatsExamensBio['hemogramme_sanguin_conclusion'] = $listeExamenBioEffectues['conclusion'];
 	            $tableauResultatsExamensBio['temoinHSan'] = 1;
 	        }
 	        if($listeExamenBioEffectues['idExamen'] == 3){
 	            $data['bilan_hepatique'] =  $listeExamenBioEffectues['noteResultat'];
 	            $tableauResultatsExamensBio['bilan_hepatique_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
-	            $tableauResultatsExamensBio['bilan_hepatique_date_enregistrement'] = $this->controlDate->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+	            $tableauResultatsExamensBio['bilan_hepatique_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
 	            $tableauResultatsExamensBio['bilan_hepatique_conclusion'] = $listeExamenBioEffectues['conclusion'];
 	            $tableauResultatsExamensBio['temoinBHep'] = 1;
 	        }
 	        if($listeExamenBioEffectues['idExamen'] == 4){
 	            $data['bilan_renal'] =  $listeExamenBioEffectues['noteResultat'];
 	            $tableauResultatsExamensBio['bilan_renal_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
-	            $tableauResultatsExamensBio['bilan_renal_date_enregistrement'] = $this->controlDate->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+	            $tableauResultatsExamensBio['bilan_renal_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
 	            $tableauResultatsExamensBio['bilan_renal_conclusion'] = $listeExamenBioEffectues['conclusion'];
 	            $tableauResultatsExamensBio['temoinBRen'] = 1;
 	        }
 	        if($listeExamenBioEffectues['idExamen'] == 5){
 	            $data['bilan_hemolyse'] =  $listeExamenBioEffectues['noteResultat'];
 	            $tableauResultatsExamensBio['bilan_hemolyse_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
-	            $tableauResultatsExamensBio['bilan_hemolyse_date_enregistrement'] = $this->controlDate->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+	            $tableauResultatsExamensBio['bilan_hemolyse_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
 	            $tableauResultatsExamensBio['bilan_hemolyse_conclusion'] = $listeExamenBioEffectues['conclusion'];
 	            $tableauResultatsExamensBio['temoinBHem'] = 1;
 	        }
 	        if($listeExamenBioEffectues['idExamen'] == 6){
 	            $data['bilan_inflammatoire'] =  $listeExamenBioEffectues['noteResultat'];
 	            $tableauResultatsExamensBio['bilan_inflammatoire_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
-	            $tableauResultatsExamensBio['bilan_inflammatoire_date_enregistrement'] = $this->controlDate->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+	            $tableauResultatsExamensBio['bilan_inflammatoire_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
 	            $tableauResultatsExamensBio['bilan_inflammatoire_conclusion'] = $listeExamenBioEffectues['conclusion'];
 	            $tableauResultatsExamensBio['temoinBInf'] = 1;
 	        }
@@ -753,7 +1150,7 @@ class ChururgieController extends AbstractActionController {
 	    
 	    if($leRendezVous) {
 	        $data['heure_rv'] = $leRendezVous->heure;
-	        $data['date_rv']  = $this->controlDate->convertDate($leRendezVous->date);
+	        $data['date_rv']  = $this->dateHelper->convertDate($leRendezVous->date);
 	        $data['motif_rv'] = $leRendezVous->note;
 	    }
 	    // Pour recuper les bandelettes
@@ -795,7 +1192,7 @@ class ChururgieController extends AbstractActionController {
 	    $donneesHospi = $this->getDemandeHospitalisationTable()->getDemandehospitalisationParIdcons($id);
 	    if($donneesHospi){
 	        $data['motif_hospitalisation'] = $donneesHospi->motif_demande_hospi;
-	        $data['date_fin_hospitalisation_prevue'] = $this->controlDate->convertDate($donneesHospi->date_fin_prevue_hospi);
+	        $data['date_fin_hospitalisation_prevue'] = $this->dateHelper->convertDate($donneesHospi->date_fin_prevue_hospi);
 	    }
 	    $form->populateValues ( array_merge($data,$bandelettes,$donneesAntecedentsPersonnels,$donneesAntecedentsFamiliaux) );
 	    return array(
@@ -847,7 +1244,7 @@ class ChururgieController extends AbstractActionController {
 	    $IdDuService = $user['IdService'];
 	  
 	    $tab = $this->getConsultationTable()->listePatientsConsMedecin ( $IdDuService );
-	    
+	   
 	    return new ViewModel ( array (
 	        'donnees' => $tab
 	    ) );
@@ -865,24 +1262,58 @@ class ChururgieController extends AbstractActionController {
 		$this->getDateHelper();
 		$id_cons = $this->params()->fromPost('id_cons');
 		$id_patient = $this->params()->fromPost('id_patient');
-	
+		
+		
+		//
 		$user = $this->layout()->user;
 		$IdDuService = $user['IdService'];
 		$id_medecin = $user['id_personne'];
-	
+		
+		
+		
+		
 		//**********-- MODIFICATION DES CONSTANTES --********
 		//**********-- MODIFICATION DES CONSTANTES --********
 		//**********-- MODIFICATION DES CONSTANTES --********
 		$form = new ConsultationForm ();
 		$formData = $this->getRequest ()->getPost ();
-		$form->setData ( $formData );
+		$form->setData ( $form );
+		$id_admission = $this->params()->fromPost('id_admission',0);
+		
+		
+		
+		//consultation
+		//
+		$this->getConsultationTable()->addConsultation($formData,$IdDuService, $id_medecin,$id_admission);
+		//ar_dump($formData);exit();
+		//Ajouter Histoire de la maladie
+		$this->getConsultationTable()->addHistoireMaladie($formData,$id_cons,$id_medecin);
+		
+		//Ajouter la note de l'examen de historique
+		$this->getConsultationTable()->addExamenHistorique($formData,$id_cons);
+		
+		// Ajouter la note de l'autre de l'historique
+		$this->getConsultationTable()->addAutreHistorique($formData,$id_cons);
+		
+		
+		// Ajouter de nouveaux antecedents familiaux
+		$this->getConsultationTable()->addAntecedentFamiliauxPersonne($formData, $id_patient, $id_medecin);
+		
+		
+		//Ajouter les antécédents chirurgicaux
+		$this->getConsultationTable()->addAntecedentsChirurgicaux($formData,$id_patient);
+		
 	
+		//var_dump($formData);exit();
+		
+		
 		// les antecedents medicaux du patient a ajouter addAntecedentMedicauxPersonne
-		$this->getConsultationTable()->addAntecedentMedicaux($formData);
 		
-		$this->getConsultationTable()->addAntecedentMedicauxPersonne($formData);
-		//var_dump($formData); exit();
-		
+		$this->getConsultationTable()->addAntecedentMedicaux($formData,$id_medecin);
+	
+		$this->getConsultationTable()->addAntecedentMedicauxPersonne($formData,$id_medecin);
+	
+	
 		// mettre a jour les motifs d'admission
 		$this->getMotifAdmissionTable ()->deleteMotifAdmission ( $id_cons );
 		
@@ -890,7 +1321,7 @@ class ChururgieController extends AbstractActionController {
 		
 		//mettre a jour la consultation
 		$this->getConsultationTable ()->updateConsultation ( $form );
-	
+		
 		//Recuperer les donnees sur les bandelettes urinaires
 		//Recuperer les donnees sur les bandelettes urinaires
 		$bandelettes = array(
@@ -905,6 +1336,7 @@ class ChururgieController extends AbstractActionController {
 		
 		//mettre a jour les bandelettes urinaires
 		$this->getConsultationTable ()->deleteBandelette($id_cons);
+		
 		$this->getConsultationTable ()->addBandelette($bandelettes);
 		
 		//POUR LES EXAMENS PHYSIQUES
@@ -919,7 +1351,7 @@ class ChururgieController extends AbstractActionController {
 				'donnee5' => $this->params()->fromPost('examen_donnee5')
 		);
 		$this->getDonneesExamensPhysiquesTable()->updateExamenPhysique($info_donnees_examen_physique);
-	
+		
 		//POUR LES ANTECEDENTS ANTECEDENTS ANTECEDENTS
 		//POUR LES ANTECEDENTS ANTECEDENTS ANTECEDENTS
 		//POUR LES ANTECEDENTS ANTECEDENTS ANTECEDENTS
@@ -967,21 +1399,23 @@ class ChururgieController extends AbstractActionController {
 		//**=== ANTECEDENTS FAMILIAUX
 		//**=== ANTECEDENTS FAMILIAUX
 		'DiabeteAF' => $this->params()->fromPost('DiabeteAF'),
-		'NoteDiabeteAF' => $this->params()->fromPost('NoteDiabeteAF'),
+		//'NoteDiabeteAF' => $this->params()->fromPost('NoteDiabeteAF'),
 		'DrepanocytoseAF' => $this->params()->fromPost('DrepanocytoseAF'),
-		'NoteDrepanocytoseAF' => $this->params()->fromPost('NoteDrepanocytoseAF'),
+		//'NoteDrepanocytoseAF' => $this->params()->fromPost('NoteDrepanocytoseAF'),
 		'htaAF' => $this->params()->fromPost('htaAF'),
-		'NoteHtaAF' => $this->params()->fromPost('NoteHtaAF'),
+		//'NoteHtaAF' => $this->params()->fromPost('NoteHtaAF'),
 		);
 	
 		$id_personne = $this->getAntecedantPersonnelTable()->getIdPersonneParIdCons($id_cons);
 		$this->getAntecedantPersonnelTable()->addAntecedentsPersonnels($donneesDesAntecedents, $id_personne, $id_medecin);
 		$this->getAntecedantsFamiliauxTable()->addAntecedentsFamiliaux($donneesDesAntecedents, $id_personne, $id_medecin);
+		
+		
 	
 		//POUR LES RESULTATS DES EXAMENS MORPHOLOGIQUES
 		//POUR LES RESULTATS DES EXAMENS MORPHOLOGIQUES
 		//POUR LES RESULTATS DES EXAMENS MORPHOLOGIQUES
-	
+		
 		$info_examen_morphologique = array(
 				'id_cons'=> $id_cons,
 				'8'  => $this->params()->fromPost('radio_'),
@@ -992,7 +1426,7 @@ class ChururgieController extends AbstractActionController {
 		);
 	
 		$this->getNotesExamensMorphologiquesTable()->updateNotesExamensMorphologiques($info_examen_morphologique);
-
+		
 		//POUR LES DIAGNOSTICS
 		//POUR LES DIAGNOSTICS
 		//POUR LES DIAGNOSTICS
@@ -1003,8 +1437,23 @@ class ChururgieController extends AbstractActionController {
 				'diagnostic3' => $this->params()->fromPost('diagnostic3'),
 				'diagnostic4' => $this->params()->fromPost('diagnostic4'),
 		);
-	
+		
 		$this->getDiagnosticsTable()->updateDiagnostics($info_diagnostics);
+		//POUR LES PATHOLOGIES
+		//POUR LES PATHOLOGIES
+		//POUR LES PATHOLOGIES
+// 		$info_diagnostics = array(
+// 		    'id_cons' => $id_cons,
+// 		    'typepathologie1' => $this->params()->fromPost('typepathologie1'),
+// 		    'typepathologie2' => $this->params()->fromPost('typepathologie2'),
+// 		    'typepathologie3' => $this->params()->fromPost('typepathologie3'),
+// 		    'typepathologie4' => $this->params()->fromPost('typepathologie4'),
+// 		    'typepathologie5' => $this->params()->fromPost('typepathologie5'),
+// 		    'typepathologie6' => $this->params()->fromPost('typepathologie6'),
+// 		);
+		
+		//$this->getDiagnosticsTable()->updateDiagnostics($info_diagnostics);
+		
 		
 		//POUR LES TRAITEMENTS
 		//POUR LES TRAITEMENTS
@@ -1049,52 +1498,56 @@ class ChururgieController extends AbstractActionController {
 			}
 		}
 		
-		/**** Pathologie ****/
-		/**** Pathologie ****/
-		
-		
-		$nomOrgane = "";
-		$classePatho = "";
-		$typePathologie = "";
-		
-		for($i = 1 ; $i < 10 ; $i++ ){
-		    if($this->params()->fromPost("pathologie_0".$i)){
-		        
-		        $nomOrgane = $this->params()->fromPost("pathologie_0".$i);
-		        $classePatho = $this->params()->fromPost("classepathologie".$i);
-		        $typePathologie = $this->params()->fromPost("typepathologie".$i);
-		      
-		        
- 		        if($this->params()->fromPost("pathologie_0".$i)){
- 		           //var_dump($this->params()->fromPost("pathologie_0".$i));exit();
- 		            $result1 = $this->getConsultationTable()->getOrganeByName($nomOrgane);
- 		             
- 		            var_dump($result1);exit();
- 		            if($result1){
-		                $tab[$j++] = $result1;
-		                $tab[$j++] = $formeMedicament; $Consommable->addFormes($formeMedicament);
-		                $tab[$j++] = $this->params()->fromPost("nb_medicament_".$i);
-		                $tab[$j++] = $quantiteMedicament; $Consommable->addQuantites($quantiteMedicament);
- 		           } else {
-		                $idMedicaments = $Consommable->addMedicaments($nomMedicament);
-		                $tab[$j++] = $idMedicaments;
-		                $tab[$j++] = $formeMedicament; $Consommable->addFormes($formeMedicament);
-		                $tab[$j++] = $this->params()->fromPost("nb_medicament_".$i);
-		                $tab[$j++] = $quantiteMedicament; $Consommable->addQuantites($quantiteMedicament);
-		           }
-	        }
-		        
-		    }
-		}
-		
 		/*Mettre a jour la duree du traitement de l'ordonnance*/
 		$idOrdonnance = $this->getOrdonnanceTable()->updateOrdonnance($tab, $donnees);
 		
 		/*Mettre a jour les medicaments*/
 		$resultat = $Consommable->updateOrdonConsommable($tab, $idOrdonnance, $nomMedicament);
-		
+	
 		/*si aucun m�dicament n'est ajout� ($resultat = false) on supprime l'ordonnance*/
 		if($resultat == false){ $this->getOrdonnanceTable()->deleteOrdonnance($idOrdonnance);}
+		
+		
+		/**** Pathologie ****/
+		/**** Pathologie ****/
+		
+		
+		$typePathologie = "";
+		
+		
+		$tab = array();
+		$j = 1;
+		for($i = 1 ; $i < 10 ; $i++ ){
+		    
+		    if($this->params()->fromPost("typepathologie".$i)){
+		        
+		        $typePathologie = $this->params()->fromPost("typepathologie".$i);
+		        
+		        
+		        if($typePathologie){
+		            
+		            $result1 = $this->getConsultationTable()->getPathologiesByName($typePathologie);
+		            
+		            if($result1){
+		                $tab[$j++] = $result1["id_type_pathologie"];
+		                //
+		            } else {
+		                $idPathologie=  $this->getConsultationTable()->addPathologie($this->params()->fromPost("typepathologie".$i));
+		                $tab[$j++] = $idPathologie;
+		                //  $tab[$j++] = $typePathologie;
+		                //  $this->getConsultationTable()->addConsPatho($id_cons,$tab);
+		                
+		            }
+		        }
+		        
+		    }
+		}
+		
+		for($k=1;$k<count($tab);$k++){
+		    // var_dump($tab[$k++]);exit();
+		    $this->getConsultationTable()->addConsPatho($id_cons,$tab[$k++]);
+		}
+		
 	
 		/**** CHIRURGICAUX ****/
 		/**** CHIRURGICAUX ****/
@@ -1107,7 +1560,7 @@ class ChururgieController extends AbstractActionController {
 		);
 		
 		$this->getDemandeVisitePreanesthesiqueTable()->updateDemandeVisitePreanesthesique($infoDemande);
-	
+		
 		/**** INSTRUMENTAL ****/
 		/**** INSTRUMENTAL ****/
 		/**** INSTRUMENTAL ****/
@@ -1118,6 +1571,7 @@ class ChururgieController extends AbstractActionController {
 				'cardiologie_interventionnelle' => $this->params()->fromPost('cardiologieInterventionnelle'),
 				'autres_interventions' => $this->params()->fromPost('autresIntervention'),
 		);
+		
 		
 		$this->getConsultationTable()->addTraitementsInstrumentaux($traitement_instrumental);
 		
@@ -1134,7 +1588,8 @@ class ChururgieController extends AbstractActionController {
 		//POUR LES RENDEZ VOUS
 		$id_patient = $this->params()->fromPost('id_patient');
 		$date_RV_Recu = $this->params()->fromPost('date_rv');
-		//var_dump($date_RV_Recu);exit();
+		$delai_rv = $this->params()->fromPost('delai_rv');
+		
 		if($date_RV_Recu){
 			$date_RV = $this->dateHelper->convertDateInAnglais($date_RV_Recu);
 		}
@@ -1145,8 +1600,10 @@ class ChururgieController extends AbstractActionController {
 				'ID_CONS' => $id_cons,
 				'NOTE'    => $this->params()->fromPost('motif_rv'),
 				'HEURE'   => $this->params()->fromPost('heure_rv'),
+		          'DELAI'   => $this->params()->fromPost('delai_rv'),
 				'DATE'    => $date_RV,
 		);
+		
 		$this->getRvPatientConsTable()->updateRendezVous($infos_rv);
 		
 		//POUR LES TRANSFERT
@@ -1172,7 +1629,8 @@ class ChururgieController extends AbstractActionController {
 				'date_fin_prevue_hospi' => $this->dateHelper->convertDateInAnglais($this->params()->fromPost('date_fin_hospitalisation_prevue')),
 				'id_cons' => $id_cons,
 		);
-	
+
+		
 		$this->getDemandeHospitalisationTable()->saveDemandehospitalisation($infoDemandeHospitalisation);
 	
 		//POUR LA PAGE complement-consultation
@@ -1185,9 +1643,10 @@ class ChururgieController extends AbstractActionController {
 			$valide = array (
 					'VALIDER' => 1,
 					'ID_CONS' => $id_cons,
-					'ID_MEDECIN' => $this->params()->fromPost('med_id_personne')
+					'ID_MEDECIN' => $id_medecin,
 						
 			);
+		
 			$this->getConsultationTable ()->validerConsultation ( $valide );
 		}
 	
@@ -1267,6 +1726,7 @@ class ChururgieController extends AbstractActionController {
 		$id = $this->params()->fromQuery ( 'id_cons' );
 		$form = new ConsultationForm();
 	
+		
 		$liste = $this->getConsultationTable()->getInfoPatient ( $id_pat );
 		$image = $this->getConsultationTable()->getPhoto ( $id_pat );
 		
@@ -1283,11 +1743,11 @@ class ChururgieController extends AbstractActionController {
 		//POUR LES CONSTANTES
 		//POUR LES CONSTANTES
 		//POUR LES CONSTANTES
-		$consult = $this->getConsultationTable ()->getConsult ( $id_pat );
+		$consult = $this->getConsultationTable ()->getConsult ( $id );
 		$pos = strpos($consult->pression_arterielle, '/') ;
 		$tensionmaximale = substr($consult->pression_arterielle, 0, $pos);
 		$tensionminimale = substr($consult->pression_arterielle, $pos+1);
-	
+		
 		$data = array (
 				'id_cons' => $consult->id_cons,
 				'id_medecin' => $consult->id_medecin,
@@ -1380,35 +1840,35 @@ class ChururgieController extends AbstractActionController {
 			if($listeExamenBioEffectues['idExamen'] == 2){
 				$data['hemogramme_sanguin'] =  $listeExamenBioEffectues['noteResultat'];
 				$tableauResultatsExamensBio['hemogramme_sanguin_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
-				$tableauResultatsExamensBio['hemogramme_sanguin_date_enregistrement'] = $this->controlDate->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+				$tableauResultatsExamensBio['hemogramme_sanguin_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
 				$tableauResultatsExamensBio['hemogramme_sanguin_conclusion'] = $listeExamenBioEffectues['conclusion'];
 				$tableauResultatsExamensBio['temoinHSan'] = 1;
 			}
 			if($listeExamenBioEffectues['idExamen'] == 3){
 				$data['bilan_hepatique'] =  $listeExamenBioEffectues['noteResultat'];
 				$tableauResultatsExamensBio['bilan_hepatique_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
-				$tableauResultatsExamensBio['bilan_hepatique_date_enregistrement'] = $this->controlDate->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+				$tableauResultatsExamensBio['bilan_hepatique_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
 				$tableauResultatsExamensBio['bilan_hepatique_conclusion'] = $listeExamenBioEffectues['conclusion'];
 				$tableauResultatsExamensBio['temoinBHep'] = 1;
 			}
 			if($listeExamenBioEffectues['idExamen'] == 4){
 				$data['bilan_renal'] =  $listeExamenBioEffectues['noteResultat'];
 				$tableauResultatsExamensBio['bilan_renal_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
-				$tableauResultatsExamensBio['bilan_renal_date_enregistrement'] = $this->controlDate->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+				$tableauResultatsExamensBio['bilan_renal_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
 				$tableauResultatsExamensBio['bilan_renal_conclusion'] = $listeExamenBioEffectues['conclusion'];
 				$tableauResultatsExamensBio['temoinBRen'] = 1;
 			}
 			if($listeExamenBioEffectues['idExamen'] == 5){
 				$data['bilan_hemolyse'] =  $listeExamenBioEffectues['noteResultat'];
 				$tableauResultatsExamensBio['bilan_hemolyse_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
-				$tableauResultatsExamensBio['bilan_hemolyse_date_enregistrement'] = $this->controlDate->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+				$tableauResultatsExamensBio['bilan_hemolyse_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
 				$tableauResultatsExamensBio['bilan_hemolyse_conclusion'] = $listeExamenBioEffectues['conclusion'];
 				$tableauResultatsExamensBio['temoinBHem'] = 1;
 			}
 			if($listeExamenBioEffectues['idExamen'] == 6){
 				$data['bilan_inflammatoire'] =  $listeExamenBioEffectues['noteResultat'];
 				$tableauResultatsExamensBio['bilan_inflammatoire_infoInfirmier'] = $this->getConsultationTable()->getInfosSurveillant( $listeExamenBioEffectues['id_personne'] );
-				$tableauResultatsExamensBio['bilan_inflammatoire_date_enregistrement'] = $this->controlDate->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
+				$tableauResultatsExamensBio['bilan_inflammatoire_date_enregistrement'] = $this->dateHelper->convertDateTime($listeExamenBioEffectues['date_enregistrement']);
 				$tableauResultatsExamensBio['bilan_inflammatoire_conclusion'] = $listeExamenBioEffectues['conclusion'];
 				$tableauResultatsExamensBio['temoinBInf'] = 1;
 			}
@@ -1536,7 +1996,7 @@ class ChururgieController extends AbstractActionController {
 		
 		if($leRendezVous) {
 			$data['heure_rv'] = $leRendezVous->heure;
-			$data['date_rv']  = $this->controlDate->convertDate($leRendezVous->date);
+			$data['date_rv']  = $this->dateHelper->convertDate($leRendezVous->date);
 			$data['motif_rv'] = $leRendezVous->note;
 		}
 		// Pour recuper les bandelettes
@@ -1577,7 +2037,7 @@ class ChururgieController extends AbstractActionController {
 		$donneesHospi = $this->getDemandeHospitalisationTable()->getDemandehospitalisationParIdcons($id);
 		if($donneesHospi){
 			$data['motif_hospitalisation'] = $donneesHospi->motif_demande_hospi;
-			$data['date_fin_hospitalisation_prevue'] = $this->controlDate->convertDate($donneesHospi->date_fin_prevue_hospi);
+			$data['date_fin_hospitalisation_prevue'] = $this->dateHelper->convertDate($donneesHospi->date_fin_prevue_hospi);
 		}
 		$form->populateValues ( array_merge($data,$bandelettes,$donneesAntecedentsPersonnels,$donneesAntecedentsFamiliaux) );
 		
@@ -1622,7 +2082,25 @@ class ChururgieController extends AbstractActionController {
 	
 		);
 	}
+	//liste des pateints deja consultes
+	public Function patientsConsultesAction(){
+	    $this->layout ()->setTemplate ( 'layout/chururgie' );
+	    $user = $this->layout()->user;
+	    $idService = $user['IdService'];
+	    //
+	    $form= new ConsultationForm();
+	    $lespatients = $this->getConsultationTable()->listePatientsConsultes ( $idService );
+	   //var_dump($lespatients);exit();
+	    //$cons=$lespatients->ID_CONS;
+	  //  var_dump($cons);exit();
+	    return new ViewModel ( array (
+	        'donnees' => $lespatients,
+	        'form'=> $form,
+	        //'id_cons'=>$cons,
+	    ) );
+	}
 	
+	//Liste des  patients qui ne sont pas encore consultes
 	public function consultationMedecinAction() {
 		
 		$this->layout ()->setTemplate ( 'layout/chururgie' );
@@ -1630,8 +2108,6 @@ class ChururgieController extends AbstractActionController {
 		$idService = $user['IdService'];
 		//
 		$form= new ConsultationForm();
-		
-		
 		$lespatients = $this->getConsultationTable()->listePatientsConsParMedecin ( $idService );
 		//RECUPERER TOUS LES PATIENTS AYANT UN RV aujourd'hui		
 		//var_dump($lespatients);exit();
@@ -1642,7 +2118,7 @@ class ChururgieController extends AbstractActionController {
 				'donnees' => $lespatients,
 				'tabPatientRV' => $tabPatientRV,
 		         'form'=> $form,
-		    'id_cons'=>$cons,
+		         'id_cons'=>$cons,
 		) );
 	}
 
@@ -1655,9 +2131,9 @@ class ChururgieController extends AbstractActionController {
 		$id_medecin = $user['id_personne'];
 	
 		$id_pat = $this->params ()->fromQuery ( 'id_patient', 0 );
-		//var_dump($id_pat);exit();
+		
 		$id_cons = $this->params ()->fromQuery ( 'id_cons' );
-		$id= $this->params ()->fromQuery ('id_admission');
+		$id= $this->params ()->fromQuery ('id_admission',0);
 		
             $listeOrgane=$this->getConsultationTable()->listeDeTousLesOrganes();
           //
@@ -1682,7 +2158,7 @@ class ChururgieController extends AbstractActionController {
 		}
 		//var_dump($id);exit();
 		$form = new ConsultationForm ();
-		
+		//var_dump($form);exit();
 		// instancier la consultation et r�cup�rer l'enregistrement
 		//$consult = $this->getConsultationTable ()->getConsult ( $id_cons );
 		
@@ -1691,7 +2167,7 @@ class ChururgieController extends AbstractActionController {
 		// POUR LES HISTORIQUES OU TERRAIN PARTICULIER
 		//*** Liste des consultations
 		//
-		$listeConsultation = $this->getConsultationTable ()->getConsultationPatient($id_pat, $id_cons);
+		$listeConsultation = $this->getConsultationTable ()->getConsultationPatient($id_pat);
 		
 		//Liste des examens biologiques
 		$listeDesExamensBiologiques = $this->demandeExamensTable()->getDemandeDesExamensBiologiques();
@@ -1787,10 +2263,14 @@ class ChururgieController extends AbstractActionController {
 		//var_dump($listeTypePathologie);exit();
 		//var_dump($liste);exit();
 		$today = new \DateTime ( 'now' );
-		$date = $today->format ( 'dd/mm/yyyy' );
-		$heure = $today->format ( "H:i" );
 		
+		$date = $today->format ( 'd/m/Y' );
+		$heure = $today->format ( "H:i" );
+	
+		//var_dump($id);exit();
 		$form->populateValues(array('id_patient' => $id_pat));
+	
+		$form->populateValues(array('id_admission' => $id));
 		
 		return array (
 		          'lesOrganes' => $listeOrgane,
@@ -1798,6 +2278,7 @@ class ChururgieController extends AbstractActionController {
 		          'listeTypePathologie'=> $listeTypePathologie,
 				'lesdetails' => $liste,
 		         'id_cons' => $id_cons,
+		          'id_admission' => $id,
 				'id_patient' => $id_pat,
 				'image' => $image,
 				'form' => $form,
@@ -1817,6 +2298,9 @@ class ChururgieController extends AbstractActionController {
 				'listeAntMed' => $listeAntMed,
 				'antMedPat' => $antMedPat,
 				'nbAntMedPat' => $antMedPat->count(),
+		    'listeAntFamiliaux' => $listeAntMed,
+		    'antFamiliauxPat' => $antMedPat,
+		    'nbAntFamiliauxPat' => $antMedPat->count(),
 				'listeActes' => $listeActes,
 		      
 		);
@@ -1999,6 +2483,18 @@ class ChururgieController extends AbstractActionController {
 				'form' => $formAdmission
 		);
 	}
+	
+	public function baseUrl() {
+	    $baseUrl = $_SERVER ['REQUEST_URI'];
+	    $tabURI = explode ( 'public', $baseUrl );
+	    return $tabURI [0];
+	}
+	
+	public function baseUrlRacine() {
+	    $baseUrl = $_SERVER ['SCRIPT_FILENAME'];
+	    $tabURI = explode ( 'public', $baseUrl );
+	    return $tabURI[0];
+	}
 	// Enregistrement du patient ajout�
 	public function enregistrementAction() {
 		$user = $this->layout ()->user;
@@ -2051,7 +2547,7 @@ class ChururgieController extends AbstractActionController {
 				
 				$donnees ['PHOTO'] = $nomfile;
 				// ENREGISTREMENT DE LA PHOTO
-				imagejpeg ( $img, 'C:\wamp\www\simens\public\img\photos_patients\\' . $nomfile . '.jpg' );
+				imagejpeg ( $img, $this->baseUrlRacine().'public/img/photos_patients/' . $nomfile . '.jpg' );
 				// ENREGISTREMENT DES DONNEES
 				$Patient->addPatient ( $donnees, $date_enregistrement, $id_employe, $sexe );
 				
@@ -2138,9 +2634,9 @@ class ChururgieController extends AbstractActionController {
 				$ancienneImage = $lePatient ['PHOTO'];
 				
 				if ($ancienneImage) {
-					unlink ( 'C:\wamp\www\simens\public\img\photos_patients\\' . $ancienneImage . '.jpg' );
+				    unlink ( $this->baseUrlRacine().'public/img/photos_patients/'. $ancienneImage . '.jpg' );
 				}
-				imagejpeg ( $img, 'C:\wamp\www\simens\public\img\photos_patients\\' . $nomfile . '.jpg' );
+				imagejpeg ( $img, $this->baseUrlRacine().'public/img/photos_patients/'. $nomfile . '.jpg' );
 				
 				$donnees ['PHOTO'] = $nomfile;
 				$Patient->updatePatient ( $donnees, $id_patient, $date_modification, $id_employe );
@@ -2388,7 +2884,169 @@ class ChururgieController extends AbstractActionController {
 		
 		//*************************************
 		$donneesPatientOR = $this->getConsultationTable()->getInfoPatient($id_patient);
-		//var_dump($id_patient); exit();
+		
+		//var_dump($donneesPatientOR);exit();
+		//*********************************Imprimer pour un examen Morphologique****************
+		//*********************************Imprimer pour un examen Morphologique****************
+		//*********************************Imprimer pour un examen Morphologique****************
+		
+		$i = 1; $j = 1;
+		$donneesExamensMorpho = array();
+		$notesExamensMorpho = array();
+		//R�cup�ration des donn�es examens biologiques
+		for( ; $i <= 6; $i++){
+		    if(isset ($_POST['demandeExamenMorpho_'.$i])){
+		        
+		        
+		        // var_dump($this->params ()->fromPost ( 'examenBio_name_'.$i ));exit();
+		        if($this->params ()->fromPost ( 'element_name_'.$i)){
+		            $donneesExamensMorph[$j] = $this->params ()->fromPost ( 'element_name_'.$i );
+		            $notesExamensMorph[$j++ ] = $this->params ()->fromPost ( 'note_'.$i  );
+		        }
+		        //CREATION DU DOCUMENT PDF
+		        //Cr�er le document
+		        $DocPdfMorpho = new DocumentPdf();
+		        //Cr�er la page
+		        $pageMorpho = new DemandeExamenMorphoPdf();
+		        //Envoi Id de la consultation
+		        $pageMorpho->setIdConsBio($id_cons);
+		        $pageMorpho->setService($serviceMedecin);
+		        //Envoi des donn�es du patient
+		        $pageMorpho->setDonneesPatientBio($donneesPatientOR);
+		        //Envoi des donn�es du medecin
+		        $pageMorpho->setDonneesMedecinBio($donneesMedecin);
+		        //Envoi les donn�es de la demande
+		        // 		        $page->setDonneesDemandeFonctionnel($donneesExamensFonc);
+		        // 		        $page->setNotesDemandeFonctionnel($notesExamensFonc);
+		        
+		        // 		        $page->setDonneesDemandeBio($donneesExamensBio);
+		        // 		        $page->setNotesDemandeBio($notesExamensBio);
+		        $pageMorpho->setDonneesDemandeMorph($donneesExamensMorph);
+		        $pageMorpho->setNotesDemandeMorph($notesExamensMorph);
+		        
+		        // var_dump($donneesExamensMorph,$notesExamensMorph);exit();
+		        
+		        //Ajouter les donnees a la page
+		        $pageMorpho->addNoteMorpho();
+		        //Ajouter la page au document
+		        $DocPdfMorpho->addPage($pageMorpho->getPage());
+		        
+		        //Afficher le document contenant la page
+		        $DocPdfMorpho->getDocument();
+		       
+		    }
+		    
+		    
+		}
+		//*********************************Imprimer pour un examen Biologique****************
+		//*********************************Imprimer pour un examen Biologique****************
+		//*********************************Imprimer pour un examen Biologique****************
+		
+		$i = 1; $j = 1;
+		$donneesExamensBios = array();
+		$notesExamensBios = array();
+		//R�cup�ration des donn�es examens biologiques
+		for( ; $i <= 6; $i++){
+		    if(isset ($_POST['demandeExamenBio_'.$i])){
+		    
+		    
+		       // var_dump($this->params ()->fromPost ( 'examenBio_name_'.$i ));exit();
+		        if($this->params ()->fromPost ( 'examenBio_name_'.$i )){
+		            $donneesExamensBios[$j] = $this->params ()->fromPost ( 'examenBio_name_'.$i );
+		            $notesExamensBios[$j++ ] = $this->params ()->fromPost ( 'noteExamenBio_'.$i  );
+		        }
+		        
+		        //CREATION DU DOCUMENT PDF
+		        //Cr�er le document
+		        $DocPdfbio = new DocumentPdf();
+		        //Cr�er la page
+		        $pagebio = new DemandeExamenBioPdf();
+		        //Envoi Id de la consultation
+		        $pagebio->setIdConsBio($id_cons);
+		        $pagebio->setService($serviceMedecin);
+		        //Envoi des donn�es du patient
+		        $pagebio->setDonneesPatientBio($donneesPatientOR);
+		        //Envoi des donn�es du medecin
+		        $pagebio->setDonneesMedecinBio($donneesMedecin);
+		        //Envoi les donn�es de la demande
+		        
+		        
+		        $pagebio->setDonneesDemandeBio($donneesExamensBios);
+		        $pagebio->setNotesDemandeBio($notesExamensBios);
+		        
+		        
+		        
+		        //Ajouter les donnees a la page
+		        $pagebio->addNoteBio();
+		        //Ajouter la page au document
+		        $DocPdfbio->addPage($pagebio->getPage());
+		       
+		        //Afficher le document contenant la page
+		        $DocPdfbio->getDocument();
+		        
+		    }
+		    //
+		    
+		}
+		
+		
+		
+		
+		 //********************************* Imprimer pour un examen Fonctionnel****************
+		 //********************************* Imprimer pour un examen Fonctionnel****************
+		 //********************************* Imprimer pour un examen Fonctionnel****************
+		 $i = 1; $j = 1;
+		 $donneesExamensFonc = array();
+		 $notesExamensFonc = array();
+		 for( ; $i <= 6; $i++){
+		     if(isset ($_POST['demandeExamenFonctionnel_'.$i])){
+		   
+		        
+		     //var_dump();exit();
+		     //R�cup�ration des donn�es examens fonctionnels
+		      
+		         
+		         if($this->params ()->fromPost ( 'acte_name_'.$i )){
+		             
+		             $donneesExamensFonc[$j] = $this->params ()->fromPost ( 'acte_name_'.$i );
+		             $notesExamensFonc[$j++ ] = $this->params ()->fromPost ( 'noteActe_'.$i  );
+		         }
+		         //CREATION DU DOCUMENT PDF
+		         //Cr�er le document
+		         $DocPdfexfc = new DocumentPdf();
+		         //Cr�er la page
+		         $pageexfc = new DemandeExamenFonctionnelPdf();
+		         //Envoi Id de la consultation
+		         $pageexfc->setIdConsBio($id_cons);
+		         $pageexfc->setService($serviceMedecin);
+		         //Envoi des donn�es du patient
+		         $pageexfc->setDonneesPatientBio($donneesPatientOR);
+		         //Envoi des donn�es du medecin
+		         $pageexfc->setDonneesMedecinBio($donneesMedecin);
+		         //Envoi les donn�es de la demande
+		         $pageexfc->setDonneesDemandeFonctionnel($donneesExamensFonc);
+		         $pageexfc->setNotesDemandeFonctionnel($notesExamensFonc);
+		         
+		         // 			$page->setDonneesDemandeBio($donneesExamensBio);
+		         // 			$page->setNotesDemandeBio($notesExamensBio);
+		         // 			$page->setDonneesDemandeMorph($donneesExamensMorph);
+		         // 			$page->setNotesDemandeMorph($notesExamensMorph);
+		         
+		         
+		         //Ajouter les donnees a la page
+		         $pageexfc->addNoteExamenFomctionnel();
+		         //Ajouter la page au document
+		         $DocPdfexfc->addPage($pageexfc->getPage());
+		         
+		         //Afficher le document contenant la page
+		         $DocPdfexfc->getDocument();
+		         
+		     }
+		   
+		     
+		 }
+
+		
 		//**********ORDONNANCE*****************
 		//**********ORDONNANCE*****************
 		//**********ORDONNANCE*****************
@@ -2626,10 +3284,10 @@ class ChururgieController extends AbstractActionController {
 			$DocPdf->getDocument();
 		}
 		else
-		//**********DEMANDES D'EXAMENS****************
-		//**********DEMANDES D'EXAMENS****************
-		//**********DEMANDES D'EXAMENS****************
-		if(isset ($_POST['demandeExamenBioMorpho'])){
+		//*********************************DEMANDES D'EXAMENS Fonctionnels****************
+		//*********************************DEMANDES D'EXAMENS FOnctionnels****************
+		//*********************************DEMANDES D'EXAMENS Fonctionnels****************
+		if(isset ($_POST['demandeExamenFonctionnel'])){
 		    $i = 1; $j = 1;
 		    $donneesExamensFonc = array();
 		    $notesExamensFonc = array();
@@ -2642,35 +3300,11 @@ class ChururgieController extends AbstractActionController {
 		    }
 		    
 		    
-		    
-		    $i = 1; $j = 1;
-			$donneesExamensBio = array();
-			$notesExamensBio = array();
-			//R�cup�ration des donn�es examens biologiques
-			for( ; $i <= 6; $i++){
-				if($this->params ()->fromPost ( 'examenBio_name_'.$i )){
-					$donneesExamensBio[$j] = $this->params ()->fromPost ( 'examenBio_name_'.$i );
-					$notesExamensBio[$j++ ] = $this->params ()->fromPost ( 'noteExamenBio_'.$i  );
-				}
-			}
-	
-			$k = 1; $l = $j;
-			$donneesExamensMorph = array();
-			$notesExamensMorph = array();
-			//R�cup�ration des donn�es examens morphologiques
-			for( ; $k <= 11; $k++){
-				if($this->params ()->fromPost ( 'element_name_'.$k )){
-					$donneesExamensMorph[$l] = $this->params ()->fromPost ( 'element_name_'.$k );
-					$notesExamensMorph[$l++ ] = $this->params ()->fromPost ( 'note_'.$k  );
-				}
-			}
-	
-	
 			//CREATION DU DOCUMENT PDF
 			//Cr�er le document
 			$DocPdf = new DocumentPdf();
 			//Cr�er la page
-			$page = new DemandeExamenPdf();
+			$page = new DemandeExamenFonctionnelPdf();
 			//Envoi Id de la consultation
 			$page->setIdConsBio($id_cons);
 			$page->setService($serviceMedecin);
@@ -2682,21 +3316,128 @@ class ChururgieController extends AbstractActionController {
 			$page->setDonneesDemandeFonctionnel($donneesExamensFonc);
 			$page->setNotesDemandeFonctionnel($notesExamensFonc);
 			
-			$page->setDonneesDemandeBio($donneesExamensBio);
-			$page->setNotesDemandeBio($notesExamensBio);
-			$page->setDonneesDemandeMorph($donneesExamensMorph);
-			$page->setNotesDemandeMorph($notesExamensMorph);
+// 			$page->setDonneesDemandeBio($donneesExamensBio);
+// 			$page->setNotesDemandeBio($notesExamensBio);
+// 			$page->setDonneesDemandeMorph($donneesExamensMorph);
+// 			$page->setNotesDemandeMorph($notesExamensMorph);
 	
 				
 			//Ajouter les donnees a la page
-			$page->addNoteBio();
+			$page->addNoteExamenFomctionnel();
 			//Ajouter la page au document
 			$DocPdf->addPage($page->getPage());
 				
 			//Afficher le document contenant la page
 			$DocPdf->getDocument();
 		}
-			
+		
+		
+		
+		else
+		    //*********************************DEMANDES D'EXAMENS Biologique****************
+		    //*********************************DEMANDES D'EXAMENS Biologique****************
+		    //*********************************DEMANDES D'EXAMENS Biologique****************
+		    if(isset ($_POST['demandeExamenBio'])){
+		 
+		        
+		        $i = 1; $j = 1;
+		        $donneesExamensBio = array();
+		        $notesExamensBio = array();
+		        //R�cup�ration des donn�es examens biologiques
+		        for( ; $i <= 6; $i++){
+		            if($this->params ()->fromPost ( 'examenBio_name_'.$i )){
+		                $donneesExamensBio[$j] = $this->params ()->fromPost ( 'examenBio_name_'.$i );
+		                $notesExamensBio[$j++ ] = $this->params ()->fromPost ( 'noteExamenBio_'.$i  );
+		            }
+		        }
+		        
+		        //CREATION DU DOCUMENT PDF
+		        //Cr�er le document
+		        $DocPdf = new DocumentPdf();
+		        //Cr�er la page
+		        $page = new DemandeExamenBioPdf();
+		        //Envoi Id de la consultation
+		        $page->setIdConsBio($id_cons);
+		        $page->setService($serviceMedecin);
+		        //Envoi des donn�es du patient
+		        $page->setDonneesPatientBio($donneesPatientOR);
+		        //Envoi des donn�es du medecin
+		        $page->setDonneesMedecinBio($donneesMedecin);
+		        //Envoi les donn�es de la demande
+// 		        $page->setDonneesDemandeFonctionnel($donneesExamensFonc);
+// 		        $page->setNotesDemandeFonctionnel($notesExamensFonc);
+		        
+		        $page->setDonneesDemandeBio($donneesExamensBio);
+		        $page->setNotesDemandeBio($notesExamensBio);
+// 		        $page->setDonneesDemandeMorph($donneesExamensMorph);
+// 		        $page->setNotesDemandeMorph($notesExamensMorph);
+		        
+		        
+		        //Ajouter les donnees a la page
+		        $page->addNoteBio();
+		        //Ajouter la page au document
+		        $DocPdf->addPage($page->getPage());
+		        
+		        //Afficher le document contenant la page
+		        $DocPdf->getDocument();
+		}
+		
+		
+		else
+		    //*********************************DEMANDES D'EXAMENS Biologique****************
+		    //*********************************DEMANDES D'EXAMENS Biologique****************
+		    //*********************************DEMANDES D'EXAMENS Biologique****************
+		    if(isset ($_POST['demandeExamenMorpho'])){
+		        
+		       
+		        
+		        $k = 1; $l =1;
+		        $donneesExamensMorph = array();
+		        $notesExamensMorph = array();
+		        //R�cup�ration des donn�es examens morphologiques
+		        for( ; $k <= 11; $k++){
+		            if($this->params ()->fromPost ( 'element_name_'.$k )){
+		                $donneesExamensMorph[$l] = $this->params ()->fromPost ( 'element_name_'.$k );
+		                $notesExamensMorph[$l++ ] = $this->params ()->fromPost ( 'note_'.$k  );
+		            }
+		        }
+		        
+		        
+		        //CREATION DU DOCUMENT PDF
+		        //Cr�er le document
+		        $DocPdf = new DocumentPdf();
+		        //Cr�er la page
+		        $page = new DemandeExamenMorphoPdf();
+		        //Envoi Id de la consultation
+		        $page->setIdConsBio($id_cons);
+		        $page->setService($serviceMedecin);
+		        //Envoi des donn�es du patient
+		        $page->setDonneesPatientBio($donneesPatientOR);
+		        //Envoi des donn�es du medecin
+		        $page->setDonneesMedecinBio($donneesMedecin);
+		        //Envoi les donn�es de la demande
+// 		        $page->setDonneesDemandeFonctionnel($donneesExamensFonc);
+// 		        $page->setNotesDemandeFonctionnel($notesExamensFonc);
+		        
+// 		        $page->setDonneesDemandeBio($donneesExamensBio);
+// 		        $page->setNotesDemandeBio($notesExamensBio);
+		        $page->setDonneesDemandeMorph($donneesExamensMorph);
+		        $page->setNotesDemandeMorph($notesExamensMorph);
+		        
+		        
+		        //Ajouter les donnees a la page
+		        $page->addNoteBio();
+		        //Ajouter la page au document
+		        $DocPdf->addPage($page->getPage());
+		        
+		        //Afficher le document contenant la page
+		        $DocPdf->getDocument();
+		}
+		
+		
+		
+		
+		   
 	}
 
 

@@ -20,11 +20,11 @@ function creerLalisteExamenBio ($listeDesElements) {
                     $liste +="</select>"+                           
                              "</th>"+
                              
-                             "<th id='noteExamenBio_"+(index+1)+"'  style='width: 59%;'  >"+
+                             "<th id='noteExamenBio_"+(index+1)+"'  style='width: 55%;'  >"+
                              "<input name='noteExamenBio_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' >" +
                              "</th >"+
                              
-                             "<th id='iconeExamenBio_supp_vider' style='width: 9%;'  >"+
+                             "<th id='iconeExamenBio_supp_vider' style='width: 25%;'  >"+
                              "<a id='supprimer_examenBio_selectionne_"+ (index+1) +"'  style='width:50%;' >"+
                              "<img class='supprimerExamenBio' style='margin-left: 5px; margin-top: 10px; cursor: pointer;' src='../images/images/sup.png' title='supprimer' />"+
                              "</a>"+
@@ -32,8 +32,9 @@ function creerLalisteExamenBio ($listeDesElements) {
                              "<a id='vider_examenBio_selectionne_"+ (index+1) +"'  style='width:50%;' >"+
                              "<img class='viderExamenBio' style='margin-left: 15px; margin-top: 10px; cursor: pointer;' src='../images_icons/gomme.png' title='vider' />"+
                              "</a>"+
-                             "</th >"+
-                             
+                             "<input type='submit'  name='demandeExamenBio_"+ (index+1) +"' id='demandeExamenBio_"+ (index+1) +"' " +
+                       		" style='width: 32px; height: 32px; background: url(../images_icons/pdf.PNG) no-repeat	right top;'  title='Imprimer'/>"+
+                       
                              "</tr>" +
                              "</table>" +
                              "</ExamensBiologiques>" +
@@ -60,6 +61,10 @@ function creerLalisteExamenBio ($listeDesElements) {
                     if((index+1) == 2){
                     	$("#supprimer_examenBio").toggle(true);
                     }
+
+                    var element = $('#examenBio_name_'+i).val();
+            		$("#SelectExamenBio_"+(i-1)+" option[value='"+element+"']").attr('selected','selected');
+            		
 }
 
 //NOMBRE DE LISTE AFFICHEES
@@ -156,17 +161,27 @@ function vider_examenBio_selectionne(id) {
 //CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
 //CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
 //CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
-//function desactiverResutatsBio () {
-//$(function(){
-//	//ON CACHE TOUT
-//	$('#groupe_sanguin').toggle(false); 
-//	$('#hemogramme_sanguin').toggle(false);
-//	$('#bilan_hemolyse').toggle(false);
-//	$('#bilan_hepatique').toggle(false); 
-//	$('#bilan_renal').toggle(false);
-//	$('#bilan_inflammatoire').toggle(false);
-//});
-//}
+function desactiverResutatsBio () {
+$(function(){
+	//ON CACHE TOUT
+	$('#groupe_sanguin').toggle(false); 
+	$('#hemogramme_sanguin').toggle(false);
+	$('#bilan_hemolyse').toggle(false);
+	$('#bilan_hepatique').toggle(false); 
+	$('#bilan_renal').toggle(false);
+	$('#bilan_inflammatoire').toggle(false);
+	
+	
+	$('#groupe_sanguin').attr('readonly',false); 
+	$('#hemogramme_sanguin').attr('readonly',false); 
+	$('#bilan_hemolyse').attr('readonly',false); 
+	$('#bilan_hepatique').attr('readonly',false); 
+	$('#bilan_renal').attr('readonly',false); 
+	$('#bilan_inflammatoire').attr('readonly',false); 
+});
+}
+
+
 
 function chargementModificationBio (index , element , note) { 
 	$("#SelectExamenBio_"+(index+1)+" option[value='"+element+"']").attr('selected','selected'); 
@@ -204,13 +219,24 @@ var tabUrl = base_url.split("public");
 //********************* EXAMEN MORPHOLOGIQUE *****************************
 
 function ValiderDemandeExamenBio(){
+
+		
 $(function(){
+	
+	
+var i=1;
+
+	if( $('#examenBio_name_'+i).val()=="groupe sanguin"){
+		alert(1);
+	}
+	
+
 	//Au debut on affiche pas le bouton modifier
 	$("#bouton_ExamenBio_modifier_demande").toggle(false);
 	//Au debut on affiche le bouton valider
 	$("#bouton_ExamenBio_valider_demande").toggle(true);
 	
-	$("#bouton_ExamenBio_valider_demande button").click(function(){ 
+	$("#demandeExamenBio").click(function(){ 
 		//RECUPERATION DES DONNEES DU TABLEAU
 		var id_cons = $('#id_cons').val();
 		var examensBio = [];
@@ -220,8 +246,11 @@ $(function(){
 				examensBio[j] = $('#examenBio_name_'+i).val();
 				notesBio[j] = $('#noteExamenBio_'+i+' input').val();
 				j++;
+			
 			}
 		}
+		
+		
 		
 		$.ajax({
 	        type: 'POST',
@@ -250,9 +279,9 @@ $(function(){
 	        	
 	            for(var i = 1; i <= nbListeExamenBio(); i++ ){
 	    			//$('#examenBio_name_'+i).attr('disabled',true);
-	    			$('#examenBio_name_'+i).css({'background':'#f8f8f8'});
+	    			//$('#examenBio_name_'+i).css({'background':'#f8f8f8'});
 	    			//$("#noteExamenBio_"+i+" input").attr('disabled',true); 
-	    			$("#noteExamenBio_"+i+" input").css({'background':'#f8f8f8'});
+	    			//$("#noteExamenBio_"+i+" input").css({'background':'#f8f8f8'});
 	    		}
 	    		$("#controls_examenBio div").toggle(false);
 	    		$("#iconeExamenBio_supp_vider a img").toggle(false);
