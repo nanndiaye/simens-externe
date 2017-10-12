@@ -492,7 +492,7 @@ class ConsultationForm extends Form {
 						'label' => 'Groupe Sanguin: '
 				),
 				'attributes' => array (
-						'readonly' => 'readonly',
+						'readonly' => false,
 						'id'  => 'groupe_sanguin'
 				)
 		) );
@@ -503,7 +503,7 @@ class ConsultationForm extends Form {
 						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Hemogramme sanguin' )
 				),
 				'attributes' => array (
-						'readonly' => 'readonly',
+						'readonly' => false,
 						'id'  => 'hemogramme_sanguin'
 				)
 		) );
@@ -514,7 +514,7 @@ class ConsultationForm extends Form {
 						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan de l\'hémostase:' )
 				),
 				'attributes' => array (
-						'readonly' => 'readonly',
+						'readonly' => false,
 						'id'  => 'bilan_hemolyse'
 				)
 		) );
@@ -525,7 +525,7 @@ class ConsultationForm extends Form {
 						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan hépatique:' )
 				),
 				'attributes' => array (
-						'readonly' => 'readonly',
+						'readonly' => false,
 						'id'  => 'bilan_hepatique'
 				)
 		) );
@@ -536,7 +536,7 @@ class ConsultationForm extends Form {
 						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan rénal:' )
 				),
 				'attributes' => array (
-						'readonly' => 'readonly',
+						'readonly' => false,
 						'id'  => 'bilan_renal'
 				)
 		) );
@@ -547,7 +547,7 @@ class ConsultationForm extends Form {
 						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Bilan inflammatoire:' )
 				),
 				'attributes' => array (
-						'readonly' => 'readonly',
+						'readonly' => false,
 						'id'  => 'bilan_inflammatoire'
 				)
 		) );

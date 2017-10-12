@@ -10,7 +10,7 @@ function creerLalisteActe ($listeDesElements) {
                              "</th >"+
                              
                              "<th id='SelectActe_"+(index+1)+"' style='width: 32%;'>"+
-                             "<select     style='width: 100%; margin-top: 3px; margin-bottom: 0px; font-size: 13px;' name='acte_name_"+(index+1)+"' id='acte_name_"+(index+1)+"'>"+
+                             "<select  onchange='ActiverResultatExamenFonctionnel()'   style='width: 100%; margin-top: 3px; margin-bottom: 0px; font-size: 13px;' name='acte_name_"+(index+1)+"' id='acte_name_"+(index+1)+"'>"+
 			                 "<option value='' > -- S&eacute;l&eacute;ctionner un examen -- </option>";
                              for(var i = 1 ; i < $listeDesElements.length ; i++){
                             	 if($listeDesElements[i]){
@@ -72,6 +72,28 @@ function nbListeActe () {
 	return $("LesActes").length;
 }
 
+// Activation des resultats
+function ActiverResultatExamenFonctionnel(){
+	var index = $("LesActes").length;
+
+	d = document.getElementById("acte_name_"+index+"").value;
+	if(d==1){
+		$("#acte_13").toggle(true);
+	}
+	if(d==2){
+		$("#acte_14").toggle(true);
+	}
+	
+	if(d==3){
+		$("#acte_15").toggle(true);
+	}
+	if(d==4){
+		$("#acte_16").toggle(true);
+	}
+	
+	
+	
+}
 
 //SUPPRIMER LE DERNIER ELEMENT
 $(function () {
@@ -125,9 +147,25 @@ function partDefautActe (Liste, n) {
 
 //SUPPRIMER ELEMENT SELECTIONNER
 function supprimer_acte_selectionne(id) { 
-
+	
+	
+	//On cache le champ résultat en cas de suppression dún examen fonctionnel
+	if( $('#acte_name_'+id).val()==1){
+		$("#acte_13").toggle(false);
+	}
+	if( $('#acte_name_'+id).val()==2){
+		$("#acte_14").toggle(false);
+	}
+	
+	if( $('#acte_name_'+id).val()==3){
+		$("#acte_15").toggle(false);
+	}
+	if( $('#acte_name_'+id).val()==4){
+		$("#acte_16").toggle(false);
+	}
 	for(var i = (id+1); i <= nbListeActe(); i++ ){
 		var element = $('#acte_name_'+i).val();
+		
 		$("#SelectActe_"+(i-1)+" option[value='"+element+"']").attr('selected','selected');
 		
 		var note = $('#noteActe_'+i+' input').val();
@@ -156,6 +194,21 @@ function supprimer_acte_selectionne(id) {
 
 //VIDER LES CHAMPS DE L'ELEMENT SELECTIONNER
 function vider_acte_selectionne(id) {
+	
+	//On desactive le champ résultat en cas de suppression dún examen fonctionnel
+	if( $('#acte_name_'+id).val()==1){
+		$("#acte_13").toggle(false);
+	}
+	if( $('#acte_name_'+id).val()==2){
+		$("#acte_14").toggle(false);
+	}
+	
+	if( $('#acte_name_'+id).val()==3){
+		$("#acte_15").toggle(false);
+	}
+	if( $('#acte_name_'+id).val()==4){
+		$("#acte_16").toggle(false);
+	}
 	$("#SelectActe_"+id+" option[value='']").attr('selected','selected');
 	$("#noteActe_"+id+" input").val("");
 	//$("#tarifActe_"+id+" input").val("");

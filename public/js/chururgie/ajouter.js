@@ -10,7 +10,7 @@ function creerLaliste ($listeDesElements) {
                              "</th >"+
                              
                              "<th id='SelectElement_"+(index+1)+"' style='width: 28%;'>"+
-                             "<select style='width: 100%; margin-top: 3px; margin-bottom: 0px; font-size: 13px;' class='validate[required]' name='element_name_"+(index+1)+"' id='element_name_"+(index+1)+"'>"+
+                             "<select  onchange='ActiverResultatExamenMorpho() ' style='width: 100%; margin-top: 3px; margin-bottom: 0px; font-size: 13px;' class='validate[required]' name='element_name_"+(index+1)+"' id='element_name_"+(index+1)+"'>"+
 			                 "<option value=''> -- S&eacute;l&eacute;ctionner un examen -- </option>";
                              for(var i = 1 ; i < $listeDesElements.length ; i++){
                             	 if($listeDesElements[i]){
@@ -75,6 +75,36 @@ function nbListe () {
 	return $("hassim").length;
 }
 
+
+//Activation des resultats d'un examen Morphologique
+function ActiverResultatExamenMorpho(){
+	var index = $("hassim").length;
+	
+	d = document.getElementById("element_name_"+index+"").value;
+	
+	if(d==8){
+	$("#resultat_radio").toggle(true);
+	
+	}
+	if(d==9){
+		$("#resultat_ecographie").toggle(true);
+		
+	}
+	
+	if(d==10){
+		$("#resultat_irm").toggle(true);
+	}
+	if(d==11){
+
+		$("#resultat_scanner").toggle(true);
+	}
+	if(d==12){
+		$("#resultat_fibrocospie").toggle(true);
+	}
+	}
+	
+
+
 //SUPPRIMER LE DERNIER ELEMENT
 $(function () {
 	//Au d�but on cache la suppression
@@ -129,6 +159,25 @@ function partDefaut (Liste, n) {
 //SUPPRIMER ELEMENT SELECTIONNER
 function supprimer_element_selectionne(id) { 
 
+	//On cache le champ résultat en cas de suppression dún examen Morphologique
+	if( $('#element_name_'+id).val()==8){
+		$("#resultat_radio").toggle(false);
+	}
+	if( $('#element_name_'+id).val()==9){
+		$("#resultat_ecographie").toggle(false);
+	}
+	
+	if( $('#element_name_'+id).val()==10){
+		$("#resultat_irm").toggle(false);
+	}
+	if( $('#element_name_'+id).val()==11){
+		$("#resultat_scanner").toggle(false);
+	}
+	
+	if( $('#element_name_'+id).val()==12){
+		$("#resultat_fibrocospie").toggle(false);
+	}
+	
 	for(var i = (id+1); i <= nbListe(); i++ ){
 		var element = $('#element_name_'+i).val();
 		$("#SelectElement_"+(i-1)+" option[value='"+element+"']").attr('selected','selected');
@@ -156,6 +205,24 @@ function supprimer_element_selectionne(id) {
 
 //VIDER LES CHAMPS DE L'ELEMENT SELECTIONNER
 function vider_element_selectionne(id) {
+	//On cache le champ résultat en cas de suppression dún examen Morphologique
+	if( $('#element_name_'+id).val()==8){
+		$("#resultat_radio").toggle(false);
+	}
+	if( $('#element_name_'+id).val()==9){
+		$("#resultat_ecographie").toggle(false);
+	}
+	
+	if( $('#element_name_'+id).val()==10){
+		$("#resultat_irm").toggle(false);
+	}
+	if( $('#element_name_'+id).val()==11){
+		$("#resultat_scanner").toggle(false);
+	}
+	
+	if( $('#element_name_'+id).val()==12){
+		$("#resultat_fibrocospie").toggle(false);
+	}
 	$("#SelectElement_"+id+" option[value='']").attr('selected','selected');
 	$("#note_"+id+" input").val("");
 }

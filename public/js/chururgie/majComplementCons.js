@@ -265,6 +265,7 @@ function scriptExamenMorpho() {
 function getimagesExamensMorphologiques()
 {
 	 var id_cons = $("#id_cons").val();
+	
      $.ajax({
         type: 'POST',
         url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
