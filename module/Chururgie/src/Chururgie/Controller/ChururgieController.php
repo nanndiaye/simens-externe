@@ -2893,7 +2893,7 @@ class ChururgieController extends AbstractActionController {
 		$i = 1; $j = 1;
 		$donneesExamensMorpho = array();
 		$notesExamensMorpho = array();
-		//R�cup�ration des donn�es examens biologiques
+		//R�cup�ration des donn�es examens Morphologiques
 		for( ; $i <= 6; $i++){
 		    if(isset ($_POST['demandeExamenMorpho_'.$i])){
 		        
@@ -3388,50 +3388,53 @@ class ChururgieController extends AbstractActionController {
 		    //*********************************DEMANDES D'EXAMENS Biologique****************
 		    //*********************************DEMANDES D'EXAMENS Biologique****************
 		    if(isset ($_POST['demandeExamenMorpho'])){
-		        
 		       
-		        
-		        $k = 1; $l =1;
-		        $donneesExamensMorph = array();
-		        $notesExamensMorph = array();
-		        //R�cup�ration des donn�es examens morphologiques
-		        for( ; $k <= 11; $k++){
-		            if($this->params ()->fromPost ( 'element_name_'.$k )){
-		                $donneesExamensMorph[$l] = $this->params ()->fromPost ( 'element_name_'.$k );
-		                $notesExamensMorph[$l++ ] = $this->params ()->fromPost ( 'note_'.$k  );
-		            }
+		        $i = 1; $j = 1;
+		        $donneesExamensMorpho = array();
+		        $notesExamensMorpho = array();
+		        //R�cup�ration des donn�es examens Morphologiques
+		        for( ; $i <= 6; $i++){
+		           
+		                // var_dump($this->params ()->fromPost ( 'examenBio_name_'.$i ));exit();
+		                if($this->params ()->fromPost ( 'element_name_'.$i)){
+		                    $donneesExamensMorph[$j] = $this->params ()->fromPost ( 'element_name_'.$i );
+		                    $notesExamensMorph[$j++] = $this->params ()->fromPost ( 'note_'.$i  );
+		                    
+		                    //CREATION DU DOCUMENT PDF
+		                    //Cr�er le document
+		                    $DocPdfMorpho = new DocumentPdf();
+		                    //Creer la page
+		                    $pageMorpho = new DemandeExamenMorphoPdf();
+		                    //Envoi Id de la consultation
+		                    $pageMorpho->setIdConsBio($id_cons);
+		                    $pageMorpho->setService($serviceMedecin);
+		                    //Envoi des donn�es du patient
+		                    $pageMorpho->setDonneesPatientBio($donneesPatientOR);
+		                    //Envoi des donn�es du medecin
+		                    $pageMorpho->setDonneesMedecinBio($donneesMedecin);
+		                    //Envoi les donn�es de la demande
+		                    
+		                    $pageMorpho->setDonneesDemandeMorph($donneesExamensMorph);
+		                    $pageMorpho->setNotesDemandeMorph($notesExamensMorph);
+		                    
+		                    //var_dump($donneesExamensMorph,$notesExamensMorph);exit();
+		                    
+		                    //Ajouter les donnees a la page
+		                    $pageMorpho->addNoteMorpho();
+		                    //Ajouter la page au document
+		                    $DocPdfMorpho->addPage($pageMorpho->getPage());
+		                    
+		                    //Afficher le document contenant la page
+		                    $DocPdfMorpho->getDocument();
+		                }
+		                
+		                
+		            
+		            
 		        }
 		        
 		        
-		        //CREATION DU DOCUMENT PDF
-		        //Cr�er le document
-		        $DocPdf = new DocumentPdf();
-		        //Cr�er la page
-		        $page = new DemandeExamenMorphoPdf();
-		        //Envoi Id de la consultation
-		        $page->setIdConsBio($id_cons);
-		        $page->setService($serviceMedecin);
-		        //Envoi des donn�es du patient
-		        $page->setDonneesPatientBio($donneesPatientOR);
-		        //Envoi des donn�es du medecin
-		        $page->setDonneesMedecinBio($donneesMedecin);
-		        //Envoi les donn�es de la demande
-// 		        $page->setDonneesDemandeFonctionnel($donneesExamensFonc);
-// 		        $page->setNotesDemandeFonctionnel($notesExamensFonc);
-		        
-// 		        $page->setDonneesDemandeBio($donneesExamensBio);
-// 		        $page->setNotesDemandeBio($notesExamensBio);
-		        $page->setDonneesDemandeMorph($donneesExamensMorph);
-		        $page->setNotesDemandeMorph($notesExamensMorph);
-		        
-		        
-		        //Ajouter les donnees a la page
-		        $page->addNoteBio();
-		        //Ajouter la page au document
-		        $DocPdf->addPage($page->getPage());
-		        
-		        //Afficher le document contenant la page
-		        $DocPdf->getDocument();
+		     
 		}
 		
 		
@@ -3678,7 +3681,7 @@ class ChururgieController extends AbstractActionController {
 	    $nom_file = "audio_".$aujourdhui.".mp3";
 	    
 	    if($type == 'audio/mp3'){
-	        $result = move_uploaded_file($tmp, 'C:\wamp\www\simens\public\audios\\'.$nom_file);
+	        $result = move_uploaded_file($tmp, $this->baseUrlRacine().'public/images/images/audios'.$nom_file);
 	    } else {
 	        $nom_file = 0;
 	    }
@@ -3870,7 +3873,7 @@ class ChururgieController extends AbstractActionController {
 	                $nom_file ="v_scan_".$aujourdhui.".m4v";
 	                $type = 'video/m4v';
 	        }
-	        $result = move_uploaded_file($tmp, 'C:\wamp\www\simens\public\videos\\'.$nom_file);
+	        $result = move_uploaded_file($tmp, $this->baseUrlRacine().'public/videos/'.$nom_file);
 	    }
 	    
 	    $html = array($nom_file, $type);
@@ -3955,7 +3958,7 @@ class ChururgieController extends AbstractActionController {
 	                    $resultatAjout = $this->demandeExamensTable()->ajouterImageMorpho($id_cons, $idExamen, $nomImage, $date_enregistrement, $id_personne);
 	                }
 	                if($resultatAjout){
-	                    imagejpeg ( $img, 'C:\wamp\www\simens\public\images\images\\' . $nomImage . '.jpg' );
+	                    imagejpeg ( $img, $this->baseUrlRacine().'public/images/images/'. $nomImage . '.jpg' );
 	                }
 	            }
 	            
@@ -3967,7 +3970,7 @@ class ChururgieController extends AbstractActionController {
 	                    $resultatAjout = $this->demandeExamensTable()->ajouterImage($id_cons, $idExamen, $nomImage, $date_enregistrement, $id_personne);
 	                }
 	                if($resultatAjout){
-	                    imagejpeg ( $img, 'C:\wamp\www\simens\public\images\images\\' . $nomImage . '.jpg' );
+	                    imagejpeg ( $img, $this->baseUrlRacine().'public/images/images/'. $nomImage . '.jpg' );
 	                }
 	            }
 	            
@@ -4125,7 +4128,7 @@ class ChururgieController extends AbstractActionController {
 	    /**
 	     * SUPPRESSION PHYSIQUE DE L'IMAGE
 	     */
-	    unlink ( 'C:\wamp\www\simens\public\images\images\\' . $result['NomImage'] . '.jpg' );
+	    unlink ( $this->baseUrlRacine().'public/images/images/'. $result['NomImage'] . '.jpg' );
 	    /**
 	     * SUPPRESSION DE L'IMAGE DANS LA BASE
 	     */
@@ -4151,7 +4154,7 @@ class ChururgieController extends AbstractActionController {
 	    /**
 	     * SUPPRESSION PHYSIQUE DE L'IMAGE
 	     */
-	    unlink ( 'C:\wamp\www\simens\public\images\images\\' . $result['NomImage'] . '.jpg' );
+	    unlink ( $this->baseUrlRacine().'public/images/images/'. $result['NomImage'] . '.jpg' );
 	    /**
 	     * SUPPRESSION DE L'IMAGE DANS LA BASE
 	     */

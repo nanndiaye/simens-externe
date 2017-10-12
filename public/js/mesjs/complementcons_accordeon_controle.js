@@ -58,7 +58,12 @@
 		var bilan_renal = $("#bilan_renal");
 		var bilan_inflammatoire = $("#bilan_inflammatoire");
 		
-		
+		$('#groupe_sanguin').attr('readonly',false); 
+		$('#hemogramme_sanguin').attr('readonly',false); 
+		$('#bilan_hemolyse').attr('readonly',false); 
+		$('#bilan_hepatique').attr('readonly',false); 
+		$('#bilan_renal').attr('readonly',false); 
+		$('#bilan_inflammatoire').attr('readonly',false); 
 		
 		
 		
@@ -136,6 +141,9 @@ $(function(){
 	$("#acte_17").toggle(false);
 	$("#acte_18").toggle(false);
 	$("#acte_19").toggle(false);
+	
+	
+	
 	
 	
 });

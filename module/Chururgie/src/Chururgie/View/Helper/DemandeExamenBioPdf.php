@@ -237,27 +237,27 @@ class DemandeExamenBioPdf
 		$this->_yPosition -= 15;// allez a ligne suivante
 		//----- -----------------------------------------
 		$this->_page->setFont($this->_newTimeGras, 9);
-		$this->_page->drawText('SEXE  :',
-		    $this->_leftMargin+205,
+		$this->_page->drawText('SEXE (AGE) : ',
+		    $this->_leftMargin+180,
 		    $this->_yPosition);
 		$this->_page->setFont($this->_newTime, 11);
-		$this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,$this->_DonneesPatient['SEXE'] .' ('.$this->_DonneesPatient['AGE'] ."  ans".')'),
+		$this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' , $this->_DonneesPatient['SEXE'] .' ('.$this->_DonneesPatient['AGE'] ."  ans".')'),
 		    $this->_leftMargin+240,
 		    $this->_yPosition);
 		
 		//-----------------------------------------------
 		$this->_yPosition -= 15;// allez a ligne suivante
-	
+		//----- -----------------------------------------
+		
 		//----- -----------------------------------------
 		$this->_page->setFont($this->_newTimeGras, 9);
-		$this->_page->drawText('ADRESSE. '. iconv ('UTF-8' ,'ISO-8859-1', (Téléphone)).':',
-		    $this->_leftMargin+187,
+		$this->_page->drawText('ADRESSE (Téléphone) :',
+		    $this->_leftMargin+140,
 		    $this->_yPosition);
 		$this->_page->setFont($this->_newTime, 11);
-		$this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,$this->_DonneesPatient['ADRESSE']),
+		$this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,$this->_DonneesPatient['ADRESSE'].' ('.$this->_DonneesPatient['TELEPHONE'].')'),
 		    $this->_leftMargin+240,
 		    $this->_yPosition);
-		
 			
 			
 			//$this->_page->setlineColor(new ZendPdf\Color\Html('green'));
