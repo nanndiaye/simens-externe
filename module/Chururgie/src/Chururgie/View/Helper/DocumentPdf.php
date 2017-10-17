@@ -17,6 +17,14 @@ class DocumentPdf extends AbstractHelper{
 	public function addPage(Page $page)
 	{
 		$this->_pdf->pages[0] = $page;
+		
+	}
+	public function addPagePlusieurs(Page $page,$n)
+	{
+	   
+	        $this->_pdf->pages[$n] = $page;
+	    
+	   
 	}
 	
 	public function getDocument()

@@ -2995,6 +2995,52 @@ class ChururgieController extends AbstractActionController {
 		 //********************************* Imprimer pour un examen Fonctionnel****************
 		 //********************************* Imprimer pour un examen Fonctionnel****************
 		 //********************************* Imprimer pour un examen Fonctionnel****************
+		 
+		if(isset ($_POST['demandeExamenFonctionnel'])){
+		    $donneesExamensFonc = array();
+		    $notesExamensFonc = array();
+		$j=1;
+		    for ( $i=1;$i<=6; $i++){
+		        if(['demandeExamenFonctionnel_'.$i]){
+		            if($this->params ()->fromPost ( 'acte_name_'.$i )){
+		                
+		                $donneesExamensFonc[$j] = $this->params ()->fromPost ( 'acte_name_'.$i );
+		                $notesExamensFonc[$j++ ] = $this->params ()->fromPost ( 'noteActe_'.$i  );
+		                $nb=$i;
+		                $DocPdftest = new DocumentPdf();
+		                //Cr�er la page
+		                $pagetest = new DemandeExamenFonctionnelPdf();
+		                
+		                $pagetest->setIdConsBio($id_cons);
+		                $pagetest->setService($serviceMedecin);
+		                //Envoi des donn�es du patient
+		                $pagetest->setDonneesPatientBio($donneesPatientOR);
+		                //Envoi des donn�es du medecin
+		                $pagetest->setDonneesMedecinBio($donneesMedecin);
+		                
+		                //Envoi les donn�es de la demande
+		                $pagetest->setDonneesDemandeFonctionnel($donneesExamensFonc);
+		                $pagetest->setNotesDemandeFonctionnel($notesExamensFonc);
+		                
+		                $pagetest->addNotePlusieursExamensFomctionnels($nb);
+		                
+		                $DocPdftest->addPagePlusieurs($pagetest->getPage(),$nb);
+		                var_dump($donneesExamensFonc);exit();
+		                //Afficher le document contenant la page
+		                $DocPdftest->getDocument();
+		            }
+		            
+		        }
+		      
+		    }
+		    
+		    
+		   
+		    
+		    
+		    
+		}
+		
 		 $i = 1; $j = 1;
 		 $donneesExamensFonc = array();
 		 $notesExamensFonc = array();
@@ -3283,53 +3329,53 @@ class ChururgieController extends AbstractActionController {
 			//Afficher le document contenant la page
 			$DocPdf->getDocument();
 		}
-		else
-		//*********************************DEMANDES D'EXAMENS Fonctionnels****************
-		//*********************************DEMANDES D'EXAMENS FOnctionnels****************
-		//*********************************DEMANDES D'EXAMENS Fonctionnels****************
-		if(isset ($_POST['demandeExamenFonctionnel'])){
-		    $i = 1; $j = 1;
-		    $donneesExamensFonc = array();
-		    $notesExamensFonc = array();
-		    //R�cup�ration des donn�es examens fonctionnels
-		    for( ; $i <= 6; $i++){
-		        if($this->params ()->fromPost ( 'acte_name_'.$i )){
-		            $donneesExamensFonc[$j] = $this->params ()->fromPost ( 'acte_name_'.$i );
-		            $notesExamensFonc[$j++ ] = $this->params ()->fromPost ( 'noteActe_'.$i  );
-		        }
-		    }
+// 		else
+// 		//*********************************DEMANDES D'EXAMENS Fonctionnels****************
+// 		//*********************************DEMANDES D'EXAMENS FOnctionnels****************
+// 		//*********************************DEMANDES D'EXAMENS Fonctionnels****************
+// 		if(isset ($_POST['demandeExamenFonctionnel'])){
+// 		    $i = 1; $j = 1;
+// 		    $donneesExamensFonc = array();
+// 		    $notesExamensFonc = array();
+// 		    //R�cup�ration des donn�es examens fonctionnels
+// 		    for( ; $i <= 6; $i++){
+// 		        if($this->params ()->fromPost ( 'acte_name_'.$i )){
+// 		            $donneesExamensFonc[$j] = $this->params ()->fromPost ( 'acte_name_'.$i );
+// 		            $notesExamensFonc[$j++ ] = $this->params ()->fromPost ( 'noteActe_'.$i  );
+// 		        }
+// 		    }
 		    
 		    
-			//CREATION DU DOCUMENT PDF
-			//Cr�er le document
-			$DocPdf = new DocumentPdf();
-			//Cr�er la page
-			$page = new DemandeExamenFonctionnelPdf();
-			//Envoi Id de la consultation
-			$page->setIdConsBio($id_cons);
-			$page->setService($serviceMedecin);
-			//Envoi des donn�es du patient
-			$page->setDonneesPatientBio($donneesPatientOR);
-			//Envoi des donn�es du medecin
-			$page->setDonneesMedecinBio($donneesMedecin);
-			//Envoi les donn�es de la demande
-			$page->setDonneesDemandeFonctionnel($donneesExamensFonc);
-			$page->setNotesDemandeFonctionnel($notesExamensFonc);
+// 			//CREATION DU DOCUMENT PDF
+// 			//Cr�er le document
+// 			$DocPdf = new DocumentPdf();
+// 			//Cr�er la page
+// 			$page = new DemandeExamenFonctionnelPdf();
+// 			//Envoi Id de la consultation
+// 			$page->setIdConsBio($id_cons);
+// 			$page->setService($serviceMedecin);
+// 			//Envoi des donn�es du patient
+// 			$page->setDonneesPatientBio($donneesPatientOR);
+// 			//Envoi des donn�es du medecin
+// 			$page->setDonneesMedecinBio($donneesMedecin);
+// 			//Envoi les donn�es de la demande
+// 			$page->setDonneesDemandeFonctionnel($donneesExamensFonc);
+// 			$page->setNotesDemandeFonctionnel($notesExamensFonc);
 			
-// 			$page->setDonneesDemandeBio($donneesExamensBio);
-// 			$page->setNotesDemandeBio($notesExamensBio);
-// 			$page->setDonneesDemandeMorph($donneesExamensMorph);
-// 			$page->setNotesDemandeMorph($notesExamensMorph);
+// // 			$page->setDonneesDemandeBio($donneesExamensBio);
+// // 			$page->setNotesDemandeBio($notesExamensBio);
+// // 			$page->setDonneesDemandeMorph($donneesExamensMorph);
+// // 			$page->setNotesDemandeMorph($notesExamensMorph);
 	
 				
-			//Ajouter les donnees a la page
-			$page->addNoteExamenFomctionnel();
-			//Ajouter la page au document
-			$DocPdf->addPage($page->getPage());
+// 			//Ajouter les donnees a la page
+// 			$page->addNoteExamenFomctionnel();
+// 			//Ajouter la page au document
+// 			$DocPdf->addPage($page->getPage());
 				
-			//Afficher le document contenant la page
-			$DocPdf->getDocument();
-		}
+// 			//Afficher le document contenant la page
+// 			$DocPdf->getDocument();
+// 		}
 		
 		
 		
