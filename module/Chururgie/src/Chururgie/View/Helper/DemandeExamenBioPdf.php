@@ -260,6 +260,19 @@ class DemandeExamenBioPdf
 		    $this->_yPosition);
 			
 			
+		
+		
+		$this->_page->drawRectangle($this->_leftMargin+250, $this->_yPosition-395,   $this->_pageWidth- 350,   $this->_yPosition-15);
+		
+		
+		//Ligne pour séparerles elements
+		$this->_page->drawLine($this->_leftMargin,
+		    $this->_yPosition-175,
+		    $this->_pageWidth -350,
+		    $this->_yPosition-175);
+		
+		
+		
 			//$this->_page->setlineColor(new ZendPdf\Color\Html('green'));
 			//$this->_page->setLineWidth(1);
 			//$this->_page->setLineDashingPattern(array(0, 0));
@@ -279,54 +292,27 @@ class DemandeExamenBioPdf
 		
 		//PREPARATION DU TEXT Diagnostic
 		while($this->_yPosition > 70) {
-// 		    if($this->_DonneesDemandeFonctionnel && $i == 1){
-// 		        $this->_page->setFont($this->_courier, 15);
-// 		        $this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,'Examens Fonctionnels:'),
-// 		            $this->_leftMargin,
-// 		            $this->_yPosition);
-		        
-// 		        $this->_page->setlineColor(new ZendPdf\Color\Html('gray'));
-// 		        //$this->_page->setLineWidth(0.7);
-// 		        $this->_page->drawLine(
-// 		            $this->_leftMargin,
-// 		            $this->_yPosition-5,
-// 		            $this->_pageWidth - $this->_leftMargin - 370,
-// 		            $this->_yPosition-5
-// 		            );
-		        
-// 		        $this->_yPosition -= $noteLineHeight;
-// 		    }
-// 		    if($i <= $examensFonctionnel){
-		        
-// 		        if($this->_DonneesDemandeFonctionnel[$i]){
-		            
-// 		            $this->_page->setFont($this->_newTimeGras, 12);
-// 		            $this->_page->drawText($i.') '.iconv ('UTF-8' ,'ISO-8859-1' ,$this->listeDesExamensFonctionnel()[$this->_DonneesDemandeFonctionnel[$i]].':'),
-// 		                $this->_leftMargin,
-// 		                $this->_yPosition);
-// 		            $this->_page->setFont($this->_policeContenu, 12);
-// 		            $this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,$this->_NotesDemandeFonctionnel[$i]),
-// 		                $this->_leftMargin+138,
-// 		                $this->_yPosition);
-		            
-// 		        }
-		        
-// 		    }
+
 		    
 		    if($this->_DonneesDemande && $i == 1){
 		        $this->_page->setFont($this->_courier, 15);
-		        $this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,'Examens Biologiques:'),
+		        $this->_page->setFont($this->_courier, 15);
+		        $this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,'Type D\'examen:'),
 		            $this->_leftMargin,
 		            $this->_yPosition);
 		        
-		        $this->_page->setlineColor(new ZendPdf\Color\Html('gray'));
-		        //$this->_page->setLineWidth(0.7);
-		        $this->_page->drawLine(
+		        
+		        
+		        $this->_page->setFont($this->_courier, 15);
+		        $this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,'Renseignement Clinique :'),
 		            $this->_leftMargin,
-		            $this->_yPosition-10,
-		            $this->_pageWidth - $this->_leftMargin - 370,
-		            $this->_yPosition-10
-		            );
+		            $this->_yPosition-150);
+		        
+		        $this->_page->setFont($this->_courier, 15);
+		        $this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,'Résultat :'),
+		            $this->_leftMargin +275,
+		            $this->_yPosition);
+		        
 		        
 		        $this->_yPosition -= $noteLineHeight;
 		    }
@@ -336,57 +322,20 @@ class DemandeExamenBioPdf
 		        
 		        if($this->_DonneesDemande[$i]){
 		            
-		            $this->_page->setFont($this->_newTimeGras, 12);
-		            $this->_page->drawText($i.') '.iconv ('UTF-8' ,'ISO-8859-1' ,$this->listeDesExamensBio()[$this->_DonneesDemande[$i]].':'),
-		                $this->_leftMargin,
-		                $this->_yPosition);
+		            $this->_page->setFont($this->_newTimeGras, 27);
+		            $this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,$this->listeDesExamensBio()[$this->_DonneesDemande[$i]]),
+		                $this->_leftMargin+50,
+		                $this->_yPosition-20);
 		            $this->_page->setFont($this->_policeContenu, 12);
 		            $this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,$this->_NotesDemande[$i]),
-		                $this->_leftMargin+138,
-		                $this->_yPosition);
+		                $this->_leftMargin,
+		                $this->_yPosition-150);
 		            
 		        }
 		        
 		    }
 		    
-// 		    if($this->_DonneesDemandeMorph && $i == count($this->_DonneesDemande)+1){
-		        
-// 		        $this->_page->setFont($this->_courier, 15);
-// 		        $this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,'Examens Morphologiques:'),
-// 		            $this->_leftMargin,
-// 		            $this->_yPosition);
-		        
-// 		        $this->_page->setlineColor(new ZendPdf\Color\Html('gray'));
-// 		        //$this->_page->setLineWidth(0.7);
-// 		        //$this->_page->setLineDashingPattern(array(0, 0));
-// 		        $this->_page->drawLine(
-// 		            $this->_leftMargin,
-// 		            $this->_yPosition-5,
-// 		            $this->_pageWidth - $this->_leftMargin - 345,
-// 		            $this->_yPosition-5
-// 		            );
-		        
-// 		        $this->_yPosition -= $noteLineHeight;
-		        
-// 		    }
-		    
-// 		    if( $i > $examensBio && $i <= ($examensBio+$examensMorpho) ){
-		        
-// 		        if($this->_DonneesDemandeMorph[$i]){
-		            
-// 		            $this->_page->setFont($this->_newTimeGras, 12);
-// 		            $this->_page->drawText($n++.') '.iconv ('UTF-8' ,'ISO-8859-1' ,$this->listeDesExamensBioMorpho()[$this->_DonneesDemandeMorph[$i]].':'),
-// 		                $this->_leftMargin,
-// 		                $this->_yPosition);
-// 		            $this->_page->setFont($this->_policeContenu, 12);
-// 		            $this->_page->drawText(iconv ('UTF-8' ,'ISO-8859-1' ,$this->_notesDemandeMorph[$i]),
-// 		                $this->_leftMargin+138,
-// 		                $this->_yPosition);
-		            
-// 		        }
-		        
-// 		    }
-		    
+
 		    $i++;
 		    
 		    $this->_page->drawLine(
@@ -412,11 +361,14 @@ class DemandeExamenBioPdf
 	
 		
 		
+		$this->_page->drawText($this->_DonneesMedecin['prenomMedecin'].' '.$this->_DonneesMedecin['nomMedecin'] ,
+		    $this->_leftMargin+15,
+		    $this->_yPosition+70);
 		
 		$this->_page->setFont($this->_policeContenu, 14);
-		$this->_page->drawText($this->_DonneesMedecin['prenomMedecin'].' '.$this->_DonneesMedecin['nomMedecin'] ,
-				$this->_leftMargin+370,
-				$this->_yPosition+90);
+		$this->_page->drawText("Cachet du Médecin :" ,
+		    $this->_leftMargin+370,
+		    $this->_yPosition+70);
 	} 
 	
 	

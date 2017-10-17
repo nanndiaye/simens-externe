@@ -278,6 +278,7 @@ function getimagesExamensMorphologiques()
                 	$("#pika").html(result);
                 });
         	} else { 
+        	
         		$html = "<div id='pika2'>"+
 			             "<div class='pikachoose' style='height: 210px;'>"+
                             "<ul id='pikame' class='jcarousel-skin-pika'>"+
@@ -319,15 +320,18 @@ function getimagesExamensMorphologiques()
 			     */
 			    var typeExamen = $('#typeExamen_tmp').val();
 			    var id_cons = $("#id_cons").val();
+			    
 		    	$.ajax({
 		            type: 'POST',
 		            url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
 		            data: {'ajout':1 , 'id_cons':id_cons , 'fichier_tmp': $("#fichier_tmp").val() , 'typeExamen':typeExamen},
 		            success: function(data) {
 		                var result = jQuery.parseJSON(data); 
+		               // alert(result);
 		                if(result !=""){
 		                	$("#pika2").fadeOut(function(){ 
 			                	$("#pika").html(result);
+			                
 			                	return false;
 			                });
 		                }else {
@@ -340,7 +344,10 @@ function getimagesExamensMorphologiques()
 		    	/**
 			     * FIN CODE AJAX POUR L'AJOUT DE L'IMAGE DANS LA BASE DE DONNEES
 			     */
-    	};
+  
+		   
+	       };
+	       //alert(reader.readAsDataURL(file[0].files[0]));
     	reader.readAsDataURL(file[0].files[0]);
     	
       });
@@ -379,7 +386,7 @@ function getimagesEchographieExamensMorphologiques()
         url: tabUrl[0]+'public/chururgie/imagesExamensMorphologiques',
         data: {'id_cons':id_cons, 'ajout':0, 'typeExamen':9},
         success: function(data) {
-        	RecupererImageEchographie();
+       	RecupererImageEchographie();
             var result = jQuery.parseJSON(data);
             if(result != "") {
         		$("#pika4").fadeOut(function(){ 
