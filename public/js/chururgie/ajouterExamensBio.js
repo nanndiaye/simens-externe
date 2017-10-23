@@ -160,28 +160,28 @@ function supprimer_examenBio_selectionne(id) {
 	//On cache le champ résultat en cas de suppression dún examen fonctionnel
 	if( $('#examenBio_name_'+id).val()==1){
 		$("#groupe_sanguin").toggle(false);
-		$('#groupe_sanguin').attr('readonly',false); 
+		//$('#groupe_sanguin').attr('readonly',false); 
 	}
 	if( $('#examenBio_name_'+id).val()==2){
 		$("#hemogramme_sanguin").toggle(false);
-		$('#hemogramme_sanguin').attr('readonly',false); 
+		//$('#hemogramme_sanguin').attr('readonly',false); 
 	}
 	
 	if( $('#examenBio_name_'+id).val()==3){
 		$("#bilan_hemolyse").toggle(false);
-		$('#bilan_hemolyse').attr('readonly',false);
+		//$('#bilan_hemolyse').attr('readonly',false);
 	}
 	if( $('#examenBio_name_'+id).val()==4){
 		$("#bilan_hepatique").toggle(false);
-		$('#bilan_hepatique').attr('readonly',false);
+		//$('#bilan_hepatique').attr('readonly',false);
 	}
 	if( $('#examenBio_name_'+id).val()==5){
 		$("#bilan_renal").toggle(false);
-		$('#bilan_renal').attr('readonly',false);
+		//$('#bilan_renal').attr('readonly',false);
 	}
 	if( $('#examenBio_name_'+id).val()==6){
 		$("#bilan_inflammatoire").toggle(false);
-		$('#bilan_inflammatoire').attr('readonly',false); 
+		//$('#bilan_inflammatoire').attr('readonly',false); 
 	}
 	
 	
@@ -216,28 +216,28 @@ function vider_examenBio_selectionne(id) {
 	//On cache le champ résultat en cas de suppression dún examen fonctionnel
 	if( $('#examenBio_name_'+id).val()==1){
 		$("#groupe_sanguin").toggle(false);
-		$('#groupe_sanguin').attr('readonly',false); 
+		//$('#groupe_sanguin').attr('readonly',false); 
 	}
 	if( $('#examenBio_name_'+id).val()==2){
 		$("#hemogramme_sanguin").toggle(false);
-		$('#hemogramme_sanguin').attr('readonly',false); 
+		//$('#hemogramme_sanguin').attr('readonly',false); 
 	}
 	
 	if( $('#examenBio_name_'+id).val()==3){
 		$("#bilan_hemolyse").toggle(false);
-		$('#bilan_hemolyse').attr('readonly',false);
+		//$('#bilan_hemolyse').attr('readonly',false);
 	}
 	if( $('#examenBio_name_'+id).val()==4){
 		$("#bilan_hepatique").toggle(false);
-		$('#bilan_hepatique').attr('readonly',false);
+		//$('#bilan_hepatique').attr('readonly',false);
 	}
 	if( $('#examenBio_name_'+id).val()==5){
 		$("#bilan_renal").toggle(false);
-		$('#bilan_renal').attr('readonly',false);
+		//$('#bilan_renal').attr('readonly',false);
 	}
 	if( $('#examenBio_name_'+id).val()==6){
 		$("#bilan_inflammatoire").toggle(false);
-		$('#bilan_inflammatoire').attr('readonly',false); 
+		//$('#bilan_inflammatoire').attr('readonly',false); 
 	}
 	$("#SelectExamenBio_"+id+" option[value='']").attr('selected','selected');
 	$("#noteExamenBio_"+id+" input").val("");
@@ -257,12 +257,12 @@ $(function(){
 	$('#bilan_inflammatoire').toggle(false);
 	
 	
-	$('#groupe_sanguin').attr('readonly',false); 
-	$('#hemogramme_sanguin').attr('readonly',false); 
-	$('#bilan_hemolyse').attr('readonly',false); 
-	$('#bilan_hepatique').attr('readonly',false); 
-	$('#bilan_renal').attr('readonly',false); 
-	$('#bilan_inflammatoire').attr('readonly',false); 
+//	$('#groupe_sanguin').attr('readonly',false); 
+//	$('#hemogramme_sanguin').attr('readonly',false); 
+//	$('#bilan_hemolyse').attr('readonly',false); 
+//	$('#bilan_hepatique').attr('readonly',false); 
+//	$('#bilan_renal').attr('readonly',false); 
+//	$('#bilan_inflammatoire').attr('readonly',false); 
 });
 }
 
@@ -317,102 +317,102 @@ var i=1;
 	
 
 	//Au debut on affiche pas le bouton modifier
-	$("#bouton_ExamenBio_modifier_demande").toggle(false);
+	//$("#bouton_ExamenBio_modifier_demande").toggle(false);
 	//Au debut on affiche le bouton valider
-	$("#bouton_ExamenBio_valider_demande").toggle(true);
+	//$("#bouton_ExamenBio_valider_demande").toggle(true);
 	
-	$("#demandeExamenBio").click(function(){ 
-		//RECUPERATION DES DONNEES DU TABLEAU
-		var id_cons = $('#id_cons').val();
-		var examensBio = [];
-		var notesBio = [];
-		for(var i = 1, j = 1; i <= nbListeExamenBio(); i++ ){
-			if($('#examenBio_name_'+i).val()) {
-				examensBio[j] = $('#examenBio_name_'+i).val();
-				notesBio[j] = $('#noteExamenBio_'+i+' input').val();
-				j++;
-			
-			}
-		}
-		
-		
-		
-		$.ajax({
-	        type: 'POST',
-	        url: tabUrl[0]+'public/chururgie/demande-examen-biologique',
-	        data: {'id_cons':id_cons, 'examensBio': examensBio, 'notesBio':notesBio},
-	        success: function(data) {
-	        	
-	        	//ON CACHE TOUT
-	        	$('#groupe_sanguin').toggle(true); 
-        		$('#hemogramme_sanguin').toggle(true);
-        		$('#bilan_hemolyse').toggle(true);
-        		$('#bilan_hepatique').toggle(true); 
-        		$('#bilan_renal').toggle(true);
-	        	$('#bilan_inflammatoire').toggle(true);
-        		
-	        	//ON AFFICHE UNIQUEMENT CEUX AYANT ETE DEMANDE
-	        	for(var k = 1; k<=nbListeExamenBio(); k++){
-	        		if(examensBio[k] == 1){ $('#groupe_sanguin').toggle(true); } 
-	        		if(examensBio[k] == 2){ $('#hemogramme_sanguin').toggle(true); } 
-	        		if(examensBio[k] == 5){ $('#bilan_hemolyse').toggle(true); } 
-	        		if(examensBio[k] == 3){ $('#bilan_hepatique').toggle(true); } 
-	        		if(examensBio[k] == 4){ $('#bilan_renal').toggle(true); } 
-	        		if(examensBio[k] == 6){ $('#bilan_inflammatoire').toggle(true); } 
-	        	}
-	        	
-	        	
-	            for(var i = 1; i <= nbListeExamenBio(); i++ ){
-	    			//$('#examenBio_name_'+i).attr('disabled',true);
-	    			//$('#examenBio_name_'+i).css({'background':'#f8f8f8'});
-	    			//$("#noteExamenBio_"+i+" input").attr('disabled',true); 
-	    			//$("#noteExamenBio_"+i+" input").css({'background':'#f8f8f8'});
-	    		}
-	    		$("#controls_examenBio div").toggle(false);
-	    		$("#iconeExamenBio_supp_vider a img").toggle(false);
-	    		//$("#bouton_ExamenBio_modifier_demande").toggle(true);
-	    	//	$("#bouton_ExamenBio_valider_demande").toggle(false);
-	    		return false;
-	      },
-	      error:function(e){console.log(e);alert("Une erreur interne est survenue!");},
-	      dataType: "html"
-		});
-		return false;
-	});
+//	$("#demandeExamenBio").click(function(){ 
+//		//RECUPERATION DES DONNEES DU TABLEAU
+//		var id_cons = $('#id_cons').val();
+//		var examensBio = [];
+//		var notesBio = [];
+//		for(var i = 1, j = 1; i <= nbListeExamenBio(); i++ ){
+//			if($('#examenBio_name_'+i).val()) {
+//				examensBio[j] = $('#examenBio_name_'+i).val();
+//				notesBio[j] = $('#noteExamenBio_'+i+' input').val();
+//				j++;
+//			
+//			}
+//		}
+//		
+//		
+//		
+//		$.ajax({
+//	        type: 'POST',
+//	        url: tabUrl[0]+'public/chururgie/demande-examen-biologique',
+//	        data: {'id_cons':id_cons, 'examensBio': examensBio, 'notesBio':notesBio},
+//	        success: function(data) {
+//	        	
+//	        	//ON CACHE TOUT
+//	        	$('#groupe_sanguin').toggle(true); 
+//        		$('#hemogramme_sanguin').toggle(true);
+//        		$('#bilan_hemolyse').toggle(true);
+//        		$('#bilan_hepatique').toggle(true); 
+//        		$('#bilan_renal').toggle(true);
+//	        	$('#bilan_inflammatoire').toggle(true);
+//        		
+//	        	//ON AFFICHE UNIQUEMENT CEUX AYANT ETE DEMANDE
+//	        	for(var k = 1; k<=nbListeExamenBio(); k++){
+//	        		if(examensBio[k] == 1){ $('#groupe_sanguin').toggle(true); } 
+//	        		if(examensBio[k] == 2){ $('#hemogramme_sanguin').toggle(true); } 
+//	        		if(examensBio[k] == 5){ $('#bilan_hemolyse').toggle(true); } 
+//	        		if(examensBio[k] == 3){ $('#bilan_hepatique').toggle(true); } 
+//	        		if(examensBio[k] == 4){ $('#bilan_renal').toggle(true); } 
+//	        		if(examensBio[k] == 6){ $('#bilan_inflammatoire').toggle(true); } 
+//	        	}
+//	        	
+//	        	
+//	            for(var i = 1; i <= nbListeExamenBio(); i++ ){
+//	    			//$('#examenBio_name_'+i).attr('disabled',true);
+//	    			//$('#examenBio_name_'+i).css({'background':'#f8f8f8'});
+//	    			//$("#noteExamenBio_"+i+" input").attr('disabled',true); 
+//	    			//$("#noteExamenBio_"+i+" input").css({'background':'#f8f8f8'});
+//	    		}
+//	    		//$("#controls_examenBio div").toggle(false);
+//	    		//$("#iconeExamenBio_supp_vider a img").toggle(false);
+//	    		//$("#bouton_ExamenBio_modifier_demande").toggle(true);
+//	    	//	$("#bouton_ExamenBio_valider_demande").toggle(false);
+//	    		return false;
+//	      },
+//	      error:function(e){console.log(e);alert("Une erreur interne est survenue!");},
+//	      dataType: "html"
+//		});
+//		return false;
+//	});
 	
-	$("#bouton_ExamenBio_modifier_demande").click(function(){
-		for(var i = 1; i <= nbListeExamenBio(); i++ ){
-			//$('#examenBio_name_'+i).attr('disabled',false); 
-			$('#examenBio_name_'+i).css({'background':'white'});
-			//$("#noteExamenBio_"+i+" input").attr('disabled',false); 
-			$("#noteExamenBio_"+i+" input").css({'background':'white'});
-		}
-		$("#controls_examenBio div").toggle(true);
-		if(nbListeExamenBio() == 1){
-			$("#supprimer_examenBio").toggle(false);
-		}
-		$("#iconeExamenBio_supp_vider a img").toggle(true);
-		$("#bouton_ExamenBio_modifier_demande").toggle(false);
-		$("#bouton_ExamenBio_valider_demande").toggle(true);
-		return false;
-	});
+//	$("#bouton_ExamenBio_modifier_demande").click(function(){
+//		for(var i = 1; i <= nbListeExamenBio(); i++ ){
+//			//$('#examenBio_name_'+i).attr('disabled',false); 
+//			$('#examenBio_name_'+i).css({'background':'white'});
+//			//$("#noteExamenBio_"+i+" input").attr('disabled',false); 
+//			$("#noteExamenBio_"+i+" input").css({'background':'white'});
+//		}
+//		$("#controls_examenBio div").toggle(true);
+//		if(nbListeExamenBio() == 1){
+//			$("#supprimer_examenBio").toggle(false);
+//		}
+//		$("#iconeExamenBio_supp_vider a img").toggle(true);
+//		$("#bouton_ExamenBio_modifier_demande").toggle(false);
+//		$("#bouton_ExamenBio_valider_demande").toggle(true);
+//		return false;
+//	});
 	
-	$("#demandeExamenBioMorpho").click(function(){
-		for(var i = 1; i <= nbListeExamenBio(); i++ ){
-			//$('#examenBio_name_'+i).attr('disabled',false);
-			$('#examenBio_name_'+i).css({'background':'white'});
-			//$("#noteExamenBio_"+i+" input").attr('disabled',false);
-			$("#noteExamenBio_"+i+" input").css({'background':'white'});
-		}
-		$("#controls_examenBio div").toggle(true);
-		if(nbListeExamenBio() == 1){
-			$("#supprimer_examenBio").toggle(false);
-		}
-		$("#iconeExamenBio_supp_vider a img").toggle(true);
-		$("#bouton_ExamenBio_modifier_demande").toggle(false);
-		$("#bouton_ExamenBio_valider_demande").toggle(true);
-		return true;
-	});
+//	$("#demandeExamenBioMorpho").click(function(){
+//		for(var i = 1; i <= nbListeExamenBio(); i++ ){
+//			//$('#examenBio_name_'+i).attr('disabled',false);
+//			$('#examenBio_name_'+i).css({'background':'white'});
+//			//$("#noteExamenBio_"+i+" input").attr('disabled',false);
+//			$("#noteExamenBio_"+i+" input").css({'background':'white'});
+//		}
+//		$("#controls_examenBio div").toggle(true);
+//		if(nbListeExamenBio() == 1){
+//			$("#supprimer_examenBio").toggle(false);
+//		}
+//		$("#iconeExamenBio_supp_vider a img").toggle(true);
+//		$("#bouton_ExamenBio_modifier_demande").toggle(false);
+//		$("#bouton_ExamenBio_valider_demande").toggle(true);
+//		return true;
+//	});
 	
 });
 }

@@ -40,7 +40,7 @@ class RvPatientConsTable{
 	
 	public function getTousRV(){
 	   
-	//$today = new \DateTime ( 'now' );
+	$today = new \DateTime ( 'now' );
 	//mettre la variable qui permet de r�cup�rer la date d'aujourd'hui et de le mettre dans la clause where $today = new \DateTime ( 'now' );
 	//$comp_date=$this->controlDate->convertDate($leRendezVous->date);
 	$db = $this->tableGateway->getAdapter();
