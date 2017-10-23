@@ -32,7 +32,7 @@ function creerLalisteExamenBio ($listeDesElements) {
                              "<a id='vider_examenBio_selectionne_"+ (index+1) +"'  style='width:50%;' >"+
                              "<img class='viderExamenBio' style='margin-left: 15px; margin-top: 10px; cursor: pointer;' src='../images_icons/gomme.png' title='vider' />"+
                              "</a>"+
-                             "<input type='submit'  name='demandeExamenBio_"+ (index+1) +"' id='demandeExamenBio_"+ (index+1) +"' " +
+                             "<input value='' type='submit'  name='demandeExamenBio_"+ (index+1) +"' id='demandeExamenBio_"+ (index+1) +"' " +
                        		" style='width: 32px; height: 32px; background: url(../images_icons/pdf.PNG) no-repeat	right top;'  title='Imprimer'/>"+
                        
                              "</tr>" +

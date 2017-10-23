@@ -2898,8 +2898,6 @@ class ChururgieController extends AbstractActionController {
 		for( ; $i <= 6; $i++){
 		    if(isset ($_POST['demandeExamenMorpho_'.$i])){
 		        
-		        
-		        // var_dump($this->params ()->fromPost ( 'examenBio_name_'.$i ));exit();
 		        if($this->params ()->fromPost ( 'element_name_'.$i)){
 		            $donneesExamensMorph[$j] = $this->params ()->fromPost ( 'element_name_'.$i );
 		            $notesExamensMorph[$j++ ] = $this->params ()->fromPost ( 'note_'.$i  );
@@ -2916,12 +2914,7 @@ class ChururgieController extends AbstractActionController {
 		        $pageMorpho->setDonneesPatientBio($donneesPatientOR);
 		        //Envoi des donn�es du medecin
 		        $pageMorpho->setDonneesMedecinBio($donneesMedecin);
-		        //Envoi les donn�es de la demande
-		        // 		        $page->setDonneesDemandeFonctionnel($donneesExamensFonc);
-		        // 		        $page->setNotesDemandeFonctionnel($notesExamensFonc);
 		        
-		        // 		        $page->setDonneesDemandeBio($donneesExamensBio);
-		        // 		        $page->setNotesDemandeBio($notesExamensBio);
 		        $pageMorpho->setDonneesDemandeMorph($donneesExamensMorph);
 		        $pageMorpho->setNotesDemandeMorph($notesExamensMorph);
 		        
@@ -3150,11 +3143,6 @@ class ChururgieController extends AbstractActionController {
 		         //Envoi les donn�es de la demande
 		         $pageexfc->setDonneesDemandeFonctionnel($donneesExamensFonc);
 		         $pageexfc->setNotesDemandeFonctionnel($notesExamensFonc);
-		         
-		         // 			$page->setDonneesDemandeBio($donneesExamensBio);
-		         // 			$page->setNotesDemandeBio($notesExamensBio);
-		         // 			$page->setDonneesDemandeMorph($donneesExamensMorph);
-		         // 			$page->setNotesDemandeMorph($notesExamensMorph);
 		         
 		         
 		         //Ajouter les donnees a la page
