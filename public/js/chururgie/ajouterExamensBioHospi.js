@@ -70,7 +70,7 @@ function nbListeExamenBio () {
 
 //SUPPRIMER LE DERNIER ELEMENT
 $(function () {
-	//Au début on cache la suppression
+	//Au dï¿½but on cache la suppression
 	$("#supprimer_examenBio").click(function(){
 		//ON PEUT SUPPRIMER QUAND C'EST PLUS DE DEUX LISTE
 		if(nbListeExamenBio () >  1){$("#ExamenBio_"+nbListeExamenBio ()).remove();}
@@ -90,7 +90,7 @@ $(function () {
 });
 
 
-//FONCTION INITIALISATION (Par défaut)
+//FONCTION INITIALISATION (Par dï¿½faut)
 function partDefautExamenBio (Liste, n) { 
 	var i = 0;
 	for( i ; i < n ; i++){
@@ -158,12 +158,12 @@ function vider_examenBio_selectionne(id) {
 function desactiverResutatsBio () {
 $(function(){
 	//ON CACHE TOUT
-	$('#groupe_sanguin').toggle(false); 
-	$('#hemogramme_sanguin').toggle(false);
-	$('#bilan_hemolyse').toggle(false);
-	$('#bilan_hepatique').toggle(false); 
-	$('#bilan_renal').toggle(false);
-	$('#bilan_inflammatoire').toggle(false);
+	$('#resultat_groupe_sanguin').toggle(false); 
+	$('#resultat_hemogramme_sanguin').toggle(false);
+	$('#resultat_bilan_hemolyse').toggle(false);
+	$('#resultat_bilan_hepatique').toggle(false); 
+	$('#resultat_bilan_renal').toggle(false);
+	$('#resultat_bilan_inflammatoire').toggle(false);
 });
 }
 
@@ -173,22 +173,22 @@ function chargementModificationBio (index , element , note) {
 	
 	$(function(){
 		if(element == 1) {
-			$('#groupe_sanguin').toggle(true); 
+			$('#resultat_groupe_sanguin').toggle(true); 
 		} else
 			if(element == 2) {
-				$('#hemogramme_sanguin').toggle(true); 
+				$('#resultat_hemogramme_sanguin').toggle(true); 
 			} else
 				if(element == 3) {
-					$('#bilan_hemolyse').toggle(true); 
+					$('#resultat_bilan_hemolyse').toggle(true); 
 				} else
 					if(element == 4) {
-						$('#bilan_hepatique').toggle(true); 
+						$('#resultat_bilan_hepatique').toggle(true); 
 					} else
 						if(element == 5) {
-							$('#bilan_renal').toggle(true); 
+							$('#resultat_bilan_renal').toggle(true); 
 						} else
 							if(element == 6) {
-								$('#bilan_inflammatoire').toggle(true); 
+								$('#resultat_bilan_inflammatoire').toggle(true); 
 							}
 			
 	});

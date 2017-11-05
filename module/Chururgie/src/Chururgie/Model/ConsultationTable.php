@@ -5,6 +5,7 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Select;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Where;
+use Zend\Db\Sql\Predicate\NotIn;
 
 class ConsultationTable {
 
@@ -78,12 +79,12 @@ class ConsultationTable {
     /**
      * Ajouter une nouvelle pathologie dans la base de donn�es
      */
-    public function addPathologie($medicament){
+    public function addPathologie($patho){
         $db = $this->tableGateway->getAdapter();
         $sql = new Sql($db);
         $sQuery = $sql->insert()
         ->into('type_pathologie')
-        ->values(array('nom_type_pathologie' => $medicament));
+        ->values(array('nom_type_pathologie' => $patho));
         $requete = $sql->prepareStatementForSqlObject($sQuery);
         return $requete->execute()->getGeneratedValue();
     }
@@ -292,18 +293,19 @@ class ConsultationTable {
 	
 	public function updateConsultation($values)
 	{
-		
+	    
+	    
 		$donnees = array(
-				'POIDS' => $values->get ( "poids" )->getValue (), 
-				'TAILLE' => $values->get ( "taille" )->getValue (), 
-				'TEMPERATURE' => $values->get ( "temperature" )->getValue (), 
-				'PRESSION_ARTERIELLE' => $values->get ( "tensionmaximale" )->getValue ().'/'.$values->get ( "tensionminimale" )->getValue (),
-				'POULS' => $values->get ( "pouls" )->getValue (), 
-				'FREQUENCE_RESPIRATOIRE' => $values->get ( "frequence_respiratoire" )->getValue (), 
-				'GLYCEMIE_CAPILLAIRE' => $values->get ( "glycemie_capillaire" )->getValue (), 
+				'POIDS' => $values->get ( "poids" ), 
+				'TAILLE' => $values->get ( "taille" ), 
+				'TEMPERATURE' => $values->get ( "temperature" ), 
+				'PRESSION_ARTERIELLE' => $values->get ( "tensionmaximale" ).'/'.$values->get ( "tensionminimale" ),
+				'POULS' => $values->get ( "pouls" ), 
+				'FREQUENCE_RESPIRATOIRE' => $values->get ( "frequence_respiratoire" ), 
+				'GLYCEMIE_CAPILLAIRE' => $values->get ( "glycemie_capillaire" ), 
 		);
-		
-		$this->tableGateway->update( $donnees, array('ID_CONS'=> $values->get ( "id_cons" )->getValue ()) );
+		//var_dump($donnees);exit();
+		$this->tableGateway->update( $donnees, array('ID_CONS'=> $values->get ( "id_cons" )) );
 	}
 	
 	public function validerConsultation($values){
@@ -319,7 +321,7 @@ class ConsultationTable {
 	    $date = $today->format('Y-m-d');
 		$this->tableGateway->getAdapter()->getDriver()->getConnection()->beginTransaction();
 		try {
-		    //var_dump($values->dateonly);exit();
+		   // var_dump($values->tensionmaximale,$values->tensionminimale);exit();
 			$dataconsultation = array(
 					'ID_CONS'=> $values->id_cons, 
 			          'ID_MEDECIN'=> $id_medecin, 
@@ -329,7 +331,7 @@ class ConsultationTable {
 					'POIDS' => $values->poids, 
 					'TAILLE' => $values->taille, 
 					'TEMPERATURE' => $values->temperature, 
-					'PRESSION_ARTERIELLE' => $values->pressionarterielle, 
+			    'PRESSION_ARTERIELLE' => $values->tensionmaximale.' / '. $values->tensionminimale, 
 					'POULS' => $values->pouls, 
 					'FREQUENCE_RESPIRATOIRE' => $values->frequence_respiratoire, 
 					'GLYCEMIE_CAPILLAIRE' => $values->glycemie_capillaire, 
@@ -346,6 +348,29 @@ class ConsultationTable {
 			$this->tableGateway->getAdapter()->getDriver()->getConnection()->rollback();
 		}
 	}
+	
+	
+	// Ajout des demandes d'examens fonctionnels
+	public function AddDemandeExamen($tabExamenFonc,$NoteExamenFonc,$idCons){
+	    $today = new \DateTime();
+	    $date = $today->format('Y-m-d');
+	  $db= $this->tableGateway->getAdapter();
+	  $sql = new Sql($db);
+	  
+	      $sQuery = $sql->insert()->into('demande')
+	      ->values(array('noteDemande'=>$NoteExamenFonc,
+	          'dateDemande'=>$date,
+	          'idCons'=>$idCons,
+	          'idExamen'=>$tabExamenFonc,
+	          
+	      ));
+	      $requete = $sql->prepareStatementForSqlObject($sQuery);
+	      $requete->execute();
+	 
+	}
+
+	
+	
 	
 	//Ajouter Idadmission a la table consultation
 	public function addIdAdmission($id_admission,$date_admise){
@@ -546,6 +571,12 @@ class ConsultationTable {
 		$today = new \DateTime();
 		$date = $today->format('Y-m-d');
 		$adapter = $this->tableGateway->getAdapter ();
+		
+		$sql2 = new Sql ($adapter );
+		$subselect1 = $sql2->select ();
+		$subselect1->from ( array ('c' => 'consultation') );
+		$subselect1->columns (array ('id_admission') );
+		
 		$sql = new Sql ( $adapter );
 		$select = $sql->select ();
 		$select->from ( array (
@@ -572,7 +603,11 @@ class ConsultationTable {
 		
 		$select->join(array('type_cons' => 'type_consultation'), 'type_cons.ID = a.type_consultation', array('designation' => 'designation'));
 		
-		$select->where(array('a.id_service' => $idService, 'a.date_admise' => $date));
+		$select->where(array(
+		    
+		    'a.date_admise' => $date,
+		    //ßnew NotIn('c.id_admission',$subselect1)
+		));
 		$select->order('id_admission ASC');
 	
 		$stmt = $sql->prepareStatementForSqlObject($select);

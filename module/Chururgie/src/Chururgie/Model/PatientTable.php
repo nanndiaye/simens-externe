@@ -7,6 +7,7 @@ use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Where;
 use Zend\Db\Sql\Predicate\NotIn;
 use Chururgie\View\Helper\DateHelper;
+use Zend\Form\Element\DateTime;
 
 class PatientTable {
 	protected $tableGateway;
@@ -26,6 +27,7 @@ class PatientTable {
 	
 	
 	public function laListePatientsAjax(){
+	   
 	    $db = $this->tableGateway->getAdapter();
 	    $aColumns = array('Numero_Dossier','Nom','Prenom', 'Age','Sexe','Adresse', 'id', 'Idpatient');
 	    /* Indexed column (used for fast and accurate table cardinality) */
@@ -68,12 +70,16 @@ class PatientTable {
 	    $sql3 = new Sql ($db);
 	    $subselect2 = $sql3->select ();
 	    $subselect2->from ('admission');
-	    $subselect2->columns ( array (	'id_cons') );
-	    
+	    $subselect2->columns ( array (	'id_patient') );
+	    $subselect2->where ( array (	'date_admise'=>$dateDuJour) );
 	    $sql = new Sql($db);
 	    $sQuery = $sql->select()
 	    ->from(array('pat' => 'patient'))->columns(array('Numero_Dossier'=>'NUMERO_DOSSIER'))
 	    ->join(array('pers' => 'personne'), 'pat.ID_PERSONNE = pers.ID_PERSONNE', array('Nom'=>'NOM','Prenom'=>'PRENOM','Age'=>'AGE','Sexe'=>'SEXE','Adresse'=>'ADRESSE','Nationalite'=>'NATIONALITE_ACTUELLE','Taille'=>'TAILLE','id'=>'ID_PERSONNE','Idpatient'=>'ID_PERSONNE'))
+	    ->where(array(
+	        new NotIn('pat.ID_PERSONNE',$subselect1),
+	        new NotIn('pat.ID_PERSONNE',$subselect2)
+	    ))
 	    ->order('pat.ID_PERSONNE DESC');
 	    
 	    /* Data set length after filtering */

@@ -270,7 +270,7 @@ class ChururgieController extends AbstractActionController {
 	    //POUR LES CONSTANTES
 	    //POUR LES CONSTANTES
 	    $consult = $this->getConsultationTable ()->getConsult ( $id );
-	  
+	    //var_dump($consult);exit();
 	    $pos = strpos($consult->pression_arterielle, '/') ;
 	   
 	    $tensionmaximale = substr($consult->pression_arterielle, 0, $pos);
@@ -297,6 +297,7 @@ class ChururgieController extends AbstractActionController {
 	    // instancier le motif d'admission et recup�rer l'enregistrement
 	    $motif_admission = $this->getMotifAdmissionTable ()->getMotifAdmission ( $id );
 	    $nbMotif = $this->getMotifAdmissionTable ()->nbMotifs ( $id );
+	    //var_dump($nbMotif);exit();
 	    
 	    //POUR LES MOTIFS D'ADMISSION
 	    $k = 1;
@@ -331,12 +332,12 @@ class ChururgieController extends AbstractActionController {
 	            $tabInfoSurv [$listeCons['ID_CONS']] = '_________';
 	        }
 	    }
-	    var_dump($data);exit();
+	  
 	    $listeConsultation = $this->getConsultationTable ()->getConsultationPatientSaufActu($id_pat, $id);
-	    
+	   
 	    //*** Liste des Hospitalisations
 	    $listeHospitalisation = $this->getDemandeHospitalisationTable()->getDemandeHospitalisationWithIdPatient($id_pat);
-	    
+
 	    //POUR LES EXAMENS COMPLEMENTAIRES
 	    //POUR LES EXAMENS COMPLEMENTAIRES
 	    //POUR LES EXAMENS COMPLEMENTAIRES
@@ -344,6 +345,7 @@ class ChururgieController extends AbstractActionController {
 	    $listeDemandesMorphologiques = $this->demandeExamensTable()->getDemandeExamensMorphologiques($id);
 	    $listeDemandesBiologiques = $this->demandeExamensTable()->getDemandeExamensBiologiques($id);
 	    $listeDemandesActes = $this->getDemandeActe()->getDemandeActe($id);
+	  
 	    
 	    //Liste des examens biologiques
 	    $listeDesExamensBiologiques = $this->demandeExamensTable()->getDemandeDesExamensBiologiques();
@@ -364,6 +366,7 @@ class ChururgieController extends AbstractActionController {
 	        'temoinBHem' => 0,
 	        'temoinBInf' => 0,
 	    );
+	    
 	    foreach ($listeDemandesBiologiquesEffectuerEnvoyer as $listeExamenBioEffectues){
 	        if($listeExamenBioEffectues['idExamen'] == 1){
 	            $data['groupe_sanguin'] =  $listeExamenBioEffectues['noteResultat'];
@@ -473,7 +476,6 @@ class ChururgieController extends AbstractActionController {
 	        $resultatVpa = $this->getResultatVpa()->getResultatVpa($donneesDemandeVPA['idVpa']);
 	    }
 	    
-	    
 	    /**** INSTRUMENTAL ****/
 	    /**** INSTRUMENTAL ****/
 	    /**** INSTRUMENTAL ****/
@@ -552,6 +554,7 @@ class ChururgieController extends AbstractActionController {
 	    $donneesAntecedentsFamiliaux = $this->getAntecedantsFamiliauxTable()->getTableauAntecedentsFamiliaux($id_pat);
 	    
 	    
+	    
 	    //Recuperer les antecedents medicaux ajouter pour le patient
 	    //Recuperer les antecedents medicaux ajouter pour le patient
 	    $antMedPat = $this->getConsultationTable()->getAntecedentMedicauxPersonneParIdPatient($id_pat);
@@ -568,6 +571,13 @@ class ChururgieController extends AbstractActionController {
 	    //FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
 	    //FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
 	    
+	    // RECUPERER LISTE DES PATHOLOGIES
+	    // RECUPERER LISTE DES PATHOLOGIES
+	    
+	    $listeTypePathologie=$this->getConsultationTable()->getTypePathologie();
+	    $listeclassePathologie=$this->getConsultationTable()->getClassePathologie();
+	    
+	    
 	    //POUR LES DEMANDES D'HOSPITALISATION
 	    //POUR LES DEMANDES D'HOSPITALISATION
 	    //POUR LES DEMANDES D'HOSPITALISATION
@@ -576,13 +586,19 @@ class ChururgieController extends AbstractActionController {
 	        $data['motif_hospitalisation'] = $donneesHospi->motif_demande_hospi;
 	        $data['date_fin_hospitalisation_prevue'] = $this->dateHelper->convertDate($donneesHospi->date_fin_prevue_hospi);
 	    }
-	    $form->populateValues ( array_merge($data,$bandelettes,$donneesAntecedentsPersonnels,$donneesAntecedentsFamiliaux) );
+	    $form->populateValues ( array_merge($data,$bandelettes,$donneesAntecedentsPersonnels,$donneesAntecedentsFamiliaux,$listeTypePathologie) );
+	   
+	    
+	    
+	   
 	    return array(
 	        'id_cons' => $id,
 	        'lesdetails' => $liste,
 	        'form' => $form,
 	        'nbMotifs' => $nbMotif,
 	        'image' => $image,
+	        'listeTypePathologie'=> $listeTypePathologie,
+	        'listeclassePathologie'=>$listeclassePathologie,
 	        'heure_cons' => $consult->heurecons,
 	        'liste' => $listeConsultation,
 	        'liste_med' => $listeMedicament,
@@ -925,7 +941,7 @@ class ChururgieController extends AbstractActionController {
 	    // instancier le motif d'admission et recup�rer l'enregistrement
 	    $motif_admission = $this->getMotifAdmissionTable ()->getMotifAdmission ( $id );
 	    $nbMotif = $this->getMotifAdmissionTable ()->nbMotifs ( $id );
-	    
+
 	    //POUR LES MOTIFS D'ADMISSION
 	    $k = 1;
 	    foreach ( $motif_admission as $Motifs ) {
@@ -1281,12 +1297,73 @@ class ChururgieController extends AbstractActionController {
 		$form->setData ( $form );
 		$id_admission = $this->params()->fromPost('id_admission',0);
 		
+	//	var_dump($formData);exit();
 		
 		
+		//
 		//consultation
 		//
 		$this->getConsultationTable()->addConsultation($formData,$IdDuService, $id_medecin,$id_admission);
-		//ar_dump($formData);exit();
+		
+		
+		// **********-- Ajout des demandes  d'examens complementaires  à faire pour le patient --********
+		// **********-- Ajout des demandes  d'examens complementaires  à faire pour le patient --********
+		// **********-- Ajout des demandes  d'examens complementaires  à faire pour le patient --********
+		
+		
+		//Ajout des examens fonctionnels
+		
+		    $tabExamenFonc= array();
+		    $NoteExamenFonc= array();
+		    $t=1;
+		    
+		    for($i=1;$i<=6;$i++){
+		    if($this->params()->fromPost('acte_name_'.$i)){
+		        $tabExamenFonc[$t]= $this->params()->fromPost('acte_name_'.$i);
+		        $NoteExamenFonc[$t++]=$this->params()->fromPost('noteactes'.$i);
+		        
+		    }
+		}
+		//var_dump($tabExamenFonc,$NoteExamenFonc);exit();
+		for($k=1;$k<=count($tabExamenFonc);$k++){
+		   
+		  $this->getConsultationTable()->AddDemandeExamen($tabExamenFonc[$k],$NoteExamenFonc[$k],$id_cons);
+		}
+		    // Ajout des examens biologiques
+		    $tabExamenBio= array();
+		    $NoteExamenBio= array();
+		    $j=1;
+		    for($i=1;$i<=6;$i++){
+		    if($this->params()->fromPost('examenBio_name_'.$i)){
+		        $tabExamenBio[$j]= $this->params()->fromPost('examenBio_name_'.$i);
+		        $NoteExamenBio[$j++]=$this->params()->fromPost('noteExamenBio_'.$i);
+		        
+		    }
+	}
+	
+	for($k=1;$k<=count($tabExamenBio);$k++){
+	 $this->getConsultationTable()->AddDemandeExamen($tabExamenBio[$k],$NoteExamenBio[$k],$id_cons);
+	}
+		    
+		    // Ajout des examens Morphologiques
+		    $tabExamenMorph= array();
+		    $NoteExamenMorph= array();
+		    $j=1;
+		    for($i=1;$i<=6;$i++){
+		    if($this->params()->fromPost('element_name_'.$i)){
+		        $tabExamenMorph[$j]= $this->params()->fromPost('element_name_'.$i);
+		        $NoteExamenMorph[$j++]=$this->params()->fromPost('note_'.$i);
+		        
+		    }
+    }
+		    
+    for($k=1;$k<=count($tabExamenMorph);$k++){
+        $this->getConsultationTable()->AddDemandeExamen($tabExamenMorph[$k],$NoteExamenMorph[$k],$id_cons);
+    }
+		
+		
+		
+		
 		//Ajouter Histoire de la maladie
 		$this->getConsultationTable()->addHistoireMaladie($formData,$id_cons,$id_medecin);
 		
@@ -1317,11 +1394,12 @@ class ChururgieController extends AbstractActionController {
 	
 		// mettre a jour les motifs d'admission
 		$this->getMotifAdmissionTable ()->deleteMotifAdmission ( $id_cons );
+		//var_dump($form);exit();
 		
-		$this->getMotifAdmissionTable ()->addMotifAdmission ( $form );
+		$this->getMotifAdmissionTable ()->addMotifAdmission ( $formData );
 		
 		//mettre a jour la consultation
-		$this->getConsultationTable ()->updateConsultation ( $form );
+		$this->getConsultationTable ()->updateConsultation ( $formData );
 		
 		//Recuperer les donnees sur les bandelettes urinaires
 		//Recuperer les donnees sur les bandelettes urinaires
@@ -1440,21 +1518,7 @@ class ChururgieController extends AbstractActionController {
 		);
 		
 		$this->getDiagnosticsTable()->updateDiagnostics($info_diagnostics);
-		//POUR LES PATHOLOGIES
-		//POUR LES PATHOLOGIES
-		//POUR LES PATHOLOGIES
-// 		$info_diagnostics = array(
-// 		    'id_cons' => $id_cons,
-// 		    'typepathologie1' => $this->params()->fromPost('typepathologie1'),
-// 		    'typepathologie2' => $this->params()->fromPost('typepathologie2'),
-// 		    'typepathologie3' => $this->params()->fromPost('typepathologie3'),
-// 		    'typepathologie4' => $this->params()->fromPost('typepathologie4'),
-// 		    'typepathologie5' => $this->params()->fromPost('typepathologie5'),
-// 		    'typepathologie6' => $this->params()->fromPost('typepathologie6'),
-// 		);
-		
-		//$this->getDiagnosticsTable()->updateDiagnostics($info_diagnostics);
-		
+	
 		
 		//POUR LES TRAITEMENTS
 		//POUR LES TRAITEMENTS
@@ -2172,7 +2236,7 @@ class ChururgieController extends AbstractActionController {
 		
 		//Liste des examens biologiques
 		$listeDesExamensBiologiques = $this->demandeExamensTable()->getDemandeDesExamensBiologiques();
-		
+		//var_dump($listeDesExamensBiologiques);exit();
 		//Liste des examens Morphologiques
 		$listeDesExamensMorphologiques = $this->demandeExamensTable()->getDemandeDesExamensMorphologiques();
 	
@@ -2260,7 +2324,6 @@ class ChururgieController extends AbstractActionController {
 		//var_dump($listeActes);exit();
 		$form->populateValues ( array_merge($donneesAntecedentsPersonnels,$donneesAntecedentsFamiliaux) );
 		
-		$listeTypePathologie=$this->getConsultationTable()->getTypePathologie();
 		//var_dump($listeTypePathologie);exit();
 		//var_dump($liste);exit();
 		$today = new \DateTime ( 'now' );

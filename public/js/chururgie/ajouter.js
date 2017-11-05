@@ -21,7 +21,7 @@ function creerLaliste ($listeDesElements) {
                              "</th>"+
                              
                              "<th id='note_"+(index+1)+"' style='width: 54%;'  >"+
-                             "<input  name='note_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' >" +
+                             "<input   id='notes"+(index+1)+"'     name='note_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' >" +
                              "</th >"+
                              
                              "<th id='icone_supp_vider' style='width: 20%;'  >"+

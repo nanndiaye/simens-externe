@@ -21,7 +21,7 @@ function creerLalisteExamenBio ($listeDesElements) {
                              "</th>"+
                              
                              "<th id='noteExamenBio_"+(index+1)+"'  style='width: 55%;'  >"+
-                             "<input name='noteExamenBio_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' >" +
+                             "<input   id='noteExamenBio"+(index+1)+"'     name='noteExamenBio_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' >" +
                              "</th >"+
                              
                              "<th id='iconeExamenBio_supp_vider' style='width: 25%;'  >"+

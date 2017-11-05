@@ -774,7 +774,7 @@ $(function(){
 	//Method envoi POST pour updatecomplementconsultation
 	//Method envoi POST pour updatecomplementconsultation
 	function updateexecuterRequetePost(donnees) {
-		
+	
 	    var formulaire = document.createElement("form");
 	 
 	    formulaire.setAttribute("action",tabUrl[0]+"public/chururgie/update-complement-consultation"); 
@@ -801,12 +801,14 @@ $(function(){
     /***LORS DU CLICK SUR 'Terminer' ****/
 	/***LORS DU CLICK SUR 'Terminer' ****/
 	$("#terminer2, #terminer3").click(function() {
+		
+		
 		if (valid == false){ 
 			$('#motifsAdmissionConstanteClick').trigger('click');
 			$('#constantesClick').trigger('click');
 			return false;
 		}
-		
+	
 		//$('#bouton_Acte_valider_demande button, #bouton_ExamenBio_valider_demande button, #bouton_morpho_valider_demande button').trigger('click');
 		
 	    var donnees = new Array();
@@ -854,29 +856,70 @@ $(function(){
 	    donnees['examen_donnee4'] = $("#examen_donnee4").val();
 	    donnees['examen_donnee5'] = $("#examen_donnee5").val();
 	    
-	    //**********-- ANALYSE BIOLOGIQUE --************
-        //**********-- ANALYSE BIOLOGIQUE --************
-	    donnees['groupe_sanguin']      = $("#groupe_sanguin").val();
-	    donnees['hemogramme_sanguin']  = $("#hemogramme_sanguin").val();
-	    donnees['bilan_hemolyse']      = $("#bilan_hemolyse").val();
-	    donnees['bilan_hepatique']     = $("#bilan_hepatique").val();
-	    donnees['bilan_renal']         = $("#bilan_renal").val();
-	    donnees['bilan_inflammatoire'] = $("#bilan_inflammatoire").val();
 	    
-	    //**********-- ANALYSE MORPHOLOGIQUE --************
-        //**********-- ANALYSE MORPHOLOGIQUE --************
-	    donnees['radio_']        = $("#radio").val();
-	    donnees['ecographie_']   = $("#ecographie").val();
-	    donnees['fibroscopie_']  = $("#fibrocospie").val();
-	    donnees['scanner_']      = $("#scanner").val();
-	    donnees['irm_']          = $("#irm").val();
+	  //**********--  Demande ANALYSE FONCTIONNEL --************
+        //**********--  Demande ANALYSE FONCTIONNEL --************
 	    
+	    for(var i = 1 ; i <5 ; i++ ){
+	   
+	     	if($("#acte_name_"+i).val()){
+	     		
+	     		donnees['acte_name_'+i] = $("#acte_name_"+i).val();
+	     		donnees['noteactes'+i] = $("#noteactes"+i).val();
+	     	}
+	     }
+//	    donnees['ecg']       = $("#ecg").val();
+//	    donnees['eeg'] 	    = $("#eeg").val();
+//	    donnees['efr']       = $("#efr").val();
+//	    donnees['emg']      = $("#emg").val();
+	   
+	    
+	    //**********--  Demande ANALYSE BIOLOGIQUE --************
+        //**********--  Demande ANALYSE BIOLOGIQUE --************
+	    
+	    
+	    for(var i = 1 ; i <=6 ; i++ ){
+	    	
+	     	if($("#examenBio_name_"+i).val()){
+	     		
+	     		donnees['examenBio_name_'+i] = $("#examenBio_name_"+i).val();
+	     		donnees['noteExamenBio_'+i] = $("#noteExamenBio"+i).val();
+	     	}
+	     }     
+	    
+	    
+	    
+//	    donnees['groupe_sanguin']      = $("#groupe_sanguin").val();
+//	    donnees['hemogramme_sanguin']  = $("#hemogramme_sanguin").val();
+//	    donnees['bilan_hemolyse']      = $("#bilan_hemolyse").val();
+//	    donnees['bilan_hepatique']     = $("#bilan_hepatique").val();
+//	    donnees['bilan_renal']         = $("#bilan_renal").val();
+//	    donnees['bilan_inflammatoire'] = $("#bilan_inflammatoire").val();
+	    
+	    //**********--  Demande ANALYSE MORPHOLOGIQUE --************
+        //**********--  Demande ANALYSE MORPHOLOGIQUE --************
+	    
+	    for(var i = 1 ; i <=5 ; i++ ){
+	    	 //alert($("#element_name_"+i).val());
+	     	if($("#element_name_"+i).val()){
+	     		
+	     		donnees['element_name_'+i] = $("#element_name_"+i).val();
+	     		donnees['note_'+i] = $("#notes"+i).val();
+	     	}
+	     } 
+	    
+//	    donnees['radio_']        = $("#radio").val();
+//	    donnees['ecographie_']   = $("#ecographie").val();
+//	    donnees['fibroscopie_']  = $("#fibrocospie").val();
+//	    donnees['scanner_']      = $("#scanner").val();
+//	    donnees['irm_']          = $("#irm").val();
+//	    
 	    //*********** DIAGNOSTICS ************
 	    //*********** DIAGNOSTICS ************
-	    donnees['diagnostic1'] = $("#diagnostic1").val();
-	    donnees['diagnostic2'] = $("#diagnostic2").val();
-	    donnees['diagnostic3'] = $("#diagnostic3").val();
-	    donnees['diagnostic4'] = $("#diagnostic4").val();
+	    //donnees['diagnostic1'] = $("#diagnostic1").val();
+	    //donnees['diagnostic2'] = $("#diagnostic2").val();
+	    //donnees['diagnostic3'] = $("#diagnostic3").val();
+	    //donnees['diagnostic4'] = $("#diagnostic4").val();
 	    
 	    //*********** ORDONNACE (M�dical) ************
 	    //*********** ORDONNACE (M�dical) ************
@@ -957,6 +1000,7 @@ $(function(){
 		donnees['poids'] = $("#poids").val();
 		donnees['taille'] = $("#taille").val();
 		donnees['temperature'] = $("#temperature").val();
+		//donnees['pressionarterielle'] = $("#tensionmaximale").val().'\'.$("#tensionminimale").val();
 		donnees['tensionmaximale'] = $("#tensionmaximale").val();
 		donnees['tensionminimale'] = $("#tensionminimale").val();
 		donnees['pouls'] = $("#pouls").val();

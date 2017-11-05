@@ -407,7 +407,7 @@ class ConsultationForm extends Form {
 						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'ECG:')
 				),
 				'attributes' => array (
-						'readonly' => 'readonly',
+				    'readonly' => 'readonly',
 						'id'  => 'ecg'
 				)
 		) );
@@ -419,7 +419,7 @@ class ConsultationForm extends Form {
 						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'EEG:')
 				),
 				'attributes' => array (
-						'readonly' => 'readonly',
+				    'readonly' => 'readonly',
 						'id'  => 'eeg'
 				)
 		) );
@@ -431,7 +431,7 @@ class ConsultationForm extends Form {
 						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'EFR:')
 				),
 				'attributes' => array (
-						'readonly' => 'readonly',
+				    'readonly' => 'readonly',
 						'id'  => 'efr'
 				)
 		) );
@@ -443,7 +443,7 @@ class ConsultationForm extends Form {
 						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'EMG:')
 				),
 				'attributes' => array (
-						'readonly' => 'readonly',
+				    'readonly' => 'readonly',
 						'id'  => 'emg'
 				)
 		) );

@@ -21,7 +21,7 @@ function creerLalisteActe ($listeDesElements) {
                              "</th>"+
                             
                              "<th id='noteActe_"+(index+1)+"'  style='width: 50%;'  >"+
-                             "<input name='noteActe_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' >" +
+                             "<input   id='noteactes"+(index+1)+"'   name='noteActe_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' />" +
                              "</th >"+
                              
                              "<th id='iconeActe_supp_vider' style='width: 13%;'  >"+
@@ -78,17 +78,17 @@ function ActiverResultatExamenFonctionnel(){
 
 	d = document.getElementById("acte_name_"+index+"").value;
 	if(d==1){
-		$("#acte_13").toggle(true);
+		$("#resultat_acte_13").toggle(true);
 	}
 	if(d==2){
-		$("#acte_14").toggle(true);
+		$("#resultat_acte_14").toggle(true);
 	}
 	
 	if(d==3){
-		$("#acte_15").toggle(true);
+		$("#resultat_acte_15").toggle(true);
 	}
 	if(d==4){
-		$("#acte_16").toggle(true);
+		$("#resultat_acte_16").toggle(true);
 	}
 	
 	
@@ -151,17 +151,17 @@ function supprimer_acte_selectionne(id) {
 	
 	//On cache le champ résultat en cas de suppression dún examen fonctionnel
 	if( $('#acte_name_'+id).val()==1){
-		$("#acte_13").toggle(false);
+		$("#resultat_acte_13").toggle(false);
 	}
 	if( $('#acte_name_'+id).val()==2){
-		$("#acte_14").toggle(false);
+		$("#resultat_acte_14").toggle(false);
 	}
 	
 	if( $('#acte_name_'+id).val()==3){
-		$("#acte_15").toggle(false);
+		$("#resultat_acte_15").toggle(false);
 	}
 	if( $('#acte_name_'+id).val()==4){
-		$("#acte_16").toggle(false);
+		$("#resultat_acte_16").toggle(false);
 	}
 	for(var i = (id+1); i <= nbListeActe(); i++ ){
 		var element = $('#acte_name_'+i).val();
@@ -197,17 +197,17 @@ function vider_acte_selectionne(id) {
 	
 	//On desactive le champ résultat en cas de suppression dún examen fonctionnel
 	if( $('#acte_name_'+id).val()==1){
-		$("#acte_13").toggle(false);
+		$("#resultat_acte_13").toggle(false);
 	}
 	if( $('#acte_name_'+id).val()==2){
-		$("#acte_14").toggle(false);
+		$("#resultat_acte_14").toggle(false);
 	}
 	
 	if( $('#acte_name_'+id).val()==3){
-		$("#acte_15").toggle(false);
+		$("#resultat_acte_15").toggle(false);
 	}
 	if( $('#acte_name_'+id).val()==4){
-		$("#acte_16").toggle(false);
+		$("#resultat_acte_16").toggle(false);
 	}
 	$("#SelectActe_"+id+" option[value='']").attr('selected','selected');
 	$("#noteActe_"+id+" input").val("");
