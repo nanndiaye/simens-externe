@@ -270,6 +270,7 @@ class ChururgieController extends AbstractActionController {
 	    //POUR LES CONSTANTES
 	    //POUR LES CONSTANTES
 	    $consult = $this->getConsultationTable ()->getConsult ( $id );
+	    
 	    //var_dump($consult);exit();
 	    $pos = strpos($consult->pression_arterielle, '/') ;
 	   
@@ -317,7 +318,8 @@ class ChururgieController extends AbstractActionController {
 	        $data['examen_donnee'.$kPhysique] = $Examen['libelle_examen'];
 	        $kPhysique++;
 	    }
-	   
+	    $ant_chirur = $this->getConsultationTable ()->getAntecedentChirugicalByID($id_pat,$id);
+	    $data["antecedent_chirugicaux"] = $ant_chirur;
 	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
 	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
 	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER

@@ -189,7 +189,6 @@ class ConsultationTable {
 	    return $listeorgane;
     }
     
-    
 	protected $tableGateway;
 	public function __construct(TableGateway $tableGateway) {
 		$this->tableGateway = $tableGateway;
@@ -207,6 +206,35 @@ class ConsultationTable {
 	    }
 	   // var_dump($row);exit();
 	    return $row;
+	}
+	
+	// Recuperer l'antécédent chirurgical
+	// Recuperer l'antécédent chirurgical
+	// Recuperer l'antécédent chirurgical
+	
+	public function getAntecedentChirugicalByID($id_pat,$id_cons){
+	    $today = (new \DateTime())->format('Y-m-d');
+	    $adapter = $this->tableGateway->getAdapter();
+	    $sql = new Sql($adapter);
+	    $select = $sql->select();
+	    $select->columns(array('*'));
+	    $select->from(array('ac'=> 'antecedents_chirurgicaux'));
+	    $select->join(array('c'=> 'consultation'), 'c.ID_PATIENT = ac.id_patient',array('*'));
+	    $where = new Where();
+	    $where->equalTo('ac.id_patient', $id_pat);
+	   $where->equalTo('c.ID_CONS', $id_cons);
+	    $where->equalTo('c.DATEONLY', $today);
+	    $select->where($where);
+	    $stat = $sql->prepareStatementForSqlObject($select);
+	    $result = $stat->execute ();
+	    $j=0;
+	   
+	    foreach ($result as $result) {
+	        $ant_chirur = $result["note_antecedents"];
+	    }
+	    //var_dump( $ant_chirur);exit();
+	    return $ant_chirur;
+	    
 	}
 	
 	public function getConsultationPatient($id_pat){
