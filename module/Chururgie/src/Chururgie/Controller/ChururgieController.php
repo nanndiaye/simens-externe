@@ -319,6 +319,7 @@ class ChururgieController extends AbstractActionController {
 	        $kPhysique++;
 	    }
 	    $ant_chirur = $this->getConsultationTable ()->getAntecedentChirugicalByID($id_pat,$id);
+	    //var_dump($ant_chirur);exit();
 	    $data["antecedent_chirugicaux"] = $ant_chirur;
 	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
 	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
@@ -573,8 +574,8 @@ class ChururgieController extends AbstractActionController {
 	    //FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
 	    //FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
 	    
-	    // RECUPERER LISTE DES PATHOLOGIES
-	    // RECUPERER LISTE DES PATHOLOGIES
+	    // RECUPERER LISTE DES TYPES PATHOLOGIES
+	    // RECUPERER LISTE DES TYPES PATHOLOGIES
 	    
 	    $listeTypePathologie=$this->getConsultationTable()->getTypePathologie();
 	    $listeclassePathologie=$this->getConsultationTable()->getClassePathologie();
@@ -2203,7 +2204,10 @@ class ChururgieController extends AbstractActionController {
 		$id= $this->params ()->fromQuery ('id_admission',0);
 		
             $listeOrgane=$this->getConsultationTable()->listeDeTousLesOrganes();
-          //
+            // RECUPERER LISTE DES TYPES PATHOLOGIES
+            
+            $listeTypePathologie=$this->getConsultationTable()->getTypePathologie();
+            
             $listeclassePathologie=$this->getConsultationTable()->getClassePathologie();
             
           
