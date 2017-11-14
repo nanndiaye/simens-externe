@@ -1124,19 +1124,19 @@ $(function(){
 		//**=== ANTECEDENTS FAMILIAUX 
 		donnees['DiabeteAF'] = $("#DiabeteAF:checked").val(); 
 		if(!donnees['DiabeteAF']){ donnees['DiabeteAF'] = 0;}
-		donnees['NoteDiabeteAF'] = $("#NoteDiabeteAF").val();
+		//donnees['NoteDiabeteAF'] = $("#NoteDiabeteAF").val();
 		
 		donnees['DrepanocytoseAF'] = $("#DrepanocytoseAF:checked").val(); 
 		if(!donnees['DrepanocytoseAF']){ donnees['DrepanocytoseAF'] = 0;}
-		donnees['NoteDrepanocytoseAF'] = $("#NoteDrepanocytoseAF").val();
+		//donnees['NoteDrepanocytoseAF'] = $("#NoteDrepanocytoseAF").val();
 		
 		donnees['htaAF'] = $("#htaAF:checked").val(); 
 		if(!donnees['htaAF']){ donnees['htaAF'] = 0;}
-		donnees['NoteHtaAF'] = $("#NoteHtaAF").val();
+		//donnees['NoteHtaAF'] = $("#NoteHtaAF").val();
 		
 		donnees['autresAF'] = $("#autresAF:checked").val(); 
-		if(!donnees['autresAF']){ donnees['autresApF'] = 0;}
-		donnees['NoteAutresAF'] = $("#NoteAutresAF").val();
+		if(!donnees['autresAF']){ donnees['autresAF'] = 0;}
+		//donnees['NoteAutresAF'] = $("#NoteAutresAF").val();
 		
 		/*Dislipid�mie*/
 		donnees['dislipidemieAF'] = $("#dislipidemieAF:checked").val(); 
@@ -1147,7 +1147,8 @@ $(function(){
 		
 		/*Ajout automatique des antecedents familiaux*/
 		var $nbCheckboxAF = ($('#nbCheckboxAF').val())+1;
-		var $nbCheck = 0;
+		
+		var $nbCheckAF = 0;
 		var $ligne;
 		var $reste = ( $nbCheckboxAF - 1 ) % 5;
   		var $nbElement = parseInt( ( $nbCheckboxAF - 1 ) / 5 ); 
@@ -1158,16 +1159,17 @@ $(function(){
   		var i;
 		for(var j=1 ; j<=$ligne ; j++){
 			for( i=0 ; i<5 ; i++){
-				var $champValider = $('#champValider_'+j+'_'+i+':checked').val();
+				var $champValider = $('#champValiderAF_'+j+'_'+i+':checked').val();
 				if($champValider == 'on'){
-					donnees['champValider_'+k] = 1;
-					donnees['champTitreLabel_'+k] = $('#champTitreLabel_'+j+'_'+i).val();
+					donnees['champValiderAF_'+k] = 1;
+					donnees['champTitreLabelAF_'+k] = $('#champTitreLabelAF_'+j+'_'+i).val();
 					k++;
-					$nbCheck++;
+					$nbCheckAF++;
 				}
 			}
 			i=0; 
 		}
+		donnees['nbCheckboxAF'] = $nbCheckAF;
 		
 		updateexecuterRequetePost(donnees);
 	});
@@ -2156,15 +2158,15 @@ $(function(){
                 "<div > "+
                 " <label style='width: 50%; height:30px; text-align:right; font-family: time new romans; font-size: 18px;'> "+
                 "       <a href='javascript:supprimerLabelAF("+ligne+","+i+");' ><img class='imageSupprimerAsthmeAF' style='cursor: pointer; float: right; margin-right: -10px; width:10px; height: 10px;' src='"+tabUrl[0]+"public/images_icons/sup.png' /></a> "+ 
-                nomLabel +"  <input type='checkbox' checked='${this.checked}' name='champValider_"+ligne+"_"+i+"' id='champValider_"+ligne+"_"+i+"' > "+
-                " <input type='hidden'  id='champTitreLabel_"+ligne+"_"+i+"' value='"+nomLabel+"' > "+
+                nomLabel +"  <input type='checkbox' checked='${this.checked}' name='champValiderAF_"+ligne+"_"+i+"' id='champValiderAF_"+ligne+"_"+i+"' > "+
+                " <input type='hidden'  id='champTitreLabelAF_"+ligne+"_"+i+"' value='"+nomLabel+"' > "+
                 " </label> "+
                 "</div> "+
                 "</td> "+
                 
                 "<script>"+
-                "$('#champValider_"+ligne+"_"+i+"').click(function(){"+
-	  			"var boutons = $('#champValider_"+ligne+"_"+i+"');"+
+                "$('#champValiderAF_"+ligne+"_"+i+"').click(function(){"+
+	  			"var boutons = $('#champValiderAF_"+ligne+"_"+i+"');"+
 	  			"if( boutons[0].checked){ $('.imageValider_"+ligne+"_"+i+"').toggle(true);  }"+
 	  			"if(!boutons[0].checked){ $('.imageValider_"+ligne+"_"+i+"').toggle(false); }"+
 	  		    "});"+
@@ -2187,7 +2189,11 @@ $(function(){
 	  	//Ajouter un label dans antecedents Familiaux --- Ajouter un label dans antecedents Familiaux
 
 	  	$('#imgIconeAjouterLabelAF').click(function(){
-	  		if(!$('#autresAF').val()){ stopPropagation(); }
+	  	
+	  		if(!$('#autresAF').val()){
+	  			stopPropagation();
+	  			
+	  			}
 	  		else{
 	  			tableau[itab++] = $('#autresAF').val();
 	  			ajouterLabelAntecedentsFamiliaux($('#autresAF').val());
@@ -2212,9 +2218,10 @@ $(function(){
 	  		);
 		  	
 	  	}
-	  	function autocompletionAntecedentAF(myArrayMedicament){
+	  	function autocompletionAntecedentAF(myAntFami){
+	  		
 		  	$( "#imageIconeAjouterLabelAF label input" ).autocomplete({
-			  	  source: myArrayMedicament
+			  	  source: myAntFami
 			    });
 	  	}
 	  	

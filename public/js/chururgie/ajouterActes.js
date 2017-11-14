@@ -225,7 +225,7 @@ function vider_acte_selectionne(id) {
 //	}
 //}
 
-function chargementModificationActe (index, element, tarif, note) {
+function chargementModificationActe (index, element, note) {
 	$("#SelectActe_"+(index+1)+" option[value='"+element+"']").attr('selected','selected'); 
 	//$("#tarifActe_"+(index+1)+" input").val(tarif);
 	$("#noteActe_"+(index+1)+" input").val(note);

@@ -1273,18 +1273,12 @@ echo $this->form()->openTag($form);
 								<div>
 									<label
 										style="width: 90%; height: 30px; text-align: right; font-family: time new romans; font-size: 18px;">
-										 
-                      
+									
                        Asthme  <?php echo $this->formRow($form->get('asthmeAF'));?>
                      </label>
 								</div>
 							</td>
-
-
 						</tr>
-
-
-
 
 
 						<tr id="labelDesAntecedentsFamiliaux_1" style="width: 100%;">
@@ -1311,29 +1305,23 @@ echo $this->form()->openTag($form);
 							<td></td>
 						</tr>
 
-
-
-
-						</tr>
 						<tr style="width: 100%;">
 							<td class='block' id='thoughtbot'
 								style='display: inline-block; vertical-align: bottom; width: 20%; padding-bottom: 5px; padding-top: 35px;'><div
 									style="float: left;" id="TerminerAntecedentsFamiliaux">Terminer</div></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						
 						
 						<tr>
 					
 					</table>
 
 
+
 					<script>
-				 var temoinDiabeteAF = <?php echo $this->donneesAntecedentsFamiliaux['DiabeteAF'];?>;
+				   var temoinDiabeteAF = <?php echo $this->donneesAntecedentsFamiliaux['DiabeteAF'];?>;
 	               var temoinDrepanocytoseAF = <?php echo $this->donneesAntecedentsFamiliaux['DrepanocytoseAF'];?>;
 	               var temoinhtaAF = <?php echo $this->donneesAntecedentsFamiliaux['htaAF'];?>;
+	               var temoindislipidemieAF = <?php echo $this->donneesAntecedentsFamiliaux['dislipidemieAF'];?>;
+	               var temoinasthmeAF = <?php echo $this->donneesAntecedentsFamiliaux['asthmeAF'];?>;
 				</script>
 
 
@@ -1341,24 +1329,29 @@ echo $this->form()->openTag($form);
               var myArrayAntFamiliaux = [''];
               var i = 1;
            </script>
-           <?php //foreach ($this->listeAntFamiliaux as $antFami){ ?>
-             <script> myArrayAntFamiliaux[i++] =  "<?php //echo $antMed['libelle']; ?>" </script>
-           <?php // } ?>
+           <?php foreach ($this->antFamiliauxPat as $antFami){ ?>
+           
+            <script> 
+         
+            myArrayAntFamiliaux[i++] =  "<?php echo $antMed['libelle']; ?>" </script>
+           
+           <?php  } ?>
            <script> 
         	  autocompletionAntecedentAF(myArrayAntFamiliaux);
            </script>
 
 					<script> 
-              var myArrayAntFamiliauxPat = [''];
-              var i = 1;
+              //var myArrayAntFamiliauxPat = [''];
+              //var i = 1;
            </script>
            <?php //foreach ($this->antFamiliauxPat as $antFami){ ?>
              <script> myArrayAntFamiliauxPat[i++] =  "<?php //echo $antFami['libelle']; ?>" </script>
-           <?php // } ?>
+           <?php //} ?>
            <script> 
+           
            $('#nbCheckboxAF').val('<?php echo $this->nbAntFamiliauxPat;?>');
            setTimeout(function(){
-        	   affichageAntecedentsFamiliauxDuPatient('<?php echo $this->nbAntFamiliauxPat;?>' , myArrayAntFamiliauxPat);
+        	   affichageAntecedentsFamiliauxDuPatient('<?php echo $this->nbAntFamiliauxPat;?>' , myArrayAntFamiliaux);
            }, 500);
            </script>
 					<!--****** ================== FIN ANTECEDENTS TERRAIN PARTICULIER ================== ****** -->

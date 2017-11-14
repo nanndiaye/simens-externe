@@ -24,6 +24,7 @@ use Zend\Stdlib\DateTime;
 use Zend\View\Model\ViewModel;
 use Zend\Code\Reflection\FunctionReflection;
 use Zend\Validator\File\Count;
+use ZendPdf\Exception\LengthException;
 
 class ChururgieController extends AbstractActionController {
 	protected $patientTable;
@@ -320,7 +321,7 @@ class ChururgieController extends AbstractActionController {
 	    }
 	    $ant_chirur = $this->getConsultationTable ()->getAntecedentChirugicalByID($id_pat,$id);
 	    //var_dump($ant_chirur);exit();
-	    $data["antecedent_chirugicaux"] = $ant_chirur;
+	    $data["antecedents_chirugicaux"] = $ant_chirur;
 	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
 	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
 	    // POUR LES ANTECEDENTS OU TERRAIN PARTICULIER
@@ -348,7 +349,7 @@ class ChururgieController extends AbstractActionController {
 	    $listeDemandesMorphologiques = $this->demandeExamensTable()->getDemandeExamensMorphologiques($id);
 	    $listeDemandesBiologiques = $this->demandeExamensTable()->getDemandeExamensBiologiques($id);
 	    $listeDemandesActes = $this->getDemandeActe()->getDemandeActe($id);
-	  
+	    
 	    
 	    //Liste des examens biologiques
 	    $listeDesExamensBiologiques = $this->demandeExamensTable()->getDemandeDesExamensBiologiques();
@@ -360,7 +361,8 @@ class ChururgieController extends AbstractActionController {
 	    ////RESULTATS DES EXAMENS BIOLOGIQUES DEJA EFFECTUES ET ENVOYER PAR LE BIOLOGISTE
 	    $listeDemandesBiologiquesEffectuerEnvoyer = $this->demandeExamensTable()->getDemandeExamensBiologiquesEffectuesEnvoyer($id);
 	    $listeDemandesBiologiquesEffectuer = $this->demandeExamensTable()->getDemandeExamensBiologiquesEffectues($id);
-	    
+	    $listeDesExamensFonctionnels =  $this->demandeExamensTable()->getDemandeExamensFonctionnelsEffectues($id);
+	    //var_dump($listeDesExamensFonctionnels->count());exit();
 	    $tableauResultatsExamensBio = array(
 	        'temoinGSan' => 0,
 	        'temoinHSan' => 0,
@@ -556,16 +558,22 @@ class ChururgieController extends AbstractActionController {
 	    $donneesAntecedentsPersonnels = $this->getAntecedantPersonnelTable()->getTableauAntecedentsPersonnels($id_pat);
 	    $donneesAntecedentsFamiliaux = $this->getAntecedantsFamiliauxTable()->getTableauAntecedentsFamiliaux($id_pat);
 	    
+	   // $donneesAntecedentsFamiliaux  = $this->getAntecedantsFamiliauxTable()->getTableauAntecedentsFamiliaux($id_pat);
 	    
+	    
+	    //RECUPERATION DES ANTECEDENTS RECEMMENTS AJOUTES
+	    $antAFPat = $this->getAntecedantsFamiliauxTable()->getAntecedentFamiliauxPersonneParIdPatient($id_pat);
+	    
+	   // var_dump($antAFPat);exit();
 	    
 	    //Recuperer les antecedents medicaux ajouter pour le patient
 	    //Recuperer les antecedents medicaux ajouter pour le patient
 	    $antMedPat = $this->getConsultationTable()->getAntecedentMedicauxPersonneParIdPatient($id_pat);
-	    
+	   // 
 	    //Recuperer les antecedents medicaux
 	    //Recuperer les antecedents medicaux
 	    $listeAntMed = $this->getConsultationTable()->getAntecedentsMedicaux();
-	    
+	    // ($listeAntMed);exit();
 	    
 	    //Recuperer la liste des actes
 	    //Recuperer la liste des actes
@@ -581,6 +589,9 @@ class ChururgieController extends AbstractActionController {
 	    $listeclassePathologie=$this->getConsultationTable()->getClassePathologie();
 	    
 	    
+	    //RECUPERER LES TYPES DE PATHOLOGIES DE LA CONSULTATION
+	    $lestypes = $this->getConsultationTable()->getConsTypePathologie($id);
+	    //var_dump($lestypes);exit();
 	    //POUR LES DEMANDES D'HOSPITALISATION
 	    //POUR LES DEMANDES D'HOSPITALISATION
 	    //POUR LES DEMANDES D'HOSPITALISATION
@@ -589,12 +600,23 @@ class ChururgieController extends AbstractActionController {
 	        $data['motif_hospitalisation'] = $donneesHospi->motif_demande_hospi;
 	        $data['date_fin_hospitalisation_prevue'] = $this->dateHelper->convertDate($donneesHospi->date_fin_prevue_hospi);
 	    }
-	    $form->populateValues ( array_merge($data,$bandelettes,$donneesAntecedentsPersonnels,$donneesAntecedentsFamiliaux,$listeTypePathologie) );
+	    //RECUPERER AUTRE DE L'HISTORIQUE
+	    $data['autre_historique'] = $this->getConsultationTable()->getAutreDEHIstoriqueIDCONS($id);
+	   // RECUPERATION EXAMEN DE L'HISTORIQUE
+	    $data['examen_historique'] = $this->getConsultationTable()->getExamenDEHIstoriqueIDCONS($id);
+	    //var_dump($data['examen_historique']);exit();
+	    //RECUPERATION DE L'HISTOIRE DE LA MALADIE
+	    $data['histoire_maladie'] = $this->getConsultationTable()->getHistoireDeLaMaladieIDCONS($id);
+	    $form->populateValues($antMedPat,$listeAntMed);
+	    
+	    $form->populateValues ( array_merge($data,$bandelettes,$donneesAntecedentsPersonnels,$donneesAntecedentsFamiliaux) );
 	   
 	    
-	    
+	    //var_dump($lestypes->count());exit();    
 	   
 	    return array(
+	        'lestypespatho'=> $lestypes,
+	        'nbTypespatho'=>$lestypes->count(),
 	        'id_cons' => $id,
 	        'lesdetails' => $liste,
 	        'form' => $form,
@@ -611,7 +633,7 @@ class ChururgieController extends AbstractActionController {
 	        'verifieRV' => $leRendezVous,
 	        'listeDemandesMorphologiques' => $listeDemandesMorphologiques,
 	        'listeDemandesBiologiques' => $listeDemandesBiologiques,
-	        'listeDemandesActes' => $listeDemandesActes,
+	        'listeDemandesActes' => $listeDesExamensFonctionnels,
 	        'hopitalSelect' =>$hopitalSelect,
 	        'nbDiagnostics'=> $infoDiagnostics->count(),
 	        'nbDonneesExamenPhysique' => $kPhysique,
@@ -633,6 +655,8 @@ class ChururgieController extends AbstractActionController {
 	        'listeAntMed' => $listeAntMed,
 	        'antMedPat' => $antMedPat,
 	        'nbAntMedPat' => $antMedPat->count(),
+	        'antFamiliauxPat' => $antAFPat,
+	        'nbAntFamiliauxPat' => $antAFPat->count(),
 	        'listeActes' => $listeActes,
 	    );
 	    
@@ -1300,7 +1324,7 @@ class ChururgieController extends AbstractActionController {
 		$form->setData ( $form );
 		$id_admission = $this->params()->fromPost('id_admission',0);
 		
-	//	var_dump($formData);exit();
+		//var_dump($formData);exit();
 		
 		
 		//
@@ -1377,15 +1401,11 @@ class ChururgieController extends AbstractActionController {
 		$this->getConsultationTable()->addAutreHistorique($formData,$id_cons);
 		
 		
-		// Ajouter de nouveaux antecedents familiaux
-		$this->getConsultationTable()->addAntecedentFamiliauxPersonne($formData, $id_patient, $id_medecin);
-		
-		
 		//Ajouter les antécédents chirurgicaux
 		$this->getConsultationTable()->addAntecedentsChirurgicaux($formData,$id_patient);
 		
 	
-		//var_dump($formData);exit();
+		
 		
 		
 		// les antecedents medicaux du patient a ajouter addAntecedentMedicauxPersonne
@@ -1486,11 +1506,16 @@ class ChururgieController extends AbstractActionController {
 		//'NoteDrepanocytoseAF' => $this->params()->fromPost('NoteDrepanocytoseAF'),
 		'htaAF' => $this->params()->fromPost('htaAF'),
 		//'NoteHtaAF' => $this->params()->fromPost('NoteHtaAF'),
+		
+		    'dislipidemieAF' => $this->params()->fromPost('dislipidemieAF'),
+		    'asthmeAF' => $this->params()->fromPost('asthmeAF'),
 		);
 	
 		$id_personne = $this->getAntecedantPersonnelTable()->getIdPersonneParIdCons($id_cons);
 		$this->getAntecedantPersonnelTable()->addAntecedentsPersonnels($donneesDesAntecedents, $id_personne, $id_medecin);
+		// Ajouter de nouveaux antecedents familiaux
 		$this->getAntecedantsFamiliauxTable()->addAntecedentsFamiliaux($donneesDesAntecedents, $id_personne, $id_medecin);
+		$this->getAntecedantsFamiliauxTable()->addAntecedentFamiliauxNouveaux($formData, $id_patient, $id_medecin);
 		
 		
 	
@@ -1697,7 +1722,7 @@ class ChururgieController extends AbstractActionController {
 				'date_fin_prevue_hospi' => $this->dateHelper->convertDateInAnglais($this->params()->fromPost('date_fin_hospitalisation_prevue')),
 				'id_cons' => $id_cons,
 		);
-
+		
 		
 		$this->getDemandeHospitalisationTable()->saveDemandehospitalisation($infoDemandeHospitalisation);
 	
@@ -2308,10 +2333,17 @@ class ChururgieController extends AbstractActionController {
 		$donneesAntecedentsPersonnels = $this->getAntecedantPersonnelTable()->getTableauAntecedentsPersonnels($id_pat);
 		$donneesAntecedentsFamiliaux  = $this->getAntecedantsFamiliauxTable()->getTableauAntecedentsFamiliaux($id_pat);
 	
+		
+		//RECUPERATION DES ANTECEDENTS RECEMMENTS AJOUTES
+		$antAFPat = $this->getAntecedantsFamiliauxTable()->getAntecedentFamiliauxPersonneParIdPatient($id_pat);
+		//$nb= count($antAFPat);
+		//var_dump($nb);exit();
+		
+		
 		//Recuperer les antecedents medicaux ajouter pour le patient
 		//Recuperer les antecedents medicaux ajouter pour le patient
 		$antMedPat = $this->getConsultationTable()->getAntecedentMedicauxPersonneParIdPatient($id_pat);
-		
+		//var_dump($antMedPat);exit();
 		//Recuperer les antecedents medicaux
 		//Recuperer les antecedents medicaux
 		$listeAntMed = $this->getConsultationTable()->getAntecedentsMedicaux();
@@ -2327,7 +2359,7 @@ class ChururgieController extends AbstractActionController {
 		//Recuperer la liste des actes
 		//Recuperer la liste des actes
 		$listeActes = $this->getConsultationTable()->getListeDesActes();
-		//var_dump($listeActes);exit();
+		//var_dump($donneesAntecedentsFamiliaux);exit();
 		$form->populateValues ( array_merge($donneesAntecedentsPersonnels,$donneesAntecedentsFamiliaux) );
 		
 		//var_dump($listeTypePathologie);exit();
@@ -2337,11 +2369,12 @@ class ChururgieController extends AbstractActionController {
 		$date = $today->format ( 'd/m/Y' );
 		$heure = $today->format ( "H:i" );
 	
-		//var_dump($id);exit();
+		//var_dump($donneesAntecedentsFamiliaux);exit();
 		$form->populateValues(array('id_patient' => $id_pat));
 	
 		$form->populateValues(array('id_admission' => $id));
 		
+		//var_dump($antAFPat);exit();
 		return array (
 		          'lesOrganes' => $listeOrgane,
 		          'listeclassePathologie'=>$listeclassePathologie,
@@ -2368,9 +2401,9 @@ class ChururgieController extends AbstractActionController {
 				'listeAntMed' => $listeAntMed,
 				'antMedPat' => $antMedPat,
 				'nbAntMedPat' => $antMedPat->count(),
-		    'listeAntFamiliaux' => $listeAntMed,
-		    'antFamiliauxPat' => $antMedPat,
-		    'nbAntFamiliauxPat' => $antMedPat->count(),
+		   // 'listeAntFamiliaux' => $listeAntMed,
+		    'antFamiliauxPat' => $antAFPat,
+		    'nbAntFamiliauxPat' => $antAFPat->count(),
 				'listeActes' => $listeActes,
 		      
 		);

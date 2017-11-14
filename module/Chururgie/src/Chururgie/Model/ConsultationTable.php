@@ -11,6 +11,34 @@ class ConsultationTable {
 
 
     
+    /**
+     * RECUPERER Les types de pathologlogies de la conultation
+     */
+    public  function getConsTypePathologie($id_cons){
+        
+        $adapter = $this->tableGateway->getAdapter();
+        $sql = new Sql ( $adapter );
+        $select = $sql->select();
+      
+        $select->columns(array('*'));
+        $select->from(array('cp' => 'consultationpathologie'));
+       
+        $select->join(array('tp'=>'type_pathologie'), 'cp.type_patho = tp.id_type_pathologie',array("*"));
+        $select->where(array('cp.ID_CONS'=> $id_cons));
+        $stat = $sql->prepareStatementForSqlObject($select);
+        $resultat = $stat->execute();
+        //var_dump($id_cons);exit();
+//         $listeorgane=array();
+//         $j=0;
+//         foreach ($resultat as $result) {
+//             $listeorgane[$j++] = $result["nom_type_pathologie"];
+//         }
+       // var_dump($listeorgane);exit();
+        return $resultat;
+    }
+    
+    
+    
     
     //  Inserer la note de l'histoire de  la maladie
     //  Inserer la note de l'histoire de la  maladie
@@ -208,6 +236,97 @@ class ConsultationTable {
 	    return $row;
 	}
 	
+	
+	// Recuperer Autre de la partie de l'histoirique
+	// Recuperer Autre de la partie de l'histoirique
+	// Recuperer Autre de la partie de l'histoirique
+	
+	public function getAutreDEHIstoriqueIDCONS($id_cons){
+	    $today = (new \DateTime())->format('Y-m-d');
+	    $adapter = $this->tableGateway->getAdapter();
+	    $sql = new Sql($adapter);
+	    $select = $sql->select();
+	    $select->columns(array('*'));
+	    $select->from(array('eh'=> 'autre_historique'));
+	    $where = new Where();
+	    $where->equalTo('eh.ID_CONS', $id_cons);
+	    
+	    $select->where($where);
+	    $stat = $sql->prepareStatementForSqlObject($select);
+	    $result = $stat->execute ();
+	    
+	    foreach ($result as $result) {
+	        $autre_histori = $result["note_autre_historique"];
+	    }
+	    //var_dump( $histoire_maladie);exit();
+	    return $autre_histori;
+	    
+	}
+	
+	
+	
+	// Recuperer Examen de la partie de l'histoirique 
+	// Recuperer Examen de la partie de l'histoirique
+	// Recuperer Examen de la partie de l'histoirique
+	
+	public function getExamenDEHIstoriqueIDCONS($id_cons){
+	    $today = (new \DateTime())->format('Y-m-d');
+	    $adapter = $this->tableGateway->getAdapter();
+	    $sql = new Sql($adapter);
+	    $select = $sql->select();
+	    $select->columns(array('*'));
+	    $select->from(array('eh'=> 'examen_historique'));
+	    $where = new Where();
+	    $where->equalTo('eh.ID_CONS', $id_cons);
+	    
+	    $select->where($where);
+	    $stat = $sql->prepareStatementForSqlObject($select);
+	    $result = $stat->execute ();
+	    
+	    foreach ($result as $result) {
+	        $examen_histori = $result["note_historique_examen"];
+	    }
+	    //var_dump( $histoire_maladie);exit();
+	    return $examen_histori;
+	    
+	}
+	
+	
+	
+	
+	
+	// Recuperer l'histoire de la maladie
+	// Recuperer l'histoire de la maladie
+	// Recuperer l'histoire de la maladie 
+	
+	public function getHistoireDeLaMaladieIDCONS($id_cons){
+	    $today = (new \DateTime())->format('Y-m-d');
+	    $adapter = $this->tableGateway->getAdapter();
+	    $sql = new Sql($adapter);
+	    $select = $sql->select();
+	    $select->columns(array('*'));
+	    $select->from(array('hm'=> 'histoire_maladie'));
+	    $where = new Where();
+	    $where->equalTo('hm.ID_CONS', $id_cons);
+	  
+	    $select->where($where);
+	    $stat = $sql->prepareStatementForSqlObject($select);
+	    $result = $stat->execute ();
+	    
+	    foreach ($result as $result) {
+	        $histoire_maladie = $result["histoire_maladie"];
+	    }
+	   //var_dump( $histoire_maladie);exit();
+	    return $histoire_maladie;
+	    
+	}
+	
+	
+	
+	
+	
+	
+	
 	// Recuperer l'antécédent chirurgical
 	// Recuperer l'antécédent chirurgical
 	// Recuperer l'antécédent chirurgical
@@ -386,7 +505,8 @@ class ConsultationTable {
 	  $sql = new Sql($db);
 	  
 	      $sQuery = $sql->insert()->into('demande')
-	      ->values(array('noteDemande'=>$NoteExamenFonc,
+	      ->values(array(
+	          'noteDemande'=>$NoteExamenFonc,
 	          'dateDemande'=>$date,
 	          'idCons'=>$idCons,
 	          'idExamen'=>$tabExamenFonc,
@@ -1211,6 +1331,7 @@ class ConsultationTable {
  		for($i=0; $i<count($tableau2); $i++){
  			if(!in_array($tableau2[$i], $tableau)){
  				$id_ant_medicaux = $this->getAntecedentMedicauxParLibelle($tableau2[$i])['id'];
+ 				//var_dump($id_ant_medicaux); exit();
  				$sQuery = $sql->delete()
  				->from('ant_medicaux_personne')
  				->where(array('id_ant_medicaux' => $id_ant_medicaux, 'id_patient' => $data->id_patient));
@@ -1240,6 +1361,7 @@ class ConsultationTable {
  	        $tableau[] = $libelle;
  	        
  	        $antecedent = $this->getAntecedentMedicauxParLibelle($libelle);
+ 	        //var_dump($antecedent);exit();
  	        if($antecedent){
  	            if(!$this->getAntecedentMedicauxPersonneParId($antecedent['id'], $data->id_patient)){
  	                $sQuery = $sql->insert()
