@@ -23,8 +23,35 @@ $(window).load(function () {
 <div id="contenu">
 
 			<table class="table table-bordered tab_list_mini" id="patient">
-				<thead>
-				<tr>
+				
+				
+				
+				
+				
+				
+					<thead>
+				<tr style="height:50px; width:100%;">
+					<th id="nom" align="center">N&deg; dossier</th>
+					<th id="nom" align="center">Nom</th>
+					<th id="prenom" align="center">Prenom</th>
+					<th id="date" align="center" name="date">AGE</th>
+					<th id="sexe" align="center" name="sexe">Sexe</th>
+					<th id="adresse" align="center" name="adresse">Adresse</th>
+					<th id="nationalite" align="center" name="nationalite">Nationalite</th>
+					<th id="effectuer" align="center">Options</th>
+				</tr>
+			</thead>
+				
+			
+
+				<tbody id="donnees" class="liste_patient">
+
+					<!-- ************ On affiche les patients en une liste ordonn�e************ -->
+
+				</tbody>
+
+				<tfoot id="foot" class="foot_style">
+					<tr>
 						<th id="numero_dossier_" style='width: 2%;'><input type="text" name="search_browser"
 							value=" N&deg; dossier" class="search_init" /></th>
 						<th id="nom_" style='width: 15%;'><input type="text" name="search_browser"
@@ -43,17 +70,6 @@ $(window).load(function () {
 							value="" class="" />Options</th>
 					
 					</tr>
-					
-				</thead>
-
-				<tbody id="donnees" class="liste_patient">
-
-					<!-- ************ On affiche les patients en une liste ordonn�e************ -->
-
-				</tbody>
-
-				<tfoot id="foot" class="foot_style">
-					
 				</tfoot>
 			</table>
 </div>

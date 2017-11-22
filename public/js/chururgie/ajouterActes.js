@@ -56,7 +56,7 @@ function creerLalisteActe ($listeDesElements) {
                     $("#Acte_"+index).after($liste);
                     
                     //CACHER L'ICONE AJOUT QUAND ON A CINQ LISTES
-                    if((index+1) == 6){
+                    if((index+1) == 4){
                     	$("#ajouter_acte").toggle(false);
                     }
                     

@@ -48,7 +48,7 @@
     /**********************************************************************************/
     
     function initialisation(){
-    	
+    
      var asInitVals = new Array();
 	
 	//le filtre du select
@@ -56,7 +56,7 @@
 	{					
 		oTable.fnFilter( this.value );
 	});
-	
+	 
 	$("tfoot input").keyup( function () {
 		/* Filter on the column (the index) of this element */
 		oTable.fnFilter( this.value, $("tfoot input").index(this) );
@@ -66,11 +66,13 @@
 	 * Support functions to provide a little bit of 'user friendlyness' to the textboxes in 
 	 * the footer
 	 */
+	
 	$("tfoot input").each( function (i) {
 		asInitVals[i] = this.value;
 	} );
 	
 	$("tfoot input").focus( function () {
+		
 		if ( this.className == "search_init" )
 		{
 			this.className = "";

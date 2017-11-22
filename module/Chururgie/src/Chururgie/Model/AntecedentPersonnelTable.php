@@ -128,7 +128,7 @@ class AntecedentPersonnelTable {
 	}
 	
 	/**
-	 * Ajouter et mettre à jour les antécédents personnels des patients
+	 * Ajouter et mettre ï¿½ jour les antï¿½cï¿½dents personnels des patients
 	 */
 	public function addAntecedentsPersonnels($donneesDesAntecedents, $id_personne, $id_medecin){
 		$this->tableGateway->getAdapter()->getDriver()->getConnection()->beginTransaction();
@@ -220,7 +220,15 @@ class AntecedentPersonnelTable {
 					
 				$this->tableGateway->insert($donneesAntecedents);
 			}
-			
+			if($donneesDesAntecedents['NoteAutresHV']){
+				$donneesAntecedents = array(
+						'ID_PERSONNE' => $id_personne,
+						'NOTE' => $donneesDesAntecedents['NoteAutresHV'],
+						'ID_EMPLOYE' => $id_medecin,
+				);
+					
+				$this->tableGateway->insert($donneesAntecedents);
+			}
 			//GYNECO-OBSTETRIQUE
 			//GYNECO-OBSTETRIQUE
 			if($donneesDesAntecedents['MenarcheGO'] == 1){
@@ -273,4 +281,52 @@ class AntecedentPersonnelTable {
 		}
 	}
 	
+	
+	//Ajout des antecedents medicaux
+	//Ajout des antecedents medicaux
+	//Ajout des antecedents medicaux
+	//Ajout des antecedents medicaux
+	public function addAntecedentMedicauxNouveaux($data,$idcons, $id_medecin){
+		$date = (new \DateTime())->format('Y-m-d H:i:s');
+		$db = $this->tableGateway->getAdapter();
+		$sql = new Sql($db);
+
+		//var_dump($data->nbCheckboxAM);exit();
+		for($i = 0; $i<$data->nbCheckboxAM; $i++){
+			$champ = "champTitreLabel_".$i;
+			$libelle =  $data->$champ;
+			
+			if(!$this->getAntecedentMedicauxParLibelle($libelle)){
+				//var_dump($idcons);exit();
+				$sQuery = $sql->insert()
+				->into('ant_medicaux')
+				->values(array('libelle' => $libelle, 'id_medecin' => $id_medecin, 'date_enregistrement' => $date,'id_cons' => $idcons));
+				 
+				$sql->prepareStatementForSqlObject($sQuery)->execute();
+	
+			}
+			 
+		}
+		
+	
+	}
+	
+	
+
+	//Recupere les antecedents Medicaux
+	//Recupere les antecedents Medicaux
+	public function getAntecedentMedicauxParLibelle($libelle){
+		 
+		$adapter = $this->tableGateway->getAdapter();
+		$sql = new Sql($adapter);
+		$select = $sql->select();
+		$select->from(array('af'=>'ant_medicaux'));
+		$select->columns(array('*'));
+		$select->where(array('libelle' => $libelle));
+	
+		return $sql->prepareStatementForSqlObject($select)->execute()->current();
+	}
+	
+
+
 }

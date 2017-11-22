@@ -125,12 +125,12 @@ class AntecedentsFamiliauxTable {
 	public function addAntecedentsFamiliaux($donneesDesAntecedents, $id_personne, $id_medecin){
 		$this->tableGateway->getAdapter()->getDriver()->getConnection()->beginTransaction();
 		$Control = new DateHelper();
-		
+		//var_dump($donneesDesAntecedents->nbCheckboxAF);exit();
 		try {
 			$this->tableGateway->delete(array('ID_PERSONNE' => $id_personne));
 			//LES ANTECEDANTS FAMILIAUX
 			//LES ANTECEDANTS FAMILIAUX
-			//var_dump($donneesDesAntecedents->nbCheckboxAF);exit();
+			
 			/*Diab�te*/
 			if($donneesDesAntecedents['DiabeteAF'] == 1){
 				$donneesAntecedents = array(

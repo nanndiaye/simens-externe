@@ -1704,31 +1704,33 @@ class ConsultationForm extends Form {
 				)
 		) );
 		
-		$this->add ( array (
-		    'name' => 'type_consultation',
-		    'type' => 'Hidden',
-		    'options' => array (
-		        'label' => 'type_consultation:'
-		    ),
-		    'attributes' => array (
-		        'id' => 'type_consultation',
-		    )
-		) );
+// 		$this->add ( array (
+// 		    'name' => 'type_consultation',
+// 		    'type' => 'Hidden',
+// 		    'options' => array (
+// 		        'label' => 'type_consultation:'
+// 		    ),
+// 		    'attributes' => array (
+// 		        'id' => 'type_consultation',
+// 		    )
+// 		) );
 		
 		$this->add ( array (
-		    'name' => 'designation',
+		    'name' => 'type_consultation',
 		    'type' => 'Zend\Form\Element\Select',
-		    'options' => array (
+		    /*
+				'options' => array (
 		      
+		    		/*
 		        'value_options' => array (
-		            'Tous' =>  'Tous' ,
+		            '' =>  'Tous' ,
 		            'Normal' =>  'Normal',
 		            'Presentation Resultat' =>'Présentation résultat',
 		            'Rendez-vous' => 'Rendez-vous' 
 		        )
-		    ),
+		    ),*/
 		    'attributes' => array (
-		        'id' => 'designation',
+		        'id' => 'type_consultation',
 		    )
 		) );
 		
