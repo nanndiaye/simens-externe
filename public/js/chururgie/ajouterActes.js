@@ -77,17 +77,18 @@ function ActiverResultatExamenFonctionnel(){
 	var index = $("LesActes").length;
 
 	d = document.getElementById("acte_name_"+index+"").value;
-	if(d==1){
+	//alert(d);
+	if(d==13){
 		$("#resultat_acte_13").toggle(true);
 	}
-	if(d==2){
+	if(d==14){
 		$("#resultat_acte_14").toggle(true);
 	}
 	
-	if(d==3){
+	if(d==15){
 		$("#resultat_acte_15").toggle(true);
 	}
-	if(d==4){
+	if(d==16){
 		$("#resultat_acte_16").toggle(true);
 	}
 	

@@ -58,6 +58,16 @@
 		var bilan_renal = $("#bilan_renal");
 		var bilan_inflammatoire = $("#bilan_inflammatoire");
 		
+		//On cache les champs
+		$('#resultat_groupe_sanguin').toggle(false); 
+		$('#resultat_hemogramme_sanguin').toggle(false);  
+		$('#resultat_bilan_hemolyse').toggle(false); 
+		$('#resultat_bilan_hepatique').toggle(false);  
+		$('#resultat_bilan_renal').toggle(false); 
+		$('#resultat_bilan_inflammatoire').toggle(false);  
+		
+		
+		
 		$('#groupe_sanguin').attr('readonly',false); 
 		$('#hemogramme_sanguin').attr('readonly',false); 
 		$('#bilan_hemolyse').attr('readonly',false); 
@@ -76,71 +86,72 @@
 $(function(){
 	//********************* Activation Resultat Examen Fonctionnel *****************************
 	//********************* Activation Resultat Examen Fonctionnel *****************************
-	var doppler_couleur_pulse = $("#doppler_couleur_pulse");
-	var echographie_de_stress = $("#echographie_de_stress");
-	var holter_ecg = $("#holter_ecg");
-	var holter_tensionnel = $("#holter_tensionnel");
-	var fibroscopie_bronchique = $("#fibroscopie_bronchique");
-	var fibroscopie_gastrique = $("#fibroscopie_gastrique");
-	var colposcopie = $("#colposcopie");
-	var echographie_gynecologique = $("#echographie_gynecologique");
-	var echographie_obstetrique = $("#echographie_obstetrique");
-	var cpn = $("#cpn");
-	var consultation_senologie = $("#consultation_senologie");
-	var plannification_familiale = $("#plannification_familiale");
+//	var doppler_couleur_pulse = $("#doppler_couleur_pulse");
+//	var echographie_de_stress = $("#echographie_de_stress");
+//	var holter_ecg = $("#holter_ecg");
+//	var holter_tensionnel = $("#holter_tensionnel");
+//	var fibroscopie_bronchique = $("#fibroscopie_bronchique");
+//	var fibroscopie_gastrique = $("#fibroscopie_gastrique");
+//	var colposcopie = $("#colposcopie");
+//	var echographie_gynecologique = $("#echographie_gynecologique");
+//	var echographie_obstetrique = $("#echographie_obstetrique");
+//	var cpn = $("#cpn");
+//	var consultation_senologie = $("#consultation_senologie");
+//	var plannification_familiale = $("#plannification_familiale");
 	var ecg = $("#ecg");
 	var eeg = $("#eeg");
 	var efr = $("#efr");
 	var emg = $("#emg");
-	var circoncision = $("#circoncision");
-	var vaccination = $("#vaccination");
-	var soins_infirmiers = $("#soins_infirmiers");
+//	var circoncision = $("#circoncision");
+//	var vaccination = $("#vaccination");
+//	var soins_infirmiers = $("#soins_infirmiers");
 	 
 	
 
 	//Au debut on desactive tous les champs
-	doppler_couleur_pulse.attr( 'readonly', false);
-	echographie_de_stress.attr( 'readonly', false);
-	holter_ecg.attr( 'readonly', false);
-	holter_tensionnel.attr( 'readonly', false);
-	fibroscopie_bronchique.attr( 'readonly', false);
-	fibroscopie_gastrique.attr( 'readonly', false);
-	colposcopie.attr( 'readonly', false);
-	echographie_gynecologique.attr( 'readonly', false);
-	echographie_obstetrique.attr( 'readonly', false);
-	consultation_senologie.attr( 'readonly', false);
-	plannification_familiale.attr( 'readonly', false);
-	cpn.attr( 'readonly', false);
+//	doppler_couleur_pulse.attr( 'readonly', false);
+//	echographie_de_stress.attr( 'readonly', false);
+//	holter_ecg.attr( 'readonly', false);
+//	holter_tensionnel.attr( 'readonly', false);
+//	fibroscopie_bronchique.attr( 'readonly', false);
+//	fibroscopie_gastrique.attr( 'readonly', false);
+//	colposcopie.attr( 'readonly', false);
+//	echographie_gynecologique.attr( 'readonly', false);
+//	echographie_obstetrique.attr( 'readonly', false);
+//	consultation_senologie.attr( 'readonly', false);
+//	plannification_familiale.attr( 'readonly', false);
+//	cpn.attr( 'readonly', false);
+	$("#resultat_acte_13").toggle(false);
+	$("#resultat_acte_14").toggle(false);
+	$("#resultat_acte_15").toggle(false);
+	$("#resultat_acte_16").toggle(false);
 	ecg.attr( 'readonly', false);
 	eeg.attr( 'readonly', false);
 	efr.attr( 'readonly', false);
 	emg.attr( 'readonly', false);
-	circoncision.attr( 'readonly', false);
-	vaccination.attr( 'readonly', false);
-	soins_infirmiers.attr( 'readonly', false);
+//	circoncision.attr( 'readonly', false);
+//	vaccination.attr( 'readonly', false);
+//	soins_infirmiers.attr( 'readonly', false);
 	
 	// ********************** ON cache les résultats de l 'examen fonctionnel ******************
 	// ********************** ON cache les résultats de l 'examen fonctionnel ******************
 	// ********************** ON cache les résultats de l 'examen fonctionnel ******************
-	$("#acte_1").toggle(false);
-	$("#acte_2").toggle(false);
-	$("#acte_3").toggle(false);
-	$("#acte_4").toggle(false);
-	$("#acte_5").toggle(false);
-	$("#acte_6").toggle(false);
-	$("#acte_7").toggle(false);
-	$("#acte_8").toggle(false);
-	$("#acte_9").toggle(false);
-	$("#acte_10").toggle(false);
-	$("#acte_11").toggle(false);
-	$("#acte_12").toggle(false);
-	$("#acte_13").toggle(false);
-	$("#acte_14").toggle(false);
-	$("#acte_15").toggle(false);
-	$("#acte_16").toggle(false);
-	$("#acte_17").toggle(false);
-	$("#acte_18").toggle(false);
-	$("#acte_19").toggle(false);
+//	$("#acte_1").toggle(false);
+//	$("#acte_2").toggle(false);
+//	$("#acte_3").toggle(false);
+//	$("#acte_4").toggle(false);
+//	$("#acte_5").toggle(false);
+//	$("#acte_6").toggle(false);
+//	$("#acte_7").toggle(false);
+//	$("#acte_8").toggle(false);
+//	$("#acte_9").toggle(false);
+//	$("#acte_10").toggle(false);
+//	$("#acte_11").toggle(false);
+//	$("#acte_12").toggle(false);
+
+//	$("#acte_17").toggle(false);
+//	$("#acte_18").toggle(false);
+//	$("#acte_19").toggle(false);
 	
 	
 	

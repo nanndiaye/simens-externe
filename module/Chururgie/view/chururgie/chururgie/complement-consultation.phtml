@@ -1052,7 +1052,7 @@ echo $this->form()->openTag($form);
               var i = 1;
            </script>
            <?php foreach ($this->listeAntMed as $antMed){ ?>
-             <script> myArrayAntMed[i++] =  "<?php //echo $antMed['libelle']; ?>" </script>
+             <script> myArrayAntMed[i++] =  "<?php echo $antMed['libelle']; ?>" </script>
            <?php } ?>
            <script> 
         	  autocompletionAntecedent(myArrayAntMed);
@@ -1333,7 +1333,7 @@ echo $this->form()->openTag($form);
            
             <script> 
          
-            myArrayAntFamiliaux[i++] =  "<?php echo $antMed['libelle']; ?>" </script>
+            myArrayAntFamiliaux[i++] =  "<?php echo $antFami['libelle']; ?>" </script>
            
            <?php  } ?>
            <script> 
@@ -1345,11 +1345,12 @@ echo $this->form()->openTag($form);
               //var i = 1;
            </script>
            <?php //foreach ($this->antFamiliauxPat as $antFami){ ?>
-             <script> myArrayAntFamiliauxPat[i++] =  "<?php //echo $antFami['libelle']; ?>" </script>
+             <script>  "<?php // myArrayAntFamiliauxPat[i++] = echo $antFami['libelle']; ?>" </script>
            <?php //} ?>
            <script> 
            
            $('#nbCheckboxAF').val('<?php echo $this->nbAntFamiliauxPat;?>');
+          // alert(myArrayAntFamiliaux);
            setTimeout(function(){
         	   affichageAntecedentsFamiliauxDuPatient('<?php echo $this->nbAntFamiliauxPat;?>' , myArrayAntFamiliaux);
            }, 500);
@@ -1935,7 +1936,7 @@ echo $this->form()->openTag($form);
                            
                                partDefautExamenBio(myArrayExamenBio, 1);
                                //Descactiver la visualisation des resultats pour afficher uniquement ceux selectionn�s
-                               desactiverResutatsBio ();
+                              // desactiverResutatsBio ();
                             </script>
 
 						</div>
@@ -2103,53 +2104,7 @@ echo $this->form()->openTag($form);
 								<div style="width: 80%; float: left; height: 1px;">
 									<table id="ActeResponde" style="width: 100%;">
 
-								<!--  	<tr id="acte_1" class="" style="width: 100%;">
-											<th> <?php //echo $this->formRow($form->get('doppler_couleur_pulse'));?> </th>
-										</tr>
-
-										<tr id="acte_2" class="" style="width: 100%;">
-											<th> <?php //echo $this->formRow($form->get('echographie_de_stress'));?> </th>
-										</tr>
-
-										<tr id="acte_3" class="" style="width: 100%;">
-											<th> <?php //echo $this->formRow($form->get('holter_ecg'));?> </th>
-										</tr>
-
-										<tr id="acte_4" class="" style="width: 100%;">
-											<th> <?php //echo $this->formRow($form->get('holter_tensionnel'));?> </th>
-										</tr>
-
-										<tr id="acte_5" class="" style="width: 100%;">
-											<th> <?php //echo $this->formRow($form->get('fibroscopie_bronchique'));?> </th>
-										</tr>
-
-										<tr id="acte_6" class="" style="width: 100%;">
-											<th> <?php //echo $this->formRow($form->get('fibroscopie_gastrique'));?> </th>
-										</tr>
-
-										<tr id="acte_7" class="" style="width: 100%;">
-											<th> <?php //echo $this->formRow($form->get('colposcopie'));?> </th>
-										</tr>
-
-										<tr id="acte_8" class="" style="width: 100%;">
-											<th> <?php //echo $this->formRow($form->get('echographie_gynecologique'));?> </th>
-										</tr>
-
-										<tr id="acte_9" class="" style="width: 100%;">
-											<th> <?php //echo $this->formRow($form->get('echographie_obstetrique'));?> </th>
-										</tr>
-
-										<tr id="acte_10" class="" style="width: 100%;">
-											<th> <?php //echo $this->formRow($form->get('cpn'));?> </th>
-										</tr>
-
-										<tr id="acte_11" class="" style="width: 100%;">
-											<th> <?php //echo $this->formRow($form->get('consultation_senologie'));?> </th>
-										</tr>
-
-										<tr id="acte_12" class="" style="width: 100%;">
-											<th> <?php //echo $this->formRow($form->get('plannification_familiale'));?> </th> 
-										</tr>-->	
+							
 
 										<tr id="resultat_acte_13" class="" style="width: 100%;">
 											<th > <?php echo $this->formRow($form->get('ecg'));?> </th>
@@ -2167,17 +2122,7 @@ echo $this->form()->openTag($form);
 											<th  > <?php echo $this->formRow($form->get('emg'));?> </th>
 										</tr>
 
-										<tr id="acte_17" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('circoncision'));?> </th>
-										</tr>
-
-										<tr id="acte_18" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('vaccination'));?> </th>
-										</tr>
-
-										<tr id="acte_19" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('soins_infirmiers'));?> </th>
-										</tr>
+										
 
 									</table>
 								</div>
@@ -2211,34 +2156,34 @@ echo $this->form()->openTag($form);
 							<div style="width: 100%;">
 
 								<div style="width: 82%; float: left; height: 1px;">
-									<table id="respondee" style="width: 100%;">
-										<tr  class="form-groupe"
-											style="width: 100%;"  id="resultat_groupe_sanguin">
+									<table id="ActeResponde" style="width: 100%;">
+										<tr  id="resultat_groupe_sanguin"
+											style="width: 100%;" >
 											<th  > <?php echo $this->formRow($form->get('groupe_sanguin'));?> </th>
 										</tr>
 
-										<tr  class="form-analyse-biologique"
-											style="width: 100%;" id="resultat_hemogramme_sanguin">
+										<tr  id="resultat_hemogramme_sanguin"
+											style="width: 100%;" >
 											<th> <?php echo $this->formRow($form->get('hemogramme_sanguin'));?> </th>
 										</tr>
 
-										<tr  class="form-analyse-biologique"
-											style="width: 100%;"  id="resultat_bilan_hemolyse">
+										<tr  id="resultat_bilan_hemolyse"
+											style="width: 100%;" >
 											<th> <?php echo $this->formRow($form->get('bilan_hemolyse'));?> </th>
 										</tr>
 
-										<tr  class="form-analyse-biologique"
-											style="width: 100%;"  id="resultat_bilan_hepatique" >
+										<tr   id="resultat_bilan_hepatique"
+											style="width: 100%;"  >
 											<th> <?php echo $this->formRow($form->get('bilan_hepatique'));?> </th>
 										</tr>
 
-										<tr  class="form-analyse-biologique"
-											style="width: 100%;" id="resultat_bilan_renal">
+										<tr  id="resultat_bilan_renal"
+											style="width: 100%;">
 											<th> <?php echo $this->formRow($form->get('bilan_renal'));?> </th>
 										</tr>
 
-										<tr  class="form-analyse-biologique"
-											style="width: 100%;" id="resultat_bilan_inflammatoire" >
+										<tr id="resultat_bilan_inflammatoire"
+											style="width: 100%;">
 											<th> <?php echo $this->formRow($form->get('bilan_inflammatoire'));?> </th>
 										</tr>
 

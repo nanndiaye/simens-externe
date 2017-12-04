@@ -76,25 +76,26 @@ function ActiverResultatExamenBiologie(){
 	var index = $("ExamensBiologiques").length;
 
 	d = document.getElementById("examenBio_name_"+index+"").value;
-	
+
 	if(d==1){
-		$("#groupe_sanguin").toggle(true);
+		$("#resultat_groupe_sanguin").toggle(true);
+		
 	}
 	if(d==2){
-		$("#hemogramme_sanguin").toggle(true);
+		$("#resultat_hemogramme_sanguin").toggle(true);
 	}
 	
 	if(d==3){
-		$("#bilan_hemolyse").toggle(true);
+		$("#resultat_bilan_hemolyse").toggle(true);
 	}
 	if(d==4){
-		$("#bilan_hepatique").toggle(true);
+		$("#resultat_bilan_hepatique").toggle(true);
 	}
 	if(d==5){
-		$("#bilan_renal").toggle(true);
+		$("#resultat_bilan_renal").toggle(true);
 	}
 	if(d==6){
-		$("#bilan_inflammatoire").toggle(true);
+		$("#bresultat_ilan_inflammatoire").toggle(true);
 	}
 	
 	
@@ -249,12 +250,12 @@ function vider_examenBio_selectionne(id) {
 function desactiverResutatsBio () {
 $(function(){
 	//ON CACHE TOUT
-	$('#groupe_sanguin').toggle(false); 
-	$('#hemogramme_sanguin').toggle(false);
-	$('#bilan_hemolyse').toggle(false);
-	$('#bilan_hepatique').toggle(false); 
-	$('#bilan_renal').toggle(false);
-	$('#bilan_inflammatoire').toggle(false);
+//	$('#groupe_sanguin').toggle(false); 
+//	$('#hemogramme_sanguin').toggle(false);
+//	$('#bilan_hemolyse').toggle(false);
+//	$('#bilan_hepatique').toggle(false); 
+//	$('#bilan_renal').toggle(false);
+//	$('#bilan_inflammatoire').toggle(false);
 	
 	
 //	$('#groupe_sanguin').attr('readonly',false); 

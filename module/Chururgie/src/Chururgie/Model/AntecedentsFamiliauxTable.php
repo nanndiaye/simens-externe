@@ -51,7 +51,7 @@ class AntecedentsFamiliauxTable {
 // 	        $tab['checkboxAF_'.$j] = $resul['libelle'];
 // 	        $j++;
 // 	    }
-	    //var_dump($tab);exit();
+// 	    var_dump($tab);exit();
 	    return $result;
 	}
 	
@@ -70,7 +70,7 @@ class AntecedentsFamiliauxTable {
 		$donnees['DrepanocytoseAF'] = 0;
 		$donnees['htaAF'] = 0;
 		$donnees['asthmeAF'] = 0;
-		$donnees['dislipidémieAF'] = 0;
+		$donnees['dislipidemieAF'] = 0;
 		
 		foreach ($rowset as $rows){
 		  
@@ -88,7 +88,7 @@ class AntecedentsFamiliauxTable {
 			}
 			
 			if($rows->id_antecedent == 7){
-			    $donnees['dislipidémieAF'] = 1;
+			    $donnees['dislipidemieAF'] = 1;
 			    //$donnees['NoteHtaAF'] = $rows->note;
 			}
 			//var_dump($rows);exit();

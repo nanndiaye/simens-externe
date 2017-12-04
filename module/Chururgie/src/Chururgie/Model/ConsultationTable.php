@@ -561,25 +561,19 @@ class ConsultationTable {
 			    			
 			         
 			);
-			//var_dump($dataconsultation);exit();
-			$resultatUpdate = $this->tableGateway->update( $dataconsultation, array('ID_CONS'=> $values->id_cons) );
-			 if($resultatUpdate == 0 ){
-			 	
+		
+			$resultatUpdate = $this->updateConsultation($values);
+		//
+			 if(!$resultatUpdate){
+			 
 			 	$this->tableGateway->insert($dataconsultation);
+			 	
 			 }
-			
-			
+		
+			 $this->tableGateway->getAdapter()->getDriver()->getConnection()->commit();
 			 //var_dump($id_admission);exit();
-			$this->tableGateway->getAdapter()->getDriver()->getConnection()->commit();
-			$db= $this->tableGateway->getAdapter();
-			$sql = new Sql($db);
-			//var_dump();exit($idCons);
-			// On fait la mise a jour l'id_cons existe
-			$requeteUpdate = $sql->update('admission')->set(array(
-					'CONS_FAIT'=>1,
-			))->where('id_admission =',$id_admission);
-					$requeteUpdate = $sql->prepareStatementForSqlObject($requeteUpdate);
-					$result = $requeteUpdate->execute()->isQueryResult();
+			
+			
 		} catch (\Exception $e) {
 			$this->tableGateway->getAdapter()->getDriver()->getConnection()->rollback();
 		}
@@ -623,24 +617,28 @@ class ConsultationTable {
 
 	
 	// Ajout des demandes d'examens Morphologique
-	public function AddDemandeExamenMorphologique($tabExamen,$NoteExamen,$idCons){
+	public function AddDemandeExamen($tabExamen,$NoteExamen,$idCons){
 		$today = new \DateTime();
 		$date = $today->format('Y-m-d');
 		$db= $this->tableGateway->getAdapter();
 		$sql = new Sql($db);
 		//var_dump();exit($idCons);
 		// On fait la mise a jour l'id_cons existe
-		$requeteUpdate = $sql->update('demande')->set(array(
-				'noteDemande'=>$NoteExamen,
-				'dateDemande'=>$date,
-				'idExamen'=>$tabExamen,
+// 		$requeteUpdate = $sql->update('demande')->set(array(
+// 				'noteDemande'=>$NoteExamen,
+// 				'dateDemande'=>$date,
+// 				'idExamen'=>$tabExamen,
 				 
-		))->where(array('idCons'=>$idCons));
-		  $requeteUpdate = $sql->prepareStatementForSqlObject($requeteUpdate);
-		  $result = $requeteUpdate->execute()->isQueryResult();
-		   
+// 		))->where(array('idCons'=>$idCons, 'idExamen'=>$tabExamen));
+// 		  $requeteUpdate = $sql->prepareStatementForSqlObject($requeteUpdate);
+// 		  $result = $requeteUpdate->execute()->isQueryResult();
+		  
+		  $re = $sql->delete(array('*'))->from('demande')->where(array('idCons'=>$idCons, 'idExamen'=>$tabExamen));
+		  $sql->prepareStatementForSqlObject($re)->execute();
+		  	
+		  
 		  // Si non on fait une insertion dans la base de données
-		if(!$result){
+		
 	
 		$sQuery = $sql->insert()->into('demande')
 			->values(array(
@@ -652,10 +650,10 @@ class ConsultationTable {
 			));
 			$requete = $sql->prepareStatementForSqlObject($sQuery);
 			$requete->execute();
-		}
+		
 	
 	
-		}
+	}
 	
 	// Ajout des demandes d'examens Biologiques
 	public function AddDemandeExamenBiologique($tabExamen,$NoteExamen,$idCons){
@@ -1513,7 +1511,10 @@ class ConsultationTable {
  			
  		//Tableau des nouveaux antecedents ajouter array('ID_PERSONNE' => $id_personne)
  		$tableau = array();
- 		$re = $sql->delete(array('*'))->from('ant_medicaux_personne')->where('id_patient',$data->id_patient);
+ 		$re = $sql->delete(array('*'))->from('ant_medicaux_personne')->where(array('id_patient'=>$data->id_patient));
+ 		
+ 		$sql->prepareStatementForSqlObject($re)->execute();
+ 		
  		
  		for($i = 0; $i<$data->nbCheckboxAM; $i++){
  			$champ = "champTitreLabel_".$i;
