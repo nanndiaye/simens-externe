@@ -349,7 +349,7 @@ class ChururgieController extends AbstractActionController {
 	    // DEMANDES DES EXAMENS COMPLEMENTAIRES
 	    $listeDemandesMorphologiques = $this->demandeExamensTable()->getDemandeExamensMorphologiques($id);
 	    $listeDemandesBiologiques = $this->demandeExamensTable()->getDemandeExamensBiologiques($id);
-	    $listeDemandesActes = $this->getDemandeActe()->getDemandeActe($id);
+	   
 	    
 	    
 	    //Liste des examens biologiques
@@ -358,6 +358,7 @@ class ChururgieController extends AbstractActionController {
 	    $listeDesExamensMorphologiques = $this->demandeExamensTable()->getDemandeDesExamensMorphologiques();
 	    //Liste des examens fonctionnels
 	    $listeDesExamensFonctionnelsPredefinis = $this->demandeExamensTable()->getDemandeDesExamensFonctionnels();
+	    $listeDemandesActes = $this->getDemandeActe()->getDemandeActe($id);
 	    //var_dump($listeDesExamensBiologiques); exit();
 	    
 	    ////RESULTATS DES EXAMENS BIOLOGIQUES DEJA EFFECTUES ET ENVOYER PAR LE BIOLOGISTE
@@ -575,7 +576,7 @@ class ChururgieController extends AbstractActionController {
 	    //Recuperer les antecedents medicaux ajouter pour le patient
 	    //Recuperer les antecedents medicaux ajouter pour le patient
 	    $antMedPat = $this->getConsultationTable()->getAntecedentMedicauxPersonneParIdPatient($id_pat);
-	   // 
+	 var_dump($antMedPat->current());exit();
 	    //Recuperer les antecedents medicaux
 	    //Recuperer les antecedents medicaux
 	    $listeAntMed = $this->getConsultationTable()->getAntecedentsMedicaux();
@@ -1342,7 +1343,38 @@ class ChururgieController extends AbstractActionController {
 		
 	
 		//consultation
-		//
+		//POUR LES RESULTATS DES EXAMENS FONCTIONNELS
+		
+		//POUR LES RESULTATS DES EXAMENS BIOLOGIQUES
+     	
+     	//POUR LES RESULTATS DES EXAMENS MORPHOLOGIQUES
+				
+		$resulat_examen = array(
+				'id_cons'=> $id_cons,
+				'1'  => $this->params()->fromPost('groupe_sanguin'),
+				'2'  => $this->params()->fromPost('hemogramme_sanguin'),
+				'3' => $this->params()->fromPost('bilan_hemolyse'),
+				'4' => $this->params()->fromPost('bilan_hepatique'),
+				'5' => $this->params()->fromPost('bilan_renal'),
+				'6' => $this->params()->fromPost('bilan_inflammatoire'),
+				'8'  => $this->params()->fromPost('radio_'),
+				'9'  => $this->params()->fromPost('ecographie_'),
+				'12' => $this->params()->fromPost('irm_'),
+				'11' => $this->params()->fromPost('scanner_'),
+				'10' => $this->params()->fromPost('fibroscopie_'),
+				'13'  => $this->params()->fromPost('ecg'),
+				'14'  => $this->params()->fromPost('ecg'),
+				'15' => $this->params()->fromPost('efr'),
+				'16' => $this->params()->fromPost('emg'),
+		);
+		
+		
+		
+		var_dump($resulat_examen);exit();
+		$this->getNotesExamensMorphologiquesTable()->updateNotesExamensMorphologiques($info_examen_morphologique);
+	
+	
+	
 		$this->getConsultationTable()->addConsultation($formData,$IdDuService, $id_medecin,$id_admission);
 		
 		// Enregistrer le rendez-vous du patient
@@ -1544,21 +1576,6 @@ class ChururgieController extends AbstractActionController {
 		
 		
 	
-		//POUR LES RESULTATS DES EXAMENS MORPHOLOGIQUES
-		//POUR LES RESULTATS DES EXAMENS MORPHOLOGIQUES
-		//POUR LES RESULTATS DES EXAMENS MORPHOLOGIQUES
-		
-		$info_examen_morphologique = array(
-				'id_cons'=> $id_cons,
-				'8'  => $this->params()->fromPost('radio_'),
-				'9'  => $this->params()->fromPost('ecographie_'),
-				'12' => $this->params()->fromPost('irm_'),
-				'11' => $this->params()->fromPost('scanner_'),
-				'10' => $this->params()->fromPost('fibroscopie_'),
-		);
-	
-		$this->getNotesExamensMorphologiquesTable()->updateNotesExamensMorphologiques($info_examen_morphologique);
-		
 		//POUR LES DIAGNOSTICS
 		//POUR LES DIAGNOSTICS
 		//POUR LES DIAGNOSTICS
@@ -2147,13 +2164,15 @@ class ChururgieController extends AbstractActionController {
 		//Recuperer la liste des actes
 		//Recuperer la liste des actes
 		//$listeActes = $this->getConsultationTable()->getListeDesActes();
-		$listeDemandesActes = $this->getDemandeActe()->getDemandeActe($id);
-	
+		  //Liste des examens fonctionnels
+	    $listeDesExamensFonctionnelsPredefinis = $this->demandeExamensTable()->getDemandeDesExamensFonctionnels();
+	    $listeDemandesActes = $this->getDemandeActe()->getDemandeActe($id);
 		//FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
 		//FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
 	
 		//Liste des examens biologiques
-		$listeDesExamensBiologiques = $this->demandeExamensTable()->getDemandeDesExamensBiologiques();
+		$listeDesExamensBiologiques = $this->demandeExamensTable()->getDemandeExamensBiologiques($id);
+		//var_dump($listeDesExamensBiologiques->current());exit();
 		//Liste des examens Morphologiques
 		$listeDesExamensMorphologiques = $this->demandeExamensTable()->getDemandeDesExamensMorphologiques();
 	
@@ -2221,8 +2240,8 @@ class ChururgieController extends AbstractActionController {
 				'antMedPat' => $antMedPat,
 				'nbAntMedPat' => $antMedPat->count(),
 				'listeDemandesActes' => $listeDemandesActes,
-				'listeActes' => $listeActes,
-				'listeDesExamensBiologiques' => $listeDesExamensBiologiques,
+				'listeDesExamensBiologiques' =>  $listeDesExamensBiologiques ,
+				'listeDesExamensFonctionnels' =>  $listeDesExamensFonctionnelsPredefinis,
 				'listeDesExamensMorphologiques' => $listeDesExamensMorphologiques,
 				'antFamiliauxPat' => $antAFPat,
 				'nbAntFamiliauxPat' => $antAFPat->count(),

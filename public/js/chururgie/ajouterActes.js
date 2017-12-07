@@ -77,21 +77,21 @@ function ActiverResultatExamenFonctionnel(){
 	var index = $("LesActes").length;
 
 	d = document.getElementById("acte_name_"+index+"").value;
-	//alert(d);
-	if(d==13){
-		$("#resultat_acte_13").toggle(true);
-	}
-	if(d==14){
-		$("#resultat_acte_14").toggle(true);
-	}
+	//alert(index);
+	// Si on change de choix dans le premier select 
 	
-	if(d==15){
-		$("#resultat_acte_15").toggle(true);
-	}
-	if(d==16){
-		$("#resultat_acte_16").toggle(true);
-	}
-	
+		if(d==13){
+			$("#resultat_acte_13").toggle(true);
+		}else
+		if(d==14){
+			$("#resultat_acte_14").toggle(true);
+		}else
+		if(d==15){
+			$("#resultat_acte_15").toggle(true);
+		}else
+		if(d==16){
+			$("#resultat_acte_16").toggle(true);
+		}
 	
 	
 }
@@ -151,17 +151,17 @@ function supprimer_acte_selectionne(id) {
 	
 	
 	//On cache le champ résultat en cas de suppression dún examen fonctionnel
-	if( $('#acte_name_'+id).val()==1){
+	if( $('#acte_name_'+id).val()==13){
 		$("#resultat_acte_13").toggle(false);
 	}
-	if( $('#acte_name_'+id).val()==2){
+	if( $('#acte_name_'+id).val()==14){
 		$("#resultat_acte_14").toggle(false);
 	}
 	
-	if( $('#acte_name_'+id).val()==3){
+	if( $('#acte_name_'+id).val()==15){
 		$("#resultat_acte_15").toggle(false);
 	}
-	if( $('#acte_name_'+id).val()==4){
+	if( $('#acte_name_'+id).val()==16){
 		$("#resultat_acte_16").toggle(false);
 	}
 	for(var i = (id+1); i <= nbListeActe(); i++ ){
@@ -197,17 +197,17 @@ function supprimer_acte_selectionne(id) {
 function vider_acte_selectionne(id) {
 	
 	//On desactive le champ résultat en cas de suppression dún examen fonctionnel
-	if( $('#acte_name_'+id).val()==1){
+	if( $('#acte_name_'+id).val()==13){
 		$("#resultat_acte_13").toggle(false);
 	}
-	if( $('#acte_name_'+id).val()==2){
+	if( $('#acte_name_'+id).val()==14){
 		$("#resultat_acte_14").toggle(false);
 	}
 	
-	if( $('#acte_name_'+id).val()==3){
+	if( $('#acte_name_'+id).val()==15){
 		$("#resultat_acte_15").toggle(false);
 	}
-	if( $('#acte_name_'+id).val()==4){
+	if( $('#acte_name_'+id).val()==16){
 		$("#resultat_acte_16").toggle(false);
 	}
 	$("#SelectActe_"+id+" option[value='']").attr('selected','selected');

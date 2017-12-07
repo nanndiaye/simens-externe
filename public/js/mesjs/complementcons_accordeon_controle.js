@@ -879,10 +879,10 @@ $(function(){
 	     		donnees['noteactes'+i] = $("#noteactes"+i).val();
 	     	}
 	     }
-//	    donnees['ecg']       = $("#ecg").val();
-//	    donnees['eeg'] 	    = $("#eeg").val();
-//	    donnees['efr']       = $("#efr").val();
-//	    donnees['emg']      = $("#emg").val();
+	    donnees['ecg']       = $("#ecg").val();
+	    donnees['eeg'] 	    = $("#eeg").val();
+	    donnees['efr']       = $("#efr").val();
+	    donnees['emg']      = $("#emg").val();
 	   
 	    
 	    //**********--  Demande ANALYSE BIOLOGIQUE --************
@@ -900,12 +900,12 @@ $(function(){
 	    
 	    
 	    
-//	    donnees['groupe_sanguin']      = $("#groupe_sanguin").val();
-//	    donnees['hemogramme_sanguin']  = $("#hemogramme_sanguin").val();
-//	    donnees['bilan_hemolyse']      = $("#bilan_hemolyse").val();
-//	    donnees['bilan_hepatique']     = $("#bilan_hepatique").val();
-//	    donnees['bilan_renal']         = $("#bilan_renal").val();
-//	    donnees['bilan_inflammatoire'] = $("#bilan_inflammatoire").val();
+	    donnees['groupe_sanguin']      = $("#groupe_sanguin").val();
+	    donnees['hemogramme_sanguin']  = $("#hemogramme_sanguin").val();
+	    donnees['bilan_hemolyse']      = $("#bilan_hemolyse").val();
+	    donnees['bilan_hepatique']     = $("#bilan_hepatique").val();
+	    donnees['bilan_renal']         = $("#bilan_renal").val();
+	    donnees['bilan_inflammatoire'] = $("#bilan_inflammatoire").val();
 	    
 	    //**********--  Demande ANALYSE MORPHOLOGIQUE --************
         //**********--  Demande ANALYSE MORPHOLOGIQUE --************
@@ -919,11 +919,11 @@ $(function(){
 	     	}
 	     } 
 	    
-//	    donnees['radio_']        = $("#radio").val();
-//	    donnees['ecographie_']   = $("#ecographie").val();
-//	    donnees['fibroscopie_']  = $("#fibrocospie").val();
-//	    donnees['scanner_']      = $("#scanner").val();
-//	    donnees['irm_']          = $("#irm").val();
+	    donnees['radio_']        = $("#radio").val();
+	    donnees['ecographie_']   = $("#ecographie").val();
+	    donnees['fibroscopie_']  = $("#fibrocospie").val();
+	    donnees['scanner_']      = $("#scanner").val();
+	    donnees['irm_']          = $("#irm").val();
 //	    
 	    //*********** DIAGNOSTICS ************
 	    //*********** DIAGNOSTICS ************
@@ -945,7 +945,7 @@ $(function(){
 	     	}
 	     }
 	    
-	    
+	   
 	   
 	    //*********** TRAITEMENTS CHIRURGICAUX ************
 		//*********** TRAITEMENTS CHIRURGICAUX ************

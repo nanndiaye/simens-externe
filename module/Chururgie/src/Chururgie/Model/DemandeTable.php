@@ -48,6 +48,7 @@ class DemandeTable{
 	 * Recuperer la liste des examens Biologiques
 	 */
 	public function getDemandeExamensBiologiques($id){
+		//var_dump($id);exit();
 		$adapter = $this->tableGateway->getAdapter();
 		$sql = new Sql($adapter);
 		$select = $sql->select();
@@ -56,11 +57,16 @@ class DemandeTable{
 		$select->join( array(
 				'e' => 'examens'
 		), 'd.idExamen = e.idExamen' , array ( '*' ) );
-		$select->where(array('d.idCons' => $id, 'idType' => 1));
+		$select->where(array('d.idCons' => $id, 'e.idType' => 1));
 		$select->order('d.idDemande ASC');
 		$stat = $sql->prepareStatementForSqlObject($select);
 		$result = $stat->execute();
-	
+// 			$tab=array();$i=1;
+// 			foreach ($result as $l){
+// 				$tab[$i++]= $l['noteDemande'];
+				
+// 			}
+// 			var_dump($tab);exit();
 		return $result;
 	}
 	

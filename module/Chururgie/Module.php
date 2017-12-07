@@ -75,6 +75,7 @@ use Chururgie\Model\TypePathologieTable;
 use Chururgie\Model\TypePathologie;
 use Chururgie\Model\ConsultantOrganeTable;
 use Chururgie\Model\ConsultantOrgane;
+use Chururgie\Model\ResultatExamensComplementairesTable;
 
 
 
@@ -464,6 +465,17 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Se
 							$resultSetPrototype->setArrayObjectPrototype ( new DemandeActe());
 							return new TableGateway ( 'demande_acte', $dbAdapter, null, $resultSetPrototype );
 						},
+						'Chururgie\Model\ResulatExamensComplementairesTable' => function ($sm) {
+							$tableGateway = $sm->get ( 'ResulatExamensComplementairesGateway' );
+							$table = new ResultatExamensComplementairesTable($tableGateway);
+							return $table;
+						},
+						'ResulatExamensComplementairesTableGateway' => function ($sm){
+							$dbAdapter = $sm->get('Zend\Db\Adapter');
+							$resultSetPrototype = new ResultSet();
+							$resultSetPrototype->setArrayObjectPrototype(new ResultatExamensComplementaires() );
+							return  new TableGateway('resultats_examens',$dbAdapter, null, $resultSetPrototype);
+						}
 					
 				)
 		);

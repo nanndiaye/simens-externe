@@ -1187,6 +1187,7 @@ echo $this->form()->openTag($form); ?>
                           
                           
                           <?php 
+                          
                           /**
                            *===========================================================================
                            *===================== Les Actes  --- Les Actes  ===========================
@@ -1231,35 +1232,53 @@ echo $this->form()->openTag($form); ?>
                             <!--********************* CHARGEMENT DES DONNEES  ************************-->
                             <!--********************* CHARGEMENT DES DONNEES  ************************-->
                             <!--********************* CHARGEMENT DES DONNEES  ************************-->
-                            <?php 
-                             $nbDemandeActe = count($this->listeDemandesActes);
-                             if($nbDemandeActe == 0){$nbDemandeActe = 1;}
-                            ?>
-                          <script> 
-
-                               ValiderDemandeActe();
+                              
+                              
+                              <?php  $nbDemandeActe = count($this->listeDemandesActes);
+                                    if($nbDemandeActe == 0){$nbDemandeActe = 1;}
+                                   ?>
+                            <script> 
+                            ValiderDemandeActe();
+                         var myArrayExamenFonc = [''];
+                         var myRenCLiExamenFonc = [''];
+                         var MylisteIdExamen = [''];
+                         var myArrayExamenFc = [''];
+                        
+                            var j = 1;
                             
-                               var myArrayActe = [''];
-                               var i = 1;
+                                   <?php foreach ($this->listeDesExamensFonctionnels as $liste){ ?>
+                                   
+                                   myArrayExamenFc[j++] =  "<?php echo $liste['libelleExamen']; ?>";
+                                   
+                           <?php } ?>
+                           
+                          
+                           partDefautActe(myArrayExamenFc, '<?php echo $nbDemandeActe; ?>');
+                           var i = 1;
+                          // var indLigneEF = 0;
+                           //chargementModificationActe( indLigneEF++ , myArrayExamenFonc , myRenCLiExamenFonc);   
+ 						<?php foreach ($this->listeDemandesActes as $listeEF){ ?>
+                                  
+                                   myArrayExamenFonc[i] =  "<?php echo $listeEF['libelleExamen']; ?>";
+                                   myRenCLiExamenFonc[i] =  "<?php echo $listeEF['noteDemande']; ?>";
+                                   MylisteIdExamen[i++] =  "<?php echo $listeEF['idExamen']; ?>";
+                           <?php } ?>
+                           
+								
 
-                               <?php foreach ($this->listeActes as $listeActes){ ?>
-                                       myArrayActe[i++] =  "<?php echo $listeActes['designation']; ?>";
-                               <?php } ?>
-                               
-                               partDefautActe(myArrayActe, '<?php echo $nbDemandeActe; ?>');
-                               
-                               //Descactiver la visualisation des resultats pour afficher uniquement ceux selectionn�s
-                               setTimeout(function(){ desactiverResutatsActe (); }, 500);
-
-                               var indLigneActe = 0;
-                               //SELECTION DES LIGNES ET CHARGEMENT DE LEUR CONTENU 
-                               <?php foreach($this->listeDemandesActes as $Liste) {?>
-                               //Faire attention aux caracteres " et ' 
-                               chargementModificationActe( indLigneActe++ , "<?php echo $Liste['idActe'];?>" , "<?php echo prixMill($Liste['tarif']);?>" , "<?php echo $Liste['noteDemande'];?>" );   
-                               <?php } ?>
-
-                               setTimeout(function(){ desactivationChamps(); }, 1000);
-                          </script>
+								//Descactiver la visualisation des resultats pour afficher uniquement ceux selectionn�s
+	                              // setTimeout(function(){ desactiverResutatsActe (); }, 500);
+									
+	                               var indLigneEF = 1;
+	                               //SELECTION DES LIGNES ET CHARGEMENT DE LEUR CONTENU 
+	                               <?php for($i=0; $i<=$nbDemandeActe; $i++) {?>
+	                               //Faire attention aux caracteres " et ' 
+	                          chargementModificationActe( <?php     echo $i ?> , myArrayExamenFonc[indLigneEF], myRenCLiExamenFonc[indLigneEF]);  
+	                          indLigneEF++; 
+	                               <?php } ?>
+	                            
+		                            
+                            </script>
                             
                           </div>
                           
@@ -1361,13 +1380,15 @@ echo $this->form()->openTag($form); ?>
                             </script>
                                    
                             <script>
+                         
                                //Descactiver la visualisation des resultats pour afficher uniquement ceux selectionn�s
                                desactiverResutatsBio ();
                                //SELECTION DES LIGNES ET CHARGEMENT DE LEUR CONTENU 
-                               <?php foreach($this->listeDemandesBiologiques as $Liste) {?>
+                               <?php foreach($this->listeDemandesBiologiques as $ListeBio) {?>
                                    //Faire attention aux caracteres " et ' 
-                                   chargementModificationBio( indligneBio++, "<?php echo $Liste['idExamen'];?>" , "<?php echo $Liste['noteDemande'];?>");   
+                                   chargementModificationBio( indligneBio++, "<?php echo $ListeBio['idExamen'];?>" , "<?php echo $ListeBio['noteDemande'];?>");   
                                <?php } ?>
+                               alert("<?php echo $ListeBio['idExamen'];?>" );
                             </script>
                             
                             </div>
