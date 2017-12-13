@@ -10,39 +10,132 @@ use Zend\Db\Sql\Predicate\NotIn;
 class ConsultationTable {
 
 
+	// Recuperer Identification de la Demande d'examen
+	// Recuperer Identification de la Demande d'examen
+	// Recuperer Identification de la Demande d'examen
+	
+	public function getIdDemande($idCons,$idExamen){
+	//var_dump($idCons,$idExamen);exit();
+		$adapter = $this->tableGateway->getAdapter();
+		$sql = new Sql($adapter);
+		//var_dump($idCons);exit();
+		$select = $sql->select();
+		$select->columns(array('*'));
+		$select->from(array( 'd' => 'demande'));
+		$select->where(array('d.idCons'=>$idCons,'d.idExamen'=>$idExamen));
+			$stat = $sql->prepareStatementForSqlObject($select);
+			$res = $stat->execute();
+			$idDemade = '';$i=1;
+			foreach ($res as $result){
+			$idDemade = $result['idDemande'];
+		}
+		//var_dump($idExamen);exit();
+		return $idDemade;
+		
+	}
    
-    
+    public function updateResultatExamensComplementaires($id_medecin,$id_cons,$resulat_examen){
+    	var_dump($resulat_examen);exit();
+    	//$this->tableGateway->delete(array('id_consult'=>$id_cons));
+    	$today = new \DateTime ();
+    	$date_enreg = $today->format ( 'Y-m-d H:i:s' );
+    	
+    	 $db = $this->tableGateway->getAdapter();
+         $sql = new Sql($db);
+//          $re_sup = $sql->delete('*')->from('resultat_examen')->where(array('id_consult'=>$id_cons));
+//          $sql->prepareStatementForSqlObject($re_sup)->execute();
+         
+     $j=1;
+ //   $idDemandeExamen="";
+        for($i=1; $i<=15;$i++){
+        	if($j==7){
+        		$j=8;
+        	}
+        	
+        	if($resulat_examen[$i]!=""){
+        		$idDemandeExamen = $this->getIdDemande($id_cons, $j );
+        		$j++;
+        		$sQuery = $sql->insert()
+        		->into('resultats_examens')
+        		->values(array(
+        				'idDemande'=>$idDemandeExamen,
+        				'Note_Resultat' => $resulat_examen[$i],
+        				'id_personne' => $id_medecin,
+        				'date_enregis'=> $date_enreg,
+        				'id_consult' => $id_cons,
+        		));
+        		
+        		
+        	}
+        	$sql->prepareStatementForSqlObject($sQuery)->execute();
+        	
+        }	
+       
+        
+    }
     
     
     
     //  Inserer la note de l'histoire de  la maladie
     //  Inserer la note de l'histoire de la  maladie
-    public function addHistoireMaladie($formData,$ID_CONS,$id_medecin){
+    
+    
+    public function updateExamenPhysique($donnees)
+    {
+    	$this->tableGateway->delete(array('id_cons' => $donnees['id_cons']));
+    
+    	for($i=1 ; $i<=10; $i++){ // 5 car on s'arrete a 5 champs de donn�es
+    		if($donnees['donnee'.$i]){
+    			$datadonnee	 = array(
+    					'libelle_examen' => $donnees['donnee'.$i],
+    					'id_cons' => $donnees['id_cons'],
+    			);
+    			$this->tableGateway->insert($datadonnee);
+    		}
+    
+    	}
+    }
+    
+    
+    public function addHistoireMaladie($donnees,$ID_CONS,$id_medecin){
         
-      
+    	$today = (new \DateTime())->format('Y-m-d');
         $db = $this->tableGateway->getAdapter();
         $sql = new Sql($db);
         // On fait la mise a jour l'id_cons existe
-        if($formData->histoire_maladie){
-        $requeteUpdate = $sql->update('histoire_maladie')->set(array(
-        		'histoire_maladie' => $formData->histoire_maladie,
-        		'date_enregistrement'=>$formData->dateonly,
-        		'id_employe_e'=>$id_medecin
-        ))->where('ID_CONS',$ID_CONS);
-        $requeteUpdate = $sql->prepareStatementForSqlObject($requeteUpdate);
-        $result = $requeteUpdate->execute()->isQueryResult();
+        $req_supp = $sql->delete('*')->from('histoire_maladie')->where(array('ID_CONS'=> $ID_CONS));
+        $sql->prepareStatementForSqlObject($req_supp)->execute();
+        
+        
+        for($i=1;$i<=10;$i++){
+        	if($donnees['symptome'.$i]){
+        		$sQuery = $sql->insert()
+        		->into('histoire_maladie')
+        		->values(array('histoire_maladie' => $donnees['symptome'.$i], 'ID_CONS'=> $ID_CONS,
+        		'date_enregistrement'=>$today,'id_employe_e'=>$id_medecin));
+        		$sql->prepareStatementForSqlObject($sQuery)->execute();
+        	}
+        }
+//         if($formData->histoire_maladie){
+//         $requeteUpdate = $sql->update('histoire_maladie')->set(array(
+//         		'histoire_maladie' => $formData->histoire_maladie,
+//         		'date_enregistrement'=>$formData->dateonly,
+//         		'id_employe_e'=>$id_medecin
+//         ))->where(array('ID_CONS'=> $ID_CONS));
+//         $requeteUpdate = $sql->prepareStatementForSqlObject($requeteUpdate);
+//         $result = $requeteUpdate->execute()->isQueryResult();
          
-        //Si non on enregistre dans la base de donnees
-        if(!$result){
+//         //Si non on enregistre dans la base de donnees
+//         if(!$result){
        
-        	$sQuery = $sql->insert()
-        	->into('histoire_maladie')
-        	->values(array('histoire_maladie' => $formData->histoire_maladie, 'ID_CONS'=> $ID_CONS,
-        			'date_enregistrement'=>$formData->dateonly,'id_employe_e'=>$id_medecin));
-        	$sql->prepareStatementForSqlObject($sQuery)->execute();
+//         	$sQuery = $sql->insert()
+//         	->into('histoire_maladie')
+//         	->values(array('histoire_maladie' => $formData->histoire_maladie, 'ID_CONS'=> $ID_CONS,
+//         			'date_enregistrement'=>$formData->dateonly,'id_employe_e'=>$id_medecin));
+//         	$sql->prepareStatementForSqlObject($sQuery)->execute();
         	
-        }
-        }
+//         }
+//         }
       
     }
     
@@ -368,15 +461,10 @@ class ConsultationTable {
 	    $where->equalTo('hm.ID_CONS', $id_cons);
 	  
 	    $select->where($where);
+	    $select->order('id_histoire_maladie ASC');
 	    $stat = $sql->prepareStatementForSqlObject($select);
 	    $result = $stat->execute ();
-	    $histoire_maladie='';
-	    foreach ($result as $resul) {
-	    	
-	        $histoire_maladie = $resul["histoire_maladie"];
-	    }
-	   
-	    return $histoire_maladie;
+	    return $result;
 	    
 	}
 	
@@ -617,7 +705,7 @@ class ConsultationTable {
 
 	
 	// Ajout des demandes d'examens Morphologique
-	public function AddDemandeExamen($tabExamen,$NoteExamen,$idCons){
+	public function AddDemandeExamen($tab_result,$tabExamen,$NoteExamen,$idCons){
 		$today = new \DateTime();
 		$date = $today->format('Y-m-d');
 		$db= $this->tableGateway->getAdapter();
@@ -646,6 +734,7 @@ class ConsultationTable {
 			'dateDemande'=>$date,
 			'idCons'=>$idCons,
 			'idExamen'=>$tabExamen,
+			'noteResultat' =>$tab_result,
 			 
 			));
 			$requete = $sql->prepareStatementForSqlObject($sQuery);
@@ -1447,7 +1536,7 @@ class ConsultationTable {
  				if($libelle){
  				$requeteUpdate = $sql->update('ant_medicaux')
  				->set(array('libelle' => $libelle))
- 				->where('ID_CONS',$id_cons);
+ 				->where(array('ID_CONS'=>$id_cons));
  				$result_exe = $sql->prepareStatementForSqlObject($requeteUpdate)->execute();
  					
  				
@@ -1539,6 +1628,17 @@ class ConsultationTable {
  						$sql->prepareStatementForSqlObject($sQuery)->execute();
  					}
  				//}
+ 			}
+ 			if(!$this->getAntecedentMedicauxParLibelle($libelle)){
+ 				$sQuery = $sql->insert()
+ 				->into('ant_medicaux')
+ 				->values(array('libelle' => $libelle, 'date_enregistrement' => $date, 'id_medecin' => $id_medecin, 'id_cons'=>$idCons));
+ 				$id_ant_med = $sql->prepareStatementForSqlObject($sQuery)->execute()->getGeneratedValue();
+ 				
+ 				$sQuery1 = $sql->insert()
+ 				->into('ant_medicaux_personne')
+ 				->values(array('id_ant_medicaux' => $id_ant_med, 'id_patient' => $data->id_patient, 'date_enregistrement' => $date, 'id_medecin' => $id_medecin));
+ 				$sql->prepareStatementForSqlObject($sQuery1)->execute();
  			}
  			
  			

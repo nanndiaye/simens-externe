@@ -134,7 +134,7 @@ class DemandeTable{
 		$select->join( array(
 				'r' => 'resultats_examens'
 		), 'd.idDemande = r.idDemande' , array ( '*' ) );
-		$select->where(array('d.idCons' => $id, 'idType' => 1, 'appliquer' => 1, 'envoyer' => 1));
+		$select->where(array('d.idCons' => $id, 'e.idType' => 1, 'appliquer' => 1));
 		$select->order('d.idDemande ASC');
 		$stat = $sql->prepareStatementForSqlObject($select);
 		$result = $stat->execute();

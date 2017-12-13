@@ -76,7 +76,7 @@ use Chururgie\Model\TypePathologie;
 use Chururgie\Model\ConsultantOrganeTable;
 use Chururgie\Model\ConsultantOrgane;
 use Chururgie\Model\ResultatExamensComplementairesTable;
-
+use Chururgie\Model\ResultatExamensComplementaires;
 
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ServiceProviderInterface, ViewHelperProviderInterface {
@@ -465,17 +465,18 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Se
 							$resultSetPrototype->setArrayObjectPrototype ( new DemandeActe());
 							return new TableGateway ( 'demande_acte', $dbAdapter, null, $resultSetPrototype );
 						},
-						'Chururgie\Model\ResulatExamensComplementairesTable' => function ($sm) {
-							$tableGateway = $sm->get ( 'ResulatExamensComplementairesGateway' );
+						'Chururgie\Model\ResultatExamensComplementairesTable' => function ($sm) {
+							$tableGateway = $sm->get ( 'ResultatExamensComplementairesTableGateway' );
 							$table = new ResultatExamensComplementairesTable($tableGateway);
 							return $table;
 						},
-						'ResulatExamensComplementairesTableGateway' => function ($sm){
-							$dbAdapter = $sm->get('Zend\Db\Adapter');
+						'ResultatExamensComplementairesTableGateway' => function ($sm) {
+							$dbAdapter = $sm->get ( 'Zend\Db\Adapter\Adapter' );
 							$resultSetPrototype = new ResultSet();
-							$resultSetPrototype->setArrayObjectPrototype(new ResultatExamensComplementaires() );
-							return  new TableGateway('resultats_examens',$dbAdapter, null, $resultSetPrototype);
-						}
+							$resultSetPrototype->setArrayObjectPrototype ( new ResultatExamensComplementaires());
+							return new TableGateway ( 'resultats_examens', $dbAdapter, null, $resultSetPrototype );
+						},
+						
 					
 				)
 		);

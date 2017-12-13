@@ -125,9 +125,8 @@ class AdmissionForm extends Form{
 				'type' => 'Zend\Form\Element\radio',
 				'options' => array (
 						'value_options' => array(
-								'1' => 'Normal',
-						    '2' => iconv ( 'UTF-8','ISO-8859-1', 'Presentation Resultat') ,
-						    '3' => iconv ('UTF-8',  'ISO-8859-1', 'Rendez-vous') ,
+								'1' => 'Nouvelle Consultation',
+						    '2' => iconv ('UTF-8',  'ISO-8859-1', 'Rendez-vous') ,
 						),
 				),
 				'attributes' => array(

@@ -231,6 +231,7 @@ function vider_element_selectionne(id) {
 //CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
 
 function chargementModification (index , element , note) { 
+	//alert(index);
 	$("#SelectElement_"+(index+1)+" option[value='"+element+"']").attr('selected','selected'); 
 	$("#note_"+(index+1)+" input").val(note);
 }

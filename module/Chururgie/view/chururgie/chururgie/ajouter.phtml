@@ -36,6 +36,7 @@ $(window).load(function () {
 
 
 <?php
+
 $form = $this->form;
 $form->setAttribute ( 'action', $this->url ( 'chururgie', array (
 		'action' => 'enregistrement' 
@@ -88,7 +89,9 @@ echo $this->form ()->openTag ( $form );
 
 				<tr class="comment-form-patient">
 					<td> <?php echo $this->formRow($this->form->get('PRENOM'));?></td>
+					
 					<td> <?php echo $this->formRow($this->form->get('TELEPHONE1'));?></td>
+					
 					<td> <?php echo $this->formRow($this->form->get('NATIONALITE_ORIGINE'));?>
 					
 				</tr>

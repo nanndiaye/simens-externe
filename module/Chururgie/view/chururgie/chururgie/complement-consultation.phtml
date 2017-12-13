@@ -1017,8 +1017,7 @@ echo $this->form()->openTag($form);
 							<td id="BUcheckbox" colspan="3" style="width: 60%;">
 								<div id="imageIconeAjouterLabel">
                       <?php echo $this->formRow($form->get('nbCheckboxAM'));?>
-                      <label
-										style="width: 55%; height: 30px; text-align: right;">
+                      <label style="width: 55%; height: 30px; text-align: right;">
                         Autres  <?php echo $this->formRow($form->get('autresAM'));?>
                         <img id="imgIconeAjouterLabel"
 										style='cursor: pointer; padding-right: 5px; padding-left: 10px; padding-bottom: 6px;'
@@ -1593,17 +1592,116 @@ echo $this->form()->openTag($form);
 		<!-- ********************Histoire de la Maladie******************-->
 		<!-- ********************Histoire de la Maladie******************-->
 		<!-- ********************Histoire de la Maladie******************-->
-		<div style='font-family: police2; font-size: 17px; font-weight: bold;'>
-			Histoire de la Maladie</div>
-
-
-
-		<div style='max-height: 240px;'>
-			<table id="hospitalisation" style="width: 90%;">
-				<tr>
-					<th class="form-hospitalisation" style="width: 90%;"> <?php echo $this->formRow($form->get('histoire_maladie'));?> </th>
+		<div style='font-family: police2; font-size: 17px; font-weight: bold;'> Histoire de La Maladie</div>
+		<div style='max-height: 340px;'>
+			<p style='color: white; opacity: 0.75;'>
+				<img id=""
+					src='<?php echo $this->basePath().'/images_icons/symptome.jpg'?>'
+					alt="consult-motif"
+					style='float: right; margin-right: 0px; width: 32%; height: 270px;' />
+			</p>
+        <?php echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterSymptomes.js');?>
+        <table id="responde" style="width: 65%;">
+				<tr id="donnee_symptome1" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome1'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome1'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome2" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome2'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome2'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome3" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome3'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome3'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome4" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome4'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome4'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome5" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome5'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome5'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				
+				<tr id="donnee_symptome6" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome6'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome6'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				
+				<tr id="donnee_symptome7" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome7'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome7'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome8" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome8'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome8'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome9" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome9'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome9'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome10" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome10'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome10'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
 				</tr>
 			</table>
+
+			<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+			<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+			<div id="controls_donnees" style="margin-top: 10px; width: 100%;">
+				<div style="width: 100%;">
+					<!--		<div style="width: 3%; height: 1px; float: left;"
+						id="supprimer_donnee">
+						<img id="supprimer_donnee_img"
+							style='margin-left: 5px; cursor: pointer;'
+							src='../images_icons/moin-green.png' title='supprimer' />
+					</div>-->
+					<div style="width: 3%; height: 1px; float: left;"
+						id="ajouter_donnee">
+						<img id="ajouter_donnee_img_symptome"
+							style='margin-left: 5px; cursor: pointer;'
+							src='../images_icons/plus-green.png' title='ajouter' />
+					</div>
+				</div>
+			</div>
+
+
+
+			<script>
+          cacherTouteDonneeSymptome();
+          afficherSymptome(1);
+          supprimerUneDonneeSymptome();
+         </script>
 
 		</div>
 		<!-- ********************Accordeon DONNEES DE L'EXAMEN PHYSIQUE******************-->
@@ -1653,6 +1751,43 @@ echo $this->form()->openTag($form);
 				<tr id="donnee5" class="form-author">
 					<th><?php echo $this->formRow($form->get('examen_donnee5'));?> <span
 						id="labelSupDonnee"> <img class='supprimerDonnee5'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				
+				<tr id="donnee6" class="form-author">
+					<th><?php echo $this->formRow($form->get('examen_donnee6'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonnee6'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				
+				<tr id="donnee7" class="form-author">
+					<th><?php echo $this->formRow($form->get('examen_donnee7'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonnee7'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee8" class="form-author">
+					<th><?php echo $this->formRow($form->get('examen_donnee8'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonnee8'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee9" class="form-author">
+					<th><?php echo $this->formRow($form->get('examen_donnee9'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonnee9'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee10" class="form-author">
+					<th><?php echo $this->formRow($form->get('examen_donnee10'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonnee10'
 							style='cursor: pointer;' src='../images/images/sup.png'
 							title='supprimer' />
 					</span></th>
@@ -1810,9 +1945,9 @@ echo $this->form()->openTag($form);
                                var i = 13;
 
                                <?php foreach ($this->listeActes as $listeActes){ ?>
-                                       myArrayActe[i++] =  "<?php echo $listeActes['designation']; ?>";
+                                       myArrayActe[i++] =  "<?php echo $listeActes['libelleExamen']; ?>";
                                <?php } ?>
-                               
+                              // alert(myArrayActe);
                                partDefautActe(myArrayActe, 1);
                                
                                //Descactiver la visualisation des resultats pour afficher uniquement ceux selectionn�s

@@ -1,5 +1,6 @@
 function creerLalisteActe ($listeDesElements) {
     	var index = $("LesActes").length; 
+    	var j =13;
 			        $liste = "<div id='Acte_"+(index+1)+"'>"+
 				             "<LesActes>"+
 				             "<table class='table table-bordered' id='Examen' style='margin-bottom: 0px; width: 100%;'>"+
@@ -14,8 +15,9 @@ function creerLalisteActe ($listeDesElements) {
 			                 "<option value='' > -- S&eacute;l&eacute;ctionner un examen -- </option>";
                              for(var i = 1 ; i < $listeDesElements.length ; i++){
                             	 if($listeDesElements[i]){
-                    $liste +="<option value='"+i+"'>"+$listeDesElements[i]+"</option>";
+                    $liste +="<option value='"+ j +"'>"+$listeDesElements[i]+"</option>";
                             	 }
+                            	 j++;
                              }   
                     $liste +="</select>"+                           
                              "</th>"+
@@ -77,7 +79,7 @@ function ActiverResultatExamenFonctionnel(){
 	var index = $("LesActes").length;
 
 	d = document.getElementById("acte_name_"+index+"").value;
-	//alert(index);
+	alert(d);
 	// Si on change de choix dans le premier select 
 	
 		if(d==13){
@@ -225,10 +227,10 @@ function vider_acte_selectionne(id) {
 //		$('#acte_'+i).toggle(fa); 
 //	}
 //}
-
+var i=1;
 function chargementModificationActe (index, element, note) {
-	$("#SelectActe_"+(index+1)+" option[value='"+element+"']").attr('selected','selected'); 
-	//$("#tarifActe_"+(index+1)+" input").val(tarif);
+	
+	$("#acte_name_"+(index+1)+" option[value='"+element+"']").attr('selected','selected'); 
 	$("#noteActe_"+(index+1)+" input").val(note);
 	
 	//ON AFFICHE UNIQUEMENT CEUX AYANT ETE DEMANDE

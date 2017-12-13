@@ -828,7 +828,17 @@ $(function(){
 	    
 	    // Histoire de la maladie
 	    
-	    donnees['histoire_maladie'] = $("#histoire_maladie").val();
+	    donnees['symptome1'] = $("#symptome1").val();
+	    donnees['symptome2'] = $("#symptome2").val();
+	    donnees['symptome3'] = $("#symptome3").val();
+	    donnees['symptome4'] = $("#symptome4").val();
+	    donnees['symptome5'] = $("#symptome5").val();
+	    
+	    donnees['symptome6'] = $("#symptome6").val();
+	    donnees['symptome7'] = $("#symptome7").val();
+	    donnees['symptome8'] = $("#symptome8").val();
+	    donnees['symptome9'] = $("#symptome9").val();
+	    donnees['symptome10'] = $("#symptome10").val();
 	    
 	    //*********** PATHOLOGIE ************
 	    //*********** PATHOLOGIE ************
@@ -866,6 +876,12 @@ $(function(){
 	    donnees['examen_donnee3'] = $("#examen_donnee3").val();
 	    donnees['examen_donnee4'] = $("#examen_donnee4").val();
 	    donnees['examen_donnee5'] = $("#examen_donnee5").val();
+	    
+	    donnees['examen_donnee6'] = $("#examen_donnee6").val();
+	    donnees['examen_donnee7'] = $("#examen_donnee7").val();
+	    donnees['examen_donnee8'] = $("#examen_donnee8").val();
+	    donnees['examen_donnee9'] = $("#examen_donnee9").val();
+	    donnees['examen_donnee10'] = $("#examen_donnee10").val();
 	    
 	    
 	  //**********--  Demande ANALYSE FONCTIONNEL --************
@@ -2165,7 +2181,7 @@ $(function(){
 	  		}
 	  		
 	  		scriptLabel = 
-  				"<td id='BUcheckbox' class='label_"+ligne+"_"+i+"' style='min-width: 45%; '> "+
+  				"<td id='BUcheckboxAF' class='label_"+ligne+"_"+i+"' style='min-width: 45%; '> "+
                 "<div > "+
                 " <label style='width: 50%; height:30px; text-align:right; font-family: time new romans; font-size: 18px;'> "+
                 "       <a href='javascript:supprimerLabelAF("+ligne+","+i+");' ><img class='imageSupprimerAsthmeAF' style='cursor: pointer; float: right; margin-right: -10px; width:10px; height: 10px;' src='"+tabUrl[0]+"public/images_icons/sup.png' /></a> "+ 

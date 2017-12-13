@@ -85,13 +85,13 @@ function ActiverResultatExamenBiologie(){
 		$("#resultat_hemogramme_sanguin").toggle(true);
 	}
 	if(d==3){
-		$("#resultat_bilan_hemolyse").toggle(true);
-	}
-	if(d==4){
 		$("#resultat_bilan_hepatique").toggle(true);
 	}
-	if(d==5){
+	if(d==4){
 		$("#resultat_bilan_renal").toggle(true);
+	}
+	if(d==5){
+		$("#resultat_bilan_hemolyse").toggle(true);
 	}
 	if(d==6){
 		$("#resultat_bilan_inflammatoire").toggle(true);

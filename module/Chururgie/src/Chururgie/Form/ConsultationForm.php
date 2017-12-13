@@ -48,17 +48,117 @@ class ConsultationForm extends Form {
 		        'id' => 'autre_historique'
 		    )
 		) );
-		/*Histoire de la maladie*/
+														/*Histoire de la maladie*/
 		$this->add ( array (
-		    'name' => 'histoire_maladie',
-		    'type' => 'Textarea',
+		    'name' => 'symptome1',
+		    'type' => 'Text',
 		    'options' => array (
-		   'label' => 'Histoire de la Maladie'
+		   'label' => 'symptome 1'
 		    ),
 		    'attributes' => array (
-		        'id' => 'histoire_maladie'
+		        'id' => 'symptome1'
 		    )
 		) );
+		
+		
+		$this->add ( array (
+				'name' => 'symptome2',
+				'type' => 'Text',
+				'options' => array (
+						'label' => 'symptome 2'
+				),
+				'attributes' => array (
+						'id' => 'symptome2'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'symptome3',
+				'type' => 'Text',
+				'options' => array (
+						'label' => 'symptome 3'
+				),
+				'attributes' => array (
+						'id' => 'symptome3'
+				)
+		) );
+		$this->add ( array (
+				'name' => 'symptome4',
+				'type' => 'Text',
+				'options' => array (
+						'label' => 'symptome 4'
+				),
+				'attributes' => array (
+						'id' => 'symptome4'
+				)
+		) );
+		$this->add ( array (
+				'name' => 'symptome5',
+				'type' => 'Text',
+				'options' => array (
+						'label' => 'symptome 5'
+				),
+				'attributes' => array (
+						'id' => 'symptome5'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'symptome6',
+				'type' => 'Text',
+				'options' => array (
+						'label' => 'symptome 6'
+				),
+				'attributes' => array (
+						'id' => 'symptome6'
+				)
+		) );
+		
+		$this->add ( array (
+				'name' => 'symptome7',
+				'type' => 'Text',
+				'options' => array (
+						'label' => 'symptome 7'
+				),
+				'attributes' => array (
+						'id' => 'symptome7'
+				)
+		) );
+		$this->add ( array (
+				'name' => 'symptome8',
+				'type' => 'Text',
+				'options' => array (
+						'label' => 'symptome8'
+				),
+				'attributes' => array (
+						'id' => 'symptome8'
+				)
+		) );
+		$this->add ( array (
+				'name' => 'symptome9',
+				'type' => 'Text',
+				'options' => array (
+						'label' => 'symptome 9'
+				),
+				'attributes' => array (
+						'id' => 'symptome9'
+				)
+		) );
+		$this->add ( array (
+				'name' => 'symptome10',
+				'type' => 'Text',
+				'options' => array (
+						'label' => 'symptome 10'
+				),
+				'attributes' => array (
+						'id' => 'symptome10'
+				)
+		) );
+		
+		
+		
+		
+		/*-------------------- FIN HISTOIRE DE LA MALADIE------------------*/
 		
 		$this->add ( array (
 		    'name' => 'id_admission',
@@ -197,7 +297,7 @@ class ConsultationForm extends Form {
 				'name' => 'examen_donnee1',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnee 1') 
+						'label' => 'donnee 1' 
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -208,7 +308,7 @@ class ConsultationForm extends Form {
 				'name' => 'examen_donnee2',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 2') 
+						'label' => 'donnée 2' 
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -219,7 +319,7 @@ class ConsultationForm extends Form {
 				'name' => 'examen_donnee3',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 3') 
+						'label' => 'donnée 3' 
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -230,7 +330,7 @@ class ConsultationForm extends Form {
 				'name' => 'examen_donnee4',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 4') 
+						'label' => 'donnée 4' 
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
@@ -241,11 +341,69 @@ class ConsultationForm extends Form {
 				'name' => 'examen_donnee5',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8','donnée 5') 
+						'label' => 'donnée 5'
 				),
 				'attributes' => array (
 						'readonly' => 'readonly',
 						'id'  => 'examen_donnee5'
+				)
+		) );
+		
+		
+		
+		$this->add ( array (
+				'name' => 'examen_donnee6',
+				'type' => 'Text',
+				'options' => array (
+						'label' =>  'donnee 6'
+				),
+				'attributes' => array (
+						'readonly' => 'readonly',
+						'id'  => 'examen_donnee6'
+				)
+		) );
+		$this->add ( array (
+				'name' => 'examen_donnee7',
+				'type' => 'Text',
+				'options' => array (
+						'label' =>  'donnée 7'
+				),
+				'attributes' => array (
+						'readonly' => 'readonly',
+						'id'  => 'examen_donnee7'
+				)
+		) );
+		$this->add ( array (
+				'name' => 'examen_donnee8',
+				'type' => 'Text',
+				'options' => array (
+						'label' => 'donnée 8'
+				),
+				'attributes' => array (
+						'readonly' => 'readonly',
+						'id'  => 'examen_donnee8'
+				)
+		) );
+		$this->add ( array (
+				'name' => 'examen_donnee9',
+				'type' => 'Text',
+				'options' => array (
+						'label' => 'donnée 9'
+				),
+				'attributes' => array (
+						'readonly' => 'readonly',
+						'id'  => 'examen_donnee9'
+				)
+		) );
+		$this->add ( array (
+				'name' => 'examen_donnee10',
+				'type' => 'Text',
+				'options' => array (
+						'label' => 'donnée 10'
+				),
+				'attributes' => array (
+						'readonly' => 'readonly',
+						'id'  => 'examen_donnee10'
 				)
 		) );
 		
