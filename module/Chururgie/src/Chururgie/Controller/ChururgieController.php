@@ -638,7 +638,7 @@ class ChururgieController extends AbstractActionController {
 	    	$data['symptome'.$i] = $resul["histoire_maladie"];
 	    	$i++;
 	    }
-	   // var_dump($data);exit();
+	  var_dump($data);exit();
 	    
 	    $form->populateValues($antMedPat,$listeAntMed);
 	    //var_dump($data);exit();
