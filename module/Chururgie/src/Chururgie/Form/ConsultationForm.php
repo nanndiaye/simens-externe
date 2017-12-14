@@ -34,7 +34,7 @@ class ConsultationForm extends Form {
 		    'options' => array (
 		     //   'label' => 'Examen'
 		    ),
-		    'attributes' => array (
+		    'attributes' => array (	
 		       'id' => 'examen_historique'
 		    )
 		) );
@@ -56,6 +56,7 @@ class ConsultationForm extends Form {
 		   'label' => 'symptome 1'
 		    ),
 		    'attributes' => array (
+		    'readonly' => 'readonly',
 		        'id' => 'symptome1'
 		    )
 		) );
@@ -68,6 +69,7 @@ class ConsultationForm extends Form {
 						'label' => 'symptome 2'
 				),
 				'attributes' => array (
+						'readonly' => 'readonly',
 						'id' => 'symptome2'
 				)
 		) );
@@ -79,6 +81,7 @@ class ConsultationForm extends Form {
 						'label' => 'symptome 3'
 				),
 				'attributes' => array (
+						'readonly' => 'readonly',
 						'id' => 'symptome3'
 				)
 		) );
@@ -89,6 +92,7 @@ class ConsultationForm extends Form {
 						'label' => 'symptome 4'
 				),
 				'attributes' => array (
+						'readonly' => 'readonly',
 						'id' => 'symptome4'
 				)
 		) );
@@ -99,6 +103,7 @@ class ConsultationForm extends Form {
 						'label' => 'symptome 5'
 				),
 				'attributes' => array (
+						'readonly' => 'readonly',
 						'id' => 'symptome5'
 				)
 		) );
@@ -110,6 +115,7 @@ class ConsultationForm extends Form {
 						'label' => 'symptome 6'
 				),
 				'attributes' => array (
+						'readonly' => 'readonly',
 						'id' => 'symptome6'
 				)
 		) );
@@ -121,6 +127,7 @@ class ConsultationForm extends Form {
 						'label' => 'symptome 7'
 				),
 				'attributes' => array (
+						'readonly' => 'readonly',
 						'id' => 'symptome7'
 				)
 		) );
@@ -131,6 +138,7 @@ class ConsultationForm extends Form {
 						'label' => 'symptome8'
 				),
 				'attributes' => array (
+						'readonly' => 'readonly',
 						'id' => 'symptome8'
 				)
 		) );
@@ -141,6 +149,7 @@ class ConsultationForm extends Form {
 						'label' => 'symptome 9'
 				),
 				'attributes' => array (
+						'readonly' => 'readonly',
 						'id' => 'symptome9'
 				)
 		) );
@@ -151,6 +160,7 @@ class ConsultationForm extends Form {
 						'label' => 'symptome 10'
 				),
 				'attributes' => array (
+						'readonly' => 'readonly',
 						'id' => 'symptome10'
 				)
 		) );

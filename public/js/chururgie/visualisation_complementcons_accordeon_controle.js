@@ -86,28 +86,84 @@
 		 $("#albumine, #sucre, #corpscetonique").attr( 'disabled' , true).css({'background':'#f8f8f8'});
 	}, 2000);
 	
-	
-	//********************* examen_donnee *****************************
+    
+    
+    //********************* examen_donnee *****************************
 	//********************* examen_donnee ***************************** 
+	
 	setTimeout(function(){
 	var donnee1 = $("#examen_donnee1");
 	var donnee2 = $("#examen_donnee2");
 	var donnee3 = $("#examen_donnee3");
 	var donnee4 = $("#examen_donnee4");
 	var donnee5 = $("#examen_donnee5");
+	var donnee6 = $("#examen_donnee6");
+	var donnee7 = $("#examen_donnee7");
+	var donnee8 = $("#examen_donnee8");
+	var donnee9 = $("#examen_donnee9");
+	var donnee10 = $("#examen_donnee10");
+	
 	
 	donnee1.attr( 'disabled', true).css({'background':'#f8f8f8'});
 	donnee2.attr( 'disabled', true).css({'background':'#f8f8f8'});
 	donnee3.attr( 'disabled', true).css({'background':'#f8f8f8'});
 	donnee4.attr( 'disabled', true).css({'background':'#f8f8f8'});
 	donnee5.attr( 'disabled', true).css({'background':'#f8f8f8'});
-	$("#bouton_donnee_modifier").toggle(false);
-	$("#bouton_donnee_valider").toggle(false);
+	
+
+	donnee6.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	donnee7.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	donnee8.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	donnee9.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	donnee10.attr( 'disabled', true).css({'background':'#f8f8f8'});
+//	$("#bouton_donnee_modifier").toggle(false);
+//	$("#bouton_donnee_valider").toggle(false);
 	
 	$('#ajouter_donnee_img').toggle(false);
 	$('#supprimer_donnee_img').toggle(false);
 	
-	$('.supprimerDonnee1, .supprimerDonnee2, .supprimerDonnee3, .supprimerDonnee4, .supprimerDonnee5').toggle(false);
+	$('.supprimerDonnee1, .supprimerDonnee2, .supprimerDonnee3, .supprimerDonnee4, .supprimerDonnee5','.supprimerDonnee6',
+			' .supprimerDonnee7, .supprimerDonnee8, .supprimerDonnee9, .supprimerDonnee10').toggle(false);
+	 }, 2000);
+    
+    
+    
+    
+	//********************* symptome *****************************
+	//********************* symptome *****************************
+	
+	setTimeout(function(){
+	var symptome1 = $("#symptome1");
+	var symptome2 = $("#symptome2");
+	var symptome3 = $("#symptome3");
+	var symptome4 = $("#symptome4");
+	var symptome5 = $("#symptome5");
+	var symptome6 = $("#symptome6");
+	var symptome7 = $("#symptome7");
+	var symptome8 = $("#symptome8");
+	var symptome9 = $("#symptome9");
+	var symptome10 = $("#symptome10");
+	
+	
+	symptome1.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome2.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome3.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome4.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome5.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	
+
+	symptome6.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome7.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome8.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome9.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome10.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	
+	
+	$('#ajouter_donnee_img').toggle(false);
+	$('#supprimer_donnee_img_symptome').toggle(false);
+	
+	$('.supprimerDonnee1, .supprimerDonnee2, .supprimerDonnee3, .supprimerDonnee4, .supprimerDonnee5','.supprimerDonnee6',
+			' .supprimerDonnee7, .supprimerDonnee8, .supprimerDonnee9, .supprimerDonnee10').toggle(false);
 	 }, 2000);
 	  		
 //********************* ANALYSE MORPHOLOGIQUE *****************************

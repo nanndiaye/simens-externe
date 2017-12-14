@@ -633,12 +633,12 @@ class ChururgieController extends AbstractActionController {
 	    //RECUPERATION DE L'HISTOIRE DE LA MALADIE OU DES SYMPTOMES
 	    $symptome= $this->getConsultationTable()->getHistoireDeLaMaladieIDCONS($id);
 	    
-			$i=1;
+			$nb_symptome=1;
 	    foreach ($symptome as $resul) { 
-	    	$data['symptome'.$i] = $resul["histoire_maladie"];
-	    	$i++;
+	    	$data['symptome'.$nb_symptome] = $resul["histoire_maladie"];
+	    	$nb_symptome++;
 	    }
-	  var_dump($data);exit();
+	 // var_dump($data);exit();
 	    
 	    $form->populateValues($antMedPat,$listeAntMed);
 	    //var_dump($data);exit();
@@ -648,6 +648,7 @@ class ChururgieController extends AbstractActionController {
 	  //var_dump($listeDesExamensFonctionnelsPredefinis->count());exit();    
 	   // var_dump('');exit();
 	    return array(
+	    		'nb_symptome'=>$nb_symptome,
 	        'lestypespatho'=> $lestypes,
 	        'nbTypespatho'=>$lestypes->count(),
 	    		'listeTypePathologie'=> $listeTypePathologie,
@@ -2247,10 +2248,10 @@ class ChururgieController extends AbstractActionController {
 		//RECUPERATION DE L'HISTOIRE DE LA MALADIE OU DES SYMPTOMES
 		$symptome= $this->getConsultationTable()->getHistoireDeLaMaladieIDCONS($id);
 		 
-		$i=1;
+		$nb_symptome=1;
 		foreach ($symptome as $resul) {
-			$data['symptome'.$i] = $resul["histoire_maladie"];
-			$i++;
+			$data['symptome'.$nb_symptome] = $resul["histoire_maladie"];
+			$nb_symptome++;
 		}
 		
 		//POUR LES DEMANDES D'HOSPITALISATION
@@ -2265,7 +2266,7 @@ class ChururgieController extends AbstractActionController {
 		
 			
 		return array(
-				
+				'nb_symptome'=>$nb_symptome,
 				'lestypespatho'=> $lestypes,
 				'nbTypespatho'=>$lestypes->count(),
 				'listeTypePathologie'=> $listeTypePathologie,

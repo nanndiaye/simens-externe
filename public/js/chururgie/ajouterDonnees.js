@@ -285,7 +285,7 @@ $(function(){
 	var donnee7 = $("#examen_donnee7");
 	var donnee8 = $("#examen_donnee8");
 	var donnee9 = $("#examen_donnee9");
-	var donnee10 = $("#examen_donnee10")
+	var donnee10 = $("#examen_donnee10");
 	
 	//Au debut on affiche pas le bouton modifier
 //	$("#bouton_donnee_modifier").toggle(false);

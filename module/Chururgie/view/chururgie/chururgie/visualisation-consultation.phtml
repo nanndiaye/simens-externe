@@ -1095,76 +1095,36 @@ echo $this->form()->openTag($form); ?>
         <?php echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterSymptomes.js');?>
         <table id="responde" style="width: 55%;">
 				<tr id="donnee_symptome1" class="form-author">
-					<th><?php echo $this->formRow($form->get('symptome1'));?> <span
-						id="labelSupDonnee"> <img class='supprimerDonneeSymptome1'
-							style='cursor: pointer;' src='../images/images/sup.png'
-							title='supprimer' />
-					</span></th>
+					<th><?php echo $this->formRow($form->get('symptome1'));?> </th>
 				</tr>
 				<tr id="donnee_symptome2" class="form-author">
-					<th><?php echo $this->formRow($form->get('symptome2'));?> <span
-						id="labelSupDonnee"> <img class='supprimerDonneeSymptome2'
-							style='cursor: pointer;' src='../images/images/sup.png'
-							title='supprimer' />
-					</span></th>
+					<th><?php echo $this->formRow($form->get('symptome2'));?> </th>
 				</tr>
 				<tr id="donnee_symptome3" class="form-author">
-					<th><?php echo $this->formRow($form->get('symptome3'));?> <span
-						id="labelSupDonnee"> <img class='supprimerDonneeSymptome3'
-							style='cursor: pointer;' src='../images/images/sup.png'
-							title='supprimer' />
-					</span></th>
+					<th><?php echo $this->formRow($form->get('symptome3'));?>  </th>
 				</tr>
 				<tr id="donnee_symptome4" class="form-author">
-					<th><?php echo $this->formRow($form->get('symptome4'));?> <span
-						id="labelSupDonnee"> <img class='supprimerDonneeSymptome4'
-							style='cursor: pointer;' src='../images/images/sup.png'
-							title='supprimer' />
-					</span></th>
+					<th><?php echo $this->formRow($form->get('symptome4'));?> </th>
 				</tr>
 				<tr id="donnee_symptome5" class="form-author">
-					<th><?php echo $this->formRow($form->get('symptome5'));?> <span
-						id="labelSupDonnee"> <img class='supprimerDonneeSymptome5'
-							style='cursor: pointer;' src='../images/images/sup.png'
-							title='supprimer' />
-					</span></th>
+					<th><?php echo $this->formRow($form->get('symptome5'));?>  </th>
 				</tr>
 				
 				<tr id="donnee_symptome6" class="form-author">
-					<th><?php echo $this->formRow($form->get('symptome6'));?> <span
-						id="labelSupDonnee"> <img class='supprimerDonneeSymptome6'
-							style='cursor: pointer;' src='../images/images/sup.png'
-							title='supprimer' />
-					</span></th>
+					<th><?php echo $this->formRow($form->get('symptome6'));?> </th>
 				</tr>
 				
 				<tr id="donnee_symptome7" class="form-author">
-					<th><?php echo $this->formRow($form->get('symptome7'));?> <span
-						id="labelSupDonnee"> <img class='supprimerDonneeSymptome7'
-							style='cursor: pointer;' src='../images/images/sup.png'
-							title='supprimer' />
-					</span></th>
+					<th><?php echo $this->formRow($form->get('symptome7'));?> </th>
 				</tr>
 				<tr id="donnee_symptome8" class="form-author">
-					<th><?php echo $this->formRow($form->get('symptome8'));?> <span
-						id="labelSupDonnee"> <img class='supprimerDonneeSymptome8'
-							style='cursor: pointer;' src='../images/images/sup.png'
-							title='supprimer' />
-					</span></th>
+					<th><?php echo $this->formRow($form->get('symptome8'));?>  </th>
 				</tr>
 				<tr id="donnee_symptome9" class="form-author">
-					<th><?php echo $this->formRow($form->get('symptome9'));?> <span
-						id="labelSupDonnee"> <img class='supprimerDonneeSymptome9'
-							style='cursor: pointer;' src='../images/images/sup.png'
-							title='supprimer' />
-					</span></th>
+					<th><?php echo $this->formRow($form->get('symptome9'));?> </th>
 				</tr>
 				<tr id="donnee_symptome10" class="form-author">
-					<th><?php echo $this->formRow($form->get('symptome10'));?> <span
-						id="labelSupDonnee"> <img class='supprimerDonneeSymptome10'
-							style='cursor: pointer;' src='../images/images/sup.png'
-							title='supprimer' />
-					</span></th>
+					<th><?php echo $this->formRow($form->get('symptome10'));?> </th>
 				</tr>
 			</table>
 
@@ -1177,22 +1137,27 @@ echo $this->form()->openTag($form); ?>
 						<img id="supprimer_donnee_img"
 							style='margin-left: 5px; cursor: pointer;'
 							src='../images_icons/moin-green.png' title='supprimer' />
-					</div>-->
+					</div
 					<div style="width: 3%; height: 1px; float: left;"
 						id="ajouter_donnee">
 						<img id="ajouter_donnee_img_symptome"
 							style='margin-left: 5px; cursor: pointer;'
 							src='../images_icons/plus-green.png' title='ajouter' />
-					</div>
+					</div>>-->
 				</div>
 			</div>
 
 
 
 			<script>
-          cacherTouteDonneeSymptome();
-          afficherSymptome(1);
-          supprimerUneDonneeSymptome();
+			<script>
+			 var nb_symptome = "<?php echo ($this->nb_symptome - 1);?>";
+	          if(nb_symptome == 0) { nb_symptome = 1;}
+			 cacherTouteDonneeSymptome();
+	          afficherSymptome(nb_symptome);
+         supprimerUneDonneeSymptome();
+
+        </script>
          </script>
 
 		</div>
@@ -1209,39 +1174,39 @@ echo $this->form()->openTag($form); ?>
         <?php echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterDonnees.js');?>
         <table id="responde" style="width:65%;">
             <tr id="donnee1" class="form-author">
-               <th><?php echo $this->formRow($form->get('examen_donnee1'));?> <span id="labelSupDonnee"> <img class='supprimerDonnee1' style='cursor: pointer;' src='../images/images/sup.png' title='supprimer' /> </span> </th>
+               <th><?php echo $this->formRow($form->get('examen_donnee1'));?>   </th>
             </tr>
             <tr id="donnee2" class="form-author">
-               <th><?php echo $this->formRow($form->get('examen_donnee2'));?> <span id="labelSupDonnee"> <img class='supprimerDonnee2' style='cursor: pointer;' src='../images/images/sup.png' title='supprimer' /> </span></th>
+               <th><?php echo $this->formRow($form->get('examen_donnee2'));?>  </th>
             </tr>
             <tr id="donnee3" class="form-author">
-               <th><?php echo $this->formRow($form->get('examen_donnee3'));?> <span id="labelSupDonnee"> <img class='supprimerDonnee3' style='cursor: pointer;' src='../images/images/sup.png' title='supprimer' /> </span></th>
+               <th><?php echo $this->formRow($form->get('examen_donnee3'));?>  </th>
             </tr>
             <tr id="donnee4" class="form-author">
-               <th><?php echo $this->formRow($form->get('examen_donnee4'));?> <span id="labelSupDonnee"> <img class='supprimerDonnee4' style='cursor: pointer;' src='../images/images/sup.png' title='supprimer' /> </span></th>
+               <th><?php echo $this->formRow($form->get('examen_donnee4'));?>  </th>
             </tr>
             <tr id="donnee5" class="form-author">
-               <th><?php echo $this->formRow($form->get('examen_donnee5'));?> <span id="labelSupDonnee"> <img class='supprimerDonnee5' style='cursor: pointer;' src='../images/images/sup.png' title='supprimer' /> </span></th>
+               <th><?php echo $this->formRow($form->get('examen_donnee5'));?>  </th>
             </tr>
             
               <tr id="donnee6" class="form-author">
-               <th><?php echo $this->formRow($form->get('examen_donnee6'));?> <span id="labelSupDonnee"> <img class='supprimerDonnee6' style='cursor: pointer;' src='../images/images/sup.png' title='supprimer' /> </span></th>
+               <th><?php echo $this->formRow($form->get('examen_donnee6'));?>  </th>
             </tr>
             
               <tr id="donnee7" class="form-author">
-               <th><?php echo $this->formRow($form->get('examen_donnee7'));?> <span id="labelSupDonnee"> <img class='supprimerDonnee7' style='cursor: pointer;' src='../images/images/sup.png' title='supprimer' /> </span></th>
+               <th><?php echo $this->formRow($form->get('examen_donnee7'));?>  </th>
             </tr>
             
               <tr id="donnee8" class="form-author">
-               <th><?php echo $this->formRow($form->get('examen_donnee8'));?> <span id="labelSupDonnee"> <img class='supprimerDonnee8' style='cursor: pointer;' src='../images/images/sup.png' title='supprimer' /> </span></th>
+               <th><?php echo $this->formRow($form->get('examen_donnee8'));?>  </th>
             </tr>
             
               <tr id="donnee9" class="form-author">
-               <th><?php echo $this->formRow($form->get('examen_donnee9'));?> <span id="labelSupDonnee"> <img class='supprimerDonnee9' style='cursor: pointer;' src='../images/images/sup.png' title='supprimer' /> </span></th>
+               <th><?php echo $this->formRow($form->get('examen_donnee9'));?> </th>
             </tr>
             
               <tr id="donnee10" class="form-author">
-               <th><?php echo $this->formRow($form->get('examen_donnee10'));?> <span id="labelSupDonnee"> <img class='supprimerDonnee10' style='cursor: pointer;' src='../images/images/sup.png' title='supprimer' /> </span></th>
+               <th><?php echo $this->formRow($form->get('examen_donnee10'));?> </th>
             </tr>
         </table>
         
@@ -1259,7 +1224,7 @@ echo $this->form()->openTag($form); ?>
 		 </div>
 
 		 <!--********************* BOUTON VALIDER-MODIFIER ************************-->
-         <!--********************* BOUTON VALIDER-MODIFIER ************************-->		            
+         <!--********************* BOUTON VALIDER-MODIFIER ************************	            
          <table style="width: 59%; position: relative; top: 0px;">
               <tr style="width: 90%;">
                 <th style="width:65%;">
@@ -1271,7 +1236,7 @@ echo $this->form()->openTag($form); ?>
                     </div>
                 </th>
               </tr>
-         </table>
+         </table>-->	
          
          <script>
           var nbMotifs = "<?php echo ($this->nbDonneesExamenPhysique - 1);?>";
@@ -1309,9 +1274,9 @@ echo $this->form()->openTag($form); ?>
                           
                           /**
                            *===========================================================================
-                           *===================== Les Actes  --- Les Actes  ===========================
-                           *===================== Les Actes  --- Les Actes  ===========================
-                           *===================== Les Actes  --- Les Actes  ===========================
+                           *===================== Examens Fonctionnels  ===========================
+                           *===================== Examens Fonctionnels  ===========================
+                           *===================== Examens Fonctionnels  ===========================
                            *===========================================================================
                            **/?>
                           <div style='font-family: police2;font-size: 15px; font-weight: bold; color:green;'> Examens Fonctionnels </div>
@@ -1617,7 +1582,7 @@ echo $this->form()->openTag($form); ?>
                        
                        <!--**************** Actes ************************-->
                        <!--**************** ACtes ************************-->
-                       <div style='font-family: police2;font-size: 15px; font-weight: bold; color:green;'> Actes </div>
+                       <div style='font-family: police2;font-size: 15px; font-weight: bold; color:green;'> Examens Fonctionnels </div>
                        <div style='max-height: 320px;'>
                        <div style="margin-bottom: 20px; border-bottom: 1px solid #cccccc; margin-top:-15px;"></div>
                        <div style="width: 100%;">
@@ -1625,53 +1590,6 @@ echo $this->form()->openTag($form); ?>
                        <div style="width: 80%; float:left; height: 1px;">
                             <table id="ActeResponde" style="width: 100%;">
                                   
-                                  <tr id="acte_1" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('doppler_couleur_pulse'));?> </th>
-                                  </tr>
-
-                                  <tr id="acte_2" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('echographie_de_stress'));?> </th>
-                                  </tr>
-
-                                  <tr id="acte_3" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('holter_ecg'));?> </th>
-                                  </tr>
-
-                                  <tr id="acte_4" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('holter_tensionnel'));?> </th>
-                                  </tr>
-
-                                  <tr id="acte_5" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('fibroscopie_bronchique'));?> </th>
-                                  </tr>
-
-                                  <tr id="acte_6" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('fibroscopie_gastrique'));?> </th>
-                                  </tr>
-                                  
-                                  <tr id="acte_7" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('colposcopie'));?> </th>
-                                  </tr>
-                                  
-                                  <tr id="acte_8" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('echographie_gynecologique'));?> </th>
-                                  </tr>
-                                  
-                                  <tr id="acte_9" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('echographie_obstetrique'));?> </th>
-                                  </tr>
-                                  
-                                  <tr id="acte_10" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('cpn'));?> </th>
-                                  </tr>
-                                  
-                                  <tr id="acte_11" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('consultation_senologie'));?> </th>
-                                  </tr>
-                                  
-                                  <tr id="acte_12" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('plannification_familiale'));?> </th>
-                                  </tr>
                                   
                                   <tr id="acte_13" class="" style="width: 100%;">
                                       <th> <?php echo $this->formRow($form->get('ecg'));?> </th>
@@ -1689,17 +1607,7 @@ echo $this->form()->openTag($form); ?>
                                       <th> <?php echo $this->formRow($form->get('emg'));?> </th>
                                   </tr>
                                   
-                                  <tr id="acte_17" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('circoncision'));?> </th>
-                                  </tr>
                                   
-                                  <tr id="acte_18" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('vaccination'));?> </th>
-                                  </tr>
-                                  
-                                  <tr id="acte_19" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('soins_infirmiers'));?> </th>
-                                  </tr>
                                   
                             </table>
                        </div>
@@ -1864,24 +1772,24 @@ echo $this->form()->openTag($form); ?>
                             <table id="respondeee" class="imageRadio" style="width: 100%;">
                                    <tr class="form-examen-morphologique" style="width: 100%;">
                                        <th style="width: 40%; vertical-align: top;"> <?php echo $this->formRow($form->get('radio'));?></th>
-                                       <th style="width: 25%; vertical-align: top; padding-top: 50px;"> <img src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" /></th>
+                             <!--          <th style="width: 25%; vertical-align: top; padding-top: 50px;"> <img src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" /></th>
                                        <th style="width: 34%; padding-bottom:15px; margin-right: 40px;"> 
                                            <!-- PIKACHOOSE -->
-                                           <!-- PIKACHOOSE -->
+                                           <!-- PIKACHOOSE 
                                            <div id="pika">
                                              <div id="pika2">
                                                 <!-- EMPLACEMENT DES IMAGES -->
                                                 <!-- EMPLACEMENT DES IMAGES -->
-                                                <!-- EMPLACEMENT DES IMAGES -->
+                                                <!-- EMPLACEMENT DES IMAGES 
                                              </div>
                                            </div>
                                            <div id="AjoutImage" style="float: right; position: relative; bottom: 42px; right: 5px;">
                                                   <input type='file' name="fichier" />
-			                                      <!-- RECUPERER L'IMAGE -->
+			                                      <!-- RECUPERER L'IMAGE 
 			                                      <input type='hidden' id="fichier_tmp" name="fichier_tmp" />
-			                                      <!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER -->
+			                                      <!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER
                                            </div>
-                                       </th>
+                                       </th>-->
                                    </tr>
                                    
                                    <tr style="width: 100%;">
@@ -1896,24 +1804,24 @@ echo $this->form()->openTag($form); ?>
                             <table id="respondeee" class="imageEchographie" style="width: 100%;">
                                    <tr class="form-examen-morphologique" style="width: 100%;">
                                        <th style="width: 40%; vertical-align: top;"> <?php echo $this->formRow($form->get('ecographie'));?></th>
-                                       <th style="width: 25%; vertical-align: top; padding-top: 50px;"> <img src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" /></th>
+                          <!--             <th style="width: 25%; vertical-align: top; padding-top: 50px;"> <img src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" /></th>
                                        <th style="width: 34%; padding-bottom:15px; margin-right: 40px;"> 
                                            <!-- PIKACHOOSE -->
-                                           <!-- PIKACHOOSE -->
+                                           <!-- PIKACHOOSE 
                                            <div id="pika3">
                                              <div id="pika4">
                                                 <!-- EMPLACEMENT DES IMAGES -->
                                                 <!-- EMPLACEMENT DES IMAGES -->
-                                                <!-- EMPLACEMENT DES IMAGES -->
+                                                <!-- EMPLACEMENT DES IMAGES 
                                              </div>
                                            </div>
                                            <div id="AjoutImageEchographie" style="float: right; position: relative; bottom: 42px; right: 5px;">
                                                   <input type='file' name="fichierEchographie" />
-			                                      <!-- RECUPERER L'IMAGE -->
+			                                      <!-- RECUPERER L'IMAGE
 			                                      <input type='hidden' id="fichierEchographie_tmp" name="fichierEchographie_tmp" />
-			                                      <!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER -->
+			                                      <!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER 
                                            </div>
-                                       </th>
+                                       </th>-->
                                    </tr>
                                    
                                    <tr style="width: 100%;">
@@ -1928,24 +1836,24 @@ echo $this->form()->openTag($form); ?>
                             <table id="respondeee" class="imageIRM" style="width: 100%;">
                                    <tr class="form-examen-morphologique" style="width: 100%;">
                                        <th style="width: 40%; vertical-align: top;"> <?php echo $this->formRow($form->get('irm'));?></th>
-                                       <th style="width: 25%; vertical-align: top; padding-top: 50px;"> <img src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" /></th>
+                                <!--         <th style="width: 25%; vertical-align: top; padding-top: 50px;"> <img src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" /></th>
                                        <th style="width: 34%; padding-bottom:15px; margin-right: 40px;"> 
                                            <!-- PIKACHOOSE -->
-                                           <!-- PIKACHOOSE -->
+                                           <!-- PIKACHOOSE 
                                            <div id="pika5">
                                              <div id="pika6">
                                                 <!-- EMPLACEMENT DES IMAGES -->
                                                 <!-- EMPLACEMENT DES IMAGES -->
-                                                <!-- EMPLACEMENT DES IMAGES -->
+                                                <!-- EMPLACEMENT DES IMAGES 
                                              </div>
                                            </div>
                                            <div id="AjoutImageIRM" style="float: right; position: relative; bottom: 42px; right: 5px;">
                                                   <input type='file' name="fichierIRM" />
-			                                      <!-- RECUPERER L'IMAGE -->
+			                                      <!-- RECUPERER L'IMAGE 
 			                                      <input type='hidden' id="fichierIRM_tmp" name="fichierIRM_tmp" />
-			                                      <!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER -->
+			                                      <!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER 
                                            </div>
-                                       </th>
+                                       </th>-->
                                    </tr>
                                    
                                    <tr style="width: 100%;">
@@ -1967,11 +1875,11 @@ echo $this->form()->openTag($form); ?>
                                    <tr class="form-examen-morphologique" style="width: 100%;">
                                        
                                        <th style="width: 40%; vertical-align: top;"> <?php echo $this->formRow($form->get('scanner'));?></th>
-                                       <th style="width: 25%; vertical-align: top; padding-top: 50px;"> <img src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" /></th>
-                                       <th style="width: 34%; padding-bottom:15px; margin-right: 40px;"> 
+                            <!--            <th style="width: 25%; vertical-align: top; padding-top: 50px;"> <img src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" /></th>
+                                       <th style="width: 34%; padding-bottom:15px; margin-right: 40px;"> --> 
                                          <!-- POUR LE MENU VIDEO ET IMAGE -->
                                          <!-- POUR LE MENU VIDEO ET IMAGE -->
-                                         <!-- POUR LE MENU VIDEO ET IMAGE -->
+                                         <!-- POUR LE MENU VIDEO ET IMAGE 
                                          <div id="divPourMenuImagesVideos" style="height: 150px;">
                                           <table style='width: 100%; margin-bottom: 25px; margin-top: 25px;'>
                                             <tr style='width: 100%; '>
@@ -1995,7 +1903,7 @@ echo $this->form()->openTag($form); ?>
                                          
                                          <!-- POUR LES VIDEOS -->
                                          <!-- POUR LES VIDEOS -->
-                                         <!-- POUR LES VIDEOS -->
+                                         <!-- POUR LES VIDEOS 
                                          <div id="divVideoScannerPourMenu">
                                           <table style='width: 100%;'>
                                             <tr style='width: 100%;'>
@@ -2015,11 +1923,11 @@ echo $this->form()->openTag($form); ?>
                                                </td>
                                             </tr>
                                           </table>
-                                         </div>
+                                         </div>-->
                                          
                                          <!-- POUR LES IMAGES -->
                                          <!-- POUR LES IMAGES -->
-                                         <!-- POUR LES IMAGES -->
+                                         <!-- POUR LES IMAGES 
                                          <div id="divImageScannerPourMenu">
                                            
                                            <table style='width: 100%;'>
@@ -2031,19 +1939,19 @@ echo $this->form()->openTag($form); ?>
                                                     
                                                     <td style='width: 99%;'>
                                                        <!-- PIKACHOOSE -->
-                                                       <!-- PIKACHOOSE -->
+                                                       <!-- PIKACHOOSE 
                                                        <div id="pika7">
                                                           <div id="pika8">
                                                              <!-- EMPLACEMENT DES IMAGES -->
                                                              <!-- EMPLACEMENT DES IMAGES -->
-                                                             <!-- EMPLACEMENT DES IMAGES -->
+                                                             <!-- EMPLACEMENT DES IMAGES 
                                                           </div>
                                                        </div>
                                                        <div id="AjoutImageScanner" style="float: right; position: relative; bottom: 42px; right: 5px;">
                                                           <input type='file' name="fichierScanner" />
-			                                              <!-- RECUPERER L'IMAGE -->
+			                                              <!-- RECUPERER L'IMAGE 
 			                                              <input type='hidden' id="fichierScanner_tmp" name="fichierScanner_tmp" />
-			                                              <!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER -->
+			                                              <!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER 
                                                        </div>
                                                     </td>
                                                  </tr>
@@ -2051,7 +1959,7 @@ echo $this->form()->openTag($form); ?>
                                            
                                          </div>
                                          
-                                       </th>
+                                       </th>-->
                                        
                                        
                                    </tr>
@@ -2077,24 +1985,24 @@ echo $this->form()->openTag($form); ?>
                             <table id="respondeee" class="imageFibroscopie" style="width: 100%;">
                                    <tr class="form-examen-morphologique" style="width: 100%;">
                                        <th style="width: 40%; vertical-align: top;"> <?php echo $this->formRow($form->get('fibrocospie'));?></th>
-                                       <th style="width: 25%; vertical-align: top; padding-top: 50px;"> <img src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" /></th>
+                           <!--             <th style="width: 25%; vertical-align: top; padding-top: 50px;"> <img src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" /></th>
                                        <th style="width: 34%; padding-bottom:15px; margin-right: 40px;"> 
                                            <!-- PIKACHOOSE -->
-                                           <!-- PIKACHOOSE -->
+                                           <!-- PIKACHOOSE 
                                            <div id="pika9">
                                              <div id="pika10">
                                                 <!-- EMPLACEMENT DES IMAGES -->
                                                 <!-- EMPLACEMENT DES IMAGES -->
-                                                <!-- EMPLACEMENT DES IMAGES -->
+                                                <!-- EMPLACEMENT DES IMAGES 
                                              </div>
                                            </div>
                                            <div id="AjoutImageFibroscopie" style="float: right; position: relative; bottom: 42px; right: 5px;">
                                                   <input type='file' name="fichierFibroscopie" />
-			                                      <!-- RECUPERER L'IMAGE -->
+			                                      <!-- RECUPERER L'IMAGE 
 			                                      <input type='hidden' id="fichierFibroscopie_tmp" name="fichierFibroscopie_tmp" />
-			                                      <!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER -->
+			                                      <!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER 
                                            </div>
-                                       </th>
+                                       </th>-->
                                    </tr>
                                    
                                    <tr style="width: 100%;">
@@ -2105,23 +2013,23 @@ echo $this->form()->openTag($form); ?>
                             
                             <!--********************* BOUTON VALIDER OU MODIFIER ************************-->
                             <!--********************* BOUTON VALIDER OU MODIFIER ************************-->
-                            <!--********************* BOUTON VALIDER OU MODIFIER ************************-->
+                            <!--********************* BOUTON VALIDER OU MODIFIER ************************
                             <table class="bouton_valider_examen_morpho" style="width: 90%;">
                                        <tr style="width: 90%;">
                                             <th style="width: 31%; "></th>
                                             <th style="height:15px; width: 69%; top:-15px; bottom:15px;">
-                                                <!-- On cr�e le bouton Valider (permettant la validation des donn�es -->
+                                                <!-- On cr�e le bouton Valider (permettant la validation des donn�es 
                                                 <div id="bouton_valider_morpho" style="float:left;">
                                                      <button id='bouton_morpho_valider'>Valider</button>
                                                 </div>
-                                                <!-- On cr�e le bouton MODIFIER (permettant la modification des donn�es -->
+                                                <!-- On cr�e le bouton MODIFIER (permettant la modification des donn�es 
                                                 <div id="bouton_modifier_morpho" style="float:left;">
                                                      <button id='bouton_morpho_modifier'>Modifier</button>
                                                 </div>
                                             </th>
                                            
                                         </tr>
-                            </table>
+                            </table>-->
 
                        </div>
 
