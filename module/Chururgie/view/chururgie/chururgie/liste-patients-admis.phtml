@@ -53,7 +53,7 @@ $(window).load(function () {
 					<th id="nom" align="center">Nom</th>
 					<th id="prenom" align="center">Prenom</th>
 					<th id="date" align="center" name="date">AGE</th>
-					<th id="sexe" align="center" name="sexe">Sexe</th>
+					<!--  <th id="sexe" align="center" name="sexe">Sexe</th>-->
 					<th id="adresse" align="center" name="adresse">Adresse</th>
 					<th id="nationalite" align="center" name="nationalite">Nationalite</th>
 					<th id="effectuer" align="center">Options</th>
@@ -77,7 +77,6 @@ $(window).load(function () {
 				    <td style='text-transform : uppercase;'><?php echo $this->escapeHtml($donnees['Nom']);?></td>
 				    <td><?php echo $this->escapeHtml($donnees['Prenom']);?></td>
 					<td><?php echo $this->escapeHtml($donnees['AGE']);?></td>
-					<td><?php echo $this->escapeHtml($donnees['Sexe']);?></td>
 					<td><?php echo $this->escapeHtml($donnees['Adresse']);?></td>
 					<td><?php echo $this->escapeHtml($donnees['Nationalite']);?></td>
 					<td>
@@ -87,22 +86,17 @@ $(window).load(function () {
 					    </a>&nbsp;&nbsp;
 					    
 
-					    <?php //if(!in_array($id, $this->listePatientsCons) ) { ?>
 					      <a href="javascript:envoyer('<?php echo $this->escapeHtml($donnees['Id_admission']);?>','<?php echo $this->escapeHtml($donnees['Id']);?>','<?php echo $this->escapeHtml($donnees['Id_Service']);?>')" >
 					    	 <img  src='<?php echo $this->basePath().'/images_icons/symbol_supprimer.png'?>' title="Annuler" />
 					      </a>&nbsp;
-					    <?php //} ?>
+					   
 
-					    <a id='<?php echo 'Service'.$id ?>'>
-					    <?php //echo $this->escapeHtml($donnees['Nomservice']);?>
-					    </a>
 
 					</td>
 				</tr>
 
 			    <script>
-				$("<?php echo '#Service'.$id ?>").toggle(false);
-				
+			 
 				$('#donnees tr').contextmenu({
 					target: '#context-menu',
 					onItem: function (context, e) {
@@ -121,11 +115,10 @@ $(window).load(function () {
 
 			<tfoot id="foot" class="foot_style">
 				<tr>
-				<th id="numero_dossier" style="width: 15%;"><input type="text" name="search_browser" value=" Numero_Dossier" class="search_init" /></th>
+				<th id="numero_dossier" style="width: 9%;"><input type="text" name="search_browser" value=" Numero_Dossier" class="search_init" /></th>
 					<th id="nom_" style="width: 13%;"><input type="text" name="search_browser" value=" Nom" class="search_init" /></th>
 					<th id="prenom_" style="width: 15%;"><input type="text" name="search_browser" value=" Prenom" class="search_init" /></th>
 					<th id="date_" style="width: 10%;"><input type="text" name="search_browser" value=" Age" class="search_init" /></th>
-					<th id="sexe_" style="width: 7%;"><input type="text" name="search_browser" value=" Sexe" class="search_init" /></th>
 					<th id="adresse_" style="width: 28%;"><input type="text" name="search_browser" value=" Adresse" class="search_init" /></th>
 					<th id="nationalite_" style="width: 15%;"><input type="text" name="search_browser" value=" Nationalite" class="search_init" /></th>
 					<th id="effectuer_" style="width: 10%;"><input type="hidden" name="search_browser" value="" class="" /></th>

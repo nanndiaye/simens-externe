@@ -787,7 +787,47 @@ class ChururgieController extends AbstractActionController {
 	        'date_enregistrement' => $unPatient['DATE_ENREGISTREMENT']
 	    );
 	}
-	
+	public function admissionInfosPatientRVAction() {
+		$id_pat = $this->params()->fromQuery ( 'id_patient', 0 );
+		$id_cons = $this->params()->fromQuery ( 'id_cons' );
+		 
+		$this->layout ()->setTemplate ( 'layout/chururgie' );
+		 
+		//var_dump($id_pat); exit();
+		 
+		$form = new ConsultationForm();
+		$form->populateValues(array('id_cons' => $id_cons));
+		 
+		//var_dump($form); exit();
+		 
+		$user = $this->layout()->user;
+		$IdDuService = $user['IdService'];
+		 
+		 
+		 
+		$patient = $this->getPatientTable ();
+		$unPatient = $patient->getInfoPatient( $id_pat );
+		$rv = $patient->getRvPatientParIdcons($id_cons);
+		 
+		//var_dump($rv); exit();
+		$donneesRv = array(
+				 'motif_rv' => $rv['NOTE'],
+				'date_rv' => (new DateHelper())->convertDate($rv['DATE']),
+				'heure_rv' => $rv['HEURE'],
+				'delai_rv' => $rv['DELAI'],
+				
+		);
+		//$form->get( 'type_consultation' )->setValueOptions ( 'Rendez-vous' );
+		$form->populateValues(array_merge($donneesRv));
+		// var_dump(""); exit();
+		return array (
+				'form'=>$form,
+				'lesdetails' => $unPatient,
+				'image' => $patient->getPhoto ( $id_pat ),
+				'id_patient' => $unPatient['ID_PERSONNE'],
+				'date_enregistrement' => $unPatient['DATE_ENREGISTREMENT']
+		);
+	}
 	public function modifierInfosPatientRVAction() {
 	    $id_pat = $this->params()->fromQuery ( 'id_patient', 0 );
 	    $id_cons = $this->params()->fromQuery ( 'id_cons' );
@@ -831,6 +871,97 @@ class ChururgieController extends AbstractActionController {
 	
 	
 	
+	public function ListeRendezVousAujourdhuiAjaxAction(){
+		$output = $this->getRvPatientConsTable()->getRVAujourdhui();
+		 
+		//$patient = $this->getPatientTable ();
+		return $this->getResponse ()->setContent ( Json::encode ( $output, array (
+				'enableJsonExprFinder' => true
+		) ) );
+	}
+	
+	public function listeRendezVousAction() {
+	
+		//$formConsultation = new ConsultationForm();
+		$layout = $this->layout ();
+		$layout->setTemplate ( 'layout/chururgie' );
+		 
+		$user = $this->layout()->user;
+		$idService = $user['IdService'];
+		$id_cons = $this->params()->fromPost('id_cons');
+		$id_patient = $this->params()->fromPost('id_patient');
+		 
+		$leRendezVous = $this->getRvPatientConsTable()->getTousRV();
+		 
+		 
+		 
+		//$lespatients = $this->getConsultationTable()->listePatientsConsParMedecin ( $idService );
+		//
+		//RECUPERER TOUS LES PATIENTS AYANT UN RV aujourd'hui
+		 
+		$tabPatientRV = $this->getConsultationTable ()->getPatientsRV($idService);
+	
+		//var_dump($tabPatientRV);exit();
+		//   		if($leRendezVous) {
+		 
+		//   		var_dump($leRendezVous); exit();
+		//  		$data['heure_rv'] = $leRendezVous->heure;
+		//   		//$data['date_rv']  = $this->controlDate->convertDate($leRendezVous->date);
+		//   		$data['motif_rv'] = $leRendezVous->note;
+		//   		$data['delai_rv'] = $leRendezVous->note;
+		//   		}
+		 
+		 
+		if (isset ( $_POST ['terminer'] ))  // si formulaire soumis
+		{
+		$id_patient = $this->params()->fromPost('id_patient');
+		$date_RV_Recu = $this->params()->fromPost('date_rv');
+		 
+	        if($date_RV_Recu){
+		        $date_RV = (new DateHelper())->convertDateInAnglais($date_RV_Recu);
+		}
+		 
+		else{
+			$date_RV = $date_RV_Recu;
+		}
+		 
+		$infos_rv = array(
+				'ID_CONS' => $id_cons,
+			'HEURE'   => $this->params()->fromPost('heure_rv'),
+			'DATE'    => $date_RV,
+			'DELAI'   => $this->params()->fromPost('delai_rv'),
+			);
+					//var_dump($infos_rv);exit();
+	    
+							$this->getRvPatientConsTable()->updateRendezVous($infos_rv);
+									//var_dump('ssssss');exit();
+											if ($this->params()->fromPost ( 'terminer' ) == 'save') {
+			//VALIDER EN METTANT '1' DANS CONSPRISE Signifiant que le medecin a consulter le patient
+			//Ajouter l'id du medecin ayant consulter le patient
+			$valide = array (
+			'VALIDER' => 1,
+			'ID_CONS' => $id_cons,
+			'ID_MEDECIN' => $this->params()->fromPost('med_id_personne')
+		);
+		$this->getConsultationTable ()->validerConsultation ( $valide );
+			}
+			return $this->redirect ()->toRoute ( 'chururgie', array (
+			'action' => 'liste-rendez-vous'
+			) );
+			}
+		  
+	
+			return new ViewModel ( array (
+			//'donnees' => $leRendezVous,
+			//'tabPatientRV' => $tabPatientRV,
+			//  				'listeRendezVous' => $patientsRV->getPatientsRV (),
+			//  				'form' => $formConsultation,
+			) );
+		  
+		  
+		  
+		}
+	
 	
 	public function listeRendezVousAConfirmerAction() {
 	    
@@ -864,7 +995,7 @@ class ChururgieController extends AbstractActionController {
 	    ) ) );
 	}
 	
-	public function listeRendezVousAction() {
+	public function listeRendezVousAujourdhuiAction() {
 	
 	    //$formConsultation = new ConsultationForm();
 	    $layout = $this->layout ();
@@ -872,28 +1003,7 @@ class ChururgieController extends AbstractActionController {
 	    
 	    $user = $this->layout()->user;
 	    $idService = $user['IdService'];
-	    $id_cons = $this->params()->fromPost('id_cons');
-	    $id_patient = $this->params()->fromPost('id_patient');
-	      
-	    $leRendezVous = $this->getRvPatientConsTable()->getTousRV();
-	    
-	    
-	    
-	    //$lespatients = $this->getConsultationTable()->listePatientsConsParMedecin ( $idService );
-	    //
-	    //RECUPERER TOUS LES PATIENTS AYANT UN RV aujourd'hui
-	    
-	    $tabPatientRV = $this->getConsultationTable ()->getPatientsRV($idService);
 	   
-	    //var_dump($tabPatientRV);exit();
-	    //   		if($leRendezVous) {
-	    
-	    //   		var_dump($leRendezVous); exit();
-	    //  		$data['heure_rv'] = $leRendezVous->heure;
-	    //   		//$data['date_rv']  = $this->controlDate->convertDate($leRendezVous->date);
-	    //   		$data['motif_rv'] = $leRendezVous->note;
-	    //   		$data['delai_rv'] = $leRendezVous->note;
-	    //   		}
 	    
 	    
 	    if (isset ( $_POST ['terminer'] ))  // si formulaire soumis
@@ -930,18 +1040,14 @@ class ChururgieController extends AbstractActionController {
 	            $this->getConsultationTable ()->validerConsultation ( $valide );
 	        }
 	        return $this->redirect ()->toRoute ( 'chururgie', array (
-	            'action' => 'liste-rendez-vous'
+	            'action' => 'liste-rendez-vous-aujourdhui'
 	        ) );
 	    }
 	    
-	
-	    return new ViewModel ( array (
-	        //'donnees' => $leRendezVous,
-	        //'tabPatientRV' => $tabPatientRV,
-	        //  				'listeRendezVous' => $patientsRV->getPatientsRV (),
-	    //  				'form' => $formConsultation,
-	    ) );
 	    
+	   	return new ViewModel ( array (
+			 
+			) );
 	    
 	    
 	}

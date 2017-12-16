@@ -1406,6 +1406,7 @@ class ConsultationForm extends Form {
 				),
 				'attributes' => array (
 						'id' => 'date_rv',
+						 'disabled' => true,
 				)
 		) );
 		$this->add ( array (
@@ -1423,9 +1424,30 @@ class ConsultationForm extends Form {
 						)
 				),
 				'attributes' => array (
-						'id' => 'heure_rv'
+						'id' => 'heure_rv', 
+					 'disabled' => true,
+						
 				)
 		) );
+		
+		/*
+		 *  Donner le tyupe d'admission a partir du rendez-vous
+		 * 
+		 */
+		
+		$this->add(array(
+				'name' => 'type_consultation',
+				'type' => 'Zend\Form\Element\radio',
+				'options' => array (
+						'value_options' => array(
+								 '2' =>   'Rendez-vous' ,
+						),
+				),
+				'attributes' => array(
+						'id' => 'type_consultation',
+						'required' => true,
+				),
+		));
 	
 		$this->add ( array (
 		    'name' => 'delai_rv',
@@ -1443,7 +1465,8 @@ class ConsultationForm extends Form {
 		        )
 		    ),
 		    'attributes' => array (
-		        'id' => 'delai_rv'
+		        'id' => 'delai_rv',
+		 		'disabled' =>true,
 		    )
 		) );
 		

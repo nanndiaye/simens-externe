@@ -85,7 +85,7 @@ width: 100%; /* la largeur du champ input*/
 {
 	width: 12%;
 }
-#sexe
+numero_dossier
 {
 	width: 7%;
 }
@@ -358,7 +358,7 @@ p{
 	color: #065d10;
 }
 
-#inform{ /*Données du décès l'id se trouve dans le controller Facturation*/
+#inform{ /*Donnï¿½es du dï¿½cï¿½s l'id se trouve dans le controller Facturation*/
 	font-family: Times  New Roman;
     color: #065d10;
 }
@@ -475,7 +475,7 @@ display: inline-block;
 
 font-size: 13px;
 
-left: 0px; /*déplacer le label*/
+left: 0px; /*dï¿½placer le label*/
 
 min-width: 60px;
 
@@ -573,7 +573,7 @@ z-index: 1;
 
     position: relative;
 	
-	/* les cotés des champs */
+	/* les cotï¿½s des champs */
 
     border-right-width: 2px;
 
