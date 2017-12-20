@@ -79,7 +79,7 @@ function ActiverResultatExamenFonctionnel(){
 	var index = $("LesActes").length;
 
 	d = document.getElementById("acte_name_"+index+"").value;
-	alert(d);
+	//alert(d);
 	// Si on change de choix dans le premier select 
 	
 		if(d==13){
@@ -94,9 +94,11 @@ function ActiverResultatExamenFonctionnel(){
 		if(d==16){
 			$("#resultat_acte_16").toggle(true);
 		}
-	
+
 	
 }
+
+
 
 //SUPPRIMER LE DERNIER ELEMENT
 $(function () {
@@ -217,21 +219,36 @@ function vider_acte_selectionne(id) {
 	//$("#tarifActe_"+id+" input").val("");
 }
 
-//CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
-//CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
-//CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
-//function desactiverResutatsActe () {
-//	//ON CACHE TOUT
-//	var i = 1;
-//	for(i; i <= 19; i++){
-//		$('#acte_'+i).toggle(fa); 
-//	}
-//}
+//Activation des resultats pour la modification
+function ActiverResultatExamenFonctionnelModification(d){
+	 
+	
+	// Si on change de choix dans le premier select 
+	
+		if(d==13){
+			$("#resultat_acte_13").toggle(true);
+			alert(d);
+		}else
+		if(d==14){
+			$("#resultat_acte_14").toggle(true);
+		}else
+		if(d==15){
+			$("#resultat_acte_15").toggle(true);
+		}else
+		if(d==16){
+			$("#resultat_acte_16").toggle(true);
+		}
+
+	
+}
 var i=1;
 function chargementModificationActe (index, element, note) {
 	
 	$("#acte_name_"+(index+1)+" option[value='"+element+"']").attr('selected','selected'); 
 	$("#noteActe_"+(index+1)+" input").val(note);
+	
+	ActiverResultatExamenFonctionnelModification(element);
+	
 	
 	//ON AFFICHE UNIQUEMENT CEUX AYANT ETE DEMANDE
 	setTimeout(function(){ $('#acte_'+element).toggle(true) },1000); 

@@ -788,6 +788,7 @@ class ChururgieController extends AbstractActionController {
 	    );
 	}
 	public function admissionInfosPatientRVAction() {
+	
 		$id_pat = $this->params()->fromQuery ( 'id_patient', 0 );
 		$id_cons = $this->params()->fromQuery ( 'id_cons' );
 		 
@@ -797,7 +798,7 @@ class ChururgieController extends AbstractActionController {
 		 
 		$form = new ConsultationForm();
 		$form->populateValues(array('id_cons' => $id_cons));
-		 
+		$form->populateValues(array('id_patient' => $id_pat));
 		//var_dump($form); exit();
 		 
 		$user = $this->layout()->user;
@@ -815,6 +816,7 @@ class ChururgieController extends AbstractActionController {
 				'date_rv' => (new DateHelper())->convertDate($rv['DATE']),
 				'heure_rv' => $rv['HEURE'],
 				'delai_rv' => $rv['DELAI'],
+				'type_consultation'=>'2'
 				
 		);
 		//$form->get( 'type_consultation' )->setValueOptions ( 'Rendez-vous' );
@@ -825,7 +827,8 @@ class ChururgieController extends AbstractActionController {
 				'lesdetails' => $unPatient,
 				'image' => $patient->getPhoto ( $id_pat ),
 				'id_patient' => $unPatient['ID_PERSONNE'],
-				'date_enregistrement' => $unPatient['DATE_ENREGISTREMENT']
+				'date_enregistrement' => $unPatient['DATE_ENREGISTREMENT'],
+				//'id_pat'=>$id_pat
 		);
 	}
 	public function modifierInfosPatientRVAction() {
@@ -1003,46 +1006,6 @@ class ChururgieController extends AbstractActionController {
 	    
 	    $user = $this->layout()->user;
 	    $idService = $user['IdService'];
-	   
-	    
-	    
-	    if (isset ( $_POST ['terminer'] ))  // si formulaire soumis
-	    {
-	        $id_patient = $this->params()->fromPost('id_patient');
-	        $date_RV_Recu = $this->params()->fromPost('date_rv');
-	        
-	        if($date_RV_Recu){
-	            $date_RV = (new DateHelper())->convertDateInAnglais($date_RV_Recu);
-	        }
-	        
-	        else{
-	            $date_RV = $date_RV_Recu;
-	        }
-	        
-	        $infos_rv = array(
-	            'ID_CONS' => $id_cons,
-	            'HEURE'   => $this->params()->fromPost('heure_rv'),
-	            'DATE'    => $date_RV,
-	            'DELAI'   => $this->params()->fromPost('delai_rv'),
-	        );
-	        //var_dump($infos_rv);exit();
-	        
-	        $this->getRvPatientConsTable()->updateRendezVous($infos_rv);
-	        //var_dump('ssssss');exit();
-	        if ($this->params()->fromPost ( 'terminer' ) == 'save') {
-	            //VALIDER EN METTANT '1' DANS CONSPRISE Signifiant que le medecin a consulter le patient
-	            //Ajouter l'id du medecin ayant consulter le patient
-	            $valide = array (
-	                'VALIDER' => 1,
-	                'ID_CONS' => $id_cons,
-	                'ID_MEDECIN' => $this->params()->fromPost('med_id_personne')
-	            );
-	            $this->getConsultationTable ()->validerConsultation ( $valide );
-	        }
-	        return $this->redirect ()->toRoute ( 'chururgie', array (
-	            'action' => 'liste-rendez-vous-aujourdhui'
-	        ) );
-	    }
 	    
 	    
 	   	return new ViewModel ( array (
@@ -2677,8 +2640,10 @@ class ChururgieController extends AbstractActionController {
 		$id_service = $user['id_service'];
 		//$montant = $this->params ()->fromPost ( 'montant' );
 		$type_consultation = $this->params ()->fromPost ( 'type_consultation' );
-	
+		$id_cons = $this->params ()->fromPost ( 'id_cons' );
+		
 		$donnees = array (
+				 
 				'id_patient' => $id_patient,
 				'id_service' => $id_service,
 				'date_admise' => $date_admise,
@@ -2686,10 +2651,10 @@ class ChururgieController extends AbstractActionController {
 				'date_enregistrement' => $date_enregistrement,
 				'id_employe' => $id_employe,
 		);
-		
-		$form = new ConsultationForm();
-		$formData = $this->getRequest ()->getPost ();
-		$form->setData ( $formData );
+		//var_dump($donnees);exit();
+// 		$form = new ConsultationForm();
+// 		$formData = $this->getRequest ()->getPost ();
+// 		$form->setData ( $formData );
 		
 		//$id_cons = $form->get (  "id_cons" )->getValue ();	
 		
@@ -2701,8 +2666,8 @@ class ChururgieController extends AbstractActionController {
 		/* CODE A SUPPRIMER POUR FAIRE INTERVENIR LE SURVEILLANT DE SERVICE*/
 		/* CODE A SUPPRIMER POUR FAIRE INTERVENIR LE SURVEILLANT DE SERVICE*/
 		/* CODE A SUPPRIMER POUR FAIRE INTERVENIR LE SURVEILLANT DE SERVICE*/		
-		
-		$this->getConsultationTable()-> addIdAdmission ( $id_admission );	
+		//var_dump($donnees);exit();
+		$this->getConsultationTable()-> addIdAdmission ( $id_admission,$date_admise,$id_cons );	
 		//var_dump($id_admission);exit();
 		//var_dump($id_admission);exit();
 		//$this->getAdmissionTable ()->addConsultationChururgieGenerale($id_cons);

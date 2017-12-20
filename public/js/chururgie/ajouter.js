@@ -280,8 +280,8 @@ $(function(){
 	        	$('.imageRadio').toggle(false); 
         		$('.imageEchographie').toggle(false);
         		$('.imageIRM').toggle(false);
-	     $('.imageScanner').toggle(false); 
-       		$('.imageFibroscopie').toggle(false);
+	            $('.imageScanner').toggle(false); 
+       		    $('.imageFibroscopie').toggle(false);
 				//$('.bouton_valider_examen_morpho').toggle(false);
         		
 	        	//ON AFFICHE UNIQUEMENT CEUX AYANT ETE DEMANDE

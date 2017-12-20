@@ -47,18 +47,30 @@ $(window).load(function () {
         </div>-->
 
 		<table class="table table-bordered tab_list_mini" id="patientdeces">
-			<thead>
-				<tr style="height:50px; width:100%;">
-					<th id="nom" align="center">N&deg; dossier</th>
-					<th id="nom" align="center">Nom</th>
-					<th id="prenom" align="center">Prenom</th>
-					<th id="date" align="center" name="date">AGE</th>
-					<!--  <th id="sexe" align="center" name="sexe">Sexe</th>-->
-					<th id="adresse" align="center" name="adresse">Adresse</th>
-					<th id="nationalite" align="center" name="nationalite">Nationalite</th>
-					<th id="effectuer" align="center">Options</th>
+		
+		
+		<thead>
+				<tr>
+					<th id="idpatient_" style='width: 15%;'><input type="text"
+						name="search_browser" value=" NUMERO_DOSSIER" class="search_init" /></th>
+					<th id="nom_" style='width: 15%;'><input type="text"
+						name="search_browser" value=" Nom" class="search_init" /></th>
+					<th id="prenom_" style='width: 15%;'><input type="text"
+						name="search_browser" value=" Pr&eacute;nom" class="search_init" /></th>
+					<th id="date_" style='width: 13%;'><input type="text"
+						name="search_browser" value=" Age" class="search_init" /></th>
+					<th id="sexe_" style='width: 7%;'><input type="text" name="search_browser"
+							value=" Sexe" class="search_init" /></th>
+					<th id="adresse_" style='width: 15%;'><input type="text"
+						name="search_browser" value=" Adresse" class="search_init" /></th>
+					<th id="effectuer_" style='width: 5%;'><input type="hidden"
+						value="" class="" />Options</th>
+
 				</tr>
+
 			</thead>
+		
+			
 
 			<tbody id="donnees" class="liste_patient">
 

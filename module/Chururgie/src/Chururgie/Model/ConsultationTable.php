@@ -782,7 +782,7 @@ class ConsultationTable {
 	
 	
 	//Ajouter Idadmission a la table consultation
-	public function addIdAdmission($id_admission,$date_admise){
+	public function addIdAdmission($id_admission,$date_admise,$id_cons){
 	    
 	    $db = $this->tableGateway->getAdapter();
 	    $sql = new Sql($db);
@@ -794,6 +794,13 @@ class ConsultationTable {
 	  //var_dump($id_admission);exit();
 	  $requete->execute();
 	  //var_dump($id_admission);exit();
+	  
+	  
+	  $requeteUpdate = $sql->update('rendezvous_consultation')
+ 				->set(array('admise' => 1))
+ 				->where(array('ID_CONS'=>$id_cons));
+ 				  $sql->prepareStatementForSqlObject($requeteUpdate)->execute();
+ 					
 	}
 	
 	

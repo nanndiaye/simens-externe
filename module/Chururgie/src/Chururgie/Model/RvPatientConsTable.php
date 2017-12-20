@@ -127,9 +127,9 @@ class RvPatientConsTable
     			'id2' => 'ID_PERSONNE',
     			'Age' => 'AGE'
     	))
-    	->
-    	// ->join(array('a' => 'admission'), 'p.ID_PERSONNE = a.id_patient', array('Id_admission' => 'id_admission'))
-    	join(array(
+    	
+   // ->join(array('a' => 'admission'), 'p.ID_PERSONNE = a.id_patient', array('*'))
+    ->	join(array(
     			'cons' => 'consultation'
     	), 'p.ID_PERSONNE = cons.ID_PATIENT', array(
     			'Id_cons' => 'ID_CONS'
@@ -142,6 +142,8 @@ class RvPatientConsTable
     	->order('rv.HEURE_ENR ASC')
     	->where(array(
     			'rv.DATE' => $date,
+    		//	'a.date_admise != ?' => $date,
+    		 	'rv.admise != ? '=> 1,
     	));
     
     	/* Data set length after filtering */
