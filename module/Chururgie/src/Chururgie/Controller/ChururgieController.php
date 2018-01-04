@@ -233,13 +233,7 @@ class ChururgieController extends AbstractActionController {
 		return $this->patientTable;
 	}
 	
-	public function getAntecedantPersonnel(){
-		
-	}
-	
-	
-	
-	
+	 
 	
 	//************************************************************************************
 	//*************************Mise A jour Consultation du Medecin************************
@@ -355,10 +349,102 @@ class ChururgieController extends AbstractActionController {
 	    //POUR LES EXAMENS COMPLEMENTAIRES
 	    //POUR LES EXAMENS COMPLEMENTAIRES
 	    // DEMANDES DES EXAMENS COMPLEMENTAIRES
+	    
+	    $listeDesResultats =  $this->demandeExamensTable()->getDemandeExamensFonctionnelsEffectues($id);
+	    //var_dump($listeDesExamensFonctionnels->current()); exit();
+	    //RECUPERATION DES RESULTATS DES EXAMENS
+	    //RECUPERATION DES RESULTATS DES EXAMENS
+	    //RECUPERATION DES RESULTATS DES EXAMENS
+	    //$tab_resultat_exam_fonc=array();
+	    foreach ($listeDesResultats as $exam_fonc){
+	    	$tab[$h++] = $exam_fonc["libelleExamen"];
+	    	if($exam_fonc["libelleExamen"]== "EEG"){
+	    		 
+	    		$data["eeg"] = $exam_fonc["noteResultat"];
+	    	}
+	    	 
+	    	if($exam_fonc["libelleExamen"]== "ECG"){
+	    		$data["ecg"] = $exam_fonc["noteResultat"];
+	    	}
+	    	 
+	    	if($exam_fonc["libelleExamen"]== "EFR"){
+	    		$data["efr"] = $exam_fonc["noteResultat"];
+	    	}
+	    	 
+	    	if($exam_fonc["libelleExamen"]== "EMG"){
+	    		$data["emg"] = $exam_fonc["noteResultat"];
+	    	}
+	    	 
+	    	//var_dump($exam_fonc['noteResultat']);exit();
+	    }
+	    //var_dump($tab);exit();
 	    $listeDemandesMorphologiques = $this->demandeExamensTable()->getDemandeExamensMorphologiques($id);
+	    
+	    $listeDesResultatsMorphologiques = $this->demandeExamensTable()->getDemandeExamensMorphologiques($id);
+
+	    
+	    
+	    foreach ($listeDesResultatsMorphologiques as $exam_fonc){
+	    	 
+	    	if($exam_fonc["libelleExamen"]== "Radio"){
+	    		
+	    		$data["radio"] = $exam_fonc["noteResultat"];
+	    	}
+	    	 
+	    	if($exam_fonc["libelleExamen"]== "Ecographie"){
+	    		
+	    		$data["ecographie"] = $exam_fonc["noteResultat"];
+	    	}
+	    	 
+	    	if($exam_fonc["libelleExamen"]== "IRM"){
+	    		$data["irm"] = $exam_fonc["noteResultat"];
+	    	}
+	    	 
+	    	if($exam_fonc["libelleExamen"]== "Scanner"){
+	    		$data["scanner"] = $exam_fonc["noteResultat"];
+	    	}
+	    
+	    	if($exam_fonc["libelleExamen"]== "Fibroscopie"){
+	    		$data["fibrocospie"] = $exam_fonc["noteResultat"];
+	    	}
+	    
+	    	 
+	    }
+	    
 	    $listeDemandesBiologiques = $this->demandeExamensTable()->getDemandeExamensBiologiques($id);
-	   
-	  
+	    
+	    $listeResultatsExamensBiologiques = $this->demandeExamensTable()->getDemandeExamensBiologiques($id);
+	   $tab= array();$h=1;
+	    foreach ($listeResultatsExamensBiologiques as $exam_fonc){
+	    	 //$tab[$h++]=$exam_fonc["libelleExamen"];
+	    	if($exam_fonc["libelleExamen"]== "groupe sanguin"){
+	    		
+	    		$data["groupe_sanguin"] = $exam_fonc["noteResultat"];
+	    	}
+	    	 
+	    	if($exam_fonc["libelleExamen"]== "hémogramme sanguin"){
+	    	;
+	    		$data["hemogramme_sanguin"] = $exam_fonc["noteResultat"];
+	    	}
+	    	 
+	    	if($exam_fonc["libelleExamen"]== "bilan hépatique"){
+	    		$data["bilan_hepatique"] = $exam_fonc["noteResultat"];
+	    	}
+	    	 
+	    	if($exam_fonc["libelleExamen"]== "bilan rénal"){
+	    		$data["bilan_renal"] = $exam_fonc["noteResultat"];
+	    	}
+	    	
+	    	if($exam_fonc["libelleExamen"]== "Bilan hémostase"){
+	    		$data["bilan_hemolyse"] = $exam_fonc["noteResultat"];
+	    	}
+	    	
+	    	if($exam_fonc["libelleExamen"]== "Bilan inflammatoire"){
+	    		$data["bilan_inflammatoire"] = $exam_fonc["noteResultat"];
+	    	}
+	    }
+	    
+	  // var_dump($tab);exit();
 	    
 	    //Liste des examens biologiques
 	    $listeDesExamensBiologiques = $this->demandeExamensTable()->getDemandeDesExamensBiologiques();
@@ -370,7 +456,7 @@ class ChururgieController extends AbstractActionController {
 	    $listeDesExamensFonctionnelsPredefinis = $this->demandeExamensTable()->getDemandeDesExamensFonctionnels();
 	   
 	    $listeDemandesActes = $this->getDemandeActe()->getDemandeActe($id);
-	    //var_dump($listeDesExamensBiologiques); exit();
+	    
 	   
 	    ////RESULTATS DES EXAMENS BIOLOGIQUES DEJA EFFECTUES ET ENVOYER PAR LE BIOLOGISTE
 	   $listeDemandesBiologiquesEffectuerEnvoyer = $this->demandeExamensTable()->getDemandeExamensBiologiquesEffectuesEnvoyer($id);
@@ -379,7 +465,7 @@ class ChururgieController extends AbstractActionController {
 	    //var_dump($ant_chirur);exit();
 	    $listeDesExamensFonctionnels =  $this->demandeExamensTable()->getDemandeExamensFonctionnelsEffectues($id);
 	  
-	    //var_dump($listeDesExamensFonctionnels);exit();
+	    
 	    $tableauResultatsExamensBio = array(
 	        'temoinGSan' => 0,
 	        'temoinHSan' => 0,
@@ -437,11 +523,11 @@ class ChururgieController extends AbstractActionController {
 	    ////RESULTATS DES EXAMENS MORPHOLOGIQUE
 	    $examen_morphologique = $this->getNotesExamensMorphologiquesTable()->getNotesExamensMorphologiques($id);
 	  
-	    $data['radio'] = $examen_morphologique['radio'];
-	    $data['ecographie'] = $examen_morphologique['ecographie'];
-	    $data['fibrocospie'] = $examen_morphologique['fibroscopie'];
-	    $data['scanner'] = $examen_morphologique['scanner'];
-	    $data['irm'] = $examen_morphologique['irm'];
+// 	    $data['radio'] = $examen_morphologique['radio'];
+// 	    $data['ecographie'] = $examen_morphologique['ecographie'];
+// 	    $data['fibrocospie'] = $examen_morphologique['fibroscopie'];
+// 	    $data['scanner'] = $examen_morphologique['scanner'];
+// 	    $data['irm'] = $examen_morphologique['irm'];
 	    
 	    ////RESULTATS DES EXAMENS MORPHOLOGIQUES DEJA EFFECTUES ET ENVOYER PAR LE BIOLOGISTE
 	    $listeDemandesMorphologiquesEffectuer = $this->demandeExamensTable()->getDemandeExamensMorphologiquesEffectues($id);
@@ -638,12 +724,12 @@ class ChururgieController extends AbstractActionController {
 	    	$data['symptome'.$nb_symptome] = $resul["histoire_maladie"];
 	    	$nb_symptome++;
 	    }
-	 // var_dump($data);exit();
+	 
 	    
 	    $form->populateValues($antMedPat,$listeAntMed);
 	    //var_dump($data);exit();
 	    $form->populateValues ( array_merge($data,$bandelettes,$donneesAntecedentsPersonnels,$donneesAntecedentsFamiliaux) );
-	   
+	  
 	    
 	  //var_dump($listeDesExamensFonctionnelsPredefinis->count());exit();    
 	   // var_dump('');exit();
@@ -876,6 +962,7 @@ class ChururgieController extends AbstractActionController {
 	
 	public function ListeRendezVousAujourdhuiAjaxAction(){
 		$output = $this->getRvPatientConsTable()->getRVAujourdhui();
+		
 		 
 		//$patient = $this->getPatientTable ();
 		return $this->getResponse ()->setContent ( Json::encode ( $output, array (
@@ -999,7 +1086,9 @@ class ChururgieController extends AbstractActionController {
 	}
 	
 	public function listeRendezVousAujourdhuiAction() {
-	
+		//$output = $this->getRvPatientConsTable()->getRVAujourdhui();
+		//var_dump($output);exit();
+			
 	    //$formConsultation = new ConsultationForm();
 	    $layout = $this->layout ();
 	    $layout->setTemplate ( 'layout/chururgie' );
@@ -1501,21 +1590,22 @@ class ChururgieController extends AbstractActionController {
 		$resulat_examen = array(
 				'1'  => $this->params()->fromPost('groupe_sanguin'),
 				'2'  => $this->params()->fromPost('hemogramme_sanguin'),
-				'3' => $this->params()->fromPost('bilan_hemolyse'),
-				'4' => $this->params()->fromPost('bilan_hepatique'),
-				'5' => $this->params()->fromPost('bilan_renal'),
-				'6' => $this->params()->fromPost('bilan_inflammatoire'),
-				'8'  => $this->params()->fromPost('radio_'),
+				'3' => $this->params()->fromPost('bilan_hepatique'),
+				'4' => $this->params()->fromPost('bilan_renal'),
+				'5' => $this->params()->fromPost('bilan_hemolyse'),
+				'6' => $this->params()->fromPost('bilan_inflammatoire'), 
 				'7' => '',
+				'8'  => $this->params()->fromPost('radio_'),
 				'9'  => $this->params()->fromPost('ecographie_'),
 				'10' => $this->params()->fromPost('irm_'),
 				'11' => $this->params()->fromPost('scanner_'),
 				'12' => $this->params()->fromPost('fibroscopie_'),
-				'13'  => $this->params()->fromPost('ecg'),
+				'13'  => $this->params()->fromPost('eeg'),
 				'14'  => $this->params()->fromPost('ecg'),
-				'15' => $this->params()->fromPost('efr'),
-				'16' => $this->params()->fromPost('emg'),
+				'15' => $this->params()->fromPost('emg'),
+				'16' => $this->params()->fromPost('efr'),
 		);
+		//var_dump($resulat_examen);exit();
 		$tab_result= array();
 		$t=1;
 		for($i=1;$i<=16;$i++){
@@ -1530,15 +1620,6 @@ class ChururgieController extends AbstractActionController {
 		}
 		   
 		
-		
-
-// 		var_dump($tab_result);exit();
-// 		var_dump($resulat_examen);exit();
-			
-		//$this->getConsultationTable()->updateResultatExamensComplementaires($id_medecin,$id_cons,$resulat_examen);
-		
-		//var_dump('');exit();
-		//var_dump($resulat_examen);exit();
 		
 		
 		//Ajouter la note de l'examen de historique
@@ -1976,7 +2057,10 @@ class ChururgieController extends AbstractActionController {
 	
 	}
 	
-	//***$$$$***
+	//VISUALISATION D'UNE ANCIENNE CONSULTATION
+	//VISUALISATION D'UNE ANCIENNE CONSULTATION
+	//VISUALISATION D'UNE ANCIENNE CONSULTATION
+	
 	public function visualisationConsultationAction(){
 	
 		$this->layout ()->setTemplate ( 'layout/chururgie' );
@@ -2139,17 +2223,108 @@ class ChururgieController extends AbstractActionController {
 		}
 		
 		////RESULTATS DES EXAMENS MORPHOLOGIQUE
-		$examen_morphologique = $this->getNotesExamensMorphologiquesTable()->getNotesExamensMorphologiques($id);
+// 		$examen_morphologique = $this->getNotesExamensMorphologiquesTable()->getNotesExamensMorphologiques($id);
 	
-		$data['radio'] = $examen_morphologique['radio'];
-		$data['ecographie'] = $examen_morphologique['ecographie'];
-		$data['fibrocospie'] = $examen_morphologique['fibroscopie'];
-		$data['scanner'] = $examen_morphologique['scanner'];
-		$data['irm'] = $examen_morphologique['irm'];
+// 		$data['radio'] = $examen_morphologique['radio'];
+// 		$data['ecographie'] = $examen_morphologique['ecographie'];
+// 		$data['fibrocospie'] = $examen_morphologique['fibroscopie'];
+// 		$data['scanner'] = $examen_morphologique['scanner'];
+// 		$data['irm'] = $examen_morphologique['irm'];
 		
 		////RESULTATS DES EXAMENS MORPHOLOGIQUES DEJA EFFECTUES ET ENVOYER PAR LE BIOLOGISTE
 		$listeDemandesMorphologiquesEffectuer = $this->demandeExamensTable()->getDemandeExamensMorphologiquesEffectues($id);
+		
+		$listeDesResultats =  $this->demandeExamensTable()->getDemandeExamensFonctionnelsEffectues($id);
+		//var_dump($listeDesExamensFonctionnels->current()); exit();
+		//RECUPERATION DES RESULTATS DES EXAMENS
+		//RECUPERATION DES RESULTATS DES EXAMENS
+		//RECUPERATION DES RESULTATS DES EXAMENS
+		//$tab_resultat_exam_fonc=array();
+		foreach ($listeDesResultats as $exam_fonc){
+			//$tab[$h++] = $exam_fonc["libelleExamen"];
+			if($exam_fonc["libelleExamen"]== "EEG"){
+		
+				$data["eeg"] = $exam_fonc["noteResultat"];
+			}
+			 
+			if($exam_fonc["libelleExamen"]== "ECG"){
+				$data["ecg"] = $exam_fonc["noteResultat"];
+			}
+			 
+			if($exam_fonc["libelleExamen"]== "EFR"){
+				$data["efr"] = $exam_fonc["noteResultat"];
+			}
+			 
+			if($exam_fonc["libelleExamen"]== "EMG"){
+				$data["emg"] = $exam_fonc["noteResultat"];
+			}
+			 
+			//var_dump($exam_fonc['noteResultat']);exit();
+		}
+		
+		$listeDesResultatsMorphologiques = $this->demandeExamensTable()->getDemandeExamensMorphologiques($id);
+		
+		 
+		 
+		foreach ($listeDesResultatsMorphologiques as $exam_fonc){
+			 
+			if($exam_fonc["libelleExamen"]== "Radio"){
+				 
+				$data["radio"] = $exam_fonc["noteResultat"];
+			}
+			 
+			if($exam_fonc["libelleExamen"]== "Ecographie"){
+				 
+				$data["ecographie"] = $exam_fonc["noteResultat"];
+			}
+			 
+			if($exam_fonc["libelleExamen"]== "IRM"){
+				$data["irm"] = $exam_fonc["noteResultat"];
+			}
+			 
+			if($exam_fonc["libelleExamen"]== "Scanner"){
+				$data["scanner"] = $exam_fonc["noteResultat"];
+			}
+			 
+			if($exam_fonc["libelleExamen"]== "Fibroscopie"){
+				$data["fibrocospie"] = $exam_fonc["noteResultat"];
+			}
+			 
+			 
+		}
 	
+		
+		$listeResultatsExamensBiologiques = $this->demandeExamensTable()->getDemandeExamensBiologiques($id);
+		$tab= array();$h=1;
+		foreach ($listeResultatsExamensBiologiques as $exam_fonc){
+			//$tab[$h++]=$exam_fonc["libelleExamen"];
+			if($exam_fonc["libelleExamen"]== "groupe sanguin"){
+				 
+				$data["groupe_sanguin"] = $exam_fonc["noteResultat"];
+			}
+			 
+			if($exam_fonc["libelleExamen"]== "hémogramme sanguin"){
+				;
+				$data["hemogramme_sanguin"] = $exam_fonc["noteResultat"];
+			}
+			 
+			if($exam_fonc["libelleExamen"]== "bilan hépatique"){
+				$data["bilan_hepatique"] = $exam_fonc["noteResultat"];
+			}
+			 
+			if($exam_fonc["libelleExamen"]== "bilan rénal"){
+				$data["bilan_renal"] = $exam_fonc["noteResultat"];
+			}
+		
+			if($exam_fonc["libelleExamen"]== "Bilan hémostase"){
+				$data["bilan_hemolyse"] = $exam_fonc["noteResultat"];
+			}
+		
+			if($exam_fonc["libelleExamen"]== "Bilan inflammatoire"){
+				$data["bilan_inflammatoire"] = $exam_fonc["noteResultat"];
+			}
+		}
+		 
 		//DIAGNOSTICS
 		//DIAGNOSTICS
 		//DIAGNOSTICS

@@ -149,9 +149,18 @@ class RvPatientConsTable
     	/* Data set length after filtering */
     	$stat = $sql2->prepareStatementForSqlObject($sQuery2);
     	$rResultFt = $stat->execute();
+    	$iFilteredTotal = count($rResultFt);
     
     	$rResult = $rResultFt;
     
+
+    	$output = array(
+    			// "sEcho" => intval($_GET['sEcho']),
+    			// "iTotalRecords" => $iTotal,
+    			"iTotalDisplayRecords" => $iFilteredTotal,
+    			"aaData" => array()
+    	);
+    	
     	/*
     	 * $Control pour convertir la date en fran�ais
     	 */
@@ -251,7 +260,8 @@ class RvPatientConsTable
                 }
             }
         }
-        
+
+       
         /*
          * SQL queries
          */
@@ -299,8 +309,18 @@ class RvPatientConsTable
         /* Data set length after filtering */
         $stat = $sql2->prepareStatementForSqlObject($sQuery2);
         $rResultFt = $stat->execute();
+        $iFilteredTotal = count($rResultFt);
+        
+        
         
         $rResult = $rResultFt;
+        
+        $output = array(
+        		// "sEcho" => intval($_GET['sEcho']),
+        		// "iTotalRecords" => $iTotal,
+        		"iTotalDisplayRecords" => $iFilteredTotal,
+        		"aaData" => array()
+        );
         
         /*
          * $Control pour convertir la date en fran�ais

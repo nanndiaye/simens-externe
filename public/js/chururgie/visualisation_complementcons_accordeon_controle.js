@@ -166,8 +166,65 @@
 			' .supprimerDonnee7, .supprimerDonnee8, .supprimerDonnee9, .supprimerDonnee10').toggle(false);
 	 }, 2000);
 	  		
-//********************* ANALYSE MORPHOLOGIQUE *****************************
-//********************* ANALYSE MORPHOLOGIQUE *****************************
+//********************* EXAMEN COMPLEMENTAIRE *****************************
+//********************* EXAMEN COMPLEMENTAIRE *****************************
+//********************* EXAMEN COMPLEMENTAIRE *****************************
+
+	
+	$(function(){
+		setTimeout(function(){
+			var groupe_sanguin = $("#resultat_groupe_sanguin");
+			var hemogramme_sanguin = $("#resultat_hemogramme_sanguin");
+			var bilan_hemolyse = $("#resultat_bilan_hemolyse");
+			var bilan_hepatique = $("#resultat_bilan_hepatique");
+			var bilan_renal = $("#resultat_bilan_renal");
+			var bilan_inflammatoire = $("#resultat_bilan_inflammatoire");
+			//ON DESACTIVE LES CHAMPS
+			
+			  $("#groupe_sanguin").attr( 'disabled', true).css({'background':'#f8f8f8'});
+			  $("#hemogramme_sanguin").attr( 'disabled', true).css({'background':'#f8f8f8'});
+			  $("#bilan_hemolyse").attr( 'disabled', true).css({'background':'#f8f8f8'});
+			  $("#bilan_hepatique").attr( 'disabled', true).css({'background':'#f8f8f8'});
+			  $("#bilan_renal").attr( 'disabled', true).css({'background':'#f8f8f8'});
+			 $("#bilan_inflammatoire").attr( 'disabled', true).css({'background':'#f8f8f8'});
+		
+			groupe_sanguin.attr( 'disabled', true).css({'background':'#f8f8f8'});
+			hemogramme_sanguin.attr('disabled', true).css({'background':'#f8f8f8'});
+			bilan_hemolyse.attr( 'disabled', true).css({'background':'#f8f8f8'});
+			bilan_hepatique.attr( 'disabled', true).css({'background':'#f8f8f8'});
+		    bilan_renal.attr( 'disabled', true).css({'background':'#f8f8f8'});
+			bilan_inflammatoire.attr( 'disabled', true).css({'background':'#f8f8f8'});
+ 		
+			
+			
+			groupe_sanguin.toggle(false);
+			hemogramme_sanguin.toggle(false);
+			bilan_hemolyse.toggle(false);
+			bilan_hepatique.toggle(false);
+			bilan_renal.toggle(false);
+			bilan_inflammatoire.toggle(false);
+			 
+		}, 2000);
+	});
+	$(function(){
+		setTimeout(function(){
+			var eeg = $("#resultat_acte_13");
+			var ecg = $("#resultat_acte_14");
+			var emg = $("#resultat_acte_15");
+			var efr = $("#resultat_acte_16");
+			 
+		
+			eeg.attr( 'disabled', true).css({'background':'#f8f8f8'});
+			ecg.attr( 'disabled', true).css({'background':'#f8f8f8'});
+			emg.attr( 'disabled', true).css({'background':'#f8f8f8'});
+			efr.attr( 'disabled', true).css({'background':'#f8f8f8'});
+ 		
+			eeg.toggle(false);
+			ecg.toggle(false);
+			emg.toggle(false);
+			efr.toggle(false);
+		}, 2000);
+	});
 $(function(){
 	setTimeout(function(){
 		var radio = $("#radio");

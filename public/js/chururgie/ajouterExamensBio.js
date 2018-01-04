@@ -271,27 +271,40 @@ function chargementModificationBio (index , element , note) {
 	$("#SelectExamenBio_"+(index+1)+" option[value='"+element+"']").attr('selected','selected'); 
 	$("#noteExamenBio_"+(index+1)+" input").val(note);
 	
-	$(function(){
+	 
 		if(element == 1) {
-			$('#resultat_groupe_sanguin').toggle(true); 
-		} else
-			if(element == 2) {
-				$('#resultat_hemogramme_sanguin').toggle(true); 
-			} else
-				if(element == 5) {
-					$('#resultat_bilan_hemolyse').toggle(true); 
-				} else
-					if(element == 3) {
-						$('#resultat_bilan_hepatique').toggle(true); 
-					} else
-						if(element == 4) {
-							$('#resultat_bilan_renal').toggle(true); 
-						} else
-							if(element == 6) {
-								$('#resultat_bilan_inflammatoire').toggle(true); 
-							}
-			
-	});
+			setTimeout(function(){
+				$('#resultat_groupe_sanguin').toggle(true);
+			},5000);
+			  
+		} 
+		if(element == 2) {
+			setTimeout(function(){
+				$('#resultat_hemogramme_sanguin').toggle(true);
+			},5000);
+			 
+			}  
+		if(element == 5) {
+					setTimeout(function(){
+						$('#resultat_bilan_hemolyse').toggle(true); 
+					},5000);
+				 	} 
+		if(element == 3) {
+						setTimeout(function(){
+							$('#resultat_bilan_hepatique').toggle(true);
+						},5000); 
+			}  
+		if(element == 4) {
+						setTimeout(function(){
+							$('#resultat_bilan_renal').toggle(true);
+						},5000); 
+						} 
+		if(element == 6) {
+			setTimeout(function(){
+				$('#resultat_bilan_inflammatoire').toggle(true); 
+			},5000); 
+			}
+ 
 }
 
 var base_url = window.location.toString();
@@ -311,7 +324,7 @@ $(function(){
 var i=1;
 
 	if( $('#examenBio_name_'+i).val()=="groupe sanguin"){
-		alert(1);
+		 
 	}
 	
 

@@ -15,8 +15,8 @@ function creerLalisteActe ($listeDesElements) {
 			                 "<option value='' > -- S&eacute;l&eacute;ctionner un examen -- </option>";
                              for(var i = 1 ; i < $listeDesElements.length ; i++){
                             	 if($listeDesElements[i]){
-                    $liste +="<option value='"+ j +"'>"+$listeDesElements[i]+"</option>";
-                            	 }
+                    $liste +="<option value='"+ j +"'>"+$listeDesElements[i]+"</option>"; 
+                            	 } 
                             	 j++;
                              }   
                     $liste +="</select>"+                           
@@ -66,6 +66,7 @@ function creerLalisteActe ($listeDesElements) {
                     if((index+1) == 2){
                     	$("#supprimer_acte").toggle(true);
                     }
+                   
 }
 
 
@@ -224,19 +225,30 @@ function ActiverResultatExamenFonctionnelModification(d){
 	 
 	
 	// Si on change de choix dans le premier select 
-	
+ 
 		if(d==13){
-			$("#resultat_acte_13").toggle(true);
-			alert(d);
-		}else
+			setTimeout(function(){
+				$("#resultat_acte_13").toggle(true);
+			},5000);
+			 
+		} 
 		if(d==14){
-			$("#resultat_acte_14").toggle(true);
-		}else
+			setTimeout(function(){
+				$("#resultat_acte_14").toggle(true);
+			},5000);
+			 
+		} 
 		if(d==15){
-			$("#resultat_acte_15").toggle(true);
-		}else
+			setTimeout(function(){
+				$("#resultat_acte_15").toggle(true);
+			},5000);
+			  
+		} 
 		if(d==16){
-			$("#resultat_acte_16").toggle(true);
+			setTimeout(function(){
+				$("#resultat_acte_16").toggle(true);
+			},5000);
+			  
 		}
 
 	
@@ -340,9 +352,10 @@ $(function(){
 
 function desactivationChamps(){
 	
-	for(var i = 1; i <= nbListeActe(); i++ ){
-		//$('#acte_name_'+i).attr('disabled',true).css({'background':'#f8f8f8'}); 
-		//$("#noteActe_"+i+" input").attr('disabled',true).css({'background':'#f8f8f8'});
+	for(var i = 1; i <= 4; i++ ){
+	    $('#acte_name_'+i).attr('disabled',true).css({'background':'#f8f8f8'}); 
+		$("#noteActe_"+i+" input").attr('disabled',true).css({'background':'#f8f8f8'});
+		alert(i);
 	}
 	$("#iconeActe_supp_vider a img").toggle(false);
 	
