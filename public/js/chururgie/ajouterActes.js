@@ -1,5 +1,6 @@
 function creerLalisteActe ($listeDesElements) {
     	var index = $("LesActes").length; 
+    	var j =13;
 			        $liste = "<div id='Acte_"+(index+1)+"'>"+
 				             "<LesActes>"+
 				             "<table class='table table-bordered' id='Examen' style='margin-bottom: 0px; width: 100%;'>"+
@@ -14,14 +15,15 @@ function creerLalisteActe ($listeDesElements) {
 			                 "<option value='' > -- S&eacute;l&eacute;ctionner un examen -- </option>";
                              for(var i = 1 ; i < $listeDesElements.length ; i++){
                             	 if($listeDesElements[i]){
-                    $liste +="<option value='"+i+"'>"+$listeDesElements[i]+"</option>";
-                            	 }
+                    $liste +="<option value='"+ j +"'>"+$listeDesElements[i]+"</option>"; 
+                            	 } 
+                            	 j++;
                              }   
                     $liste +="</select>"+                           
                              "</th>"+
                             
                              "<th id='noteActe_"+(index+1)+"'  style='width: 50%;'  >"+
-                             "<input name='noteActe_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' >" +
+                             "<input   id='noteactes"+(index+1)+"'   name='noteActe_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' />" +
                              "</th >"+
                              
                              "<th id='iconeActe_supp_vider' style='width: 13%;'  >"+
@@ -56,7 +58,7 @@ function creerLalisteActe ($listeDesElements) {
                     $("#Acte_"+index).after($liste);
                     
                     //CACHER L'ICONE AJOUT QUAND ON A CINQ LISTES
-                    if((index+1) == 6){
+                    if((index+1) == 4){
                     	$("#ajouter_acte").toggle(false);
                     }
                     
@@ -64,6 +66,7 @@ function creerLalisteActe ($listeDesElements) {
                     if((index+1) == 2){
                     	$("#supprimer_acte").toggle(true);
                     }
+                   
 }
 
 
@@ -77,23 +80,26 @@ function ActiverResultatExamenFonctionnel(){
 	var index = $("LesActes").length;
 
 	d = document.getElementById("acte_name_"+index+"").value;
-	if(d==1){
-		$("#acte_13").toggle(true);
-	}
-	if(d==2){
-		$("#acte_14").toggle(true);
-	}
+	//alert(d);
+	// Si on change de choix dans le premier select 
 	
-	if(d==3){
-		$("#acte_15").toggle(true);
-	}
-	if(d==4){
-		$("#acte_16").toggle(true);
-	}
-	
-	
+		if(d==13){
+			$("#resultat_acte_13").toggle(true);
+		}else
+		if(d==14){
+			$("#resultat_acte_14").toggle(true);
+		}else
+		if(d==15){
+			$("#resultat_acte_15").toggle(true);
+		}else
+		if(d==16){
+			$("#resultat_acte_16").toggle(true);
+		}
+
 	
 }
+
+
 
 //SUPPRIMER LE DERNIER ELEMENT
 $(function () {
@@ -150,18 +156,18 @@ function supprimer_acte_selectionne(id) {
 	
 	
 	//On cache le champ résultat en cas de suppression dún examen fonctionnel
-	if( $('#acte_name_'+id).val()==1){
-		$("#acte_13").toggle(false);
+	if( $('#acte_name_'+id).val()==13){
+		$("#resultat_acte_13").toggle(false);
 	}
-	if( $('#acte_name_'+id).val()==2){
-		$("#acte_14").toggle(false);
+	if( $('#acte_name_'+id).val()==14){
+		$("#resultat_acte_14").toggle(false);
 	}
 	
-	if( $('#acte_name_'+id).val()==3){
-		$("#acte_15").toggle(false);
+	if( $('#acte_name_'+id).val()==15){
+		$("#resultat_acte_15").toggle(false);
 	}
-	if( $('#acte_name_'+id).val()==4){
-		$("#acte_16").toggle(false);
+	if( $('#acte_name_'+id).val()==16){
+		$("#resultat_acte_16").toggle(false);
 	}
 	for(var i = (id+1); i <= nbListeActe(); i++ ){
 		var element = $('#acte_name_'+i).val();
@@ -196,39 +202,65 @@ function supprimer_acte_selectionne(id) {
 function vider_acte_selectionne(id) {
 	
 	//On desactive le champ résultat en cas de suppression dún examen fonctionnel
-	if( $('#acte_name_'+id).val()==1){
-		$("#acte_13").toggle(false);
+	if( $('#acte_name_'+id).val()==13){
+		$("#resultat_acte_13").toggle(false);
 	}
-	if( $('#acte_name_'+id).val()==2){
-		$("#acte_14").toggle(false);
+	if( $('#acte_name_'+id).val()==14){
+		$("#resultat_acte_14").toggle(false);
 	}
 	
-	if( $('#acte_name_'+id).val()==3){
-		$("#acte_15").toggle(false);
+	if( $('#acte_name_'+id).val()==15){
+		$("#resultat_acte_15").toggle(false);
 	}
-	if( $('#acte_name_'+id).val()==4){
-		$("#acte_16").toggle(false);
+	if( $('#acte_name_'+id).val()==16){
+		$("#resultat_acte_16").toggle(false);
 	}
 	$("#SelectActe_"+id+" option[value='']").attr('selected','selected');
 	$("#noteActe_"+id+" input").val("");
 	//$("#tarifActe_"+id+" input").val("");
 }
 
-//CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
-//CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
-//CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
-//function desactiverResutatsActe () {
-//	//ON CACHE TOUT
-//	var i = 1;
-//	for(i; i <= 19; i++){
-//		$('#acte_'+i).toggle(fa); 
-//	}
-//}
+//Activation des resultats pour la modification
+function ActiverResultatExamenFonctionnelModification(d){
+	 
+	
+	// Si on change de choix dans le premier select 
+ 
+		if(d==13){
+			setTimeout(function(){
+				$("#resultat_acte_13").toggle(true);
+			},5000);
+			 
+		} 
+		if(d==14){
+			setTimeout(function(){
+				$("#resultat_acte_14").toggle(true);
+			},5000);
+			 
+		} 
+		if(d==15){
+			setTimeout(function(){
+				$("#resultat_acte_15").toggle(true);
+			},5000);
+			  
+		} 
+		if(d==16){
+			setTimeout(function(){
+				$("#resultat_acte_16").toggle(true);
+			},5000);
+			  
+		}
 
-function chargementModificationActe (index, element, tarif, note) {
-	$("#SelectActe_"+(index+1)+" option[value='"+element+"']").attr('selected','selected'); 
-	//$("#tarifActe_"+(index+1)+" input").val(tarif);
+	
+}
+var i=1;
+function chargementModificationActe (index, element, note) {
+	//alert(element);
+	$("#acte_name_"+(index+1)+" option[value='"+element+"']").attr('selected','selected'); 
 	$("#noteActe_"+(index+1)+" input").val(note);
+	
+	ActiverResultatExamenFonctionnelModification(element);
+	
 	
 	//ON AFFICHE UNIQUEMENT CEUX AYANT ETE DEMANDE
 	setTimeout(function(){ $('#acte_'+element).toggle(true) },1000); 
@@ -320,11 +352,13 @@ $(function(){
 
 function desactivationChamps(){
 	
-	for(var i = 1; i <= nbListeActe(); i++ ){
-		//$('#acte_name_'+i).attr('disabled',true).css({'background':'#f8f8f8'}); 
-		//$("#noteActe_"+i+" input").attr('disabled',true).css({'background':'#f8f8f8'});
+	for(var i = 1; i <= 4; i++ ){
+	    $('#acte_name_'+i).attr('disabled',true).css({'background':'#f8f8f8'}); 
+		$("#noteActe_"+i+" input").attr('disabled',true).css({'background':'#f8f8f8'});
+		$('#demandeExamenFonctionnel_'+i).toggle(false);
 	}
 	$("#iconeActe_supp_vider a img").toggle(false);
+	
 	
 }
 

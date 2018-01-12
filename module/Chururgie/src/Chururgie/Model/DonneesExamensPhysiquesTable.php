@@ -26,7 +26,7 @@ class DonneesExamensPhysiquesTable{
 	{
 		$this->tableGateway->delete(array('id_cons' => $donnees['id_cons']));
 
- 		for($i=1 ; $i<=5; $i++){ // 5 car on s'arrete a 5 champs de données
+ 		for($i=1 ; $i<=10; $i++){ // 5 car on s'arrete a 5 champs de donnï¿½es
  			if($donnees['donnee'.$i]){
  				$datadonnee	 = array(
  						'libelle_examen' => $donnees['donnee'.$i],
@@ -42,7 +42,7 @@ class DonneesExamensPhysiquesTable{
 	{
 		$this->tableGateway->delete(array('id_cons' => $donnees['id_cons']));
 	
-		for($i=1 ; $i<=5; $i++){ // 5 car on s'arrete a 5 champs de données
+		for($i=1 ; $i<=5; $i++){ // 5 car on s'arrete a 5 champs de donnï¿½es
 			if($donnees['donnee'.$i]){
 				$datadonnee	 = array(
 						'libelle_examen' => $donnees['donnee'.$i],

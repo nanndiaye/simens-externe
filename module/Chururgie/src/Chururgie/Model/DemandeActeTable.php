@@ -51,8 +51,8 @@ class DemandeActeTable{
 			foreach ($this->getDemande($id_cons) as $listeDemande) {
 				if(!in_array($listeDemande['idActe'], $examensActe)){
 					
-					/** Emplacement pour la suppression des données **/
-					/** Emplacement pour la suppression des données **/
+					/** Emplacement pour la suppression des donnï¿½es **/
+					/** Emplacement pour la suppression des donnï¿½es **/
 					$this->tableGateway->delete(array('idDemande'=>$listeDemande['idDemande']));
 				
 				}
@@ -150,8 +150,26 @@ class DemandeActeTable{
 	
 	
 	/**
-	 * Recuperer la liste des actes de la consultation donnée en paramètre
+	 * 
+	 * Recuperer la liste des actes de la consultation donnï¿½e en paramï¿½tre
 	 */
+	
+	public function getDemandeFoncDemande($id){
+		$adapter = $this->tableGateway->getAdapter();
+		$sql = new Sql($adapter);
+		$select = $sql->select();
+		$select->columns(array('*'));
+		$select->from(array('d'=>'demande'));
+		$select->join( array(
+				'e' => 'examens'
+		), 'd.idExamen = e.idExamen' , array ( '*' ) );
+		$select->where(array('d.idCons' => $id, 'e.idType' => 3));
+		$select->order('d.idDemande ASC');
+		$stat = $sql->prepareStatementForSqlObject($select);
+		$result = $stat->execute();
+		//var_dump($result->current());exit();
+		return $result;
+	}
 	public function getDemandeActe($id){
 		$adapter = $this->tableGateway->getAdapter();
 		$sql = new Sql($adapter);
@@ -163,7 +181,7 @@ class DemandeActeTable{
 		$select->order('d.idDemande ASC');
 		$stat = $sql->prepareStatementForSqlObject($select);
 		$result = $stat->execute();
-	
+		//var_dump($result->current());exit();
 		return $result;
 	}
 	
@@ -442,7 +460,7 @@ class DemandeActeTable{
 	
 	
 // 	/**
-// 	 * Recuperer la liste des examens Biologiques Effectués et Envoyés par le laborantion (biologiste)
+// 	 * Recuperer la liste des examens Biologiques Effectuï¿½s et Envoyï¿½s par le laborantion (biologiste)
 // 	 */
 // 	public function getDemandeExamensBiologiquesEffectuesEnvoyer($id){
 // 		$adapter = $this->tableGateway->getAdapter();
@@ -465,7 +483,7 @@ class DemandeActeTable{
 // 	}
 	
 // 	/**
-// 	 * Recuperer la liste des examens Biologiques Effectués par le laborantion (biologiste)
+// 	 * Recuperer la liste des examens Biologiques Effectuï¿½s par le laborantion (biologiste)
 // 	 */
 // 	public function getDemandeExamensBiologiquesEffectues($id){
 // 		$adapter = $this->tableGateway->getAdapter();
@@ -488,7 +506,7 @@ class DemandeActeTable{
 // 	}
 	
 // 	/**
-// 	 * Recuperer la liste des examens Morphologiques Effectués et Envoyés par le laborantion (radiologue)
+// 	 * Recuperer la liste des examens Morphologiques Effectuï¿½s et Envoyï¿½s par le laborantion (radiologue)
 // 	 */
 // 	public function getDemandeExamensMorphologiquesEffectues($id){
 // 		$adapter = $this->tableGateway->getAdapter();
@@ -602,7 +620,7 @@ class DemandeActeTable{
 // 				$result = $stat->execute();
 // 				return $result;
 // 			}else {
-// 				//C'est ici qu'on met appliquer à 1
+// 				//C'est ici qu'on met appliquer ï¿½ 1
 // 				$this->tableGateway->update(array('appliquer' => 1, 'responsable' => 0) , array('idCons' => $id_cons, 'idExamen' => $idExamen));
 	
 // 				//INSERTION DU RESULTAT DE LA DEMANDE
@@ -685,7 +703,7 @@ class DemandeActeTable{
 // 				$result = $stat->execute();
 // 				return $result;
 // 			}else {
-// 				//C'est ici qu'on met appliquer à 1
+// 				//C'est ici qu'on met appliquer ï¿½ 1
 // 				$this->tableGateway->update(array('appliquer' => 1, 'responsable' => 1) , array('idCons' => $id_cons, 'idExamen' => $idExamen));
 				
 // 				//INSERTION DU RESULTAT DE LA DEMANDE

@@ -21,7 +21,7 @@ function creerLaliste ($listeDesElements) {
                              "</th>"+
                              
                              "<th id='note_"+(index+1)+"' style='width: 54%;'  >"+
-                             "<input  name='note_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' >" +
+                             "<input   id='notes"+(index+1)+"'     name='note_"+(index+1)+"' type='text' style='width: 100%; margin-top: 3px; height: 30px; margin-bottom: 0px; font-size: 15px; padding-left: 10px;' >" +
                              "</th >"+
                              
                              "<th id='icone_supp_vider' style='width: 20%;'  >"+
@@ -231,6 +231,7 @@ function vider_element_selectionne(id) {
 //CHARGEMENT DES ELEMENTS SELECTIONNES POUR LA MODIFICATION
 
 function chargementModification (index , element , note) { 
+	//alert(index);
 	$("#SelectElement_"+(index+1)+" option[value='"+element+"']").attr('selected','selected'); 
 	$("#note_"+(index+1)+" input").val(note);
 }
@@ -279,8 +280,8 @@ $(function(){
 	        	$('.imageRadio').toggle(false); 
         		$('.imageEchographie').toggle(false);
         		$('.imageIRM').toggle(false);
-	     $('.imageScanner').toggle(false); 
-       		$('.imageFibroscopie').toggle(false);
+	            $('.imageScanner').toggle(false); 
+       		    $('.imageFibroscopie').toggle(false);
 				//$('.bouton_valider_examen_morpho').toggle(false);
         		
 	        	//ON AFFICHE UNIQUEMENT CEUX AYANT ETE DEMANDE

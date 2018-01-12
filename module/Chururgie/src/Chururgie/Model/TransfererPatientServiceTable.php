@@ -97,6 +97,26 @@ class TransfererPatientServiceTable{
 		return $result;
 	}
 	
+	
+	
+	/**
+	 * Recuperer ID_SERVICE A PARTIR DU NOM DU SERVICE
+	 */
+	public function getHopitalIDSERVICE ($nomService) {
+		$adapter = $this->tableGateway->getAdapter ();
+		$sql = new Sql ( $adapter );
+		$select = $sql->select ();
+		$select->columns( array('*'));
+		$select->from(array('hs' => 'service'));
+		$select->where(array('hs.NOM' => $nomService));
+	
+		$stat = $sql->prepareStatementForSqlObject ( $select );
+		$result = $stat->execute ()->current();
+	//var_dump($result);exit();
+		return $result;
+	}
+	
+	
 	/**
 	 * Modification des donnees du transfert
 	 */
@@ -136,10 +156,16 @@ class TransfererPatientServiceTable{
 	 * Inserer des donnees du transfert
 	 */
 	public function insererTransfertPatientService($info_transfert){
+
+	$this->tableGateway->delete(array('ID_CONS'=> $info_transfert['ID_CONS']));
+	
+	$id_service = $this->getHopitalIDSERVICE($info_transfert['ID_SERVICE']);
+	//var_dump();exit();
 		$today = new \DateTime ();
 		$dateAujourdhui = $today->format ( 'Y-m-d H:i:s' );
 		$info_transfert['DATE'] = $dateAujourdhui;
-		if($info_transfert['MOTIF_TRANSFERT'] && $info_transfert['ID_MEDECIN'] && $info_transfert['ID_SERVICE']){
+		if($info_transfert['MOTIF_TRANSFERT'] && $info_transfert['ID_MEDECIN'] && $id_service['ID_SERVICE'] ){
+			
 			$this->tableGateway->insert($info_transfert);
 		}
 	}

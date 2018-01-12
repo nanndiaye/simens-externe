@@ -48,6 +48,7 @@ class DemandeTable{
 	 * Recuperer la liste des examens Biologiques
 	 */
 	public function getDemandeExamensBiologiques($id){
+		//var_dump($id);exit();
 		$adapter = $this->tableGateway->getAdapter();
 		$sql = new Sql($adapter);
 		$select = $sql->select();
@@ -56,11 +57,16 @@ class DemandeTable{
 		$select->join( array(
 				'e' => 'examens'
 		), 'd.idExamen = e.idExamen' , array ( '*' ) );
-		$select->where(array('d.idCons' => $id, 'idType' => 1));
+		$select->where(array('d.idCons' => $id, 'e.idType' => 1));
 		$select->order('d.idDemande ASC');
 		$stat = $sql->prepareStatementForSqlObject($select);
 		$result = $stat->execute();
-	
+// 			$tab=array();$i=1;
+// 			foreach ($result as $l){
+// 				$tab[$i++]= $l['noteDemande'];
+				
+// 			}
+// 			var_dump($tab);exit();
 		return $result;
 	}
 	
@@ -128,7 +134,7 @@ class DemandeTable{
 		$select->join( array(
 				'r' => 'resultats_examens'
 		), 'd.idDemande = r.idDemande' , array ( '*' ) );
-		$select->where(array('d.idCons' => $id, 'idType' => 1, 'appliquer' => 1, 'envoyer' => 1));
+		$select->where(array('d.idCons' => $id, 'e.idType' => 1, 'appliquer' => 1));
 		$select->order('d.idDemande ASC');
 		$stat = $sql->prepareStatementForSqlObject($select);
 		$result = $stat->execute();
@@ -158,6 +164,42 @@ class DemandeTable{
 	
 		return $result;
 	}
+	
+	
+	/**
+	 * Recuperer la liste des examens Fonctionnels Effectu�s et Envoy�s par le laborantion (radiologue)
+	 */
+	public function getDemandeExamensFonctionnelsEffectues($id){
+	    $adapter = $this->tableGateway->getAdapter();
+	    $sql = new Sql($adapter);
+	    $select = $sql->select();
+	    $select->columns(array('*'));
+	    $select->from(array('d'=>'demande'));
+	    $select->join( array(
+	        'e' => 'examens'
+	    ), 'd.idExamen = e.idExamen' , array ( '*' ) );
+// 	    $select->join( array(
+// 	        'r' => 'resultats_examens'
+// 	    ), 'd.idDemande = r.idDemande' , array ( '*' ) );
+	    $select->where(array('d.idCons' => $id, 'e.idType' => 3));
+	    $select->order('d.idDemande ASC');
+	    $stat = $sql->prepareStatementForSqlObject($select);
+	    $result = $stat->execute();
+// 	    $tab =  array();$j=1;
+// 	    foreach ($result as $r){
+// 	        $tab[$j++] = $r['noteDemande'];
+// 	    }
+// 	    var_dump($tab);exit();
+	    return $result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * Recuperer la liste des examens Morphologiques Effectu�s et Envoy�s par le laborantion (radiologue)

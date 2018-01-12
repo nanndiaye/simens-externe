@@ -67,7 +67,7 @@ class PatientForm extends Form {
 				'name' => 'PRENOM',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Prenom' )
+						'label' => 'Prénom' 
 				),
 				'attributes' => array (
 						'id' => 'PRENOM',
@@ -121,7 +121,7 @@ class PatientForm extends Form {
 				'name' => 'TELEPHONE',
 				'type' => 'Text',
 				'options' => array (
-						'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Telephone' )
+						'label' => 'Téléphone' 
 				),
 				'attributes' => array (
 						'id' => 'TELEPHONE',
@@ -133,7 +133,7 @@ class PatientForm extends Form {
 		    'name' => 'TELEPHONE1',
 		    'type' => 'Text',
 		    'options' => array (
-		        'label' => iconv ( 'ISO-8859-1', 'UTF-8', 'Telephone Proche' )
+		        'label' => 'Téléphone accompagnant' 	
 		    ),
 		    'attributes' => array (
 		        'id' => 'TELEPHONE1',

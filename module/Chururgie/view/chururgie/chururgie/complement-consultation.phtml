@@ -1,6 +1,5 @@
 
-<?php 
-
+<?php
 use Chururgie\View\Helper\DateHelper;
 ?>
 <!-- SCRIPT DU NOUVEAU CODE POUR LA GESTION DES IMAGES  -->
@@ -16,7 +15,7 @@ echo $this->headScript()->appendFile($this->basePath() . '/js/plugins/pikachoose
 <?php echo $this->headScript()->appendFile($this->basePath().'/js/plugins/fancybox/source/jquery.fancybox.js');?>
 <?php echo $this->headLink()->appendStylesheet($this->basePath().'/js/plugins/fancybox/source/jquery.fancybox.css');?>
 <?php
-echo $this->headLink()->appendStylesheet($this->basePath().'/css/monstyle.css');
+echo $this->headLink()->appendStylesheet($this->basePath() . '/css/monstyle.css');
 echo $this->headScript()->appendFile($this->basePath() . '/js/mesjs/complementcons_accordeon_controle.js');
 echo $this->headLink()->appendStylesheet($this->basePath() . '/css/mescss/bloquerDate.css'); // DatePicker
 echo $this->headScript()->appendFile($this->basePath() . '/js/mesjs/bloquerDate.js'); // Pour bloquer certaines dates ?>
@@ -43,7 +42,7 @@ $('#declarer_style').css({'font-weight':'bold','color':'white','font-size':'22px
 <!--===================================== BLOCAGE DES JOURS NON CONSULTABLE ====================================-->
 <!--===================================== BLOCAGE DES JOURS NON CONSULTABLE ====================================-->
 <!--************************************************************************************************************-->
-<?php 
+<?php
 $Control = new DateHelper();
 $today = new DateTime();
 $AnneeActuelle = $today->format('Y');
@@ -156,7 +155,6 @@ AntecedentScript();
 /*** Bouton input submit***/
 /*** Bouton input submit***/
 /*** Bouton input submit***/
-
 .transf, .rendezvous, .ordonnance {
 	width: 32px;
 	height: 32px;
@@ -271,17 +269,17 @@ $(window).load(function () {
 	 
 });
 </script>
-  
+
 <div id="wait"
 	style="color: gray; font-size: 20px; text-align: center; margin-top: 80px;">
 	<span> Chargement ... </span>
 </div>
 
- 
-<div id="contenu">
-<?php 
 
-//echo $this->headLink()->appendStylesheet($this->basePath().'/css/monstyle.css');?>
+<div id="contenu">
+<?php
+
+// echo $this->headLink()->appendStylesheet($this->basePath().'/css/monstyle.css'); ?>
 
 <?php
 
@@ -298,7 +296,7 @@ echo $this->form()->openTag($form);
 
 <div id="accordions">
 		<!-- couleur bleu du logo//#49afcd-->
- 
+
 		<!--*************** Accordeon ETAT CIVIL ******************-->
 		<!--*************** Accordeon ETAT CIVIL ******************-->
 		<!--*************** Accordeon ETAT CIVIL ******************-->
@@ -424,8 +422,8 @@ echo $this->form()->openTag($form);
 						<div id="aa">
 							<a style="text-decoration: underline;">Adresse</a><br>
 							<p style='font-weight: bold; font-size: 19px;'><?php echo $this->lesdetails['ADRESSE'];?></p>
-							
-							
+
+
 						</div>
 
 					</td>
@@ -496,7 +494,7 @@ echo $this->form()->openTag($form);
 				<!-- **1** -->
 				<div
 					style='font-family: police2; font-size: 17px; font-weight: bold;'>
-					Motifs d'admission </div>
+					Motifs d'admission</div>
 				<div>
                 <?php echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterMotifs.js');?>
                 <div style='width: 100%; height: 30px;'>
@@ -508,7 +506,7 @@ echo $this->form()->openTag($form);
 											style='cursor: pointer;' src='../images/images/sup.png'
 											title='supprimer' />
 									</span></th>
-									
+
 								</tr>
 								<tr class="form-author" id="motif2">
 									<th><?php echo $this->formRow($form->get('motif_admission2'));?> <span
@@ -652,8 +650,7 @@ echo $this->form()->openTag($form);
 							<td>
 								<div id="erreur_frequence"></div>
 							</td>
-							<td>
-							</td>
+							<td></td>
 						</tr>
 
 					</table>
@@ -691,7 +688,7 @@ echo $this->form()->openTag($form);
 												</div> <br>
 											</td>
 										</tr>
-         
+
 										<tr style="width: 100%;">
 											<td style="width: 100%;">
 												<div style="float: left;">
@@ -730,15 +727,15 @@ echo $this->form()->openTag($form);
 								</div>
 							</td>
 
-<!-- 							<td class="comment-form-author" 
+							<!-- 							<td class="comment-form-author" 
 								style="width: 50%; position: absolute; bottom: 40px; right: 40px;">
 								<div style="float: right;">-->
-<!-- 									<button id='bouton_constantes_valider'>Valider</button> -->
-<!-- 								</div> 
+							<!-- 									<button id='bouton_constantes_valider'>Valider</button> -->
+							<!-- 								</div> 
 								<div style="float: right;">-->
-<!-- 									<button id='bouton_constantes_modifier'>Modifier</button> -->
-<!-- 								</div> -->
-<!-- 							</td> -->
+							<!-- 									<button id='bouton_constantes_modifier'>Modifier</button> -->
+							<!-- 								</div> -->
+							<!-- 							</td> -->
 						</tr>
 
 
@@ -994,7 +991,7 @@ echo $this->form()->openTag($form);
 								</div>
 							</td>
 
-								<td id="BUcheckbox" style="width: 15%;">
+							<td id="BUcheckbox" style="width: 15%;">
 								<div>
 									<label
 										style="width: 90%; height: 30px; text-align: right; font-family: time new romans; font-size: 18px;">
@@ -1007,7 +1004,7 @@ echo $this->form()->openTag($form);
                      </label>
 								</div>
 							</td>
-							
+
 
 						</tr>
 
@@ -1020,8 +1017,7 @@ echo $this->form()->openTag($form);
 							<td id="BUcheckbox" colspan="3" style="width: 60%;">
 								<div id="imageIconeAjouterLabel">
                       <?php echo $this->formRow($form->get('nbCheckboxAM'));?>
-                      <label
-										style="width: 55%; height: 30px; text-align: right;">
+                      <label style="width: 55%; height: 30px; text-align: right;">
                         Autres  <?php echo $this->formRow($form->get('autresAM'));?>
                         <img id="imgIconeAjouterLabel"
 										style='cursor: pointer; padding-right: 5px; padding-left: 10px; padding-bottom: 6px;'
@@ -1055,7 +1051,7 @@ echo $this->form()->openTag($form);
               var i = 1;
            </script>
            <?php foreach ($this->listeAntMed as $antMed){ ?>
-             <script> myArrayAntMed[i++] =  "<?php //echo $antMed['libelle']; ?>" </script>
+             <script> myArrayAntMed[i++] =  "<?php echo $antMed['libelle']; ?>" </script>
            <?php } ?>
            <script> 
         	  autocompletionAntecedent(myArrayAntMed);
@@ -1089,8 +1085,8 @@ echo $this->form()->openTag($form);
 							</td>
 						</tr>
 						<tr>
-						<td class="form-hospitalisation" style="width: 100%;"> <?php echo $this->formRow($form->get('antecedents_chirugicaux'));?> </td>
-						
+							<td class="form-hospitalisation" style="width: 100%;"> <?php echo $this->formRow($form->get('antecedents_chirugicaux'));?> </td>
+
 						</tr>
 						<tr style="width: 100%;">
 							<td class='block' id='thoughtbot'
@@ -1207,10 +1203,10 @@ echo $this->form()->openTag($form);
 
 					<!--****** ================== ANTECEDENTS FAMILIAUX ================== ****** -->
 					<!--****** ================== ANTECEDENTS FAMILIAUX ================== ****** -->
-					
-					
-							
-					
+
+
+
+
 					<table id="AntecedentsFamiliaux" style="width: 100%;">
 						<tr style="width: 100%;">
 							<td colspan="3" style="width: 60%;">
@@ -1223,13 +1219,14 @@ echo $this->form()->openTag($form);
 							<td></td>
 							<td></td>
 						</tr>
-		
 
-								
-							<tr style="width: 100%; height: 50px;">
+
+
+						<tr style="width: 100%; height: 50px;">
 							<td id="BUcheckbox" style="width: 15%;">
 								<div>
-						<label style="width: 90%; height: 30px; text-align: right; font-family: time new romans; font-size: 18px;">
+									<label
+										style="width: 90%; height: 30px; text-align: right; font-family: time new romans; font-size: 18px;">
 								
                          Diab&egrave;te 
                          <?php echo $this->formRow($form->get('DiabeteAF'));?>
@@ -1271,24 +1268,18 @@ echo $this->form()->openTag($form);
 								</div>
 							</td>
 
-								<td id="BUcheckbox" style="width: 15%;">
+							<td id="BUcheckbox" style="width: 15%;">
 								<div>
 									<label
 										style="width: 90%; height: 30px; text-align: right; font-family: time new romans; font-size: 18px;">
-										 
-                      
+									
                        Asthme  <?php echo $this->formRow($form->get('asthmeAF'));?>
                      </label>
 								</div>
 							</td>
-							
-
 						</tr>
-							
-							
-								
-		
-									
+
+
 						<tr id="labelDesAntecedentsFamiliaux_1" style="width: 100%;">
 							<!-- Emplacement des autres antecedents m�dicaux ajouter � partir du champ autre -->
 						</tr>
@@ -1313,29 +1304,23 @@ echo $this->form()->openTag($form);
 							<td></td>
 						</tr>
 
-
-					
-						
-						</tr>
 						<tr style="width: 100%;">
 							<td class='block' id='thoughtbot'
 								style='display: inline-block; vertical-align: bottom; width: 20%; padding-bottom: 5px; padding-top: 35px;'><div
 									style="float: left;" id="TerminerAntecedentsFamiliaux">Terminer</div></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						
 						
 						<tr>
 					
 					</table>
-					
-					
-				<script >
-				 var temoinDiabeteAF = <?php echo $this->donneesAntecedentsFamiliaux['DiabeteAF'];?>;
+
+
+
+					<script>
+				   var temoinDiabeteAF = <?php echo $this->donneesAntecedentsFamiliaux['DiabeteAF'];?>;
 	               var temoinDrepanocytoseAF = <?php echo $this->donneesAntecedentsFamiliaux['DrepanocytoseAF'];?>;
 	               var temoinhtaAF = <?php echo $this->donneesAntecedentsFamiliaux['htaAF'];?>;
+	               var temoindislipidemieAF = <?php echo $this->donneesAntecedentsFamiliaux['dislipidemieAF'];?>;
+	               var temoinasthmeAF = <?php echo $this->donneesAntecedentsFamiliaux['asthmeAF'];?>;
 				</script>
 
 
@@ -1343,24 +1328,30 @@ echo $this->form()->openTag($form);
               var myArrayAntFamiliaux = [''];
               var i = 1;
            </script>
-           <?php //foreach ($this->listeAntFamiliaux as $antFami){ ?>
-             <script> myArrayAntFamiliaux[i++] =  "<?php //echo $antMed['libelle']; ?>" </script>
-           <?php // } ?>
+           <?php foreach ($this->antFamiliauxPat as $antFami){ ?>
+           
+            <script> 
+         
+            myArrayAntFamiliaux[i++] =  "<?php echo $antFami['libelle']; ?>" </script>
+           
+           <?php  } ?>
            <script> 
         	  autocompletionAntecedentAF(myArrayAntFamiliaux);
            </script>
 
 					<script> 
-              var myArrayAntFamiliauxPat = [''];
-              var i = 1;
+              //var myArrayAntFamiliauxPat = [''];
+              //var i = 1;
            </script>
            <?php //foreach ($this->antFamiliauxPat as $antFami){ ?>
-             <script> myArrayAntFamiliauxPat[i++] =  "<?php //echo $antFami['libelle']; ?>" </script>
-           <?php // } ?>
+             <script>  "<?php // myArrayAntFamiliauxPat[i++] = echo $antFami['libelle']; ?>" </script>
+           <?php //} ?>
            <script> 
+           
            $('#nbCheckboxAF').val('<?php echo $this->nbAntFamiliauxPat;?>');
+          // alert(myArrayAntFamiliaux);
            setTimeout(function(){
-        	   affichageAntecedentsFamiliauxDuPatient('<?php echo $this->nbAntFamiliauxPat;?>' , myArrayAntFamiliauxPat);
+        	   affichageAntecedentsFamiliauxDuPatient('<?php echo $this->nbAntFamiliauxPat;?>' , myArrayAntFamiliaux);
            }, 500);
            </script>
 					<!--****** ================== FIN ANTECEDENTS TERRAIN PARTICULIER ================== ****** -->
@@ -1514,12 +1505,12 @@ echo $this->form()->openTag($form);
 					<!-- FIN LISTE DES HOSPITALISATIONS DU PATIENT -->
 					<!-- FIN LISTE DES HOSPITALISATIONS DU PATIENT -->
 					<!-- FIN LISTE DES HOSPITALISATIONS DU PATIENT -->
-					
-					
-					
-					
-					
-				    <!-- Examen-->
+
+
+
+
+
+					<!-- Examen-->
 					<!--Examen -->
 					<!-- Examen -->
 
@@ -1530,13 +1521,14 @@ echo $this->form()->openTag($form);
 					</div>
 
 					<div id='examenprhistorique'>
-					        <table id="responde" style="width: 65%;">
-				<tr id="examenhistorique" class="form-author" style="max-width: 85px;">
-					<th><?php echo $this->formRow($form->get('examen_historique'));?> 
+						<table id="responde" style="width: 65%;">
+							<tr id="examenhistorique" class="form-author"
+								style="max-width: 85px;">
+								<th><?php echo $this->formRow($form->get('examen_historique'));?> 
 					</span></th>
-				</tr>
-				
-			</table>	
+							</tr>
+
+						</table>
 					</div>
 
 					<table id="boutonTerminerexamenhistorique" style="width: 100%;">
@@ -1549,9 +1541,9 @@ echo $this->form()->openTag($form);
 						<tr>
 					
 					</table>
-					
-								
-				    <!-- Autres de l'historique-->
+
+
+					<!-- Autres de l'historique-->
 					<!--Autres de l'historique -->
 					<!-- Autres de l'historique -->
 
@@ -1561,14 +1553,14 @@ echo $this->form()->openTag($form);
 						Autre(s)
 					</div>
 
-					<div id='autreprhistorique'  style="min-width: 100%;">
-					        <table id="responde">
-				<tr id="autrehistorique" class="form-author">
-					<th><?php echo $this->formRow($form->get('autre_historique'));?> 
+					<div id='autreprhistorique' style="min-width: 100%;">
+						<table id="responde">
+							<tr id="autrehistorique" class="form-author">
+								<th><?php echo $this->formRow($form->get('autre_historique'));?> 
 					</th>
-				</tr>
-				
-			</table>	
+							</tr>
+
+						</table>
 					</div>
 
 					<table id="boutonTerminerautrehistorique" style="width: 100%;">
@@ -1581,7 +1573,7 @@ echo $this->form()->openTag($form);
 						<tr>
 					
 					</table>
-					
+
 
 				</div>
 
@@ -1597,21 +1589,121 @@ echo $this->form()->openTag($form);
 
 
 
-        <!-- ********************Histoire de la Maladie******************-->
-        <!-- ********************Histoire de la Maladie******************-->
-        <!-- ********************Histoire de la Maladie******************-->
-	<div style='font-family: police2; font-size: 17px; font-weight: bold;'> Histoire de la Maladie</div>
-
-
+		<!-- ********************Histoire de la Maladie******************-->
+		<!-- ********************Histoire de la Maladie******************-->
+		<!-- ********************Histoire de la Maladie******************-->
+		<div style='font-family: police2; font-size: 17px; font-weight: bold;'> Histoire de La Maladie</div>
+		<div style='max-height: 340px;'>
+			<p style='color: white; opacity: 0.75;'>
+				<img id=""
+					src='<?php echo $this->basePath().'/images_icons/symptome.jpg'?>'
+					alt="consult-motif"
+					style='float: right; margin-right: 0px; width: 32%; height: 270px;' />
+			</p>
+        <?php echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterSymptomes.js');?>
+        <table id="responde" style="width: 65%;">
+				<tr id="donnee_symptome1" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome1'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome1'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome2" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome2'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome2'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome3" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome3'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome3'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome4" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome4'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome4'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome5" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome5'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome5'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
 				
-		<div style='max-height: 240px;'>
-		<table id="hospitalisation" style="width: 90%;">
-						<tr>
-							<th class="form-hospitalisation" style="width: 90%;"> <?php echo $this->formRow($form->get('histoire_maladie'));?> </th>
-							</tr>
-					</table>
-		
-		  </div>
+				<tr id="donnee_symptome6" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome6'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome6'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				
+				<tr id="donnee_symptome7" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome7'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome7'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome8" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome8'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome8'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome9" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome9'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome9'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee_symptome10" class="form-author">
+					<th><?php echo $this->formRow($form->get('symptome10'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonneeSymptome10'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+			</table>
+
+			<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+			<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+			<div id="controls_donnees" style="margin-top: 10px; width: 100%;">
+				<div style="width: 100%;">
+					<!--		<div style="width: 3%; height: 1px; float: left;"
+						id="supprimer_donnee">
+						<img id="supprimer_donnee_img"
+							style='margin-left: 5px; cursor: pointer;'
+							src='../images_icons/moin-green.png' title='supprimer' />
+					</div>-->
+					<div style="width: 3%; height: 1px; float: left;"
+						id="ajouter_donnee">
+						<img id="ajouter_donnee_img_symptome"
+							style='margin-left: 5px; cursor: pointer;'
+							src='../images_icons/plus-green.png' title='ajouter' />
+					</div>
+				</div>
+			</div>
+
+
+
+			<script>
+          cacherTouteDonneeSymptome();
+          afficherSymptome(1);
+          supprimerUneDonneeSymptome();
+         </script>
+
+		</div>
 		<!-- ********************Accordeon DONNEES DE L'EXAMEN PHYSIQUE******************-->
 		<!-- ********************Accordeon DONNEES DE L'EXAMEN PHYSIQUE******************-->
 		<!-- ********************Accordeon DONNEES DE L'EXAMEN PHYSIQUE******************-->
@@ -1663,13 +1755,50 @@ echo $this->form()->openTag($form);
 							title='supprimer' />
 					</span></th>
 				</tr>
+				
+				<tr id="donnee6" class="form-author">
+					<th><?php echo $this->formRow($form->get('examen_donnee6'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonnee6'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				
+				<tr id="donnee7" class="form-author">
+					<th><?php echo $this->formRow($form->get('examen_donnee7'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonnee7'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee8" class="form-author">
+					<th><?php echo $this->formRow($form->get('examen_donnee8'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonnee8'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee9" class="form-author">
+					<th><?php echo $this->formRow($form->get('examen_donnee9'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonnee9'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
+				<tr id="donnee10" class="form-author">
+					<th><?php echo $this->formRow($form->get('examen_donnee10'));?> <span
+						id="labelSupDonnee"> <img class='supprimerDonnee10'
+							style='cursor: pointer;' src='../images/images/sup.png'
+							title='supprimer' />
+					</span></th>
+				</tr>
 			</table>
 
 			<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
 			<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
 			<div id="controls_donnees" style="margin-top: 10px; width: 100%;">
-			<div style="width: 100%;">
-				<!--		<div style="width: 3%; height: 1px; float: left;"
+				<div style="width: 100%;">
+					<!--		<div style="width: 3%; height: 1px; float: left;"
 						id="supprimer_donnee">
 						<img id="supprimer_donnee_img"
 							style='margin-left: 5px; cursor: pointer;'
@@ -1684,7 +1813,7 @@ echo $this->form()->openTag($form);
 				</div>
 			</div>
 
-			
+
 
 			<script>
           cacherTouteDonnee();
@@ -1698,7 +1827,8 @@ echo $this->form()->openTag($form);
 		<!-- ********************Examen complementaire (examen et analyse)******************-->
 		<!-- ********************Examen complementaire (examen et analyse)******************-->
 		<!--*4*-->
-		<div style='font-family: police2; font-size: 17px; font-weight: bold;'> Examens compl&eacute;mentaires</div>
+		<div style='font-family: police2; font-size: 17px; font-weight: bold;'>
+			Examens compl&eacute;mentaires</div>
 		<div style='max-height: 600px;'>
 
 			<div id="accordionsss" style=''>
@@ -1710,7 +1840,7 @@ echo $this->form()->openTag($form);
 				<div style=''>
 					<div
 						style="padding-bottom: 0px; margin-bottom: 5px; border-bottom: 2px solid green; margin-left: 0px;"></div>
-				
+
 					<div id="accordions_demande">
                           
                           <?php
@@ -1727,13 +1857,14 @@ echo $this->form()->openTag($form);
 							Examens Fonctionnels</div>
 						<div>
 							<!-- LE PDF POUR IMPRESSION-->
-					<div class="rendezvous">
-						<hass> <input type="submit" title="Imprimer"
-							name="demandeExamenFonctionnel" id="demandeExamenFonctionnel"> </hass>
-					</div>
-					<div
-						style="padding-bottom: 40px; margin-bottom: 10px; border-bottom: 1px dashed green; margin-left: 0px; margin-right: 0px;"></div>
-						
+							<div class="rendezvous">
+								<hass> <input type="submit" title="Imprimer"
+									name="demandeExamenFonctionnel" id="demandeExamenFonctionnel">
+								</hass>
+							</div>
+							<div
+								style="padding-bottom: 40px; margin-bottom: 10px; border-bottom: 1px dashed green; margin-left: 0px; margin-right: 0px;"></div>
+
 							<div
 								style="margin-bottom: 5px; border-bottom: 1.5px solid #cccccc; margin-top: -15px;"></div>
 
@@ -1755,9 +1886,10 @@ echo $this->form()->openTag($form);
 											<th style="width: 4%; font-weight: bold; font-size: 15px;">N&ordm;</th>
 											<th
 												style="width: 32%; font-weight: bold; font-size: 15px; text-align: left;">Examen</th>
-										
+
 											<th
-												style="width: 51%; font-weight: bold; font-size: 15px; text-align: left;">Renseignement Clinique</th>
+												style="width: 51%; font-weight: bold; font-size: 15px; text-align: left;">Renseignement
+												Clinique</th>
 											<th style="width: 19%; font-weight: bold; font-size: 15px;">Options</th>
 										</tr>
 									</thead>
@@ -1813,9 +1945,9 @@ echo $this->form()->openTag($form);
                                var i = 1;
 
                                <?php foreach ($this->listeActes as $listeActes){ ?>
-                                       myArrayActe[i++] =  "<?php echo $listeActes['designation']; ?>";
+                                       myArrayActe[i++] =  "<?php echo $listeActes['libelleExamen']; ?>";
                                <?php } ?>
-                               
+                              // alert(myArrayActe);
                                partDefautActe(myArrayActe, 1);
                                
                                //Descactiver la visualisation des resultats pour afficher uniquement ceux selectionn�s
@@ -1839,15 +1971,15 @@ echo $this->form()->openTag($form);
 							style='font-family: police2; font-size: 15px; font-weight: bold; color: green;'>
 							Examens Biologiques</div>
 						<div>
-						
+
 							<!-- LE PDF POUR IMPRESSION-->
-					<div class="rendezvous">
-						<hass> <input type="submit" title="Imprimer"
-							name="demandeExamenBio" id="demandeExamenBio"> </hass>
-					</div>
-					<div
-						style="padding-bottom: 40px; margin-bottom: 10px; border-bottom: 1px dashed green; margin-left: 0px; margin-right: 0px;"></div>
-						
+							<div class="rendezvous">
+								<hass> <input type="submit" title="Imprimer"
+									name="demandeExamenBio" id="demandeExamenBio"> </hass>
+							</div>
+							<div
+								style="padding-bottom: 40px; margin-bottom: 10px; border-bottom: 1px dashed green; margin-left: 0px; margin-right: 0px;"></div>
+
 							<div
 								style="margin-bottom: 5px; border-bottom: 1.5px solid #cccccc; margin-top: -15px;"></div>
 
@@ -1871,7 +2003,8 @@ echo $this->form()->openTag($form);
 											<th
 												style="width: 28%; font-weight: bold; font-size: 15px; text-align: left;">Examen</th>
 											<th
-												style="width: 51%; font-weight: bold; font-size: 15px; text-align: left;">Renseignement Clinique</th>
+												style="width: 51%; font-weight: bold; font-size: 15px; text-align: left;">Renseignement
+												Clinique</th>
 											<th style="width: 12%; font-weight: bold; font-size: 15px;">Options</th>
 										</tr>
 									</thead>
@@ -1935,9 +2068,10 @@ echo $this->form()->openTag($form);
                             <?php } ?>
                             
                             <script> 
+                           
                                partDefautExamenBio(myArrayExamenBio, 1);
                                //Descactiver la visualisation des resultats pour afficher uniquement ceux selectionn�s
-                               desactiverResutatsBio ();
+                              // desactiverResutatsBio ();
                             </script>
 
 						</div>
@@ -1955,15 +2089,15 @@ echo $this->form()->openTag($form);
 							style='font-family: police2; font-size: 15px; font-weight: bold; color: green;'>
 							Examens Morphologiques</div>
 						<div style="max-height: 250px;">
-						
+
 							<!-- LE PDF POUR IMPRESSION-->
-					<div class="rendezvous">
-						<hass> <input type="submit" title="Imprimer"
-							name="demandeExamenMorpho" id="demandeExamenMorpho"> </hass>
-					</div>
-					<div
-						style="padding-bottom: 40px; margin-bottom: 10px; border-bottom: 1px dashed green; margin-left: 0px; margin-right: 0px;"></div>
-						
+							<div class="rendezvous">
+								<hass> <input type="submit" title="Imprimer"
+									name="demandeExamenMorpho" id="demandeExamenMorpho"> </hass>
+							</div>
+							<div
+								style="padding-bottom: 40px; margin-bottom: 10px; border-bottom: 1px dashed green; margin-left: 0px; margin-right: 0px;"></div>
+
 							<div
 								style="margin-bottom: 5px; border-bottom: 1.5px solid #cccccc; margin-top: -15px;"></div>
                                         
@@ -1985,7 +2119,8 @@ echo $this->form()->openTag($form);
 											<th
 												style="width: 26%; font-weight: bold; font-size: 15px; text-align: left;">Examen</th>
 											<th
-												style="width: 50%; font-weight: bold; font-size: 15px; text-align: left;">Renseignement Clinique</th>
+												style="width: 50%; font-weight: bold; font-size: 15px; text-align: left;">Renseignement
+												Clinique</th>
 											<th style="width: 13%; font-weight: bold; font-size: 15px;">Options</th>
 										</tr>
 									</thead>
@@ -2082,9 +2217,9 @@ echo $this->form()->openTag($form);
 				</div>
 				<!--**************** RESULTAT ************************-->
 				<!--**************** RESULTAT ************************-->
-				
-				
-				
+
+
+
 				<div
 					style='font-family: police2; font-size: 17px; font-weight: bold;'>
 					R&eacute;sultats</div>
@@ -2104,81 +2239,25 @@ echo $this->form()->openTag($form);
 								<div style="width: 80%; float: left; height: 1px;">
 									<table id="ActeResponde" style="width: 100%;">
 
-										<tr id="acte_1" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('doppler_couleur_pulse'));?> </th>
+							
+
+										<tr id="resultat_acte_13" class="" style="width: 100%;">
+											<th > <?php echo $this->formRow($form->get('ecg'));?> </th>
 										</tr>
 
-										<tr id="acte_2" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('echographie_de_stress'));?> </th>
+										<tr id="resultat_acte_14" class="" style="width: 100%;">
+											<th  > <?php echo $this->formRow($form->get('eeg'));?> </th>
 										</tr>
 
-										<tr id="acte_3" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('holter_ecg'));?> </th>
+										<tr id="resultat_acte_15" class="" style="width: 100%;">
+											<th  > <?php echo $this->formRow($form->get('efr'));?> </th>
 										</tr>
 
-										<tr id="acte_4" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('holter_tensionnel'));?> </th>
+										<tr id="resultat_acte_16" class="" style="width: 100%;">
+											<th  > <?php echo $this->formRow($form->get('emg'));?> </th>
 										</tr>
 
-										<tr id="acte_5" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('fibroscopie_bronchique'));?> </th>
-										</tr>
-
-										<tr id="acte_6" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('fibroscopie_gastrique'));?> </th>
-										</tr>
-
-										<tr id="acte_7" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('colposcopie'));?> </th>
-										</tr>
-
-										<tr id="acte_8" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('echographie_gynecologique'));?> </th>
-										</tr>
-
-										<tr id="acte_9" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('echographie_obstetrique'));?> </th>
-										</tr>
-
-										<tr id="acte_10" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('cpn'));?> </th>
-										</tr>
-
-										<tr id="acte_11" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('consultation_senologie'));?> </th>
-										</tr>
-
-										<tr id="acte_12" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('plannification_familiale'));?> </th>
-										</tr>
-
-										<tr id="acte_13" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('ecg'));?> </th>
-										</tr>
-
-										<tr id="acte_14" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('eeg'));?> </th>
-										</tr>
-
-										<tr id="acte_15" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('efr'));?> </th>
-										</tr>
-
-										<tr id="acte_16" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('emg'));?> </th>
-										</tr>
-
-										<tr id="acte_17" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('circoncision'));?> </th>
-										</tr>
-
-										<tr id="acte_18" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('vaccination'));?> </th>
-										</tr>
-
-										<tr id="acte_19" class="" style="width: 100%;">
-											<th> <?php echo $this->formRow($form->get('soins_infirmiers'));?> </th>
-										</tr>
+										
 
 									</table>
 								</div>
@@ -2199,51 +2278,51 @@ echo $this->form()->openTag($form);
 
 
 
-					
+
 						<!--**************** ANALYSE BIOLOGIQUE ************************-->
 						<!--**************** ANALYSE BIOLOGIQUE ************************-->
 						<div
 							style='font-family: police2; font-size: 15px; font-weight: bold; color: green;'>
 							Examens Biologiques</div>
-							
+
 						<div style='max-height: 320px;'>
 							<div
 								style="margin-bottom: 20px; border-bottom: 1px solid #cccccc; margin-top: -15px;"></div>
 							<div style="width: 100%;">
 
 								<div style="width: 82%; float: left; height: 1px;">
-									<table id="respondee" style="width: 100%;">
-										<tr id="groupe_sanguin" class="form-groupe"
-											style="width: 100%;">
-											<th id="groupe"> <?php echo $this->formRow($form->get('groupe_sanguin'));?> </th>
+									<table id="ActeResponde" style="width: 100%;">
+										<tr  id="resultat_groupe_sanguin"
+											style="width: 100%;" >
+											<th  > <?php echo $this->formRow($form->get('groupe_sanguin'));?> </th>
 										</tr>
 
-										<tr id="hemogramme_sanguin" class="form-analyse-biologique"
-											style="width: 100%;">
+										<tr  id="resultat_hemogramme_sanguin"
+											style="width: 100%;" >
 											<th> <?php echo $this->formRow($form->get('hemogramme_sanguin'));?> </th>
 										</tr>
 
-										<tr id="bilan_hemolyse" class="form-analyse-biologique"
-											style="width: 100%;">
+										<tr  id="resultat_bilan_hemolyse"
+											style="width: 100%;" >
 											<th> <?php echo $this->formRow($form->get('bilan_hemolyse'));?> </th>
 										</tr>
 
-										<tr id="bilan_hepatique" class="form-analyse-biologique"
-											style="width: 100%;">
+										<tr   id="resultat_bilan_hepatique"
+											style="width: 100%;"  >
 											<th> <?php echo $this->formRow($form->get('bilan_hepatique'));?> </th>
 										</tr>
 
-										<tr id="bilan_renal" class="form-analyse-biologique"
+										<tr  id="resultat_bilan_renal"
 											style="width: 100%;">
 											<th> <?php echo $this->formRow($form->get('bilan_renal'));?> </th>
 										</tr>
 
-										<tr id="bilan_inflammatoire" class="form-analyse-biologique"
+										<tr id="resultat_bilan_inflammatoire"
 											style="width: 100%;">
 											<th> <?php echo $this->formRow($form->get('bilan_inflammatoire'));?> </th>
 										</tr>
-										
-										
+
+
 									</table>
 								</div>
 								<div style="width: 18%; float: left;">
@@ -2273,11 +2352,11 @@ echo $this->form()->openTag($form);
                             <!-- AFFICHAGE DES EXAMENS N'AYANT PAS ENCORE D'IMAGES -->
 							<!-- AFFICHAGE DES EXAMENS N'AYANT PAS ENCORE D'IMAGES -->
 							<script>
-                              getimagesExamensMorphologiques();
-                              getimagesEchographieExamensMorphologiques();
-                              getimagesIRMExamensMorphologiques();
-                              getimagesScannerExamensMorphologiques();
-                              getimagesFibroscopieExamensMorphologiques();
+                             // getimagesExamensMorphologiques();
+                              //getimagesEchographieExamensMorphologiques();
+                              //getimagesIRMExamensMorphologiques();
+                              //getimagesScannerExamensMorphologiques();
+                              //getimagesFibroscopieExamensMorphologiques();
                             
                               <?php for($i = 0; $i<count($tableauDesExamens); $i++) {?>
                                   affichageExamenMorphoSansImages("<?php echo $tableauDesExamens[$i];?>");   
@@ -2304,36 +2383,37 @@ echo $this->form()->openTag($form);
 							<!-- RADIO RADIO RADIO  -->
 							<input type='hidden' id="typeExamen_tmp" />
 							<table id="respondeee" class="imageRadio" style="width: 100%;">
-								<tr class="form-examen-morphologique" style="width: 100%;" id="resultat_radio">
+								<tr class="form-examen-morphologique" style="width: 100%;"
+									id="resultat_radio">
 									<th style="width: 40%; vertical-align: top;"> <?php echo $this->formRow($form->get('radio'));?></th>
+
+									<!--
 									<th style="width: 25%; vertical-align: top; padding-top: 50px;">
 										<img
-										src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" />
+										src="<?php //echo $this->basePath().'/images_icons/right_64.png';?>" />
 									</th>
 									<th
 										style="width: 34%; padding-bottom: 15px; margin-right: 40px;">
-										<!-- PIKACHOOSE --> <!-- PIKACHOOSE -->
-										<div id="pika">
+										<!-- PIKACHOOSE -->
+									<!-- PIKACHOOSE -->
+									<!--<div id="pika">
 											<div id="pika2">
-												<!-- EMPLACEMENT DES IMAGES -->
-												<!-- EMPLACEMENT DES IMAGES -->
-												<!-- EMPLACEMENT DES IMAGES -->
-											</div>
-										</div>
+												
+											</div> -->
+									<!-- </div>
 										<div id="AjoutImage"
 											style="float: right; position: relative; bottom: 42px; right: 5px;">
 											<input type='file' name="fichier" />
-											<!-- RECUPERER L'IMAGE -->
+											
 											<input type='hidden' id="fichier_tmp" name="fichier_tmp" />
-											<!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER -->
+											 FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER 
 										</div>
 									</th>
+									
+									-->
 								</tr>
 
-								<tr style="width: 100%;">
-									<th colspan="3"><div
-											style="width: 100%; margin-top: -20px; margin-bottom: -10px; border-bottom: 2px solid green;"></div></th>
-								</tr>
+
 							</table>
 
 							<!-- ECHOGRAPHIE ECHOGRAPHIE ECHOGRAPHIE  -->
@@ -2342,37 +2422,36 @@ echo $this->form()->openTag($form);
 							<!-- ECHOGRAPHIE ECHOGRAPHIE ECHOGRAPHIE  -->
 							<table id="respondeee" class="imageEchographie"
 								style="width: 100%;">
-								<tr class="form-examen-morphologique" style="width: 100%;" id="resultat_ecographie">
+								<tr class="form-examen-morphologique" style="width: 100%;"
+									id="resultat_ecographie">
 									<th style="width: 40%; vertical-align: top;"> <?php echo $this->formRow($form->get('ecographie'));?></th>
-									<th style="width: 25%; vertical-align: top; padding-top: 50px;">
+									<!--  <th style="width: 25%; vertical-align: top; padding-top: 50px;">
 										<img
-										src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" />
-									</th>
-									<th
+										src="<?php //echo $this->basePath().'/images_icons/right_64.png';?>" />
+									</th>-->
+									<!--  <th
 										style="width: 34%; padding-bottom: 15px; margin-right: 40px;">
-										<!-- PIKACHOOSE --> <!-- PIKACHOOSE -->
+										
 										<div id="pika3">
 											<div id="pika4">
-												<!-- EMPLACEMENT DES IMAGES -->
-												<!-- EMPLACEMENT DES IMAGES -->
-												<!-- EMPLACEMENT DES IMAGES -->
+												
 											</div>
-										</div>
-										<div id="AjoutImageEchographie"
+										</div>-->
+									<!--<div id="AjoutImageEchographie"
 											style="float: right; position: relative; bottom: 42px; right: 5px;">
 											<input type='file' name="fichierEchographie" />
-											<!-- RECUPERER L'IMAGE -->
-											<input type='hidden' id="fichierEchographie_tmp"
+											 RECUPERER L'IMAGE -->
+									<!-- <input type='hidden' id="fichierEchographie_tmp"
 												name="fichierEchographie_tmp" />
-											<!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER -->
+											FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER 
 										</div>
-									</th>
+									</th>-->
 								</tr>
 
-								<tr style="width: 100%;">
+								<!--  <tr style="width: 100%;">
 									<th colspan="3"><div
 											style="width: 100%; margin-top: -20px; margin-bottom: -10px; border-bottom: 2px solid green; margin-left: 0px; margin-right: 0px;"></div></th>
-								</tr>
+								</tr>-->
 							</table>
 
 							<!-- IRM IRM IRM  -->
@@ -2380,37 +2459,39 @@ echo $this->form()->openTag($form);
 							<!-- IRM IRM IRM  -->
 							<!-- IRM IRM IRM  -->
 							<table id="respondeee" class="imageIRM" style="width: 100%;">
-								<tr class="form-examen-morphologique" style="width: 100%;" id="resultat_irm">
+								<tr class="form-examen-morphologique" style="width: 100%;"
+									id="resultat_irm">
 									<th style="width: 40%; vertical-align: top;"> <?php echo $this->formRow($form->get('irm'));?></th>
-									<th style="width: 25%; vertical-align: top; padding-top: 50px;">
+									<!--  <th style="width: 25%; vertical-align: top; padding-top: 50px;">
 										<img
-										src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" />
-									</th>
-									<th
+										src="<?php //echo $this->basePath().'/images_icons/right_64.png';?>" />
+									</th>-->
+									<!--  <th
 										style="width: 34%; padding-bottom: 15px; margin-right: 40px;">
-										<!-- PIKACHOOSE --> <!-- PIKACHOOSE -->
-										<div id="pika5">
+										<!-- PIKACHOOSE -->
+									<!-- PIKACHOOSE -->
+									<!--  <div id="pika5">
 											<div id="pika6">
 												<!-- EMPLACEMENT DES IMAGES -->
-												<!-- EMPLACEMENT DES IMAGES -->
-												<!-- EMPLACEMENT DES IMAGES -->
-											</div>
-										</div>
-										<div id="AjoutImageIRM"
+									<!-- EMPLACEMENT DES IMAGES -->
+									<!-- EMPLACEMENT DES IMAGES -->
+									<!--  </div>
+										</div>-->
+									<!--  	<div id="AjoutImageIRM"
 											style="float: right; position: relative; bottom: 42px; right: 5px;">
 											<input type='file' name="fichierIRM" />
 											<!-- RECUPERER L'IMAGE -->
-											<input type='hidden' id="fichierIRM_tmp"
+									<!--  	<input type='hidden' id="fichierIRM_tmp"
 												name="fichierIRM_tmp" />
-											<!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER -->
-										</div>
-									</th>
+											FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER -->
+									<!-- 	</div>
+									</th> -->
 								</tr>
 
-								<tr style="width: 100%;">
+								<!-- <tr style="width: 100%;">
 									<th colspan="3"><div
 											style="width: 100%; margin-top: -20px; margin-bottom: -10px; border-bottom: 2px solid green;"></div></th>
-								</tr>
+								</tr> -->
 							</table>
 
 							<!-- SCANNER SCANNER SCANNER  -->
@@ -2426,28 +2507,30 @@ echo $this->form()->openTag($form);
                 ?>
                             <table id="respondeee" class="imageScanner"
 								style="width: 100%;">
-								<tr class="form-examen-morphologique" style="width: 100%;" id="resultat_scanner">
+								<tr class="form-examen-morphologique" style="width: 100%;"
+									id="resultat_scanner">
 
 									<th style="width: 40%; vertical-align: top;"> <?php echo $this->formRow($form->get('scanner'));?></th>
-									<th style="width: 25%; vertical-align: top; padding-top: 50px;">
+									<!-- <th style="width: 25%; vertical-align: top; padding-top: 50px;">
 										<img
-										src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" />
-									</th>
-									<th
+										src="<?php //echo $this->basePath().'/images_icons/right_64.png';?>" />
+									</th> -->
+									<!-- 	<th
 										style="width: 34%; padding-bottom: 15px; margin-right: 40px;">
-										<!-- POUR LE MENU VIDEO ET IMAGE --> <!-- POUR LE MENU VIDEO ET IMAGE -->
 										<!-- POUR LE MENU VIDEO ET IMAGE -->
-										<div id="divPourMenuImagesVideos" style="height: 150px;">
+									<!-- POUR LE MENU VIDEO ET IMAGE -->
+									<!-- POUR LE MENU VIDEO ET IMAGE -->
+									<!--  <div id="divPourMenuImagesVideos" style="height: 150px;">
 											<table
 												style='width: 100%; margin-bottom: 25px; margin-top: 25px;'>
 												<tr style='width: 100%;'>
 													<td style='width: 50%;'><img id="IconeImagesMenu"
 														style="cursor: pointer; top: 20px; float: right;"
-														src="<?php echo $this->basePath().'/images_icons/icone_image_96X96.png';?>" />
+														src="<?php //echo $this->basePath().'/images_icons/icone_image_96X96.png';?>" />
 													</td>
 													<td style='width: 50%;'><img id="IconeVideosMenu"
 														style="cursor: pointer; top: 20px; float: right;"
-														src="<?php echo $this->basePath().'/images_icons/icone_video_96X96.png';?>" />
+														src="<?php //echo $this->basePath().'/images_icons/icone_video_96X96.png';?>" />
 													</td>
 												</tr>
 												<tr style='width: 100%;'>
@@ -2459,8 +2542,10 @@ echo $this->form()->openTag($form);
 															Vid&eacute;os</span></td>
 												</tr>
 											</table>
-										</div> <!-- POUR LES VIDEOS --> <!-- POUR LES VIDEOS --> <!-- POUR LES VIDEOS -->
-										<div id="divVideoScannerPourMenu">
+										</div> <!-- POUR LES VIDEOS -->
+									<!-- POUR LES VIDEOS -->
+									<!-- POUR LES VIDEOS -->
+									<!--  <div id="divVideoScannerPourMenu">
 											<table style='width: 100%;'>
 												<tr style='width: 100%;'>
 													<td>
@@ -2470,7 +2555,7 @@ echo $this->form()->openTag($form);
 																	<div style='width: 17px;'>
 																		<img id="RetourDeVideosVersMenu"
 																			style="cursor: pointer; width: 16px; height: 16px;"
-																			src="<?php echo $this->basePath().'/images_icons/left_16.png';?>" />
+																			src="<?php //echo $this->basePath().'/images_icons/left_16.png';?>" />
 																	</div>
 																</td>
 																<td style='width: 90%;'>
@@ -2483,8 +2568,10 @@ echo $this->form()->openTag($form);
 													</td>
 												</tr>
 											</table>
-										</div> <!-- POUR LES IMAGES --> <!-- POUR LES IMAGES --> <!-- POUR LES IMAGES -->
-										<div id="divImageScannerPourMenu">
+										</div> <!-- POUR LES IMAGES -->
+									<!-- POUR LES IMAGES -->
+									<!-- POUR LES IMAGES -->
+									<!-- 	<div id="divImageScannerPourMenu">
 
 											<table style='width: 100%;'>
 												<tr style='width: 100%;' >
@@ -2492,27 +2579,24 @@ echo $this->form()->openTag($form);
 														<div style='width: 16px; position: absolute;'>
 															<img id="RetourDeImagesVersMenu"
 																style="cursor: pointer; width: 16px; height: 16px;"
-																src="<?php echo $this->basePath().'/images_icons/left_16.png';?>" />
+																src="<?php //echo $this->basePath().'/images_icons/left_16.png';?>" />
 														</div>
-													</td>
+													</td> -->
 
 
-													<td style='width: 99%;'>
-														<!-- PIKACHOOSE --> <!-- PIKACHOOSE -->
+									<!-- <td style='width: 99%;'>
+														
 														<div id="pika7">
 															<div id="pika8">
-																<!-- EMPLACEMENT DES IMAGES -->
-																<!-- EMPLACEMENT DES IMAGES -->
-																<!-- EMPLACEMENT DES IMAGES -->
+																
 															</div>
-														</div>
-														<div id="AjoutImageScanner"
+														</div> -->
+									<!--  <div id="AjoutImageScanner"
 															style="float: right; position: relative; bottom: 42px; right: 5px;">
 															<input type='file' name="fichierScanner" />
-															<!-- RECUPERER L'IMAGE -->
+															
 															<input type='hidden' id="fichierScanner_tmp"
 																name="fichierScanner_tmp" />
-															<!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER -->
 														</div>
 													</td>
 												</tr>
@@ -2528,7 +2612,8 @@ echo $this->form()->openTag($form);
 								<tr style="width: 100%;">
 									<th colspan="3"><div
 											style="width: 100%; margin-top: -20px; margin-bottom: -10px; border-bottom: 2px solid green;"></div></th>
-								</tr>
+								</tr>-->
+							
 							</table>
 
 							<!-- FIBROSCOPIE FIBROSCOPIE FIBROSCOPIE  -->
@@ -2538,38 +2623,38 @@ echo $this->form()->openTag($form);
                             <?php ?>
                             <table id="respondeee"
 								class="imageFibroscopie" style="width: 100%;">
-								<tr class="form-examen-morphologique" style="width: 100%;" id="resultat_fibrocospie">
+								<tr class="form-examen-morphologique" style="width: 100%;"
+									id="resultat_fibrocospie">
 									<th style="width: 40%; vertical-align: top;"> <?php echo $this->formRow($form->get('fibrocospie'));?></th>
-									<th style="width: 25%; vertical-align: top; padding-top: 50px;">
+
+								</tr>
+							</table>
+							<!--  <th style="width: 25%; vertical-align: top; padding-top: 50px;">
 										<img
-										src="<?php echo $this->basePath().'/images_icons/right_64.png';?>" />
-									</th>
-									<th
+										src="<?php //echo $this->basePath().'/images_icons/right_64.png';?>" />
+									</th>-->
+							<!--  <th
 										style="width: 34%; padding-bottom: 15px; margin-right: 40px;">
-										<!-- PIKACHOOSE --> <!-- PIKACHOOSE -->
+										
 										<div id="pika9">
 											<div id="pika10">
-												<!-- EMPLACEMENT DES IMAGES -->
-												<!-- EMPLACEMENT DES IMAGES -->
-												<!-- EMPLACEMENT DES IMAGES -->
+												
 											</div>
-										</div>
-										<div id="AjoutImageFibroscopie"
+										</div>-->
+							<!-- <div id="AjoutImageFibroscopie"
 											style="float: right; position: relative; bottom: 42px; right: 5px;">
 											<input type='file' name="fichierFibroscopie" />
 											<!-- RECUPERER L'IMAGE -->
-											<input type='hidden' id="fichierFibroscopie_tmp"
+							<!-- <input type='hidden' id="fichierFibroscopie_tmp"
 												name="fichierFibroscopie_tmp" />
-											<!-- FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER -->
+											 FICHIER TAMPON POUR RECUPERER L'IMAGE DANS LE CONTROLLER 
 										</div>
-									</th>
-								</tr>
-
-								<tr style="width: 100%;">
+								
+								<!--  <tr style="width: 100%;">
 									<th colspan="3"><div
 											style="width: 100%; margin-top: -20px; margin-bottom: -10px; border-bottom: 2px solid green;"></div></th>
-								</tr>
-							</table>
+								</tr>-->
+							
                             <?php ?>
                             
                             <!--********************* BOUTON VALIDER OU MODIFIER ************************-->
@@ -2606,128 +2691,116 @@ echo $this->form()->openTag($form);
 		<!-- *******************************Diagnostic  et Pathologies***********************************-->
 
 		<!--*5*-->
-		<div style='font-family: police2; font-size: 17px; font-weight: bold;'>Diagnostic et Pathologies
-			</div>
-		<div style='max-height: 450px;'>
-		<div id="accordions_diagnostic_pathologies">
-		<div style='font-family: police2; font-size: 17px; font-weight: bold;'>
-					Diagnostic (pr&eacute;liminaire et/ou final) </div>
-			<div style='min-height: 220px;'>
-			<p style='color: white; opacity: 0.5;'>
+		<div style='font-family: police2; font-size: 17px; font-weight: bold;'>  Pathologies</div>
+	<!-- 	<div > -->
+			<div style='max-height: 450px;' >
+			<!--  	<div
+					style='font-family: police2; font-size: 17px; font-weight: bold;'>
+					Diagnostic (pr&eacute;liminaire et/ou final)</div>-->
+				<!--  <div style='min-height: 220px;'>-->
+				<!-- 	<p style='color: white; opacity: 0.5;'>
 
-<img id="" src='<?php echo $this->basePath().'/images_icons/diag.png'?>' alt="consult-motif"
+						<img id=""
+							src='<?php //echo $this->basePath().'/images_icons/diag.png'?>'
+							alt="consult-motif"
+							style='float: right; margin-right: 10px; width: 28%; height: 220px;' />
 
-style='float: right; margin-right: 10px; width: 28%; height: 220px;' />
+					</p> -->
 
-</p>
-
-        <?php echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterDiagnostic.js');?>
-
-
-
-        <table id="responded" style="width: 65%;">
-
-<tr id="diag1" class="form-diag" style="width: 65%; height: 40px;">
-
-<th> <?php echo $this->formRow($form->get('diagnostic1')); ?> <span
-
-id="label"> <img class='supprimerDiag1' style='cursor: pointer;'
-
-src='../images/images/sup.png' title='supprimer' />
-
-</span>
-
-</th>
-
-</tr>
+        <?php //echo  $this->headScript()->appendFile($this->basePath().'/js/chururgie/ajouterDiagnostic.js');?>
 
 
 
-<tr id="diag2" class="form-diag" style="width: 65%;">
+       				<!--   <table id="responded" style="width: 65%;">
 
-<th> <?php echo $this->formRow($form->get('diagnostic2')); ?> <span
+						<tr id="diag1" class="form-diag" style="width: 65%; height: 40px;">
 
-id="label"> <img class='supprimerDiag2' style='cursor: pointer;'
+							<th> <?php //echo $this->formRow($form->get('diagnostic1')); ?> <span
+								id="label"> <img class='supprimerDiag1' style='cursor: pointer;'
+									src='../images/images/sup.png' title='supprimer' />
 
-src='../images/images/sup.png' title='supprimer' />
+							</span>
 
-</span></th>
+							</th>
 
-</tr>
-
-
-
-<tr id="diag3" class="form-diag" style="width: 65%;">
-
-<th> <?php echo $this->formRow($form->get('diagnostic3')); ?> <span
-
-id="label"> <img class='supprimerDiag3' style='cursor: pointer;'
-
-src='../images/images/sup.png' title='supprimer' />
-
-</span></th>
-
-</tr>
+						</tr>
 
 
 
-<tr id="diag4" class="form-diag" style="width: 65%;">
+						<tr id="diag2" class="form-diag" style="width: 65%;">
 
-<th> <?php echo $this->formRow($form->get('diagnostic4')); ?> <span
+							<th> <?php //echo $this->formRow($form->get('diagnostic2')); ?> <span
+								id="label"> <img class='supprimerDiag2' style='cursor: pointer;'
+									src='../images/images/sup.png' title='supprimer' />
 
-id="label"> <img class='supprimerDiag4' style='cursor: pointer;'
+							</span></th>
 
-src='../images/images/sup.png' title='supprimer' />
-
-</span></th>
-
-</tr>
-
-</table>
+						</tr>
 
 
 
-<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+						<tr id="diag3" class="form-diag" style="width: 65%;">
 
-<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+							<th> <?php //echo $this->formRow($form->get('diagnostic3')); ?> <span
+								id="label"> <img class='supprimerDiag3' style='cursor: pointer;'
+									src='../images/images/sup.png' title='supprimer' />
 
-<div id="controls_diagnostics" style="margin-top: 10px; width: 100%;">
+							</span></th>
 
-<div style="width: 100%; background: green;">
-
-<div style="width: 3%; height: 1px; float: left;"
-
-id="supprimer_diagnostic">
-
-<img id="supprimer_diagnostic_img"
-
-style='margin-left: 5px; cursor: pointer;'
-
-src='../images_icons/moin-green.png' title='supprimer' />
-
-</div>
-
-<div style="width: 3%; height: 1px; float: left;"
-
-id="ajouter_diagnostic">
-
-<img id="ajouter_diagnostic_img"
-
-style='margin-left: 5px; cursor: pointer;'
-
-src='../images_icons/plus-green.png' title='ajouter' />
-
-</div>
-
-</div>
-
-</div>
+						</tr>
 
 
 
-<!--********************* BOUTON VALIDER-MODIFIER ************************-->
+						<tr id="diag4" class="form-diag" style="width: 65%;">
 
-<!--********************* BOUTON VALIDER-MODIFIER 
+							<th> <?php //echo $this->formRow($form->get('diagnostic4')); ?> <span
+								id="label"> <img class='supprimerDiag4' style='cursor: pointer;'
+									src='../images/images/sup.png' title='supprimer' />
+
+							</span></th>
+
+						</tr>
+
+					</table>-->
+
+
+
+					<!--********************* BOUTON AJOUTER-SUPPRIMER ************************-->
+
+					<!--********************* BOUTON AJOUTER-SUPPRIMER 
+
+					<div id="controls_diagnostics"
+						style="margin-top: 10px; width: 100%;">
+
+						<div style="width: 100%; background: green;">
+
+							<div style="width: 3%; height: 1px; float: left;"
+								id="supprimer_diagnostic">
+
+								<img id="supprimer_diagnostic_img"
+									style='margin-left: 5px; cursor: pointer;'
+									src='../images_icons/moin-green.png' title='supprimer' />
+
+							</div>
+
+							<div style="width: 3%; height: 1px; float: left;"
+								id="ajouter_diagnostic">
+
+								<img id="ajouter_diagnostic_img"
+									style='margin-left: 5px; cursor: pointer;'
+									src='../images_icons/plus-green.png' title='ajouter' />
+
+							</div>
+
+						</div>
+
+					</div>  ************************-->
+
+
+
+					<!--********************* BOUTON VALIDER-MODIFIER ************************-->
+
+					<!--********************* BOUTON VALIDER-MODIFIER 
 
 <table style="width: 59%; position: relative; top: 0px;">
 
@@ -2750,30 +2823,30 @@ src='../images_icons/plus-green.png' title='ajouter' />
 </th>
 
 </tr>
+	<script>
+
+              //var nbdiagnostic = 1;
+
+             // cacherTout();
+
+             // afficher(nbdiagnostic);
+
+            //  supprimerUnDiagnostic();
+
+         </script>
 
 </table> ************************-->
 
 
 
-<script>
-
-              var nbdiagnostic = 1;
-
-              cacherTout();
-
-              afficher(nbdiagnostic);
-
-              supprimerUnDiagnostic();
-
-         </script>
-
-			
 				
-			</div>
-			
-			
-			
-			
+
+
+			<!--  	</div>-->
+
+
+
+
 				<!-- ************* Traitement les pathologies **********-->
 				<!-- Les pathologies -->
 				<!-- Les pathologies -->
@@ -2782,9 +2855,7 @@ src='../images_icons/plus-green.png' title='ajouter' />
 				<!-- Les pathologies -->
 				<!-- Les pathologies -->
 
-				<div
-					style='font-family: police2; font-size: 17px; font-weight: bold;'>
-					Les Pathologies</div>
+				
 				<div style='min-height: 260px;'>
 
 					
@@ -2859,11 +2930,12 @@ src='../images_icons/plus-green.png' title='ajouter' />
 						</table> ************************-->
 
 					</div>
+					
 
-                    <!--********************* CHARGEMENT DES DONNEES  ************************-->
 					<!--********************* CHARGEMENT DES DONNEES  ************************-->
 					<!--********************* CHARGEMENT DES DONNEES  ************************-->
-						<script> 
+					<!--********************* CHARGEMENT DES DONNEES  ************************-->
+					<script> 
                    ValiderPathologie();
 
                    var myArrayOrgane1 = new Array();
@@ -2892,8 +2964,9 @@ src='../images_icons/plus-green.png' title='ajouter' />
        
                    <script> var j = 0;  </script>
        
-                   <?php 
-                     for($i = 0 ; $i < count($this->listeTypePathologie); $i++) {  ?>
+                   <?php
+                for ($i = 0; $i < count($this->listeTypePathologie); $i ++) {
+                    ?>
                       <script>
                          myArrayTypePathologie1[j++]= "<?php echo $this->listeTypePathologie[$i]; ?>";
                       </script>
@@ -2902,8 +2975,8 @@ src='../images_icons/plus-green.png' title='ajouter' />
                    <script>
                       DefautPathologie(myArrayOrgane1, myArrayClassePathologie1, myArrayTypePathologie1, 1);
                    </script>
-			  
-			  </div>
+
+				
 			</div>
 		</div>
 
@@ -3111,21 +3184,21 @@ src='../images_icons/plus-green.png' title='ajouter' />
 									<th style="width: 33%;"> <?php echo $this->formRow($form->get('observation'));?> </th>
 									<th style="width: 33%;"> <?php echo $this->formRow($form->get('intervention_prevue'));?> </th>
 								</tr>
-							<!-- 	<tr class="form-chirurgical" style="width: 100%;">
+								<!-- 	<tr class="form-chirurgical" style="width: 100%;">
 									<th style="width: 33%;"></th>
 									<th style="width: 33%;"></th>
 									<th style="width: 33%; padding-right: 30px;">-->
-<!-- 										<div id="bouton_valider_chirurgical" 
+								<!-- 										<div id="bouton_valider_chirurgical" 
 											style='margin-top: 30px; float: right;'>-->
-<!-- 											<button id='bouton_chirurgical_valider'>Valider</button> -->
-<!-- 										</div> -->
-<!-- 										<div id="bouton_modifier_chirurgical" 
+								<!-- 											<button id='bouton_chirurgical_valider'>Valider</button> -->
+								<!-- 										</div> -->
+								<!-- 										<div id="bouton_modifier_chirurgical" 
 											style='margin-top: 30px; float: right;'>-->
-<!-- 											<button id='bouton_chirurgical_modifier'>Modifier</button> -->
-<!-- 										</div> -->
-<!-- 									</th> -->
+								<!-- 											<button id='bouton_chirurgical_modifier'>Modifier</button> -->
+								<!-- 										</div> -->
+								<!-- 									</th> -->
 
-<!-- 								</tr> -->
+								<!-- 								</tr> -->
 							</table>
 
 						</div>
@@ -3148,13 +3221,10 @@ src='../images_icons/plus-green.png' title='ajouter' />
 												<td style="width: 100%; padding-right: 30px;">
 													<div style='margin-top: 10px; float: right;'>
 <!-- 														<button id='bouton_compte_rendu_chirurgical_valider'>Valider</button> -->
-<!-- 													</div> -->
-												<!-- 	<div style='margin-top: 10px; float: right;'>
+										<!-- 													</div> --> <!-- 	<div style='margin-top: 10px; float: right;'>
 <!-- 														<button id='bouton_compte_rendu_chirurgical_modifier'>Modifier</button> -->
-<!-- 													</div> -->
-<!-- 												</td> -->
-<!-- 											</tr> -->
-<!-- 										</table> -->
+										<!-- 													</div> --> <!-- 												</td> --> <!-- 											</tr> -->
+										<!-- 										</table> -->
 									</td>
 
 								</tr>
@@ -3243,7 +3313,7 @@ src='../images_icons/plus-green.png' title='ajouter' />
 											<!-- ****** EMPLACEMENT DU LECTEUR AUDIO (MP3)********* -->
 										</div>
 									</td>
-									<td class="form-transfert"
+								<!--  	<td class="form-transfert"
 										style="width: 45%; vertical-align: top;"> 
                                               <?php echo $this->formRow($form->get('note_compte_rendu_operatoire_instrumental'));?> 
                                               <table style="width: 97%;">
@@ -3258,7 +3328,7 @@ src='../images_icons/plus-green.png' title='ajouter' />
 												</td>
 											</tr>
 										</table>
-									</td>
+									</td>-->
 								</tr>
 							</table>
 							<!-- ******* -->
@@ -3284,7 +3354,7 @@ src='../images_icons/plus-green.png' title='ajouter' />
 
 		<!--*7*-->
 		<div style='font-family: police2; font-size: 17px; font-weight: bold;'>Autres
-			( Rendez-Vous  / Hospitalisation /  Transfert )</div>
+			( Rendez-Vous / Hospitalisation / Transfert )</div>
 		<div style="max-height: 480px;">
 
 
@@ -3292,8 +3362,8 @@ src='../images_icons/plus-green.png' title='ajouter' />
 			<!--  **************** NOUVELLE ACCORDEON *********************  -->
 			<div id="accordionsssss">
 
-		
-		
+
+
 				<!-- ************** Rendez-vous **************** -->
 				<!-- **3** -->
 				<div
@@ -3323,7 +3393,7 @@ src='../images_icons/plus-green.png' title='ajouter' />
 							<th class="form-rendezvous2" style="width: 27%;"> <?php echo $this->formRow($form->get('date_rv')); ?> </th>
 							<th class="form-rendezvous2" style="width: 17%;"> <?php echo $this->formRow($form->get('heure_rv'));?> </th>
 							<th class="form-rendezvous2" style="width: 17%;"> <?php echo $this->formRow($form->get('delai_rv'));?> </th>
-							
+
 							<th style="width: 10%;">
 							
 							<th>
@@ -3348,11 +3418,11 @@ src='../images_icons/plus-green.png' title='ajouter' />
 					</table>
 
 				</div>
-		
-		
-		
-		
-		
+
+
+
+
+
 				<!-- ************** Hospitalisation **************** -->
 				<!-- **2** -->
 				<div
@@ -3406,11 +3476,11 @@ src='../images_icons/plus-green.png' title='ajouter' />
 				</div>
 
 
-				
-				
-				
-				
-						<!-- ************** Tranfert **************** -->
+
+
+
+
+				<!-- ************** Tranfert **************** -->
 				<!-- **1** -->
 				<div
 					style='font-family: police2; font-size: 17px; font-weight: bold;'>
@@ -3458,7 +3528,7 @@ src='../images_icons/plus-green.png' title='ajouter' />
 					</table>
 
 				</div>
-				
+
 			</div>
 
 		</div>
@@ -3469,12 +3539,12 @@ src='../images_icons/plus-green.png' title='ajouter' />
 		<tr>
 			<td style="background-color: #eeeeee; height: 40px; width: 100%;">
 				<p style="text-align: center;">
-					
+
 					<button name="terminer2" id="terminer2"
 						style="font-family: police2; font-size: 18px; font-weight: bold;">
 						Terminer</button>
-						
-						<button id="annuler2"
+
+					<button id="annuler2"
 						style="font-family: police2; font-size: 18px; font-weight: bold;">
 						Annuler</button>
 				</p>

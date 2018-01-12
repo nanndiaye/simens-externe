@@ -23,7 +23,9 @@ $(window).load(function () {
 <div id="contenu">
 
 			<table class="table table-bordered tab_list_mini" id="patient">
-				<thead>
+				
+				
+					<thead>
 				<tr>
 						<th id="numero_dossier_" style='width: 2%;'><input type="text" name="search_browser"
 							value=" N&deg; dossier" class="search_init" /></th>
@@ -43,8 +45,13 @@ $(window).load(function () {
 							value="" class="" />Options</th>
 					
 					</tr>
-					
-				</thead>
+			</thead>
+				
+				
+				
+				
+				
+			
 
 				<tbody id="donnees" class="liste_patient">
 
@@ -53,7 +60,25 @@ $(window).load(function () {
 				</tbody>
 
 				<tfoot id="foot" class="foot_style">
+					<tr>
+						<th id="numero_dossier_" style='width: 2%;'><input type="text" name="search_browser"
+							value=" N&deg; dossier" class="search_init" /></th>
+						<th id="nom_" style='width: 15%;'><input type="text" name="search_browser"
+							value=" Nom" class="search_init" /></th>
+						<th id="prenom_" style='width: 15%;'><input type="text" name="search_browser"
+							value=" Pr&eacute;nom" class="search_init" /></th>
+						<th id="date_" style='width: 7%;'><input type="text" name="search_browser"
+							value=" Age" class="search_init" /></th>
+						<th id="sexe_" style='width: 7%;'><input type="text" name="search_browser"
+							value=" Sexe" class="search_init" /></th>
+						<th id="adresse_" style='width: 25%;'><input type="text" name="search_browser"
+							value=" Adresse" class="search_init" /></th>
+						<th id="nationalite_" style='width: 15%;'><input type="text" name="search_browser"
+							value=" Nationalite" class="search_init" /></th>
+						<th id="effectuer_" style='width: 10%;'><input type="hidden" name="search_browser"
+							value="" class="" />Options</th>
 					
+					</tr>
 				</tfoot>
 			</table>
 </div>

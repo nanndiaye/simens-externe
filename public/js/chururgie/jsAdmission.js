@@ -10,10 +10,18 @@ function confirmation(id){
     modal: true,
     buttons: {
         "Terminer": function() {
+        
             $( this ).dialog( "close" );             	     
             return false;
+        },
+        "Admettre": function(){
+        	 declarer(id);
+        	  $( this ).dialog( "close" );             	     
+              return false;
+        	
         }
    }
+  
   });
 }
 
@@ -176,7 +184,7 @@ $('#precedent').click(function(){
 }
 
 function declarer(id){
-	
+
 	$("#termineradmission").replaceWith("<button id='termineradmission' style='height:35px;'>Terminer</button>");
     $("#titre").replaceWith("<div id='titre2' style='font-family: police2; color: green; font-size: 18px; font-weight: bold; padding-left: 35px;'><iS style='font-size: 25px;'>&curren;</iS> ADMISSION </div>");	
 

@@ -5,6 +5,12 @@ function cacherTouteDonnee(){
 	$('#donnee3').toggle(false);
 	$('#donnee4').toggle(false);
 	$('#donnee5').toggle(false);
+	$('#donnee6').toggle(false);
+	$('#donnee7').toggle(false);
+	$('#donnee8').toggle(false);
+	$('#donnee9').toggle(false);
+	$('#donnee10').toggle(false);
+	
  });
 }
 var nbChampDonnee;
@@ -16,7 +22,7 @@ function afficher(nbexamen_donnee) {
  });
  nbChampDonnee = nbexamen_donnee;
 
- if(nbChampDonnee == 5){
+ if(nbChampDonnee == 10){
 		$('#ajouter_donnee_img').toggle(false);
 	}
  
@@ -36,7 +42,7 @@ function ajouterDonnee(){
 		nbChampDonnee++;
 		$('#donnee'+(nbChampDonnee)).toggle(true);
 		
-		if(nbChampDonnee == 5){
+		if(nbChampDonnee == 10){
 			$('#ajouter_donnee_img').toggle(false);
 		}
 		if(nbChampDonnee == 2){
@@ -47,7 +53,7 @@ function ajouterDonnee(){
 			supprimerLeDonnee1();
 		}
 	});
-	if(nbChampDonnee == 5){
+	if(nbChampDonnee == 10){
 		$('#ajouter_donnee_img').toggle(false);
 	}
 }
@@ -63,7 +69,7 @@ function supprimerDonnee(){
 					"<img class='supprimerDonnee' src='../images/images/sup2.png' />"
 				);
 		}
-		if(nbChampDonnee == 4){
+		if(nbChampDonnee == 9){
 			$('#ajouter_donnee_img').toggle(true);
 		}
 	});
@@ -76,7 +82,7 @@ function supprimerLeDonnee1(){
 		}
 		$("#examen_donnee"+i).val('');
 		$('#donnee'+i).toggle(false);
-		if(nbChampDonnee == 5){
+		if(nbChampDonnee == 10){
 			$('#ajouter_donnee_img').toggle(true);
 		}
 		if(nbChampDonnee == 2){
@@ -166,6 +172,104 @@ function supprimerUneDonnee(){
 		nbChampDonnee--;
 		return false;
 	});
+	
+	
+	
+	$(".supprimerDonnee6").click(function(){ 
+		for(var i=6; i<nbChampDonnee; i++){
+			$("#examen_donnee"+i).val( $("#examen_donnee"+(i+1)).val() );
+		}
+		$("#examen_donnee"+i).val('');
+		$('#donnee'+i).toggle(false);
+		if(nbChampDonnee == 6){
+			$('#ajouter_donnee_img').toggle(true);
+		}
+		if(nbChampDonnee == 2){
+			$('#supprimer_donnee_img').toggle(false);
+			$(".supprimerDonnee1" ).replaceWith(
+					"<img class='supprimerDonnee' src='../images/images/sup2.png' />"
+				);
+		}
+		nbChampDonnee--;
+		return false;
+	});
+	$(".supprimerDonnee7").click(function(){ 
+		for(var i=7; i<nbChampDonnee; i++){
+			$("#examen_donnee"+i).val( $("#examen_donnee"+(i+1)).val() );
+		}
+		$("#examen_donnee"+i).val('');
+		$('#donnee'+i).toggle(false);
+		if(nbChampDonnee == 7){
+			$('#ajouter_donnee_img').toggle(true);
+		}
+		if(nbChampDonnee == 2){
+			$('#supprimer_donnee_img').toggle(false);
+			$(".supprimerDonnee1" ).replaceWith(
+					"<img class='supprimerDonnee' src='../images/images/sup2.png' />"
+				);
+		}
+		nbChampDonnee--;
+		return false;
+	});
+	
+	$(".supprimerDonnee8").click(function(){ 
+		for(var i=5; i<nbChampDonnee; i++){
+			$("#examen_donnee"+i).val( $("#examen_donnee"+(i+1)).val() );
+		}
+		$("#examen_donnee"+i).val('');
+		$('#donnee'+i).toggle(false);
+		if(nbChampDonnee == 8){
+			$('#ajouter_donnee_img').toggle(true);
+		}
+		if(nbChampDonnee == 2){
+			$('#supprimer_donnee_img').toggle(false);
+			$(".supprimerDonnee1" ).replaceWith(
+					"<img class='supprimerDonnee' src='../images/images/sup2.png' />"
+				);
+		}
+		nbChampDonnee--;
+		return false;
+	});
+	
+	
+	$(".supprimerDonnee9").click(function(){ 
+		for(var i=5; i<nbChampDonnee; i++){
+			$("#examen_donnee"+i).val( $("#examen_donnee"+(i+1)).val() );
+		}
+		$("#examen_donnee"+i).val('');
+		$('#donnee'+i).toggle(false);
+		if(nbChampDonnee == 9){
+			$('#ajouter_donnee_img').toggle(true);
+		}
+		if(nbChampDonnee == 2){
+			$('#supprimer_donnee_img').toggle(false);
+			$(".supprimerDonnee1" ).replaceWith(
+					"<img class='supprimerDonnee' src='../images/images/sup2.png' />"
+				);
+		}
+		nbChampDonnee--;
+		return false;
+	});
+	
+	$(".supprimerDonnee10").click(function(){ 
+		for(var i=5; i<nbChampDonnee; i++){
+			$("#examen_donnee"+i).val( $("#examen_donnee"+(i+1)).val() );
+		}
+		$("#examen_donnee"+i).val('');
+		$('#donnee'+i).toggle(false);
+		if(nbChampDonnee == 10){
+			$('#ajouter_donnee_img').toggle(true);
+		}
+		if(nbChampDonnee == 2){
+			$('#supprimer_donnee_img').toggle(false);
+			$(".supprimerDonnee1" ).replaceWith(
+					"<img class='supprimerDonnee' src='../images/images/sup2.png' />"
+				);
+		}
+		nbChampDonnee--;
+		return false;
+	});
+	
 }
 
 
@@ -177,6 +281,11 @@ $(function(){
 	var donnee3 = $("#examen_donnee3");
 	var donnee4 = $("#examen_donnee4");
 	var donnee5 = $("#examen_donnee5");
+	var donnee6 = $("#examen_donnee6");
+	var donnee7 = $("#examen_donnee7");
+	var donnee8 = $("#examen_donnee8");
+	var donnee9 = $("#examen_donnee9");
+	var donnee10 = $("#examen_donnee10");
 	
 	//Au debut on affiche pas le bouton modifier
 //	$("#bouton_donnee_modifier").toggle(false);
@@ -189,6 +298,11 @@ $(function(){
 	donnee3.attr( 'readonly', false);
 	donnee4.attr( 'readonly', false);
 	donnee5.attr( 'readonly', false);
+	donnee6.attr( 'readonly', false);
+	donnee7.attr( 'readonly', false);
+	donnee8.attr( 'readonly', false);
+	donnee9.attr( 'readonly', false);
+	donnee10.attr( 'readonly', false);
 	
 //	$("#bouton_donnee_valider").click(function(){
 //		donnee1.attr( 'readonly', true).css({'background':'#f8f8f8'});

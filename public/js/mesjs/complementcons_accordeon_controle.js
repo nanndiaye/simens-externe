@@ -58,6 +58,16 @@
 		var bilan_renal = $("#bilan_renal");
 		var bilan_inflammatoire = $("#bilan_inflammatoire");
 		
+		//On cache les champs
+		$('#resultat_groupe_sanguin').toggle(false); 
+		$('#resultat_hemogramme_sanguin').toggle(false);  
+		$('#resultat_bilan_hemolyse').toggle(false); 
+		$('#resultat_bilan_hepatique').toggle(false);  
+		$('#resultat_bilan_renal').toggle(false); 
+		$('#resultat_bilan_inflammatoire').toggle(false);  
+		
+		
+		
 		$('#groupe_sanguin').attr('readonly',false); 
 		$('#hemogramme_sanguin').attr('readonly',false); 
 		$('#bilan_hemolyse').attr('readonly',false); 
@@ -76,71 +86,72 @@
 $(function(){
 	//********************* Activation Resultat Examen Fonctionnel *****************************
 	//********************* Activation Resultat Examen Fonctionnel *****************************
-	var doppler_couleur_pulse = $("#doppler_couleur_pulse");
-	var echographie_de_stress = $("#echographie_de_stress");
-	var holter_ecg = $("#holter_ecg");
-	var holter_tensionnel = $("#holter_tensionnel");
-	var fibroscopie_bronchique = $("#fibroscopie_bronchique");
-	var fibroscopie_gastrique = $("#fibroscopie_gastrique");
-	var colposcopie = $("#colposcopie");
-	var echographie_gynecologique = $("#echographie_gynecologique");
-	var echographie_obstetrique = $("#echographie_obstetrique");
-	var cpn = $("#cpn");
-	var consultation_senologie = $("#consultation_senologie");
-	var plannification_familiale = $("#plannification_familiale");
+//	var doppler_couleur_pulse = $("#doppler_couleur_pulse");
+//	var echographie_de_stress = $("#echographie_de_stress");
+//	var holter_ecg = $("#holter_ecg");
+//	var holter_tensionnel = $("#holter_tensionnel");
+//	var fibroscopie_bronchique = $("#fibroscopie_bronchique");
+//	var fibroscopie_gastrique = $("#fibroscopie_gastrique");
+//	var colposcopie = $("#colposcopie");
+//	var echographie_gynecologique = $("#echographie_gynecologique");
+//	var echographie_obstetrique = $("#echographie_obstetrique");
+//	var cpn = $("#cpn");
+//	var consultation_senologie = $("#consultation_senologie");
+//	var plannification_familiale = $("#plannification_familiale");
 	var ecg = $("#ecg");
 	var eeg = $("#eeg");
 	var efr = $("#efr");
 	var emg = $("#emg");
-	var circoncision = $("#circoncision");
-	var vaccination = $("#vaccination");
-	var soins_infirmiers = $("#soins_infirmiers");
+//	var circoncision = $("#circoncision");
+//	var vaccination = $("#vaccination");
+//	var soins_infirmiers = $("#soins_infirmiers");
 	 
 	
 
 	//Au debut on desactive tous les champs
-	doppler_couleur_pulse.attr( 'readonly', false);
-	echographie_de_stress.attr( 'readonly', false);
-	holter_ecg.attr( 'readonly', false);
-	holter_tensionnel.attr( 'readonly', false);
-	fibroscopie_bronchique.attr( 'readonly', false);
-	fibroscopie_gastrique.attr( 'readonly', false);
-	colposcopie.attr( 'readonly', false);
-	echographie_gynecologique.attr( 'readonly', false);
-	echographie_obstetrique.attr( 'readonly', false);
-	consultation_senologie.attr( 'readonly', false);
-	plannification_familiale.attr( 'readonly', false);
-	cpn.attr( 'readonly', false);
+//	doppler_couleur_pulse.attr( 'readonly', false);
+//	echographie_de_stress.attr( 'readonly', false);
+//	holter_ecg.attr( 'readonly', false);
+//	holter_tensionnel.attr( 'readonly', false);
+//	fibroscopie_bronchique.attr( 'readonly', false);
+//	fibroscopie_gastrique.attr( 'readonly', false);
+//	colposcopie.attr( 'readonly', false);
+//	echographie_gynecologique.attr( 'readonly', false);
+//	echographie_obstetrique.attr( 'readonly', false);
+//	consultation_senologie.attr( 'readonly', false);
+//	plannification_familiale.attr( 'readonly', false);
+//	cpn.attr( 'readonly', false);
+	$("#resultat_acte_13").toggle(false);
+	$("#resultat_acte_14").toggle(false);
+	$("#resultat_acte_15").toggle(false);
+	$("#resultat_acte_16").toggle(false);
 	ecg.attr( 'readonly', false);
 	eeg.attr( 'readonly', false);
 	efr.attr( 'readonly', false);
 	emg.attr( 'readonly', false);
-	circoncision.attr( 'readonly', false);
-	vaccination.attr( 'readonly', false);
-	soins_infirmiers.attr( 'readonly', false);
+//	circoncision.attr( 'readonly', false);
+//	vaccination.attr( 'readonly', false);
+//	soins_infirmiers.attr( 'readonly', false);
 	
 	// ********************** ON cache les résultats de l 'examen fonctionnel ******************
 	// ********************** ON cache les résultats de l 'examen fonctionnel ******************
 	// ********************** ON cache les résultats de l 'examen fonctionnel ******************
-	$("#acte_1").toggle(false);
-	$("#acte_2").toggle(false);
-	$("#acte_3").toggle(false);
-	$("#acte_4").toggle(false);
-	$("#acte_5").toggle(false);
-	$("#acte_6").toggle(false);
-	$("#acte_7").toggle(false);
-	$("#acte_8").toggle(false);
-	$("#acte_9").toggle(false);
-	$("#acte_10").toggle(false);
-	$("#acte_11").toggle(false);
-	$("#acte_12").toggle(false);
-	$("#acte_13").toggle(false);
-	$("#acte_14").toggle(false);
-	$("#acte_15").toggle(false);
-	$("#acte_16").toggle(false);
-	$("#acte_17").toggle(false);
-	$("#acte_18").toggle(false);
-	$("#acte_19").toggle(false);
+//	$("#acte_1").toggle(false);
+//	$("#acte_2").toggle(false);
+//	$("#acte_3").toggle(false);
+//	$("#acte_4").toggle(false);
+//	$("#acte_5").toggle(false);
+//	$("#acte_6").toggle(false);
+//	$("#acte_7").toggle(false);
+//	$("#acte_8").toggle(false);
+//	$("#acte_9").toggle(false);
+//	$("#acte_10").toggle(false);
+//	$("#acte_11").toggle(false);
+//	$("#acte_12").toggle(false);
+
+//	$("#acte_17").toggle(false);
+//	$("#acte_18").toggle(false);
+//	$("#acte_19").toggle(false);
 	
 	
 	
@@ -774,7 +785,7 @@ $(function(){
 	//Method envoi POST pour updatecomplementconsultation
 	//Method envoi POST pour updatecomplementconsultation
 	function updateexecuterRequetePost(donnees) {
-		
+	
 	    var formulaire = document.createElement("form");
 	 
 	    formulaire.setAttribute("action",tabUrl[0]+"public/chururgie/update-complement-consultation"); 
@@ -801,12 +812,14 @@ $(function(){
     /***LORS DU CLICK SUR 'Terminer' ****/
 	/***LORS DU CLICK SUR 'Terminer' ****/
 	$("#terminer2, #terminer3").click(function() {
+		
+		
 		if (valid == false){ 
 			$('#motifsAdmissionConstanteClick').trigger('click');
 			$('#constantesClick').trigger('click');
 			return false;
 		}
-		
+	
 		//$('#bouton_Acte_valider_demande button, #bouton_ExamenBio_valider_demande button, #bouton_morpho_valider_demande button').trigger('click');
 		
 	    var donnees = new Array();
@@ -815,7 +828,17 @@ $(function(){
 	    
 	    // Histoire de la maladie
 	    
-	    donnees['histoire_maladie'] = $("#histoire_maladie").val();
+	    donnees['symptome1'] = $("#symptome1").val();
+	    donnees['symptome2'] = $("#symptome2").val();
+	    donnees['symptome3'] = $("#symptome3").val();
+	    donnees['symptome4'] = $("#symptome4").val();
+	    donnees['symptome5'] = $("#symptome5").val();
+	    
+	    donnees['symptome6'] = $("#symptome6").val();
+	    donnees['symptome7'] = $("#symptome7").val();
+	    donnees['symptome8'] = $("#symptome8").val();
+	    donnees['symptome9'] = $("#symptome9").val();
+	    donnees['symptome10'] = $("#symptome10").val();
 	    
 	    //*********** PATHOLOGIE ************
 	    //*********** PATHOLOGIE ************
@@ -854,8 +877,45 @@ $(function(){
 	    donnees['examen_donnee4'] = $("#examen_donnee4").val();
 	    donnees['examen_donnee5'] = $("#examen_donnee5").val();
 	    
-	    //**********-- ANALYSE BIOLOGIQUE --************
-        //**********-- ANALYSE BIOLOGIQUE --************
+	    donnees['examen_donnee6'] = $("#examen_donnee6").val();
+	    donnees['examen_donnee7'] = $("#examen_donnee7").val();
+	    donnees['examen_donnee8'] = $("#examen_donnee8").val();
+	    donnees['examen_donnee9'] = $("#examen_donnee9").val();
+	    donnees['examen_donnee10'] = $("#examen_donnee10").val();
+	    
+	    
+	  //**********--  Demande ANALYSE FONCTIONNEL --************
+        //**********--  Demande ANALYSE FONCTIONNEL --************
+	    
+	    for(var i = 1 ; i <5 ; i++ ){
+	   
+	     	if($("#acte_name_"+i).val()){
+	     		
+	     		donnees['acte_name_'+i] = $("#acte_name_"+i).val();
+	     		donnees['noteactes'+i] = $("#noteactes"+i).val();
+	     	}
+	     }
+	    donnees['ecg']       = $("#ecg").val();
+	    donnees['eeg'] 	    = $("#eeg").val();
+	    donnees['efr']       = $("#efr").val();
+	    donnees['emg']      = $("#emg").val();
+	   
+	    
+	    //**********--  Demande ANALYSE BIOLOGIQUE --************
+        //**********--  Demande ANALYSE BIOLOGIQUE --************
+	    
+	    
+	    for(var i = 1 ; i <=6 ; i++ ){
+	    	
+	     	if($("#examenBio_name_"+i).val()){
+	     		
+	     		donnees['examenBio_name_'+i] = $("#examenBio_name_"+i).val();
+	     		donnees['noteExamenBio_'+i] = $("#noteExamenBio"+i).val();
+	     	}
+	     }     
+	    
+	    
+	    
 	    donnees['groupe_sanguin']      = $("#groupe_sanguin").val();
 	    donnees['hemogramme_sanguin']  = $("#hemogramme_sanguin").val();
 	    donnees['bilan_hemolyse']      = $("#bilan_hemolyse").val();
@@ -863,20 +923,30 @@ $(function(){
 	    donnees['bilan_renal']         = $("#bilan_renal").val();
 	    donnees['bilan_inflammatoire'] = $("#bilan_inflammatoire").val();
 	    
-	    //**********-- ANALYSE MORPHOLOGIQUE --************
-        //**********-- ANALYSE MORPHOLOGIQUE --************
+	    //**********--  Demande ANALYSE MORPHOLOGIQUE --************
+        //**********--  Demande ANALYSE MORPHOLOGIQUE --************
+	    
+	    for(var i = 1 ; i <=5 ; i++ ){
+	    	 //alert($("#element_name_"+i).val());
+	     	if($("#element_name_"+i).val()){
+	     		
+	     		donnees['element_name_'+i] = $("#element_name_"+i).val();
+	     		donnees['note_'+i] = $("#notes"+i).val();
+	     	}
+	     } 
+	    
 	    donnees['radio_']        = $("#radio").val();
 	    donnees['ecographie_']   = $("#ecographie").val();
 	    donnees['fibroscopie_']  = $("#fibrocospie").val();
 	    donnees['scanner_']      = $("#scanner").val();
 	    donnees['irm_']          = $("#irm").val();
-	    
+//	    
 	    //*********** DIAGNOSTICS ************
 	    //*********** DIAGNOSTICS ************
-	    donnees['diagnostic1'] = $("#diagnostic1").val();
-	    donnees['diagnostic2'] = $("#diagnostic2").val();
-	    donnees['diagnostic3'] = $("#diagnostic3").val();
-	    donnees['diagnostic4'] = $("#diagnostic4").val();
+	    //donnees['diagnostic1'] = $("#diagnostic1").val();
+	    //donnees['diagnostic2'] = $("#diagnostic2").val();
+	    //donnees['diagnostic3'] = $("#diagnostic3").val();
+	    //donnees['diagnostic4'] = $("#diagnostic4").val();
 	    
 	    //*********** ORDONNACE (M�dical) ************
 	    //*********** ORDONNACE (M�dical) ************
@@ -891,7 +961,7 @@ $(function(){
 	     	}
 	     }
 	    
-	    
+	   
 	   
 	    //*********** TRAITEMENTS CHIRURGICAUX ************
 		//*********** TRAITEMENTS CHIRURGICAUX ************
@@ -957,6 +1027,7 @@ $(function(){
 		donnees['poids'] = $("#poids").val();
 		donnees['taille'] = $("#taille").val();
 		donnees['temperature'] = $("#temperature").val();
+		//donnees['pressionarterielle'] = $("#tensionmaximale").val().'\'.$("#tensionminimale").val();
 		donnees['tensionmaximale'] = $("#tensionmaximale").val();
 		donnees['tensionminimale'] = $("#tensionminimale").val();
 		donnees['pouls'] = $("#pouls").val();
@@ -1080,19 +1151,19 @@ $(function(){
 		//**=== ANTECEDENTS FAMILIAUX 
 		donnees['DiabeteAF'] = $("#DiabeteAF:checked").val(); 
 		if(!donnees['DiabeteAF']){ donnees['DiabeteAF'] = 0;}
-		donnees['NoteDiabeteAF'] = $("#NoteDiabeteAF").val();
+		//donnees['NoteDiabeteAF'] = $("#NoteDiabeteAF").val();
 		
 		donnees['DrepanocytoseAF'] = $("#DrepanocytoseAF:checked").val(); 
 		if(!donnees['DrepanocytoseAF']){ donnees['DrepanocytoseAF'] = 0;}
-		donnees['NoteDrepanocytoseAF'] = $("#NoteDrepanocytoseAF").val();
+		//donnees['NoteDrepanocytoseAF'] = $("#NoteDrepanocytoseAF").val();
 		
 		donnees['htaAF'] = $("#htaAF:checked").val(); 
 		if(!donnees['htaAF']){ donnees['htaAF'] = 0;}
-		donnees['NoteHtaAF'] = $("#NoteHtaAF").val();
+		//donnees['NoteHtaAF'] = $("#NoteHtaAF").val();
 		
 		donnees['autresAF'] = $("#autresAF:checked").val(); 
-		if(!donnees['autresAF']){ donnees['autresApF'] = 0;}
-		donnees['NoteAutresAF'] = $("#NoteAutresAF").val();
+		if(!donnees['autresAF']){ donnees['autresAF'] = 0;}
+		//donnees['NoteAutresAF'] = $("#NoteAutresAF").val();
 		
 		/*Dislipid�mie*/
 		donnees['dislipidemieAF'] = $("#dislipidemieAF:checked").val(); 
@@ -1103,7 +1174,8 @@ $(function(){
 		
 		/*Ajout automatique des antecedents familiaux*/
 		var $nbCheckboxAF = ($('#nbCheckboxAF').val())+1;
-		var $nbCheck = 0;
+		
+		var $nbCheckAF = 0;
 		var $ligne;
 		var $reste = ( $nbCheckboxAF - 1 ) % 5;
   		var $nbElement = parseInt( ( $nbCheckboxAF - 1 ) / 5 ); 
@@ -1114,16 +1186,17 @@ $(function(){
   		var i;
 		for(var j=1 ; j<=$ligne ; j++){
 			for( i=0 ; i<5 ; i++){
-				var $champValider = $('#champValider_'+j+'_'+i+':checked').val();
+				var $champValider = $('#champValiderAF_'+j+'_'+i+':checked').val();
 				if($champValider == 'on'){
-					donnees['champValider_'+k] = 1;
-					donnees['champTitreLabel_'+k] = $('#champTitreLabel_'+j+'_'+i).val();
+					donnees['champValiderAF_'+k] = 1;
+					donnees['champTitreLabelAF_'+k] = $('#champTitreLabelAF_'+j+'_'+i).val();
 					k++;
-					$nbCheck++;
+					$nbCheckAF++;
 				}
 			}
 			i=0; 
 		}
+		donnees['nbCheckboxAF'] = $nbCheckAF;
 		
 		updateexecuterRequetePost(donnees);
 	});
@@ -2108,19 +2181,19 @@ $(function(){
 	  		}
 	  		
 	  		scriptLabel = 
-  				"<td id='BUcheckbox' class='label_"+ligne+"_"+i+"' style='min-width: 45%; '> "+
+  				"<td id='BUcheckboxAF' class='label_"+ligne+"_"+i+"' style='min-width: 45%; '> "+
                 "<div > "+
                 " <label style='width: 50%; height:30px; text-align:right; font-family: time new romans; font-size: 18px;'> "+
                 "       <a href='javascript:supprimerLabelAF("+ligne+","+i+");' ><img class='imageSupprimerAsthmeAF' style='cursor: pointer; float: right; margin-right: -10px; width:10px; height: 10px;' src='"+tabUrl[0]+"public/images_icons/sup.png' /></a> "+ 
-                nomLabel +"  <input type='checkbox' checked='${this.checked}' name='champValider_"+ligne+"_"+i+"' id='champValider_"+ligne+"_"+i+"' > "+
-                " <input type='hidden'  id='champTitreLabel_"+ligne+"_"+i+"' value='"+nomLabel+"' > "+
+                nomLabel +"  <input type='checkbox' checked='${this.checked}' name='champValiderAF_"+ligne+"_"+i+"' id='champValiderAF_"+ligne+"_"+i+"' > "+
+                " <input type='hidden'  id='champTitreLabelAF_"+ligne+"_"+i+"' value='"+nomLabel+"' > "+
                 " </label> "+
                 "</div> "+
                 "</td> "+
                 
                 "<script>"+
-                "$('#champValider_"+ligne+"_"+i+"').click(function(){"+
-	  			"var boutons = $('#champValider_"+ligne+"_"+i+"');"+
+                "$('#champValiderAF_"+ligne+"_"+i+"').click(function(){"+
+	  			"var boutons = $('#champValiderAF_"+ligne+"_"+i+"');"+
 	  			"if( boutons[0].checked){ $('.imageValider_"+ligne+"_"+i+"').toggle(true);  }"+
 	  			"if(!boutons[0].checked){ $('.imageValider_"+ligne+"_"+i+"').toggle(false); }"+
 	  		    "});"+
@@ -2143,7 +2216,11 @@ $(function(){
 	  	//Ajouter un label dans antecedents Familiaux --- Ajouter un label dans antecedents Familiaux
 
 	  	$('#imgIconeAjouterLabelAF').click(function(){
-	  		if(!$('#autresAF').val()){ stopPropagation(); }
+	  	
+	  		if(!$('#autresAF').val()){
+	  			stopPropagation();
+	  			
+	  			}
 	  		else{
 	  			tableau[itab++] = $('#autresAF').val();
 	  			ajouterLabelAntecedentsFamiliaux($('#autresAF').val());
@@ -2168,9 +2245,10 @@ $(function(){
 	  		);
 		  	
 	  	}
-	  	function autocompletionAntecedentAF(myArrayMedicament){
+	  	function autocompletionAntecedentAF(myAntFami){
+	  		
 		  	$( "#imageIconeAjouterLabelAF label input" ).autocomplete({
-			  	  source: myArrayMedicament
+			  	  source: myAntFami
 			    });
 	  	}
 	  	

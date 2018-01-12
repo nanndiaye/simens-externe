@@ -25,6 +25,17 @@
 //********************* MOTIFS D'ADMISSION ***************************
   $(function(){
    setTimeout(function(){
+	   
+	   
+	   $("#antecedents_chirugicaux").attr('disabled', true).css({'background':'#f8f8f8'});
+	   $("#htaAF").attr('disabled', true).css({'background':'#f8f8f8'});
+	   $("#DrepanocytoseAF").attr('disabled', true).css({'background':'#f8f8f8'});
+	   $("#dislipidemieAF").attr('disabled', true).css({'background':'#f8f8f8'});
+	   $("#asthmeAF").attr('disabled', true).css({'background':'#f8f8f8'});
+	   
+	   
+	   $("#histoire_maladie").attr('disabled', true).css({'background':'#f8f8f8'});
+	   
     var motif1 = $("#motif_admission1");
 	var motif2 = $("#motif_admission2");
 	var motif3 = $("#motif_admission3");
@@ -75,32 +86,145 @@
 		 $("#albumine, #sucre, #corpscetonique").attr( 'disabled' , true).css({'background':'#f8f8f8'});
 	}, 2000);
 	
-	
-	//********************* examen_donnee *****************************
+    
+    
+    //********************* examen_donnee *****************************
 	//********************* examen_donnee ***************************** 
+	
 	setTimeout(function(){
 	var donnee1 = $("#examen_donnee1");
 	var donnee2 = $("#examen_donnee2");
 	var donnee3 = $("#examen_donnee3");
 	var donnee4 = $("#examen_donnee4");
 	var donnee5 = $("#examen_donnee5");
+	var donnee6 = $("#examen_donnee6");
+	var donnee7 = $("#examen_donnee7");
+	var donnee8 = $("#examen_donnee8");
+	var donnee9 = $("#examen_donnee9");
+	var donnee10 = $("#examen_donnee10");
+	
 	
 	donnee1.attr( 'disabled', true).css({'background':'#f8f8f8'});
 	donnee2.attr( 'disabled', true).css({'background':'#f8f8f8'});
 	donnee3.attr( 'disabled', true).css({'background':'#f8f8f8'});
 	donnee4.attr( 'disabled', true).css({'background':'#f8f8f8'});
 	donnee5.attr( 'disabled', true).css({'background':'#f8f8f8'});
-	$("#bouton_donnee_modifier").toggle(false);
-	$("#bouton_donnee_valider").toggle(false);
+	
+
+	donnee6.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	donnee7.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	donnee8.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	donnee9.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	donnee10.attr( 'disabled', true).css({'background':'#f8f8f8'});
+//	$("#bouton_donnee_modifier").toggle(false);
+//	$("#bouton_donnee_valider").toggle(false);
 	
 	$('#ajouter_donnee_img').toggle(false);
 	$('#supprimer_donnee_img').toggle(false);
 	
-	$('.supprimerDonnee1, .supprimerDonnee2, .supprimerDonnee3, .supprimerDonnee4, .supprimerDonnee5').toggle(false);
+	$('.supprimerDonnee1, .supprimerDonnee2, .supprimerDonnee3, .supprimerDonnee4, .supprimerDonnee5','.supprimerDonnee6',
+			' .supprimerDonnee7, .supprimerDonnee8, .supprimerDonnee9, .supprimerDonnee10').toggle(false);
+	 }, 2000);
+    
+    
+    
+    
+	//********************* symptome *****************************
+	//********************* symptome *****************************
+	
+	setTimeout(function(){
+	var symptome1 = $("#symptome1");
+	var symptome2 = $("#symptome2");
+	var symptome3 = $("#symptome3");
+	var symptome4 = $("#symptome4");
+	var symptome5 = $("#symptome5");
+	var symptome6 = $("#symptome6");
+	var symptome7 = $("#symptome7");
+	var symptome8 = $("#symptome8");
+	var symptome9 = $("#symptome9");
+	var symptome10 = $("#symptome10");
+	
+	
+	symptome1.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome2.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome3.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome4.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome5.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	
+
+	symptome6.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome7.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome8.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome9.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	symptome10.attr( 'disabled', true).css({'background':'#f8f8f8'});
+	
+	
+	$('#ajouter_donnee_img').toggle(false);
+	$('#supprimer_donnee_img_symptome').toggle(false);
+	
+	$('.supprimerDonnee1, .supprimerDonnee2, .supprimerDonnee3, .supprimerDonnee4, .supprimerDonnee5','.supprimerDonnee6',
+			' .supprimerDonnee7, .supprimerDonnee8, .supprimerDonnee9, .supprimerDonnee10').toggle(false);
 	 }, 2000);
 	  		
-//********************* ANALYSE MORPHOLOGIQUE *****************************
-//********************* ANALYSE MORPHOLOGIQUE *****************************
+//********************* EXAMEN COMPLEMENTAIRE *****************************
+//********************* EXAMEN COMPLEMENTAIRE *****************************
+//********************* EXAMEN COMPLEMENTAIRE *****************************
+
+	
+	$(function(){
+		setTimeout(function(){
+			var groupe_sanguin = $("#resultat_groupe_sanguin");
+			var hemogramme_sanguin = $("#resultat_hemogramme_sanguin");
+			var bilan_hemolyse = $("#resultat_bilan_hemolyse");
+			var bilan_hepatique = $("#resultat_bilan_hepatique");
+			var bilan_renal = $("#resultat_bilan_renal");
+			var bilan_inflammatoire = $("#resultat_bilan_inflammatoire");
+			//ON DESACTIVE LES CHAMPS
+			
+			  $("#groupe_sanguin").attr( 'disabled', true).css({'background':'#f8f8f8'});
+			  $("#hemogramme_sanguin").attr( 'disabled', true).css({'background':'#f8f8f8'});
+			  $("#bilan_hemolyse").attr( 'disabled', true).css({'background':'#f8f8f8'});
+			  $("#bilan_hepatique").attr( 'disabled', true).css({'background':'#f8f8f8'});
+			  $("#bilan_renal").attr( 'disabled', true).css({'background':'#f8f8f8'});
+			 $("#bilan_inflammatoire").attr( 'disabled', true).css({'background':'#f8f8f8'});
+		
+			groupe_sanguin.attr( 'disabled', true).css({'background':'#f8f8f8'});
+			hemogramme_sanguin.attr('disabled', true).css({'background':'#f8f8f8'});
+			bilan_hemolyse.attr( 'disabled', true).css({'background':'#f8f8f8'});
+			bilan_hepatique.attr( 'disabled', true).css({'background':'#f8f8f8'});
+		    bilan_renal.attr( 'disabled', true).css({'background':'#f8f8f8'});
+			bilan_inflammatoire.attr( 'disabled', true).css({'background':'#f8f8f8'});
+ 		
+			
+			
+			groupe_sanguin.toggle(false);
+			hemogramme_sanguin.toggle(false);
+			bilan_hemolyse.toggle(false);
+			bilan_hepatique.toggle(false);
+			bilan_renal.toggle(false);
+			bilan_inflammatoire.toggle(false);
+			 
+		}, 2000);
+	});
+	$(function(){
+		setTimeout(function(){
+			var eeg = $("#resultat_acte_13");
+			var ecg = $("#resultat_acte_14");
+			var emg = $("#resultat_acte_15");
+			var efr = $("#resultat_acte_16");
+			 
+		
+			eeg.attr( 'disabled', true).css({'background':'#f8f8f8'});
+			ecg.attr( 'disabled', true).css({'background':'#f8f8f8'});
+			emg.attr( 'disabled', true).css({'background':'#f8f8f8'});
+			efr.attr( 'disabled', true).css({'background':'#f8f8f8'});
+ 		
+			eeg.toggle(false);
+			ecg.toggle(false);
+			emg.toggle(false);
+			efr.toggle(false);
+		}, 2000);
+	});
 $(function(){
 	setTimeout(function(){
 		var radio = $("#radio");
@@ -171,6 +295,26 @@ setTimeout(function(){
 	
 },2000);
   
+
+
+//********************* POUR LES PATHOLOGIES *****************************
+//********************* POUR LES PATHOLOGIES ***************************** 
+setTimeout(function(){
+	$("#listePathologies input").attr("disabled", true).css({'background':'#f8f8f8'});
+	
+	
+	//$("#supprimer_pathologie_selectionne_ a img").toggle(false);
+	//$("#vider_Pathologie_selectionne_ a img").toggle(false);
+	
+	$("#controls_pathologie div").toggle(false);
+	$("#iconePathologie_supp_vider a img").toggle(false);
+	//$("#bouton_Medicament_modifier_demande").toggle(false);
+	//$("#bouton_Medicament_valider_demande").toggle(false);
+	$("#increm_decrem img").toggle(false);
+}, 2000);
+
+
+
 //********************* POUR LES MEDICAMENTS *****************************
 //********************* POUR LES MEDICAMENTS ***************************** 
 setTimeout(function(){
@@ -768,8 +912,8 @@ setTimeout(function(){
 		}
 			
  
-    //TESTER LEQUEL DES CHECKBOX est coché
-	//TESTER LEQUEL DES CHECKBOX est coché
+    //TESTER LEQUEL DES CHECKBOX est cochï¿½
+	//TESTER LEQUEL DES CHECKBOX est cochï¿½
 	//maskDeSaisie();
 	OptionCochee();
 	function OptionCochee() {
@@ -995,4 +1139,182 @@ setTimeout(function(){
   	//===================================================================================================================
   	//===================================================================================================================
   	
+  	
+  	
+  	
+  	
+  	
+  //===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//=============================================Antecedents Familiaux===============================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	var itab = 1;
+  	var ligne = 0; 
+  	var tableau = [];
+  	
+  	function ajouterToutLabelAntecedentsFamiliaux(tableau_){
+  		for(var l = 1; l <= ligne; l++){
+  			if( l == 1 ){
+	  			$("#labelDesAntecedentsFamiliaux_"+1).html("").css({'height' : '0px'});
+	  			itab = 1;
+  			} else {
+	  			$("#labelDesAntecedentsFamiliaux_"+l).remove();
+  			}
+  		}
+  		
+  		var tab = [];
+  		var j = 1;
+  		
+  		for(var i=1 ; i<tableau_.length ; i++){
+  			if( tableau_[i] ){
+  				tab[j++] = tableau_[i];
+  				itab++;
+  				ajouterLabelAntecedentsFamiliaux(tableau_[i]);
+  			}
+  		}
+
+  		tableau = tab;
+  		itab = j;
+  		$('#nbCheckboxAF').val(itab);
+
+  		stopPropagation();
+  	}
+  	
+  	
+  //Ajouter des labels au click sur ajouter pour antecedents familiaux
+  	//Ajouter des labels au click sur ajouter pour antecedents familiaux
+  	//Ajouter des labels au click sur ajouter pour antecedents familiaux
+  	var scriptLabel = "";
+  	function ajouterLabelAntecedentsFamiliaux(nomLabel){
+  		
+  		if(!nomLabel){ stopPropagation(); }
+  		
+  		var reste = ( itab - 1 ) % 5; 
+  		var nbElement = parseInt( ( itab - 1 ) / 5 ); 
+  		if(reste != 0){ ligne = nbElement + 1; }
+  		else { ligne = nbElement; }
+  		
+  		var i = 0;
+  		if(ligne == 1){
+	  		i = $("#labelDesAntecedentsFamiliaux_"+ligne+" td").length;
+  		} else {
+  			if(reste == 1){
+	  			$("#labelDesAntecedentsFamiliaux_"+(ligne-1)).after(
+            			"<tr id='labelDesAntecedentsFamiliaux_"+ligne+"' style='width:100%; '>"+
+            			"</tr>");
+  			}
+  			i = $("#labelDesAntecedentsFamiliaux_"+ligne+" td").length;
+  		}
+  		
+  		scriptLabel = 
+				"<td id='BUcheckbox' class='label_"+ligne+"_"+i+"' style='min-width: 45%; '> "+
+            "<div > "+
+            " <label style='width: 50%; height:30px; text-align:right; font-family: time new romans; font-size: 18px;'> "+
+            "       <a href='javascript:supprimerLabelAF("+ligne+","+i+");' ><img class='imageSupprimerAsthmeAF' style='cursor: pointer; float: right; margin-right: -10px; width:10px; height: 10px;' src='"+tabUrl[0]+"public/images_icons/sup.png' /></a> "+ 
+            nomLabel +"  <input type='checkbox'   disabled='true'  checked='${this.checked}' name='champValiderAF_"+ligne+"_"+i+"' id='champValiderAF_"+ligne+"_"+i+"' > "+
+            " <input type='hidden'  id='champTitreLabelAF_"+ligne+"_"+i+"' value='"+nomLabel+"' > "+
+            " </label> "+
+            "</div> "+
+            "</td> "+
+            
+            "<script>"+
+            "$('#champValiderAF_"+ligne+"_"+i+"').click(function(){"+
+  			"var boutons = $('#champValiderAF_"+ligne+"_"+i+"');"+
+  			"if( boutons[0].checked){ $('.imageValider_"+ligne+"_"+i+"').toggle(true);  }"+
+  			"if(!boutons[0].checked){ $('.imageValider_"+ligne+"_"+i+"').toggle(false); }"+
+  		    "});"+
+  		    "</script>"
+            ;
+  		
+  		if( i == 0 ){
+  			//AJOUTER ELEMENT SUIVANT
+            $("#labelDesAntecedentsFamiliaux_"+ligne).html(scriptLabel);
+            $("#labelDesAntecedentsFamiliaux_"+ligne).css({'height' : '50px'});
+  	    } else if( i < 5 ){
+  	    	//AJOUTER ELEMENT SUIVANT
+            $("#labelDesAntecedentsFamiliaux_"+ligne+" .label_"+ligne+"_"+(i-1)).after(scriptLabel);
+  	    }
+  		
+  	}
+  	
+  	//Ajouter un label dans antecedents Familiaux --- Ajouter un label dans antecedents Familiaux
+  	//Ajouter un label dans antecedents Familiaux --- Ajouter un label dans antecedents Familiaux
+  	//Ajouter un label dans antecedents Familiaux --- Ajouter un label dans antecedents Familiaux
+
+  	$('#imgIconeAjouterLabelAF').click(function(){
+  	
+  		if(!$('#autresAF').val()){
+  			stopPropagation();
+  			
+  			}
+  		else{
+  			tableau[itab++] = $('#autresAF').val();
+  			ajouterLabelAntecedentsFamiliaux($('#autresAF').val());
+  			$('#nbCheckboxAF').val(itab);
+  			$('#autresAF').val("");
+  		}
+  		stopPropagation();
+  	});
+  	
+  	
+  	//Supprimer un label ajouter pour antecedents familiaux --- Supprimer un label ajouter pour antecedents familiaux
+  	//Supprimer un label ajouter pour antecedents familiaux --- Supprimer un label ajouter pour antecedents familiaux
+  	//Supprimer un label ajouter pour antecedents familiaux --- Supprimer un label ajouter pour antecedents familiaux
+  	function supprimerLabelAF(ligne, i){
+  		
+  		var pos = ((ligne - 1)*5)+i;
+  		var indiceTableau = pos+1; 
+  		tableau[indiceTableau] = "";
+  		
+  		$("#labelDesAntecedentsFamiliaux_"+ligne+" .label_"+ligne+"_"+i).fadeOut(
+  			function(){	ajouterToutLabelAntecedentsFamiliaux(tableau); }
+  		);
+	  	
+  	}
+  	function autocompletionAntecedentAF(myAntFami){
+  		
+	  	$( "#imageIconeAjouterLabelAF label input" ).autocomplete({
+		  	  source: myAntFami
+		    });
+  	}
+  	
+  	function affichageAntecedentsFamiliauxDuPatient(nbElement, tableau_){
+  		for(var i=1 ; i<=nbElement ; i++){
+  			itab++;
+  			ajouterLabelAntecedentsFamiliaux(tableau_[i]);
+  		}
+  		tableau = tableau_;
+  	}
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
+  	//===================================================================================================================
   	

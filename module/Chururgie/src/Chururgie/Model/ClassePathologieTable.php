@@ -1,11 +1,11 @@
 <?php
-namespace Chururgie\Model
+namespace Chururgie\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
 
 
-class ClassePathologieTable(){
+class ClassePathologieTable{
     
     
     protected $tableGateway;

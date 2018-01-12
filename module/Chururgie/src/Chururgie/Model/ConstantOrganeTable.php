@@ -1,5 +1,5 @@
 <?php
-namespace Chururgie\Model
+namespace Chururgie\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
