@@ -255,7 +255,7 @@ function ActiverResultatExamenFonctionnelModification(d){
 }
 var i=1;
 function chargementModificationActe (index, element, note) {
-	
+	//alert(element);
 	$("#acte_name_"+(index+1)+" option[value='"+element+"']").attr('selected','selected'); 
 	$("#noteActe_"+(index+1)+" input").val(note);
 	
@@ -355,9 +355,10 @@ function desactivationChamps(){
 	for(var i = 1; i <= 4; i++ ){
 	    $('#acte_name_'+i).attr('disabled',true).css({'background':'#f8f8f8'}); 
 		$("#noteActe_"+i+" input").attr('disabled',true).css({'background':'#f8f8f8'});
-		alert(i);
+		$('#demandeExamenFonctionnel_'+i).toggle(false);
 	}
 	$("#iconeActe_supp_vider a img").toggle(false);
+	
 	
 }
 

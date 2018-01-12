@@ -1317,10 +1317,10 @@ echo $this->form()->openTag($form); ?>
                             <!--********************* CHARGEMENT DES DONNEES  ************************-->
                             <!--********************* CHARGEMENT DES DONNEES  ************************-->
                               
-                             
-                            <script> 
-
                           
+                            
+                            
+                              <script> 
                             //ValiderDemandeActe();
                          var myArrayExamenFonc = [''];
                          var myRenCLiExamenFonc = [''];
@@ -1338,7 +1338,7 @@ echo $this->form()->openTag($form); ?>
                                    myArrayExamenFc[j++] =  "<?php echo $liste['libelleExamen']; ?>";
                                    
                            <?php } ?>
-                           
+                         //  alert(myArrayExamenFc);
                           
                            partDefautActe(myArrayExamenFc, '<?php echo $nbDemandeActe; ?>');
                            var i = 1;
@@ -1346,12 +1346,15 @@ echo $this->form()->openTag($form); ?>
                           // var indLigneEF = 0;
                            //chargementModificationActe( indLigneEF++ , myArrayExamenFonc , myRenCLiExamenFonc);   
  						      <?php foreach ($this->listeDemandesActes as $listeEF){ ?> 
- 						      
+ 						     
 	                          chargementModificationActe(  indLigneEF++ , "<?php echo $listeEF['idExamen']; ?>", "<?php echo $listeEF['noteDemande']; ?>");  
+	                         
+										 
 	                            <?php } ?> 
-
+	                            
 	                            desactivationChamps();
                             </script>
+                          
                             
                           </div>
                           
@@ -1589,11 +1592,11 @@ echo $this->form()->openTag($form); ?>
                                   </tr>
                                   
                                   <tr id="resultat_acte_15" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('efr'));?> </th>
+                                      <th> <?php echo $this->formRow($form->get('emg'));?> </th>
                                   </tr>
                                   
                                   <tr id="resultat_acte_16" class="" style="width: 100%;">
-                                      <th> <?php echo $this->formRow($form->get('emg'));?> </th>
+                                      <th> <?php echo $this->formRow($form->get('efr'));?> </th>
                                   </tr>
                                   
                                   

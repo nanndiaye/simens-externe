@@ -456,7 +456,7 @@ class ChururgieController extends AbstractActionController {
 	    $listeDesExamensFonctionnelsPredefinis = $this->demandeExamensTable()->getDemandeDesExamensFonctionnels();
 	   
 	    $listeDemandesActes = $this->getDemandeActe()->getDemandeActe($id);
-	    
+	    var_dump($listeDemandesActes->current());exit();
 	   
 	    ////RESULTATS DES EXAMENS BIOLOGIQUES DEJA EFFECTUES ET ENVOYER PAR LE BIOLOGISTE
 	   $listeDemandesBiologiquesEffectuerEnvoyer = $this->demandeExamensTable()->getDemandeExamensBiologiquesEffectuesEnvoyer($id);
@@ -685,7 +685,7 @@ class ChururgieController extends AbstractActionController {
 	    //Recuperer la liste des actes
 	    //Recuperer la liste des actes
 	    $listeActes = $this->getConsultationTable()->getListeDesActes();
-	    
+	   
 	    //FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
 	    //FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
 	    
@@ -2324,7 +2324,7 @@ class ChururgieController extends AbstractActionController {
 				$data["bilan_inflammatoire"] = $exam_fonc["noteResultat"];
 			}
 		}
-		 
+		 //var_dump($data);exit();
 		//DIAGNOSTICS
 		//DIAGNOSTICS
 		//DIAGNOSTICS
@@ -2465,7 +2465,8 @@ class ChururgieController extends AbstractActionController {
 		//$listeActes = $this->getConsultationTable()->getListeDesActes();
 		  //Liste des examens fonctionnels
 	    $listeDesExamensFonctionnelsPredefinis = $this->demandeExamensTable()->getDemandeDesExamensFonctionnels();
-	    $listeDemandesActes = $this->getDemandeActe()->getDemandeActe($id);
+	    $listeDemandesActes = $this->getDemandeActe()->getDemandeFoncDemande($id);
+	    //var_dump($id);exit();
 		//FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
 		//FIN ANTECEDENTS --- FIN ANTECEDENTS --- FIN ANTECEDENTS
 	
